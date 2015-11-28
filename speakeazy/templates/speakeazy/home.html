@@ -1,0 +1,22 @@
+{% extends "user_base.html" %}
+{% load static %}{% load i18n %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <h2>Home</h2>
+
+        <div class="list-group">
+            {% for project in project_list %}
+                <a href="{% url 'speakeazy:projects:projectDetail' project.slug %}" class="list-group-item">
+                    <h4 class="list-group-item-heading">{{ project }}</h4>
+                </a>
+            {% endfor %}
+
+            <a href="{% url 'speakeazy:createProject' %}" class="list-group-item">
+                Create Project
+            </a>
+        </div>
+    </div>
+{% endblock content %}

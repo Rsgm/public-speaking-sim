@@ -1,0 +1,15 @@
+{% extends "user_base.html" %}
+{% load static %}{% load i18n %}
+{% block title %}Create Project{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <h2>Create Project</h2>
+
+        <form action="" method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Create"/>
+        </form>
+    </div>
+{% endblock content %}
