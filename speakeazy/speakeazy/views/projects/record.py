@@ -48,6 +48,7 @@ def upload(request, *args, **kwargs):  # this may haunt me later on, use rtp
 def _upload(request, *args, **kwargs):
     # rate limit
     # test for bad requests
+    # auth
 
     # create object to keep the id
     piece = UploadPiece()
