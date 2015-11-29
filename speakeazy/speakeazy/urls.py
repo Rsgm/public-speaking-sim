@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from django.conf.urls import include, url
-# this file is not used, but I will leave it here to show where the go
 from speakeazy.speakeazy.views.createProject import CreateProject
 from speakeazy.speakeazy.views.home import Home
 

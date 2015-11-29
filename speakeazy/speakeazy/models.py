@@ -16,11 +16,11 @@ ROLES = [
     (USER, 'speakeazy'),
 ]
 
-NOT_STARTED = 'n'
+UPLOADING = 'u'
 PROCESSING = 'p'
 FINISHED = 'r'
 STATE_CHOICES = [
-    (NOT_STARTED, 'not started'),
+    (UPLOADING, 'uploading'),
     (PROCESSING, 'processing'),
     (FINISHED, 'finished')
 ]
@@ -35,7 +35,7 @@ class Project(Model):
     created_time = models.DateTimeField(auto_now_add=True)
     due_date = models.DateField()
 
-    slug = AutoSlugField(populate_from='name', unique=True, unique_with='user')
+    slug = AutoSlugField(populate_from='name', unique_with='user')
 
     def __str__(self):
         return self.name
@@ -47,9 +47,11 @@ class Project(Model):
 class Recording(Model):
     project = models.ForeignKey('Project', editable=False)
 
-    state = models.CharField(max_length=1, choices=STATE_CHOICES, default=NOT_STARTED)
+    state = models.CharField(max_length=1, choices=STATE_CHOICES, default=UPLOADING)
     finish_time = models.DateTimeField()
     start_time = models.DateTimeField(auto_now_add=True)
+
+    slug = AutoSlugField(unique_with='project')
 
     def __str__(self):
         return self.name
@@ -110,7 +112,7 @@ class Submission(Model):
     for_evaluation = models.BooleanField()
     role_visibility = models.CharField(max_length=1, choices=ROLES)
 
-    slug = AutoSlugField(populate_from='recording.project.name', unique=True, unique_with='group')
+    slug = AutoSlugField(populate_from='recording.project.name', unique_with='group')
 
     def __str__(self):
         return '%s - %s' % (self.recording.project.user, self.recording.project.name)

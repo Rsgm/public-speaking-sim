@@ -1,44 +1,45 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-
+import json
+from datetime import datetime
 from braces.views import LoginRequiredMixin
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
+from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from ratelimit.decorators import ratelimit
+from speakeazy.speakeazy import models
 from speakeazy.speakeazy.models import Recording, Project, UploadPiece
-from speakeazy.speakeazy.tasks import convert_media
+from speakeazy.speakeazy.tasks import convert_media, concatenate_media
 from vanilla.views import TemplateView
 
 
 class Record(LoginRequiredMixin, TemplateView):
-    model = Recording
-    template_name = 'speakeazy/projects/recording.html'
-
-    # These next two lines tell the view to index lookups by project
-    slug_field = "project"
-    slug_url_kwarg = "project"
+    template_name = 'speakeazy/projects/record.html'
 
 
-def start(request, project):
-    if not request.user.is_authenticated():
-        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+@login_required
+def start(request, *args, **kwargs):
+    allowed = auth(request, kwargs['project'])
+    if not allowed[0]:
+        return allowed[1]
 
-    project_name = project
-    project = Project.objects.filter(slug=project_name)
+    project = allowed[1]
 
-    if request.user.id != project.user.id:
-        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    # create recording
+    recording = Recording(project=project)
+    recording.save()
 
-    # recording.
-    # recording = Recording(name=)
-
-    return HttpResponse()
+    return HttpResponse(json.dumps({'recording_id': recording.slug}))
 
 
 @csrf_exempt
-def upload(request, *args, **kwargs):  # this may haunt me later on, use rtp
+@login_required
+@ratelimit(key='ip', rate='2/s', block=True)
+def upload(request, *args, **kwargs):  # this may haunt me later on, use rtp, how to auth?
     # maybe use a custom upload handler that limits filesize
     request.upload_handlers = [TemporaryFileUploadHandler()]
     return _upload(request, *args, **kwargs)
@@ -46,12 +47,18 @@ def upload(request, *args, **kwargs):  # this may haunt me later on, use rtp
 
 @csrf_protect
 def _upload(request, *args, **kwargs):
-    # rate limit
-    # test for bad requests
-    # auth
+    allowed = auth(request, kwargs['project'])
+    if not allowed[0]:
+        return allowed[1]
+
+    # todo: test for bad requests
+
+    # find project and recording
+    project = allowed[1]
+    recording = Recording.objects.filter(project=project, slug=request.POST['recording']).get()
 
     # create object to keep the id
-    piece = UploadPiece()
+    piece = UploadPiece(recording=recording)
     piece.save()
 
     # write video data
@@ -71,5 +78,38 @@ def _upload(request, *args, **kwargs):
     return HttpResponse()
 
 
-def finish(request):
+@login_required
+def finish(request, *args, **kwargs):
+    allowed = auth(request, kwargs['project'])
+    if not allowed[0]:
+        return allowed[1]
+
+    # find project and recording
+    project = allowed[1]
+    recording = Recording.objects.filter(project=project, slug=request.POST['recording']).get()
+
+    # get piece list
+    piece_list = UploadPiece.objects.filter(recording=recording).values_list('pk', flat=True)
+
+    # run concat task
+    concatenate_media.delay(recording.id, piece_list)
+
+    # update recording
+    recording.finish_time = datetime.now()
+    recording.state = models.FINISHED
+    recording.save()
+
     return HttpResponse()
+
+
+# Authenticate a user
+def auth(request, project_slug):
+    # find project
+    project = Project.objects.filter(user=request.user, slug=project_slug).get()
+
+    # if no project exists, return a redirect
+    if not project:
+        return False, redirect(reverse('speakeazy:projects:projectList'))
+
+    # return the project
+    return True, project

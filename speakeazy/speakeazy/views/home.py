@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-
 from braces.views import LoginRequiredMixin
+from ratelimit.decorators import ratelimit
+from ratelimit.mixins import RatelimitMixin
 from speakeazy.speakeazy.models import Project
 from vanilla.views import TemplateView
 

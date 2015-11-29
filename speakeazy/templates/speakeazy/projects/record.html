@@ -1,0 +1,63 @@
+{% extends "user_base.html" %}
+{% load static %}{% load i18n %}
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+    <div class="btn-group glyph-logout" role="group" aria-label="...">
+        <button type="button" class="btn btn-default topbtns" data-ng-click="vm.logout()">Log out<span
+                class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
+    </div>
+
+    <div id="headingDiv">
+        <h1 class="text-center">Practice <span class="glyphicon glyphicon-question-sign"
+                                               data-tooltip-placement="bottom"
+                                               data-tooltip="Make sure you’re in the frame. Decide where you will be standing when speaking to the audience in the next step and when speaking from that distance the audio marker is well in the green."></span>
+        </h1>
+    </div>
+
+
+    <div id="dashboardBody">
+        <div class="recording-page">
+            <!-- preview -->
+            <div class="preview container" data-ng-show="vm.state === 'preview'">
+                <button class="btn btn-primary text-center" data-ng-disabled="!vm.mediaStream"
+                        data-ng-click="vm.startRecording()">
+                    Start Recording
+                </button>
+
+                <div class="row-fluid">
+                    <div class="col-md-4 text-center col-md-offset-4">
+                        <video class="setup-video-new" id="setup-video" width="400" height="300"></video>
+                    </div>
+
+                    <div class="col-md-2 col-md-offset-1 volume">
+                        <span class="glyphicon glyphicon-volume-up"></span>
+
+                        <div class="background">
+                            <span class="glyphicon glyphicon-menu-down slider" data-ng-style="vm.slider"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recording -->
+            <div data-ng-show="vm.state === 'recording'">
+                <button class="btn btn-primary text-center" data-ng-click="vm.stopRecording()"
+                        data-ng-disabled="!vm.started">
+                    stop
+                </button>
+
+                <video class="text-center embed-responsive-item" id="audience-video" preload></video>
+
+                <!--<timer></timer>-->
+            </div>
+
+            <!-- uploading -->
+            <div class="upload-progress" data-ng-show="vm.state === 'uploading'">
+                <h1 class="text-center">Uploading</h1>
+
+                <progressbar value="vm.progress" class="progress-striped active">{{ vm.progress }}%</progressbar>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
