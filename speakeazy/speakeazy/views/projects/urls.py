@@ -25,7 +25,7 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^(?P<project>\S+)/record/start/$',
+        regex=r'^(?P<project>\S+)/record/(?P<recording>\S+)/start/$',
         view=start,
         name='recordStart'
     ),

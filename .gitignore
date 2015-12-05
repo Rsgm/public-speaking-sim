@@ -66,8 +66,8 @@ tests/.hitch
 mailhog
 
 # Recording files
-recordings/audio_pieces/
-recordings/video_pieces/
-recordings/converted_pieces/
-recordings/scripts/
-recordings/finished/
+recordings/audio_pieces/*
+recordings/video_pieces/*
+recordings/converted_pieces/*
+recordings/scripts/*
+recordings/finished/*

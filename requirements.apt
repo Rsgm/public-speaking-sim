@@ -42,3 +42,7 @@ libbz2-dev
 wget
 curl
 llvm
+
+
+# arch needs the following
+#pkg-config

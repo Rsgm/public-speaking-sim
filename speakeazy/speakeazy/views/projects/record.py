@@ -33,12 +33,12 @@ def start(request, *args, **kwargs):
     recording = Recording(project=project)
     recording.save()
 
-    return HttpResponse(json.dumps({'recording_id': recording.slug}))
+    return HttpResponse(json.dumps({'id': recording.slug}))
 
 
 @csrf_exempt
 @login_required
-@ratelimit(key='ip', rate='2/s', block=True)
+@ratelimit(key='ip', rate='1/s', block=True)
 def upload(request, *args, **kwargs):  # this may haunt me later on, use rtp, how to auth?
     # maybe use a custom upload handler that limits filesize
     request.upload_handlers = [TemporaryFileUploadHandler()]
@@ -86,7 +86,7 @@ def finish(request, *args, **kwargs):
 
     # find project and recording
     project = allowed[1]
-    recording = Recording.objects.filter(project=project, slug=request.POST['recording']).get()
+    recording = Recording.objects.filter(project=project, slug=kwargs['recording']).get()
 
     # get piece list
     piece_list = UploadPiece.objects.filter(recording=recording).values_list('pk', flat=True)

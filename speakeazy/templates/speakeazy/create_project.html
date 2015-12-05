@@ -1,15 +1,15 @@
 {% extends "user_base.html" %}
-{% load static %}{% load i18n %}
-{% block title %}Create Project{% endblock %}
+{% load static %}{% load i18n %}{% load crispy_forms_tags %}
+{% block title-dash %}Speakeazy - Create Project{% endblock %}
+
+{% block title %}{% endblock %}
 
 {% block content %}
     <div class="container">
 
         <h2>Create Project</h2>
 
-        <form action="" method="post">{% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Create"/>
-        </form>
+        {% csrf_token %}
+        {% crispy form %}
     </div>
 {% endblock content %}

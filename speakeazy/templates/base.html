@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Speakeazy - {% block title %}{% endblock title %}</title>
+    <title>{% block title %}Speakeazy{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -21,6 +21,7 @@
 
         <!-- This file store project specific CSS -->
         <link href="{% static 'css/project.css' %}" rel="stylesheet">
+        {% block extrascripts %}{% endblock extrascripts %}
     {% endblock %}
 
     <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>
@@ -74,34 +75,32 @@
 {#    </nav>#}
 {#</div>#}
 
-<div class="container">
-
+<div id="error-notification" class="container">
     {% if messages %}
         {% for message in messages %}
             <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
         {% endfor %}
     {% endif %}
+</div>
 
+
+<div>
     {% block content %}
     {% endblock content %}
-
 </div>
 
 {% block modal %}{% endblock modal %}
 
 {% block javascript %}
-    <!-- Latest frameworks -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
-    <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
 
     <!-- Your stuff: Third-party javascript libraries go here -->
 
     <!-- place project specific Javascript in this file -->
     <script src="{% static 'js/project.js' %}"></script>
-    {% block backbone %}{% endblock backbone %}
-
+    {% block jquery %}{% endblock jquery %}
+    {% block extraendscripts %}{% endblock extraendscripts %}
 {% endblock javascript %}
 
 </body>

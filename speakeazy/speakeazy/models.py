@@ -5,16 +5,8 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.base import Model
 from django.utils.translation import ugettext_lazy as _
+from docutils.parsers.rst.directives import choice
 from speakeazy.users.models import User
-
-ADMIN = 'a'
-GRADER = 'g'
-USER = 'u'
-ROLES = [
-    (ADMIN, 'admin'),
-    (GRADER, 'grader'),
-    (USER, 'speakeazy'),
-]
 
 UPLOADING = 'u'
 PROCESSING = 'p'
@@ -84,8 +76,9 @@ class UploadPiece(Model):
 class Group(Model):
     name = models.CharField(_("Name of group"), max_length=30)
     description = models.CharField(_("Description of group"), blank=True, max_length=255)
+    users = models.ManyToManyField(User, through='GroupMembership')
 
-    parent_group = models.ForeignKey('Group', blank=True, null=True)
+    parent_user_group = models.ForeignKey('self', blank=True, null=True)
 
     slug = AutoSlugField(populate_from='name', unique=True)
 
@@ -96,13 +89,31 @@ class Group(Model):
         return reverse('speakeazy:groups:groupDetail', kwargs={'group': self.slug})
 
 
-class GroupRole(Model):
+class GroupMembership(Model):
     group = models.ForeignKey('Group')
-    role = models.CharField(max_length=1, choices=ROLES, default=USER)
     user = models.ForeignKey(User)
 
+    authorization = models.ManyToManyField('Authorization')
+
     def __str__(self):
-        return '%s - %s - %s' % (self.group, self.role, self.user)
+        return '%s - %s' % (self.group.name, self.user)
+
+
+class Authorization(Model):
+    name = models.CharField(_("Name of authorization"), max_length=30, unique=True)
+
+    group = models.ForeignKey('Group')
+    permissions = models.ManyToManyField('Permission')
+
+    def __str__(self):
+        return self.name
+
+
+class Permission(Model):
+    name = models.CharField(_("Name of permission"), max_length=30, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Submission(Model):
@@ -110,7 +121,7 @@ class Submission(Model):
     group = models.ForeignKey('Group')
 
     for_evaluation = models.BooleanField()
-    role_visibility = models.CharField(max_length=1, choices=ROLES)
+    group_visibility = models.ForeignKey('Authorization')
 
     slug = AutoSlugField(populate_from='recording.project.name', unique_with='group')
 
@@ -119,3 +130,19 @@ class Submission(Model):
 
     def get_absolute_url(self):
         return reverse('speakeazy:groups:submissionDetail', kwargs={'submission': self.slug})
+
+
+class DefaultAuthorization(Model):
+    name = models.CharField(_("Name of authorization"), max_length=30, unique=True)
+    permissions = models.ManyToManyField('Permission', related_name='+')
+
+    def __str__(self):
+        return self.name
+
+
+class DefaultGroupStructure(Model):
+    name = models.CharField(_("Name of authorization"), max_length=30, unique=True)
+    default_authorization_types = models.ManyToManyField('DefaultAuthorization')
+
+    def __str__(self):
+        return self.name
