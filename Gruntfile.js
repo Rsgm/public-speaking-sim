@@ -112,6 +112,9 @@ module.exports = function (grunt) {
       runDjango: {
         cmd: 'python <%= paths.manageScript %> runserver'
       },
+      runCelery: {
+        cmd: 'celery -A speakeazy.taskapp worker -l info'
+      },
       runMailHog: {
         cmd: './mailhog'
       },
@@ -121,6 +124,7 @@ module.exports = function (grunt) {
   grunt.registerTask('serve', [
     'bgShell:runMailHog',
     'bgShell:runDjango',
+    'bgShell:runCelery',
     'watch'
   ]);
 

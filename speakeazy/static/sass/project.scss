@@ -49,3 +49,15 @@ $red: #b94a48;
 [hidden][style="display: block;"] {
   display: block !important;
 }
+
+noscript {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #85de97;
+  color: #217a30;
+  font-weight: bold;
+  text-align: center;
+  padding: 4px;
+}

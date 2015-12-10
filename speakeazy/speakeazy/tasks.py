@@ -1,6 +1,6 @@
 import os
 import subprocess
-from json import load
+from json import loads
 from pathlib import Path
 import base64
 from celery.app import shared_task
@@ -15,32 +15,34 @@ def convert_media(piece_id):
     encoded_audio_path = Path('%s/%s.b64' % (settings.RECORDING_PATHS['AUDIO_PIECES'], piece_id)).absolute()
 
     video_path = Path('%s/%s.webm' % (settings.RECORDING_PATHS['VIDEO_PIECES'], piece_id)).absolute()
-    audio_path = Path('%s/%s.webm' % (settings.RECORDING_PATHS['AUDIO_PIECES'], piece_id)).absolute()
+    audio_path = Path('%s/%s.wav' % (settings.RECORDING_PATHS['AUDIO_PIECES'], piece_id)).absolute()
 
     # decode video data from base64
     try:
-        with (encoded_video_path.open(mode='rb'), video_path.open(mode='wb')) as (encoded_video, video):
-            base64.decode(encoded_video, video)
+        with encoded_video_path.open(mode='rb') as encoded_video:
+            with video_path.open(mode='wb') as video:
+                base64.decode(encoded_video, video)
     except OSError:
         print('No video data: %s' % encoded_video_path)
         video_path = None
 
     # decode audio data from base64
     try:
-        with (encoded_audio_path.open(mode='rb'), audio_path.open(mode='wb'))as (encoded_audio, audio):
-            base64.decode(encoded_audio, audio)
+        with encoded_audio_path.open(mode='rb') as encoded_audio:
+            with audio_path.open(mode='wb')as audio:
+                base64.decode(encoded_audio, audio)
     except OSError:
         print('No audio data: %s' % encoded_audio_path)
         audio_path = None
 
     combined = False
 
-    if video_path and not video_path:
-        output = subprocess.check_output(
-            'ffprobe -i %s -v quiet -print_format json -show_format -show_streams' % video_path)
-        map = load(output)
+    if video_path and not audio_path:
+        command = 'ffprobe -i %s -v quiet -print_format json -show_format -show_streams' % video_path
+        output = subprocess.check_output(command.split())
+        m = loads(output.decode("utf-8"))  # map
 
-        for stream in map['streams']:
+        for stream in m['streams']:
             if stream['codec_type'] == 'audio':
                 combined = True
                 break
@@ -50,31 +52,31 @@ def convert_media(piece_id):
     # I suppose we will leave these as cpu-used 2, I may downgrade this later if it takes too long
     if combined:
         command = 'ffmpeg -loglevel quiet -i %s ' \
-                  '-c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a \"asetpts=N/SR/TB\" %s' \
+                  '-c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
                   % (video_path, converted_path)
     elif video_path and audio_path:
         command = 'ffmpeg -loglevel quiet -i %s -i %s ' \
-                  '-map 0 -map 1 -c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a \"asetpts=N/SR/TB\" %s' \
+                  '-map 0 -map 1 -c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
                   % (video_path, audio_path, converted_path)
     elif video_path:
-        command = 'ffmpeg -loglevel quiet -i %s -c:v libvpx -cpu-used 2  %s' % (video_path, converted_path)
+        command = 'ffmpeg -loglevel quiet -i %s video_path -c:v libvpx -cpu-used 2' % converted_path
     elif audio_path:
-        command = 'ffmpeg -loglevel quiet -i %s -c:a libvorbis -filter:a \"asetpts=N/SR/TB\" %s' \
+        command = 'ffmpeg -loglevel quiet -i %s -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
                   % (audio_path, converted_path)
     else:
         command = 'Echo Error - No video or audio'
 
     # run command
     print(command)
-    subprocess.call(command)
+    subprocess.call(command.split())
 
     # clean up files
     if audio_path:
-        os.remove(encoded_audio_path)
-        os.remove(audio_path)
+        os.remove(str(encoded_audio_path))
+        os.remove(str(audio_path))
     if video_path:
-        os.remove(encoded_video_path)
-        os.remove(video_path)
+        os.remove(str(encoded_video_path))
+        os.remove(str(video_path))
 
 
 @shared_task
@@ -83,7 +85,7 @@ def concatenate_media(recording_id, piece_list):
         return
 
     list_path = Path('%s/%s.txt' % (settings.RECORDING_PATHS['LISTS'], recording_id)).absolute()
-    finished_path = Path('%s/%s.txt' % (settings.RECORDING_PATHS['FINISHED'], recording_id)).absolute()
+    finished_path = Path('%s/%s.webm' % (settings.RECORDING_PATHS['FINISHED'], recording_id)).absolute()
 
     # fill list with piece paths
     with list_path.open(mode='w') as list:
@@ -91,7 +93,9 @@ def concatenate_media(recording_id, piece_list):
             print('file \'%s/%s.webm\'' % (settings.RECORDING_PATHS['CONVERTED_PIECES'], i), file=list)
 
     # concat pieces
-    subprocess.call('ffmpeg -loglevel quiet -f concat -i %s -c copy %s' % (str(list_path), str(finished_path)))
+    command = 'ffmpeg -loglevel quiet -f concat -i %s -c copy %s' % (str(list_path), str(finished_path))
+    print(command)
+    subprocess.call(command.split())
 
     # create thumbnail
     # todo: make video and image
@@ -108,6 +112,6 @@ def concatenate_media(recording_id, piece_list):
 
     # clean up scripts and converted pieces
     os.remove(str(list_path))
-    os.remove(str(finished_path))
+    # os.remove(str(finished_path))
     for i in piece_list:
         os.remove('%s/%s.webm' % (settings.RECORDING_PATHS['CONVERTED_PIECES'], i))

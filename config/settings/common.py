@@ -259,6 +259,7 @@ RECORDING_PATHS = {
     'VIDEO_PIECES': RECORDING_ROOT_PATH.path('video_pieces'),
     'AUDIO_PIECES': RECORDING_ROOT_PATH.path('audio_pieces'),
     'CONVERTED_PIECES': RECORDING_ROOT_PATH.path('converted_pieces'),
+    'LISTS': RECORDING_ROOT_PATH.path('lists'),
     'SCRIPTS': RECORDING_ROOT_PATH.path('scripts'),
     'FINISHED': RECORDING_ROOT_PATH.path('finished'),
 }

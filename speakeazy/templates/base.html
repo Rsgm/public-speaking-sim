@@ -91,16 +91,21 @@
 
 {% block modal %}{% endblock modal %}
 
+<noscript>
+    <div id="noscript">Speakeazy works best with JavaScript enabled</div>
+</noscript>
+
 {% block javascript %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
 
     <!-- Your stuff: Third-party javascript libraries go here -->
+    {% block extra_js_libraries %}{% endblock extra_js_libraries %}
 
     <!-- place project specific Javascript in this file -->
     <script src="{% static 'js/project.js' %}"></script>
     {% block jquery %}{% endblock jquery %}
-    {% block extraendscripts %}{% endblock extraendscripts %}
+    {% block extra_end_scripts %}{% endblock extra_end_scripts %}
 {% endblock javascript %}
 
 </body>

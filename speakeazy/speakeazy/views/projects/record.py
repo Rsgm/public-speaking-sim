@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from ratelimit.decorators import ratelimit
@@ -33,7 +34,7 @@ def start(request, *args, **kwargs):
     recording = Recording(project=project)
     recording.save()
 
-    return HttpResponse(json.dumps({'id': recording.slug}))
+    return JsonResponse({'id': recording.slug})
 
 
 @csrf_exempt
@@ -55,7 +56,7 @@ def _upload(request, *args, **kwargs):
 
     # find project and recording
     project = allowed[1]
-    recording = Recording.objects.filter(project=project, slug=request.POST['recording']).get()
+    recording = Recording.objects.filter(project=project, slug=kwargs['recording']).get()
 
     # create object to keep the id
     piece = UploadPiece(recording=recording)

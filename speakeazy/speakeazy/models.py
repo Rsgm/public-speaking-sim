@@ -40,13 +40,10 @@ class Recording(Model):
     project = models.ForeignKey('Project', editable=False)
 
     state = models.CharField(max_length=1, choices=STATE_CHOICES, default=UPLOADING)
-    finish_time = models.DateTimeField()
+    finish_time = models.DateTimeField(null=True)
     start_time = models.DateTimeField(auto_now_add=True)
 
     slug = AutoSlugField(unique_with='project')
-
-    def __str__(self):
-        return self.name
 
     def get_absolute_url(self):
         return reverse('speakeazy:projects:recordingDetail', kwargs={'recording': self.slug})

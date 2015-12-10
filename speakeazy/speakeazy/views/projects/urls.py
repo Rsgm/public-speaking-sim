@@ -25,21 +25,21 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^(?P<project>\S+)/record/(?P<recording>\S+)/start/$',
+        regex=r'^(?P<project>\S+)/record/start/$',
         view=start,
         name='recordStart'
     ),
 
     url(
-        regex=r'^(?P<project>\S+)/record/upload/$',
+        regex=r'^(?P<project>\S+)/record/(?P<recording>\S+)/upload/$',
         view=upload,
         name='recordUpload'
     ),
 
     url(
-        regex=r'^(?P<project>\S+)/record/finish/$',
+        regex=r'^(?P<project>\S+)/record/(?P<recording>\S+)/finish/$',
         view=finish,
-        name='record'
+        name='recordFinish'
     ),
 
     # url(
