@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-from django.conf import settings
 import autoslug.fields
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
@@ -16,49 +16,49 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Audience',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=60, verbose_name='Name of audience')),
-                ('description', models.CharField(blank=True, max_length=255, verbose_name='Description of project')),
-                ('user_created', models.BooleanField()),
-                ('slug', autoslug.fields.AutoSlugField(editable=False, populate_from='name', unique=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('name', models.CharField(verbose_name='Name of audience', max_length=60)),
+                ('description', models.CharField(verbose_name='Description of project', blank=True, max_length=255)),
+                ('file', models.FileField(upload_to='audience')),
+                ('slug', autoslug.fields.AutoSlugField(populate_from='name', unique=True, editable=False)),
             ],
         ),
         migrations.CreateModel(
             name='Authorization',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=30, unique=True, verbose_name='Name of authorization')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('name', models.CharField(unique=True, verbose_name='Name of authorization', max_length=30)),
             ],
         ),
         migrations.CreateModel(
             name='DefaultAuthorization',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=30, unique=True, verbose_name='Name of authorization')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('name', models.CharField(unique=True, verbose_name='Name of authorization', max_length=30)),
             ],
         ),
         migrations.CreateModel(
             name='DefaultGroupStructure',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=30, unique=True, verbose_name='Name of authorization')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('name', models.CharField(unique=True, verbose_name='Name of authorization', max_length=30)),
                 ('default_authorization_types', models.ManyToManyField(to='speakeazy.DefaultAuthorization')),
             ],
         ),
         migrations.CreateModel(
             name='Group',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=30, verbose_name='Name of group')),
-                ('description', models.CharField(blank=True, max_length=255, verbose_name='Description of group')),
-                ('slug', autoslug.fields.AutoSlugField(editable=False, populate_from='name', unique=True)),
-                ('parent_user_group', models.ForeignKey(to='speakeazy.Group', null=True, blank=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('name', models.CharField(verbose_name='Name of group', max_length=30)),
+                ('description', models.CharField(verbose_name='Description of group', blank=True, max_length=255)),
+                ('slug', autoslug.fields.AutoSlugField(populate_from='name', unique=True, editable=False)),
+                ('parent_user_group', models.ForeignKey(null=True, blank=True, to='speakeazy.Group')),
             ],
         ),
         migrations.CreateModel(
             name='GroupMembership',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('authorization', models.ManyToManyField(to='speakeazy.Authorization')),
                 ('group', models.ForeignKey(to='speakeazy.Group')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
@@ -67,19 +67,19 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Permission',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=30, unique=True, verbose_name='Name of permission')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('name', models.CharField(unique=True, verbose_name='Name of permission', max_length=30)),
             ],
         ),
         migrations.CreateModel(
             name='Project',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=30, verbose_name='Name of project')),
-                ('description', models.CharField(blank=True, max_length=255, verbose_name='Description of project')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('name', models.CharField(verbose_name='Name of project', max_length=30)),
+                ('description', models.CharField(verbose_name='Description of project', blank=True, max_length=255)),
                 ('created_time', models.DateTimeField(auto_now_add=True)),
                 ('due_date', models.DateField()),
-                ('slug', autoslug.fields.AutoSlugField(editable=False, unique_with=('user',), populate_from='name')),
+                ('slug', autoslug.fields.AutoSlugField(populate_from='name', unique_with=('user',), editable=False)),
                 ('audience', models.ForeignKey(editable=False, to='speakeazy.Audience')),
                 ('user', models.ForeignKey(editable=False, to=settings.AUTH_USER_MODEL)),
             ],
@@ -87,10 +87,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Recording',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
-                ('state', models.CharField(max_length=1, default='u', choices=[('u', 'uploading'), ('p', 'processing'), ('r', 'finished')])),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('state', models.CharField(choices=[('u', 'uploading'), ('p', 'processing'), ('r', 'finished')], max_length=1, default='u')),
                 ('finish_time', models.DateTimeField(null=True)),
                 ('start_time', models.DateTimeField(auto_now_add=True)),
+                ('video', models.FileField(upload_to='recordings')),
+                ('thumbnail_image', models.FileField(upload_to='thumbnails')),
+                ('thumbnail_video', models.FileField(upload_to='thumbnails')),
                 ('slug', autoslug.fields.AutoSlugField(unique_with=('project',))),
                 ('project', models.ForeignKey(editable=False, to='speakeazy.Project')),
             ],
@@ -98,9 +101,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Submission',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('for_evaluation', models.BooleanField()),
-                ('slug', autoslug.fields.AutoSlugField(editable=False, unique_with=('group',), populate_from='recording.project.name')),
+                ('slug', autoslug.fields.AutoSlugField(populate_from='recording.project.name', unique_with=('group',), editable=False)),
                 ('group', models.ForeignKey(to='speakeazy.Group')),
                 ('group_visibility', models.ForeignKey(to='speakeazy.Authorization')),
                 ('recording', models.ForeignKey(to='speakeazy.Recording')),
@@ -109,7 +112,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UploadPiece',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('time', models.DateTimeField(auto_now_add=True)),
                 ('recording', models.ForeignKey(to='speakeazy.Recording')),
             ],
@@ -122,7 +125,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='defaultauthorization',
             name='permissions',
-            field=models.ManyToManyField(related_name='_defaultauthorization_permissions_+', to='speakeazy.Permission'),
+            field=models.ManyToManyField(to='speakeazy.Permission', related_name='_defaultauthorization_permissions_+'),
         ),
         migrations.AddField(
             model_name='authorization',

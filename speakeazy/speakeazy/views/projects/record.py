@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-import json
-from datetime import datetime
+
 from braces.views import LoginRequiredMixin
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
-from django.core.urlresolvers import reverse
-from django.http.response import HttpResponse
 from django.http import JsonResponse
-from django.shortcuts import redirect
+from django.http.response import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from ratelimit.decorators import ratelimit
 from speakeazy.speakeazy import models
@@ -21,14 +19,15 @@ from vanilla.views import TemplateView
 class Record(LoginRequiredMixin, TemplateView):
     template_name = 'speakeazy/projects/record.html'
 
+    def get(self, request, *args, **kwargs):
+        get_object_or_404(Project, slug=kwargs['project'])
+        context = self.get_context_data()
+        return self.render_to_response(context)
+
 
 @login_required
 def start(request, *args, **kwargs):
-    allowed = auth(request, kwargs['project'])
-    if not allowed[0]:
-        return allowed[1]
-
-    project = allowed[1]
+    project = get_object_or_404(Project, user=request.user, slug=kwargs['project'])
 
     # create recording
     recording = Recording(project=project)
@@ -39,7 +38,7 @@ def start(request, *args, **kwargs):
 
 @csrf_exempt
 @login_required
-@ratelimit(key='ip', rate='1/s', block=True)
+@ratelimit(key='ip', rate='2/s', block=True)
 def upload(request, *args, **kwargs):  # this may haunt me later on, use rtp, how to auth?
     # maybe use a custom upload handler that limits filesize
     request.upload_handlers = [TemporaryFileUploadHandler()]
@@ -48,15 +47,12 @@ def upload(request, *args, **kwargs):  # this may haunt me later on, use rtp, ho
 
 @csrf_protect
 def _upload(request, *args, **kwargs):
-    allowed = auth(request, kwargs['project'])
-    if not allowed[0]:
-        return allowed[1]
-
-    # todo: test for bad requests
+    # todo: test for bad requests, is it even needed?
 
     # find project and recording
-    project = allowed[1]
-    recording = Recording.objects.filter(project=project, slug=kwargs['recording']).get()
+    project = get_object_or_404(Project, user=request.user, slug=kwargs['project'])
+    recording = get_object_or_404(Recording, project=project, slug=kwargs['recording'],
+                                  state=models.UPLOADING)
 
     # create object to keep the id
     piece = UploadPiece(recording=recording)
@@ -81,13 +77,9 @@ def _upload(request, *args, **kwargs):
 
 @login_required
 def finish(request, *args, **kwargs):
-    allowed = auth(request, kwargs['project'])
-    if not allowed[0]:
-        return allowed[1]
-
-    # find project and recording
-    project = allowed[1]
-    recording = Recording.objects.filter(project=project, slug=kwargs['recording']).get()
+    project = get_object_or_404(Project, user=request.user, slug=kwargs['project'])
+    recording = get_object_or_404(Recording, project=project, slug=kwargs['recording'],
+                                  state=models.UPLOADING)
 
     # get piece list
     piece_list = UploadPiece.objects.filter(recording=recording).values_list('pk', flat=True)
@@ -95,22 +87,4 @@ def finish(request, *args, **kwargs):
     # run concat task
     concatenate_media.delay(recording.id, piece_list)
 
-    # update recording
-    recording.finish_time = datetime.now()
-    recording.state = models.FINISHED
-    recording.save()
-
     return HttpResponse()
-
-
-# Authenticate a user
-def auth(request, project_slug):
-    # find project
-    project = Project.objects.filter(user=request.user, slug=project_slug).get()
-
-    # if no project exists, return a redirect
-    if not project:
-        return False, redirect(reverse('speakeazy:projects:projectList'))
-
-    # return the project
-    return True, project

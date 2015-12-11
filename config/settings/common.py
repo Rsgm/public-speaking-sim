@@ -260,6 +260,8 @@ RECORDING_PATHS = {
     'AUDIO_PIECES': RECORDING_ROOT_PATH.path('audio_pieces'),
     'CONVERTED_PIECES': RECORDING_ROOT_PATH.path('converted_pieces'),
     'LISTS': RECORDING_ROOT_PATH.path('lists'),
-    'SCRIPTS': RECORDING_ROOT_PATH.path('scripts'),
-    'FINISHED': RECORDING_ROOT_PATH.path('finished'),
+    'THUMBNAILS': RECORDING_ROOT_PATH.path('thumbnails'),
+    'FINISHED': RECORDING_ROOT_PATH.path('finished')
 }
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'

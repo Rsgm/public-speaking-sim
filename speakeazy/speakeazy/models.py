@@ -9,7 +9,7 @@ from docutils.parsers.rst.directives import choice
 from speakeazy.users.models import User
 
 UPLOADING = 'u'
-PROCESSING = 'p'
+PROCESSING = 'p'  # may not be needed
 FINISHED = 'r'
 STATE_CHOICES = [
     (UPLOADING, 'uploading'),
@@ -43,6 +43,10 @@ class Recording(Model):
     finish_time = models.DateTimeField(null=True)
     start_time = models.DateTimeField(auto_now_add=True)
 
+    video = models.FileField(upload_to='recordings')
+    thumbnail_image = models.FileField(upload_to='thumbnails')
+    thumbnail_video = models.FileField(upload_to='thumbnails')
+
     slug = AutoSlugField(unique_with='project')
 
     def get_absolute_url(self):
@@ -53,7 +57,7 @@ class Audience(Model):
     name = models.CharField(_("Name of audience"), max_length=60)
     description = models.CharField(_("Description of project"), blank=True, max_length=255)
 
-    user_created = models.BooleanField()
+    file = models.FileField(upload_to='audience')
     group = models.ForeignKey('Group')
 
     slug = AutoSlugField(populate_from='name', unique=True)
@@ -67,7 +71,7 @@ class UploadPiece(Model):
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class Group(Model):
