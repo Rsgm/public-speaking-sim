@@ -35,6 +35,13 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js']
       },
+      concat: {
+        files: ['<%= paths.sass %>/**/*.{scss,sass}'],
+        tasks: ['concat:dev'],
+        options: {
+          atBegin: true
+        }
+      },
       sass: {
         files: ['<%= paths.sass %>/**/*.{scss,sass}'],
         tasks: ['sass:dev'],
@@ -51,9 +58,22 @@ module.exports = function (grunt) {
         options: {
           spawn: false,
           livereload: true,
-        },
-      },
+        }
+      }
     },
+
+    concat: {
+       dev: {
+         options: {
+           separator: ';\n'
+         },
+         src: [
+           '<%= paths.sass %>/*.scss',
+           '!<%= paths.sass %>/build.scss'
+         ],
+         dest: '<%= paths.sass %>/build.scss'
+       }
+     },
 
     // see: https://github.com/sindresorhus/grunt-sass
     sass: {
@@ -64,8 +84,8 @@ module.exports = function (grunt) {
               precision: 10
           },
           files: {
-              '<%= paths.css %>/project.css': '<%= paths.sass %>/project.scss'
-          },
+              '<%= paths.css %>/build.css': '<%= paths.sass %>/build.scss'
+          }
       },
       dist: {
           options: {
@@ -74,8 +94,8 @@ module.exports = function (grunt) {
               precision: 10
           },
           files: {
-              '<%= paths.css %>/project.css': '<%= paths.sass %>/project.scss'
-          },
+              '<%= paths.css %>/build.css': '<%= paths.sass %>/build.scss'
+          }
       }
     },
 
@@ -117,7 +137,7 @@ module.exports = function (grunt) {
       },
       runMailHog: {
         cmd: './mailhog'
-      },
+      }
     }
   });
 

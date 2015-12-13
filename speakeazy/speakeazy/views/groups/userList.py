@@ -9,7 +9,7 @@ from vanilla.model_views import DetailView
 
 class UserList(LoginRequiredMixin, ListView):
     model = Project
-    template_name = 'speakeazy/projects/project_detail.html'
+    template_name = 'speakeazy/projects/project_view.html'
 
     # These next two lines tell the view to index lookups by project
     slug_field = "project"

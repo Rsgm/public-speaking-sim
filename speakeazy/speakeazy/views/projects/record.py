@@ -30,7 +30,8 @@ def start(request, *args, **kwargs):
     project = get_object_or_404(Project, user=request.user, slug=kwargs['project'])
 
     # create recording
-    recording = Recording(project=project)
+    slug = 1 + Recording.objects.filter(project=project).count()
+    recording = Recording(project=project, slug=slug)
     recording.save()
 
     return JsonResponse({'id': recording.slug})

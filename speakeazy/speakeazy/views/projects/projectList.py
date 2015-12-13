@@ -11,6 +11,4 @@ class ProjectList(LoginRequiredMixin, ListView):
     template_name = 'speakeazy/projects/project_list.html'
 
     def get_queryset(self):
-        set = super(ProjectList, self).get_queryset()
-        set.filter()
-        return set
+        return Project.objects.filter(user=self.request.user).order_by('-due_date')

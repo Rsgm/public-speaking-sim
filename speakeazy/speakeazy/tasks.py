@@ -118,7 +118,7 @@ def concatenate_media(recording_id, piece_list):
         offset_time = timedelta(seconds=offset * (i + 1))
         path = Path('%s/%s-%s.png' % (settings.RECORDING_PATHS['THUMBNAILS'], recording_id, i)).absolute()
         thumbnail_image_paths.append(path)
-        command = 'ffmpeg -v quiet -i %s -ss %s -vframes 1 %s' % (finished_path, offset_time, path)
+        command = 'ffmpeg -v quiet -i %s -vf scale=150:-1 -ss %s -vframes 1 %s' % (finished_path, offset_time, path)
         print(command)
         subprocess.call(command.split())
 

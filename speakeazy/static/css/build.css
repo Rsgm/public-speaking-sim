@@ -31,3 +31,7 @@ noscript {
   font-weight: bold;
   text-align: center;
   padding: 4px; }
+
+.s-list .s-list-add {
+  border: #47b347 dashed;
+  border-radius: 4px; }

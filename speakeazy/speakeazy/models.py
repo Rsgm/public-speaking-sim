@@ -33,7 +33,7 @@ class Project(Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('speakeazy:projects:projectDetail', kwargs={'project': self.slug})
+        return reverse('speakeazy:projects:projectView', kwargs={'project': self.slug})
 
 
 class Recording(Model):
@@ -47,17 +47,20 @@ class Recording(Model):
     thumbnail_image = models.FileField(upload_to='thumbnails')
     thumbnail_video = models.FileField(upload_to='thumbnails')
 
-    slug = AutoSlugField(unique_with='project')
+    slug = models.IntegerField()
+
+    def __str__(self):
+        return '%s - %s' % (self.project, self.slug)
 
     def get_absolute_url(self):
-        return reverse('speakeazy:projects:recordingDetail', kwargs={'recording': self.slug})
+        return reverse('speakeazy:projects:recordingView', kwargs={'recording': self.slug})
 
 
 class Audience(Model):
     name = models.CharField(_("Name of audience"), max_length=60)
     description = models.CharField(_("Description of project"), blank=True, max_length=255)
 
-    file = models.FileField(upload_to='audience')
+    file = models.FileField(upload_to='audience')  # ensure file name uniqueness
     group = models.ForeignKey('Group')
 
     slug = AutoSlugField(populate_from='name', unique=True)
