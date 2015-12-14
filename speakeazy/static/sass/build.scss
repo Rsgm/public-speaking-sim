@@ -61,15 +61,228 @@ noscript {
   text-align: center;
   padding: 4px;
 }
-;
+
+html, body {
+  background: hsl(26, 30%, 95%);
+  height: 100%;
+};
+$green: #47b347;
+
+$border: hsl(120, 15%, 50%);
+$highlight: hsl(120, 15%, 95%);
+
+// custom list
 .s-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start; //space-around; //center;
+  //align-items: flex-start; //center;
+  align-content: flex-start; //center;
 
   .s-list-item {
+    border: 1px solid $border;
+    border-radius: 4px;
 
+    width: 160px;
+
+    margin-right: 20px;
+    margin-bottom: 30px;
+
+    color: black;
+    text-align: center;
+
+    .s-list-item-heading {
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+
+    &:hover {
+      background: $highlight;
+      color: black;
+      text-decoration: none;
+      outline: none;
+    }
+
+    &:active, &:focus {
+      background: $highlight;
+      color: black;
+      text-decoration: none;
+      outline: none;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   .s-list-add {
-    border: #47b347 dashed;
-    border-radius: 4px;
+    border: 1px dashed $border;
+    padding: 8px;
+
+    color: $border;
+    font-size: x-large;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      color: $border;
+    }
+
+    &:active, &:focus {
+      color: $border;
+    }
+  }
+}
+
+// flip recordings on the y axis to mirror the user
+.s-recording {
+  transform: rotateY(180deg);
+}
+
+.s-title {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+};
+$description: hsl(120, 0, 60%);
+
+$section-background: hsl(120, 35%, 85%);
+$section-shadow: hsl(26, 10%, 70%);
+$section-title-shadow: hsl(120, 25%, 80%);
+
+#home {
+
+  .home-section {
+    background: white;
+    box-shadow: 0 0 2px $section-shadow;
+
+    padding-bottom: 0;
+    margin: 5px 0;
+
+    .home-section-link {
+      background: $section-background;
+      box-shadow: 0 4px 2px -2px $section-title-shadow;
+
+      display: block;
+      margin-bottom: 20px;
+
+      .home-section-title {
+        color: black;
+        padding: 10px;
+        margin-bottom: 0;
+        margin-left: 30px;
+      }
+    }
+
+    .s-list {
+      padding: 30px 40px;
+      justify-content: space-around;
+
+      .s-list-item {
+        display: flex;
+        flex-direction: column;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        .item-info {
+          flex-grow: 1;
+
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .project-description {
+            margin: 5px;
+            text-align: start;
+            text-indent: 10px;
+
+            color: $description;
+          }
+
+          .project-recording-count {
+            color: $description;
+          }
+        }
+      }
+    }
+  }
+}
+;
+$description: hsl(120, 0, 60%);
+
+#project-list {
+
+  .s-list-item {
+    display: flex;
+    flex-direction: column;
+
+    .project-info {
+      flex-grow: 1;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .project-description {
+        margin: 5px;
+        text-align: start;
+        text-indent: 10px;
+
+        color: $description;
+      }
+
+      .recording-count {
+        color: $description;
+      }
+    }
+  }
+}
+;
+$background: hsl(120, 60%, 70%);
+//$link: hsl(120, 40%, 45%);
+$text: hsl(120, 5%, 50%);
+
+#user-base-background {
+  height: 100%;
+}
+
+#user-base {
+  #action-bar {
+    background: white;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 15px;
+
+    a {
+      padding: 10px 15px 10px 15px;
+
+      &:hover {
+        background: $background;
+        text-decoration: none;
+        outline: none;
+      }
+
+      &:active, &:focus {
+        background: $background;
+        text-decoration: none;
+        outline: none;
+      }
+    }
+  }
+
+  .breadcrumb {
+    background: $background;
+    border-radius: 0;
+    padding: 30px;
+    font-size: 24px;
+    margin: 0;
+
+    li.active, *::before {
+      color: $text;
+    }
   }
 }

@@ -43,6 +43,8 @@ class Recording(Model):
     finish_time = models.DateTimeField(null=True)
     start_time = models.DateTimeField(auto_now_add=True)
 
+    duration = models.IntegerField()
+
     video = models.FileField(upload_to='recordings')
     thumbnail_image = models.FileField(upload_to='thumbnails')
     thumbnail_video = models.FileField(upload_to='thumbnails')

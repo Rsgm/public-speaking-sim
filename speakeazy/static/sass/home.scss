@@ -1,0 +1,65 @@
+$description: hsl(120, 0, 60%);
+
+$section-background: hsl(120, 35%, 85%);
+$section-shadow: hsl(26, 10%, 70%);
+$section-title-shadow: hsl(120, 25%, 80%);
+
+#home {
+
+  .home-section {
+    background: white;
+    box-shadow: 0 0 2px $section-shadow;
+
+    padding-bottom: 0;
+    margin: 5px 0;
+
+    .home-section-link {
+      background: $section-background;
+      box-shadow: 0 4px 2px -2px $section-title-shadow;
+
+      display: block;
+      margin-bottom: 20px;
+
+      .home-section-title {
+        color: black;
+        padding: 10px;
+        margin-bottom: 0;
+        margin-left: 30px;
+      }
+    }
+
+    .s-list {
+      padding: 30px 40px;
+      justify-content: space-around;
+
+      .s-list-item {
+        display: flex;
+        flex-direction: column;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        .item-info {
+          flex-grow: 1;
+
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .project-description {
+            margin: 5px;
+            text-align: start;
+            text-indent: 10px;
+
+            color: $description;
+          }
+
+          .project-recording-count {
+            color: $description;
+          }
+        }
+      }
+    }
+  }
+}

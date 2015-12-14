@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}Speakeazy{% endblock title %}</title>
+    <title>{% block base_title %}Speakeazy{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -16,15 +16,14 @@
     {% block css %}
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
         <!-- Your stuff: Third-party css libraries go here -->
 
         <!-- This file store project specific CSS -->
-        <link href="{% static 'css/project.css' %}" rel="stylesheet">
-        {% block extrascripts %}{% endblock extrascripts %}
+        <link href="{% static 'css/build.css' %}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>
     {% endblock %}
-
-    <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>
 </head>
 
 <body>
@@ -84,10 +83,7 @@
 </div>
 
 
-<div>
-    {% block content %}
-    {% endblock content %}
-</div>
+{% block content %}{% endblock content %}
 
 {% block modal %}{% endblock modal %}
 

@@ -2,21 +2,25 @@
 {% load static %}{% load i18n %}
 {% block title %}Projects{% endblock %}
 
-{% block content %}
-    <div class="container">
+{% block s_content %}
+    <div id="project-list" class="container">
 
-        <h2>projects</h2>
+        <h2 class="s-title">Projects</h2>
 
-        <div class="list-group">
+        <div class="s-list">
             {% for project in project_list %}
-                <a href="{% url 'speakeazy:projects:projectView' project.slug %}" class="list-group-item">
-                    <h4 class="list-group-item-heading">{{ project.name }}</h4>
+                <a href="{% url 'speakeazy:projects:projectView' project.slug %}" class="s-list-item">
+                    <h4 class="s-list-item-heading">{{ project.name }}</h4>
+
+                    <div class="project-info">
+                        <p class="project-description">{{ project.description }}</p>
+
+                        <div class="recording-count">{{ project.recording_set.all | length }} Recordings</div>
+                    </div>
                 </a>
             {% endfor %}
 
-            <a href="{% url 'speakeazy:newProject' %}" class="list-group-item">
-                <h4 class="list-group-item-heading">New Project</h4>
-            </a>
+            <a href="{% url 'speakeazy:newProject' %}" class="s-list-item s-list-add">+</a>
         </div>
     </div>
-{% endblock content %}
+{% endblock %}

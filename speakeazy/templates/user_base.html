@@ -1,1 +1,16 @@
 {% extends "base.html" %}
+
+{% block base_title %}Speakeazy - {% block title %}{% endblock %}{% endblock %}
+
+{% block content %}
+    <div id="user-base">
+        <div id="action-bar">
+            <a href="{% url 'speakeazy:home' %}">{{ view.request.user }}</a>
+            <a href="{% url 'account_logout' %}">Log Out</a>
+        </div>
+
+        <ol class="breadcrumb"></ol>
+    </div>
+
+    {% block s_content %}{% endblock %}
+{% endblock %}

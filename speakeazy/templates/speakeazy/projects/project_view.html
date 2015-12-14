@@ -2,24 +2,25 @@
 {% load static %}{% load i18n %}
 {% block title %}{{ project.name }}{% endblock %}
 
-{% block content %}
+{% block s_content %}
     <div class="container">
 
-        <h2>{{ project.name }}</h2>
+        <h2 class="s-title">Recordings for project {{ project.name }}</h2>
 
         <div class="s-list">
             {% for recording in recording_list %}
-                <a href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}"
-                   class="list-group-item">
-                    <img src="{{ recording.thumbnail_image.url }}">
-                    <video src="{{ recording.thumbnail_video.url }}" autoplay loop></video>
-                    <h4 class="list-group-item-heading">{{ recording.slug }}</h4>
+                <a href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}" class="s-list-item">
+                    <h4 class="s-list-item-heading">{{ recording.slug }}</h4>
+                    <video class="s-recording" src="{{ recording.thumbnail_video.url }}"
+                           poster="{{ recording.thumbnail_image.url }}" loop></video>
                 </a>
             {% endfor %}
 
-            <a href="{% url 'speakeazy:projects:record' project.slug %}" class="s-list-item s-list-add">
-                <h4 class="list-group-item-heading">New Recording</h4>
-            </a>
+            <a href="{% url 'speakeazy:projects:record' project.slug %}" class="s-list-item s-list-add">+</a>
         </div>
     </div>
-{% endblock content %}
+{% endblock %}
+
+{% block jquery %}
+    <script src="{% static 'js/project_view.js' %}"></script>
+{% endblock %}
