@@ -3,11 +3,14 @@
 {% block title %}{{ recording.slug }}{% endblock %}
 
 {% block s_content %}
-    <div class="container">
+    <div id="recording-view" class="container">
+        <div class="s-section">
 
-        <h2 class="s-title">{{ recording.slug }}</h2>
+            <h4 class="s-section-title">{{ recording.slug }}</h4>
 
-        <video src="{{ recording.video.url }}" autoplay controls></video>
-
+            <div class="s-section-content">
+                <video src="{{ recording.video.url }}" autoplay controls></video>
+            </div>
+        </div>
     </div>
 {% endblock %}

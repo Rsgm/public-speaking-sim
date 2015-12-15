@@ -4,19 +4,22 @@
 
 {% block s_content %}
     <div class="container">
+        <div class="s-section">
 
-        <h2 class="s-title">Recordings for project {{ project.name }}</h2>
+            <h4 class="s-section-title">{{ project.name }}</h4>
 
-        <div class="s-list">
-            {% for recording in recording_list %}
-                <a href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}" class="s-list-item">
-                    <h4 class="s-list-item-heading">{{ recording.slug }}</h4>
-                    <video class="s-recording" src="{{ recording.thumbnail_video.url }}"
-                           poster="{{ recording.thumbnail_image.url }}" loop></video>
-                </a>
-            {% endfor %}
+            <div class="s-list s-section-content">
+                {% for recording in recording_list %}
+                    <a href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}"
+                       class="s-list-item">
+                        <h4 class="s-list-item-heading">{{ recording.slug }}</h4>
+                        <video class="s-recording" src="{{ recording.thumbnail_video.url }}"
+                               poster="{{ recording.thumbnail_image.url }}" loop></video>
+                    </a>
+                {% endfor %}
 
-            <a href="{% url 'speakeazy:projects:record' project.slug %}" class="s-list-item s-list-add">+</a>
+                <a href="{% url 'speakeazy:projects:record' project.slug %}" class="s-list-item s-list-add fa fa-plus"></a>
+            </div>
         </div>
     </div>
 {% endblock %}

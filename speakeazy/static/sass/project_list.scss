@@ -13,16 +13,20 @@ $description: hsl(120, 0, 60%);
       flex-direction: column;
       justify-content: space-between;
 
+      color: $description;
+
       .project-description {
         margin: 5px;
         text-align: start;
         text-indent: 10px;
-
-        color: $description;
       }
 
-      .recording-count {
-        color: $description;
+      .project-bottom-info {
+        padding-top: 5px;
+
+        * {
+          padding: 2px;
+        }
       }
     }
   }

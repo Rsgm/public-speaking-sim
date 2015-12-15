@@ -4,65 +4,64 @@
 
 {% block s_content %}
     <div id="home" class="container">
-            {#        <h2>Home</h2>#}
+        {#        <h2>Home</h2>#}
 
+        <div class="s-section">
+            <a class="s-section-link" href="{% url 'speakeazy:projects:projectList' %}">
+                <h4 class="s-section-title">Upcoming Projects</h4>
+            </a>
 
-            <div class="home-section">
-                <a class="home-section-link" href="{% url 'speakeazy:projects:projectList' %}">
-                    <h4 class="home-section-title">Upcoming Projects</h4>
-                </a>
+            <div class="s-list s-section-content">
+                {% for project in project_list %}
+                    <a class="s-list-item" href="{% url 'speakeazy:projects:projectView' project.slug %}">
+                        <h4 class="s-list-item-heading">{{ project.name }}</h4>
 
-                <div class="s-list">
-                    {% for project in project_list %}
-                        <a class="s-list-item" href="{% url 'speakeazy:projects:projectView' project.slug %}">
-                            <h4 class="s-list-item-heading">{{ project.name }}</h4>
-
-                            <div class="item-info">
-                                <div class="project-due-date">Due: {{ project.due_date | date:"D, d M Y" }}</div>
-                                <div class="project-recording-count">{{ project.recording_set.all | length }}</div>
-                            </div>
-                        </a>
-                    {% endfor %}
-                </div>
-            </div>
-
-
-            <div class="home-section">
-                <div class="home-section-link">
-                    <h4 class="home-section-title">Recent Recordings</h4>
-                </div>
-
-                <div class="s-list">
-                    {% for recording in recording_list %}
-                        <a class="s-list-item">
-                            {#                       href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}">#}
-                            <h4 class="s-list-item-heading">{{ recording.project.name }} - {{ recording.slug }}</h4>
-
-                            <div class="item-info">
-                            </div>
-                        </a>
-                    {% endfor %}
-                </div>
-            </div>
-
-
-            <div class="home-section">
-                <div class="home-section-link">
-                    <h4 class="home-section-title">Groups</h4>
-                </div>
-
-                <div class="s-list">
-                    {% for recording in recording_list %}
-                        <a class="s-list-item">
-                            {#                       href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}">#}
-                            <h4 class="s-list-item-heading">{{ recording.project.name }} - {{ recording.slug }}</h4>
-
-                            <div class="item-info">
-                            </div>
-                        </a>
-                    {% endfor %}
-                </div>
+                        <div class="item-info">
+                            <div class="project-due-date">Due: {{ project.due_date | date:"D, d M Y" }}</div>
+                            <div class="project-recording-count">{{ project.recording_set.all | length }}</div>
+                        </div>
+                    </a>
+                {% endfor %}
             </div>
         </div>
+
+
+        <div class="s-section">
+            <div class="s-section-link">
+                <h4 class="s-section-title">Recent Recordings</h4>
+            </div>
+
+            <div class="s-list s-section-content">
+                {% for recording in recording_list %}
+                    <a class="s-list-item">
+                        {#                       href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}">#}
+                        <h4 class="s-list-item-heading">{{ recording.project.name }} - {{ recording.slug }}</h4>
+
+                        <div class="item-info">
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div class="s-section">
+            <div class="s-section-link">
+                <h4 class="s-section-title">Groups</h4>
+            </div>
+
+            <div class="s-list s-section-content">
+                {% for recording in recording_list %}
+                    {#                    <a class="s-list-item">#}
+                    {#                       href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}">#}
+                    {#                        <h4 class="s-list-item-heading">{{ recording.project.name }} - {{ recording.slug }}</h4>#}
+                    {##}
+                    {#                        <div class="item-info">#}
+                    {#                        </div>#}
+                    {#                    </a>#}
+                {% endfor %}
+            </div>
+        </div>
+
     </div>
 {% endblock %}

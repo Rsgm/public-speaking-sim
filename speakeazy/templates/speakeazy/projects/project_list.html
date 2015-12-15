@@ -5,22 +5,27 @@
 {% block s_content %}
     <div id="project-list" class="container">
 
-        <h2 class="s-title">Projects</h2>
+        <div class="s-section">
+            <h4 class="s-section-title">Projects</h4>
 
-        <div class="s-list">
-            {% for project in project_list %}
-                <a href="{% url 'speakeazy:projects:projectView' project.slug %}" class="s-list-item">
-                    <h4 class="s-list-item-heading">{{ project.name }}</h4>
+            <div class="s-list s-section-content">
+                {% for project in project_list %}
+                    <a href="{% url 'speakeazy:projects:projectView' project.slug %}" class="s-list-item">
+                        <h4 class="s-list-item-heading">{{ project.name }}</h4>
 
-                    <div class="project-info">
-                        <p class="project-description">{{ project.description }}</p>
+                        <div class="project-info">
+                            <p class="project-description">{{ project.description }}</p>
 
-                        <div class="recording-count">{{ project.recording_set.all | length }} Recordings</div>
-                    </div>
-                </a>
-            {% endfor %}
+                            <div class="project-bottom-info">
+                                <div>Due: {{ project.due_date | date:"Y-m-d" }}</div>
+                                <div>{{ project.recording_set.all | length }} Recordings</div>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
 
-            <a href="{% url 'speakeazy:newProject' %}" class="s-list-item s-list-add">+</a>
+                <a href="{% url 'speakeazy:newProject' %}" class="s-list-item s-list-add fa fa-plus"></a>
+            </div>
         </div>
     </div>
 {% endblock %}

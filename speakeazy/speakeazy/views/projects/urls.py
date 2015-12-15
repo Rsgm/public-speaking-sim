@@ -20,7 +20,7 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^(?P<project>[\w-]+)/(?P<recording>[\w-]+)/$',
+        regex=r'^(?P<project>[\w-]+)/(?P<recording>\d+)/$',
         view=RecordingView.as_view(),
         name='recordingView'
     ),  # since recording slugs are always numbers, it will not collide with /record or others
