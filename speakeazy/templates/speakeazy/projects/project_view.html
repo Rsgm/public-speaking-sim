@@ -13,7 +13,7 @@
                     <a href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}"
                        class="s-list-item">
                         <h4 class="s-list-item-heading">{{ recording.slug }}</h4>
-                        <video class="s-recording" src="{{ recording.thumbnail_video.url }}"
+                        <video class="s-video" src="{{ recording.thumbnail_video.url }}"
                                poster="{{ recording.thumbnail_image.url }}" loop></video>
                     </a>
                 {% endfor %}

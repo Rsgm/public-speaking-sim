@@ -2,9 +2,92 @@ $description: hsl(120, 0, 60%);
 
 #recording-view {
   .s-section-content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    //display: flex;
+    //flex-direction: row;
+    //justify-content: space-around;
+    //align-items: center;
+  }
+
+  // move this to classes
+  .s-video {
+    video {
+      width: 100%;
+    }
+
+    .s-video-controls {
+      background-color: hsl(120, 40%, 20%);
+      opacity: 0.9999999; // fixes background not showing
+      width: 100%;
+      height: 30px;
+      z-index: 2147483647;
+      color: white;
+
+      margin-top: -37px;
+      padding: 0 10px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .s-video-time {
+        font-size: 12px;
+      }
+
+      .s-video-slider {
+        background: black;
+        height: 50%;
+
+        flex-grow: 1;
+        align-self: flex-end;
+
+        cursor: pointer;
+
+        padding: 0;
+        margin: 0 10px;
+
+        .s-video-slider-position {
+          background: white;
+
+          $diameter: 10px;
+          border-radius: $diameter/2;
+          width: $diameter;
+          height: $diameter;
+
+          margin: -5px;
+        }
+
+        .s-video-slider-played {
+          background-color: #ccc;
+          top: 0;
+          left: 0;
+          width: 0;
+          height: 100%;
+        }
+
+        .s-video-slider-buffered {
+          background-color: red;
+          top: 0;
+          left: 0;
+          width: 0;
+          height: 100%;
+        }
+      }
+
+      & > * {
+        padding: 0 8px;
+        margin: 0 2px;
+      }
+
+      a {
+        color: white;
+        cursor: pointer;
+
+        &:hover, &:active, &:focus {
+          text-decoration: none;
+          outline: none;
+        }
+      }
+    }
   }
 }
+

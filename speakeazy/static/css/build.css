@@ -80,7 +80,7 @@ html, body {
     .s-list .s-list-add:active, .s-list .s-list-add:focus {
       color: #6c936c; }
 
-.s-recording {
+.s-preview {
   transform: rotateY(180deg); }
 
 .s-title {
@@ -150,11 +150,58 @@ html, body {
       #project-list .s-list-item .project-info .project-bottom-info * {
         padding: 2px; }
 
-#recording-view .s-section-content {
+#recording-view .s-video video {
+  width: 100%; }
+
+#recording-view .s-video .s-video-controls {
+  background-color: #1f471f;
+  opacity: 0.9999999;
+  width: 100%;
+  height: 30px;
+  z-index: 2147483647;
+  color: white;
+  margin-top: -37px;
+  padding: 0 10px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center; }
+  #recording-view .s-video .s-video-controls .s-video-time {
+    font-size: 12px; }
+  #recording-view .s-video .s-video-controls .s-video-slider {
+    background: black;
+    height: 50%;
+    flex-grow: 1;
+    align-self: flex-end;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 10px; }
+    #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-position {
+      background: white;
+      border-radius: 5px;
+      width: 10px;
+      height: 10px;
+      margin: -5px; }
+    #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-played {
+      background-color: #ccc;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%; }
+    #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-buffered {
+      background-color: red;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%; }
+  #recording-view .s-video .s-video-controls > * {
+    padding: 0 8px;
+    margin: 0 2px; }
+  #recording-view .s-video .s-video-controls a {
+    color: white;
+    cursor: pointer; }
+    #recording-view .s-video .s-video-controls a:hover, #recording-view .s-video .s-video-controls a:active, #recording-view .s-video .s-video-controls a:focus {
+      text-decoration: none;
+      outline: none; }
 
 #user-base-background {
   height: 100%; }

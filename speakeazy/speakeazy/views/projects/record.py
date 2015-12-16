@@ -19,10 +19,10 @@ from vanilla.views import TemplateView
 class Record(LoginRequiredMixin, TemplateView):
     template_name = 'speakeazy/projects/record.html'
 
-    def get(self, request, *args, **kwargs):
-        get_object_or_404(Project, slug=kwargs['project'])
-        context = self.get_context_data()
-        return self.render_to_response(context)
+    def get_context_data(self, **kwargs):
+        kwargs['view'] = self
+        kwargs['project'] = get_object_or_404(Project, user=self.request.user, slug=self.kwargs['project'])
+        return kwargs
 
 
 @login_required

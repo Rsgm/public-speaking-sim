@@ -23,7 +23,7 @@
 
                 <div class="row-fluid">
                     <div class="col-md-4 text-center col-md-offset-4">
-                        <video class="setup-video-new" id="setup-video" width="400" height="300"></video>
+                        <video class="setup-video-new s-preview" id="setup-video" width="400" height="300"></video>
                     </div>
 
                     <div class="col-md-2 col-md-offset-1 volume">
@@ -42,7 +42,8 @@
                     stop
                 </button>
 
-                <video class="text-center embed-responsive-item" id="audience-video" preload></video>
+                <video id="audience-video" class="embed-responsive-item" src="{{ project.audience.file.url }}"
+                       preload></video>
 
                 <!--<timer></timer>-->
             </div>
