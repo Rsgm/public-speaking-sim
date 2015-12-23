@@ -7,7 +7,7 @@
     var progress;
 
     var uploadInterval = 3000;
-    var crsf = document.getElementsByName('csrfmiddlewaretoken')[0].value; // $('csrfmiddlewaretoken').get(0);
+    var crsf = $('input[name=csrfmiddlewaretoken]').val();
 
     rec.project = window.location.pathname.split('/')[2];
 

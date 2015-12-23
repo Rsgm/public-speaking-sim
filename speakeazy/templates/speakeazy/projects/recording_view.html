@@ -3,6 +3,8 @@
 {% block title %}{{ recording.slug }}{% endblock %}
 
 {% block s_content %}
+    {% csrf_token %}
+
     <div id="recording-view" class="container">
         <div class="s-section">
 
@@ -19,12 +21,57 @@
                             <i class="fa fa-pause"></i>
                         </a>
 
-                        <div class="s-video-time"><div class="s-position"></div>/<div class="s-duration"></div></div>
+                        <div class="s-video-time">
+                            <span class="s-video-position">0:00</span>/<span class="s-video-duration"></span>
+                        </div>
 
                         <div class="s-video-slider">
-                            <div class="s-video-slider-position"></div>
-                            <div class="s-video-slider-played"></div>
-                            <div class="s-video-slider-buffered"></div>
+                            <div class="s-video-points">
+                                <div class="s-video-pointer fa fa-chevron-down"></div>
+
+                                {% for point in point_list %}
+                                    <div class="s-video-marker" data-position="{{ point.time }}">
+                                        <div class="fa fa-caret-down fa-lg"></div>
+                                        <div class="fa fa-caret-up fa-lg"></div>
+
+                                        <div class="s-video-marker-container">
+
+                                            {% for eval in point.eval_list %}
+                                                <div class="s-video-eval fa {{ eval.type.fa_class }}"
+                                                     style="background: #{{ eval.type.color }};">
+                                                    <div class="s-video-eval-menu">
+                                                        <div class="fa fa-caret-left"></div>
+                                                        <div class="fa fa-caret-right"></div>
+
+                                                        <div class="s-video-eval-content">
+                                                            {{ eval.text }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+
+                                            <div class="s-video-eval-add fa fa-plus-square-o">
+                                                <div class="s-video-eval-menu">
+                                                    <div class="fa fa-caret-left"></div>
+                                                    <div class="fa fa-caret-right"></div>
+
+                                                    <div class="s-video-eval-add-types"></div>
+
+                                                    <div class="s-video-eval-content">
+                                                        <input type="text" title="Add evaluation">
+                                                        <i class="fa fa-share-square"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+                            <div class="s-video-slider-bar">
+                                <div class="s-video-slider-played"></div>
+                                <div class="s-video-slider-buffered"></div>
+                            </div>
                         </div>
 
                         <a class="s-video-volume"><i class="fa fa-volume-up"></i></a>
@@ -34,6 +81,20 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block template_scripts %}
+    <script>
+        var evaluationTypes = [
+            {% for evaluation_type in evaluation_type_list %}
+                {
+                    'name': '{{ evaluation_type.name }}',
+                    'color': '{{ evaluation_type.color }}',
+                    'fa_class': '{{ evaluation_type.fa_class }}'
+                },
+            {% endfor %}
+        ];
+    </script>
 {% endblock %}
 
 {% block jquery %}

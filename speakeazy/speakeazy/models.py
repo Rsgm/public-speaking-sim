@@ -21,7 +21,7 @@ STATE_CHOICES = [
 class Project(Model):
     user = models.ForeignKey(User, editable=False)
     name = models.CharField(_("Name of project"), max_length=30)
-    description = models.CharField(_("Description of project"), blank=True, max_length=255)
+    description = models.TextField(_("Description of project"), null=True, blank=True)
     audience = models.ForeignKey('Audience', editable=False)
 
     created_time = models.DateTimeField(auto_now_add=True)
@@ -40,14 +40,14 @@ class Recording(Model):
     project = models.ForeignKey('Project', editable=False)
 
     state = models.CharField(max_length=1, choices=STATE_CHOICES, default=UPLOADING)
-    finish_time = models.DateTimeField(null=True)
+    finish_time = models.DateTimeField(null=True, blank=True)
     start_time = models.DateTimeField(auto_now_add=True)
 
-    duration = models.IntegerField()
+    duration = models.IntegerField(null=True, blank=True)
 
-    video = models.FileField(upload_to='recordings')
-    thumbnail_image = models.FileField(upload_to='thumbnails')
-    thumbnail_video = models.FileField(upload_to='thumbnails')
+    video = models.FileField(upload_to='recordings', null=True, blank=True)
+    thumbnail_image = models.FileField(upload_to='thumbnails', null=True, blank=True)
+    thumbnail_video = models.FileField(upload_to='thumbnails', null=True, blank=True)
 
     slug = models.IntegerField()
 
@@ -60,7 +60,7 @@ class Recording(Model):
 
 class Audience(Model):
     name = models.CharField(_("Name of audience"), max_length=60)
-    description = models.CharField(_("Description of project"), blank=True, max_length=255)
+    description = models.TextField(_("Description of project"), null=True, blank=True)
 
     file = models.FileField(upload_to='audience')  # ensure file name uniqueness
     group = models.ForeignKey('Group')
@@ -81,12 +81,14 @@ class UploadPiece(Model):
 
 class Group(Model):
     name = models.CharField(_("Name of group"), max_length=30)
-    description = models.CharField(_("Description of group"), blank=True, max_length=255)
+    description = models.TextField(_("Description of group"), null=True, blank=True)
     users = models.ManyToManyField(User, through='GroupMembership')
 
     parent_user_group = models.ForeignKey('self', blank=True, null=True)
 
     slug = AutoSlugField(populate_from='name', unique=True)
+
+    password = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -140,6 +142,7 @@ class Submission(Model):
 
 class DefaultAuthorization(Model):
     name = models.CharField(_("Name of authorization"), max_length=30, unique=True)
+    description = models.TextField(_("Description of authorization"), null=True, blank=True)
     permissions = models.ManyToManyField('Permission', related_name='+')
 
     def __str__(self):
@@ -147,8 +150,43 @@ class DefaultAuthorization(Model):
 
 
 class DefaultGroupStructure(Model):
-    name = models.CharField(_("Name of authorization"), max_length=30, unique=True)
+    name = models.CharField(_("Name of group structure"), max_length=30, unique=True)
+    description = models.TextField(_("Description of group structure"), null=True, blank=True)
     default_authorization_types = models.ManyToManyField('DefaultAuthorization')
 
     def __str__(self):
         return self.name
+
+
+class GroupInvite(Model):
+    group = models.ForeignKey('Group')
+    token = models.CharField(unique=True, max_length=20)
+
+    uses = models.IntegerField()
+    expires = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return '%s - %s' % (self.group, self.token)
+
+
+class EvaluationType(Model):
+    name = models.CharField(unique=True, max_length=30)
+    color = models.CharField(unique=True, max_length=6)
+    fa_class = models.CharField(unique=True, max_length=30)
+
+    def __str__(self):
+        return self.name
+
+
+class Evaluation(Model):
+    evaluator = models.ForeignKey(User, null=True, blank=True)
+    recording = models.ForeignKey('Recording')
+
+    type = models.ForeignKey('EvaluationType')
+    text = models.TextField()
+    seconds = models.IntegerField()
+
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '%s - %s- %s' % (self.recording, self.seconds, self.type)

@@ -1,50 +1,50 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+
 from django.conf.urls import url
 from speakeazy.speakeazy.views.projects.projectView import ProjectView
-from speakeazy.speakeazy.views.projects.projectList import ProjectList
 from speakeazy.speakeazy.views.projects.record import Record, start, upload, finish
-from speakeazy.speakeazy.views.projects.recordingView import RecordingView
+from speakeazy.speakeazy.views.projects.recordingView import RecordingView, create_evaluation
 
 urlpatterns = [
     url(
         regex=r'^$',
-        view=ProjectList.as_view(),
-        name='projectList'
-    ),
-
-    url(
-        regex=r'^(?P<project>[\w-]+)/$',
         view=ProjectView.as_view(),
         name='projectView'
     ),
 
     url(
-        regex=r'^(?P<project>[\w-]+)/(?P<recording>\d+)/$',
+        regex=r'^(?P<recording>\d+)/$',
         view=RecordingView.as_view(),
         name='recordingView'
     ),  # since recording slugs are always numbers, it will not collide with /record or others
 
     url(
-        regex=r'^(?P<project>[\w-]+)/record/$',
+        regex=r'^(?P<recording>\d+)/evaluate/$',
+        view=create_evaluation,
+        name='recordingEvaluation'
+    ),
+
+    url(
+        regex=r'^record/$',
         view=Record.as_view(),
         name='record'
     ),
 
     url(
-        regex=r'^(?P<project>[\w-]+)/record/start/$',
+        regex=r'^/record/start/$',
         view=start,
         name='recordStart'
     ),
 
     url(
-        regex=r'^(?P<project>[\w-]+)/record/(?P<recording>[\w-]+)/upload/$',
+        regex=r'^record/(?P<recording>[\w-]+)/upload/$',
         view=upload,
         name='recordUpload'
     ),
 
     url(
-        regex=r'^(?P<project>[\w-]+)/record/(?P<recording>[\w-]+)/finish/$',
+        regex=r'^record/(?P<recording>[\w-]+)/finish/$',
         view=finish,
         name='recordFinish'
     ),

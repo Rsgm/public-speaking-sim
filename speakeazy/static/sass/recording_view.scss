@@ -1,4 +1,5 @@
 $description: hsl(120, 0, 60%);
+$height: 30px;
 
 #recording-view {
   .s-section-content {
@@ -10,19 +11,26 @@ $description: hsl(120, 0, 60%);
 
   // move this to classes
   .s-video {
+    position: relative;
+
     video {
       width: 100%;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     .s-video-controls {
       background-color: hsl(120, 40%, 20%);
-      opacity: 0.9999999; // fixes background not showing
+      //opacity: 0.9999999; // fixes background not showing
+      position: absolute;
+      bottom: 5px;
       width: 100%;
-      height: 30px;
+      height: $height;
       z-index: 2147483647;
       color: white;
 
-      margin-top: -37px;
       padding: 0 10px;
 
       display: flex;
@@ -34,42 +42,157 @@ $description: hsl(120, 0, 60%);
       }
 
       .s-video-slider {
-        background: black;
-        height: 50%;
-
         flex-grow: 1;
-        align-self: flex-end;
 
-        cursor: pointer;
-
+        height: 100%;
         padding: 0;
         margin: 0 10px;
 
-        .s-video-slider-position {
-          background: white;
+        .s-video-points {
+          height: 50%;
+          position: relative;
 
-          $diameter: 10px;
-          border-radius: $diameter/2;
-          width: $diameter;
-          height: $diameter;
+          .s-video-pointer {
+            position: absolute;
+            bottom: -2px;
 
-          margin: -5px;
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: flex-start;
+            text-align: center;
+
+            cursor: default;
+          }
+
+          .s-video-marker {
+            position: absolute;
+            bottom: 0;
+
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: flex-start;
+
+            & > .fa {
+              text-align: center;
+              width: 40px;
+
+              cursor: pointer;
+            }
+
+            & > .fa-caret-down {
+              margin-bottom: -3px;
+              padding-bottom: 6px;
+            }
+
+            & > .fa-caret-up {
+              color: white;
+              margin-top: -5px;
+              margin-bottom: -9px;
+            }
+          }
+
+          .s-video-marker-container {
+            background: hsla(120, 0, 90%, 0.2);
+            border: 1px solid hsla(120, 0, 70%, 0.2);
+            color: black;
+
+            padding: 5px;
+
+            display: flex;
+            flex-flow: column-reverse;
+
+            .s-video-eval, .s-video-eval-add {
+              position: relative;
+              margin: 3px;
+              text-align: center;
+
+              background: hsl(26, 100%, 45%);
+              border-radius: 4px;
+              padding: 3px;
+
+              cursor: pointer;
+            }
+
+            .s-video-eval-menu {
+              position: absolute;
+              bottom: -8px;
+              left: 15px;
+
+              height: 40px;
+
+              padding-left: 10px;
+
+              display: flex;
+              align-items: center;
+
+              & > .fa {
+                color: white;
+                text-align: center;
+              }
+
+              & > .fa-caret-left {
+              }
+
+              & > .fa-caret-right {
+                margin-left: -1px;
+                margin-right: 5px;
+              }
+
+              .s-video-eval-content, .s-video-eval-add-types {
+                background: hsla(120, 0, 90%, 0.2);
+                border: 1px solid hsla(120, 0, 70%, 0.2);
+                padding: 5px;
+                margin-left: -5px;
+
+                color: white;
+
+                display: flex;
+
+                div {
+                  cursor: default;
+                }
+              }
+
+              .s-video-eval-add-types {
+
+                & > a {
+                  position: relative;
+                  margin: 3px;
+                  text-align: center;
+
+                  background: hsl(26, 100%, 45%);
+                  border-radius: 4px;
+                  padding: 3px;
+
+                  cursor: pointer;
+                }
+              }
+            }
+          }
         }
 
-        .s-video-slider-played {
-          background-color: #ccc;
-          top: 0;
-          left: 0;
-          width: 0;
-          height: 100%;
-        }
+        .s-video-slider-bar {
+          background: black;
+          height: 50%;
 
-        .s-video-slider-buffered {
-          background-color: red;
-          top: 0;
-          left: 0;
-          width: 0;
-          height: 100%;
+          display: flex;
+
+          cursor: pointer;
+
+          .s-video-slider-played {
+            background-color: red;
+            width: 0;
+            height: 100%;
+
+            display: flex;
+            justify-content: flex-end;
+          }
+
+          .s-video-slider-buffered {
+            background-color: hsl(0, 0, 50%);
+            width: 0;
+            height: 100%;
+          }
         }
       }
 

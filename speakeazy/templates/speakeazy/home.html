@@ -7,7 +7,7 @@
         {#        <h2>Home</h2>#}
 
         <div class="s-section">
-            <a class="s-section-link" href="{% url 'speakeazy:projects:projectList' %}">
+            <a class="s-section-link" href="{% url 'speakeazy:projectList' %}">
                 <h4 class="s-section-title">Upcoming Projects</h4>
             </a>
 
@@ -46,9 +46,9 @@
 
 
         <div class="s-section">
-            <div class="s-section-link">
+            <a class="s-section-link" href="{% url 'speakeazy:group-home' %}">
                 <h4 class="s-section-title">Groups</h4>
-            </div>
+            </a>
 
             <div class="s-list s-section-content">
                 {% for recording in recording_list %}

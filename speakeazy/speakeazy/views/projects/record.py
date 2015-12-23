@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-
 from braces.views import LoginRequiredMixin
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -50,10 +49,9 @@ def upload(request, *args, **kwargs):  # this may haunt me later on, use rtp, ho
 def _upload(request, *args, **kwargs):
     # todo: test for bad requests, is it even needed?
 
-    # find project and recording
-    project = get_object_or_404(Project, user=request.user, slug=kwargs['project'])
-    recording = get_object_or_404(Recording, project=project, slug=kwargs['recording'],
-                                  state=models.UPLOADING)
+    # find recording
+    recording = get_object_or_404(Recording, project_user=request.user, project_slug=kwargs['project'],
+                                  slug=kwargs['recording'], state=models.UPLOADING)
 
     # create object to keep the id
     piece = UploadPiece(recording=recording)
@@ -78,9 +76,8 @@ def _upload(request, *args, **kwargs):
 
 @login_required
 def finish(request, *args, **kwargs):
-    project = get_object_or_404(Project, user=request.user, slug=kwargs['project'])
-    recording = get_object_or_404(Recording, project=project, slug=kwargs['recording'],
-                                  state=models.UPLOADING)
+    recording = get_object_or_404(Recording, project_user=request.user, project_slug=kwargs['project'],
+                                  slug=kwargs['recording'], state=models.UPLOADING)
 
     # get piece list
     piece_list = UploadPiece.objects.filter(recording=recording).values_list('pk', flat=True)

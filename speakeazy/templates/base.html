@@ -1,5 +1,5 @@
 {% load staticfiles %}{% load hijack_tags %}{% load staticfiles i18n %}<!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -99,6 +99,8 @@
     {% block extra_js_libraries %}{% endblock extra_js_libraries %}
 
     <!-- place project specific Javascript in this file -->
+    {% block template_scripts %}{% endblock template_scripts %}
+
     <script src="{% static 'js/project.js' %}"></script>
     {% block jquery %}{% endblock jquery %}
     {% block extra_end_scripts %}{% endblock extra_end_scripts %}

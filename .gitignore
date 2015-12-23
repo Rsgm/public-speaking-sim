@@ -66,8 +66,10 @@ tests/.hitch
 mailhog
 
 # Recording files
-recordings/audio_pieces/*
-recordings/video_pieces/*
-recordings/converted_pieces/*
-recordings/scripts/*
-recordings/finished/*
+recordings/*/*
+!recordings/**/.gitkeep
+
+# Static files
+staticfiles/
+speakeazy/static/sass/build.scss
+speakeazy/static/css/build.css

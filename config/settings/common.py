@@ -263,5 +263,3 @@ RECORDING_PATHS = {
     'THUMBNAILS': RECORDING_ROOT_PATH.path('thumbnails'),
     'FINISHED': RECORDING_ROOT_PATH.path('finished')
 }
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'

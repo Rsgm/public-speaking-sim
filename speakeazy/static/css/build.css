@@ -150,58 +150,129 @@ html, body {
       #project-list .s-list-item .project-info .project-bottom-info * {
         padding: 2px; }
 
-#recording-view .s-video video {
-  width: 100%; }
-
-#recording-view .s-video .s-video-controls {
-  background-color: #1f471f;
-  opacity: 0.9999999;
-  width: 100%;
-  height: 30px;
-  z-index: 2147483647;
-  color: white;
-  margin-top: -37px;
-  padding: 0 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center; }
-  #recording-view .s-video .s-video-controls .s-video-time {
-    font-size: 12px; }
-  #recording-view .s-video .s-video-controls .s-video-slider {
-    background: black;
-    height: 50%;
-    flex-grow: 1;
-    align-self: flex-end;
-    cursor: pointer;
-    padding: 0;
-    margin: 0 10px; }
-    #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-position {
-      background: white;
-      border-radius: 5px;
-      width: 10px;
-      height: 10px;
-      margin: -5px; }
-    #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-played {
-      background-color: #ccc;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 100%; }
-    #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-buffered {
-      background-color: red;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 100%; }
-  #recording-view .s-video .s-video-controls > * {
-    padding: 0 8px;
-    margin: 0 2px; }
-  #recording-view .s-video .s-video-controls a {
-    color: white;
-    cursor: pointer; }
-    #recording-view .s-video .s-video-controls a:hover, #recording-view .s-video .s-video-controls a:active, #recording-view .s-video .s-video-controls a:focus {
-      text-decoration: none;
+#recording-view .s-video {
+  position: relative; }
+  #recording-view .s-video video {
+    width: 100%; }
+    #recording-view .s-video video:focus {
       outline: none; }
+  #recording-view .s-video .s-video-controls {
+    background-color: #1f471f;
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    height: 30px;
+    z-index: 2147483647;
+    color: white;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    #recording-view .s-video .s-video-controls .s-video-time {
+      font-size: 12px; }
+    #recording-view .s-video .s-video-controls .s-video-slider {
+      flex-grow: 1;
+      height: 100%;
+      padding: 0;
+      margin: 0 10px; }
+      #recording-view .s-video .s-video-controls .s-video-slider .s-video-points {
+        height: 50%;
+        position: relative; }
+        #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-pointer {
+          position: absolute;
+          bottom: -2px;
+          display: flex;
+          flex-direction: column-reverse;
+          justify-content: flex-start;
+          text-align: center;
+          cursor: default; }
+        #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker {
+          position: absolute;
+          bottom: 0;
+          display: flex;
+          flex-direction: column-reverse;
+          justify-content: flex-start; }
+          #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker > .fa {
+            text-align: center;
+            width: 40px;
+            cursor: pointer; }
+          #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker > .fa-caret-down {
+            margin-bottom: -3px;
+            padding-bottom: 6px; }
+          #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker > .fa-caret-up {
+            color: white;
+            margin-top: -5px;
+            margin-bottom: -9px; }
+        #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container {
+          background: rgba(230, 230, 230, 0.2);
+          border: 1px solid rgba(179, 179, 179, 0.2);
+          color: black;
+          padding: 5px;
+          display: flex;
+          flex-flow: column-reverse; }
+          #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval, #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-add {
+            position: relative;
+            margin: 3px;
+            text-align: center;
+            background: #e66300;
+            border-radius: 4px;
+            padding: 3px;
+            cursor: pointer; }
+          #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu {
+            position: absolute;
+            bottom: -8px;
+            left: 15px;
+            height: 40px;
+            padding-left: 10px;
+            display: flex;
+            align-items: center; }
+            #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu > .fa {
+              color: white;
+              text-align: center; }
+            #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu > .fa-caret-right {
+              margin-left: -1px;
+              margin-right: 5px; }
+            #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu .s-video-eval-content, #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu .s-video-eval-add-types {
+              background: rgba(230, 230, 230, 0.2);
+              border: 1px solid rgba(179, 179, 179, 0.2);
+              padding: 5px;
+              margin-left: -5px;
+              color: white;
+              display: flex; }
+              #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu .s-video-eval-content div, #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu .s-video-eval-add-types div {
+                cursor: default; }
+            #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu .s-video-eval-add-types > a {
+              position: relative;
+              margin: 3px;
+              text-align: center;
+              background: #e66300;
+              border-radius: 4px;
+              padding: 3px;
+              cursor: pointer; }
+      #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-bar {
+        background: black;
+        height: 50%;
+        display: flex;
+        cursor: pointer; }
+        #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-bar .s-video-slider-played {
+          background-color: red;
+          width: 0;
+          height: 100%;
+          display: flex;
+          justify-content: flex-end; }
+        #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-bar .s-video-slider-buffered {
+          background-color: gray;
+          width: 0;
+          height: 100%; }
+    #recording-view .s-video .s-video-controls > * {
+      padding: 0 8px;
+      margin: 0 2px; }
+    #recording-view .s-video .s-video-controls a {
+      color: white;
+      cursor: pointer; }
+      #recording-view .s-video .s-video-controls a:hover, #recording-view .s-video .s-video-controls a:active, #recording-view .s-video .s-video-controls a:focus {
+        text-decoration: none;
+        outline: none; }
 
 #user-base-background {
   height: 100%; }
@@ -211,13 +282,14 @@ html, body {
   display: flex;
   justify-content: flex-end;
   padding-right: 15px; }
-  #user-base #action-bar a {
+  #user-base #action-bar > * {
+    cursor: pointer;
     padding: 10px 15px 10px 15px; }
-    #user-base #action-bar a:hover {
+    #user-base #action-bar > *:hover {
       background: #85e085;
       text-decoration: none;
       outline: none; }
-    #user-base #action-bar a:active, #user-base #action-bar a:focus {
+    #user-base #action-bar > *:active, #user-base #action-bar > *:focus {
       background: #85e085;
       text-decoration: none;
       outline: none; }

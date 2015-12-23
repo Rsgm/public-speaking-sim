@@ -5,7 +5,20 @@
 {% block content %}
     <div id="user-base">
         <div id="action-bar">
-            <a href="{% url 'speakeazy:home' %}">{{ view.request.user }}</a>
+            <div class="s-dropdown">
+                <div class="s-dropdown-title">{{ view.request.user }}</div>
+                <div class="s-dropdown-content">
+                    <a href="{% url 'speakeazy:home' %}">Home</a>
+
+                    {# <a href="{% url 'speakeazy:' %}">Account</a> #}
+
+                    {% for group in group_list %}
+{#                     <a href="{% url 'speakeazy:groups:home' %}">Acc{{ group.name }}ount</a> #}
+                    {% endfor %}
+
+                    {% if user.isAdmin %}<a href="{% url 'speakeazy:home' %}">Home</a>{% endif %}
+                </div>
+            </div>
             <a href="{% url 'account_logout' %}">Log Out</a>
         </div>
 
