@@ -22,7 +22,9 @@ urlpatterns = [
                   url(r'^account/', include('allauth.urls')),
 
                   # Your stuff: custom urls includes go here
-                  url(r'^', include("speakeazy.speakeazy.urls", namespace="speakeazy")),
+                  url(r'^', include("speakeazy.groups.urls", namespace="groups")),
+                  url(r'^', include("speakeazy.projects.urls", namespace="projects")),
+                  url(r'^', include("speakeazy.recordings.urls", namespace="recordings")),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -50,7 +50,9 @@ LOCAL_APPS = (
     'speakeazy.users',  # custom users app
 
     # Your stuff: custom apps go here
-    'speakeazy.speakeazy',  # speakeazy app
+    'speakeazy.projects',
+    'speakeazy.recordings',
+    'speakeazy.groups',
 )
 
 # apps that need to be added last
