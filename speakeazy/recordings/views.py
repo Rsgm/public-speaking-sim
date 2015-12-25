@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-
 from speakeazy.projects.models import Project
 from speakeazy.recordings import models
 from speakeazy.recordings.models import Recording, UploadPiece
 from speakeazy.recordings.tasks import convert_media, concatenate_media
-
 from braces.views import LoginRequiredMixin
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -39,17 +37,9 @@ def start(request, *args, **kwargs):
     return JsonResponse({'id': recording.slug})
 
 
-@csrf_exempt
 @login_required
 @ratelimit(key='ip', rate='2/s', block=True)
-def upload(request, *args, **kwargs):  # this may haunt me later on, use rtp, how to auth?
-    # maybe use a custom upload handler that limits filesize
-    request.upload_handlers = [TemporaryFileUploadHandler()]
-    return _upload(request, *args, **kwargs)
-
-
-@csrf_protect
-def _upload(request, *args, **kwargs):
+def upload(request, *args, **kwargs):
     # todo: test for bad requests, is it even needed?
 
     # find recording
