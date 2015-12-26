@@ -9,7 +9,7 @@ from vanilla.views import FormView
 
 
 class NewProject(LoginRequiredMixin, FormView):
-    template_name = 'speakeazy/create_project.html'
+    template_name = 'projects/create_project.html'
     project = None
 
     def get_form(self, user=None, data=None, files=None, **kwargs):

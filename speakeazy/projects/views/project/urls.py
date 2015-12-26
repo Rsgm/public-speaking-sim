@@ -2,8 +2,8 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
-from speakeazy.projects.views.projects.projectView import ProjectView
-from speakeazy.projects.views.projects.recordingView import RecordingView, create_evaluation
+from speakeazy.projects.views.project.projectView import ProjectView
+from speakeazy.projects.views.project.recordingView import RecordingView, create_evaluation
 
 urlpatterns = [
     url(

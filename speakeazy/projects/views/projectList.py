@@ -9,7 +9,7 @@ from vanilla.model_views import ListView
 
 class ProjectList(LoginRequiredMixin, ListView):
     model = Project
-    template_name = 'speakeazy/projects/project_list.html'
+    template_name = 'projects/project_list.html'
 
     def get_queryset(self):
         return Project.objects.filter(user=self.request.user).order_by('-due_date')

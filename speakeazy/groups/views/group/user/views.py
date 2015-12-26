@@ -6,17 +6,18 @@ from vanilla.model_views import DetailView, ListView, DeleteView, UpdateView
 
 
 class ListUsers(LoginRequiredMixin, ListView):
-    template_name = 'speakeazy/groups/user/list.html'
+    model = GroupMembership
+    template_name = 'groups/group/user/list.html'
 
     @require_permission('list_users')
     def get_queryset(self):
         group = self.kwargs['group']
-        return GroupMembership.objects.filter(group=group)
+        return GroupMembership.objects.filter(group__slug=group)
 
 
 # class AddUser(LoginRequiredMixin, DetailView):
 #     model = GroupMembership
-#     template_name = 'speakeazy/groups/user/view.html'
+#     template_name = 'groups/group/user/view.html'
 #
 #     @require_permission('add_users')
 #     def get_object(self):
@@ -27,7 +28,7 @@ class ListUsers(LoginRequiredMixin, ListView):
 
 class ViewUser(LoginRequiredMixin, DetailView):
     model = GroupMembership
-    template_name = 'speakeazy/groups/user/view.html'
+    # template_name = 'groups/group/user/view.html'
 
     @require_permission('view_users')
     def get_object(self):
@@ -38,7 +39,7 @@ class ViewUser(LoginRequiredMixin, DetailView):
 
 class UpdateUser(LoginRequiredMixin, UpdateView):
     model = GroupMembership
-    template_name = 'speakeazy/groups/user/update.html'
+    # template_name = 'groups/group/user/update.html'
 
     fields = ['authorization']
 
@@ -51,7 +52,7 @@ class UpdateUser(LoginRequiredMixin, UpdateView):
 
 class DeleteUser(LoginRequiredMixin, DeleteView):
     model = GroupMembership
-    template_name = 'speakeazy/groups/user/delete.html'
+    # template_name = 'groups/group/user/delete.html'
 
     @require_permission('delete_users')
     def get_object(self):

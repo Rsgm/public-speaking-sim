@@ -9,7 +9,7 @@ from vanilla.views import TemplateView
 
 
 class ProjectView(LoginRequiredMixin, TemplateView):
-    template_name = 'speakeazy/projects/project_view.html'
+    template_name = 'projects/project/project_view.html'
 
     def get_context_data(self, **kwargs):
         kwargs['view'] = self

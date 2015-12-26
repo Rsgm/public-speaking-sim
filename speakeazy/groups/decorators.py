@@ -12,13 +12,16 @@ def require_permission(permission):
             user = self.request.user
 
             permissions = Permission.objects.filter(authorization__groupmembership__group__slug=group,
-                                                    authorization__groupmembership__user=user).values_list('name', flat=True)
+                                                    authorization__groupmembership__user=user).values_list('name',
+                                                                                                           flat=True)
 
             if not permissions:
                 raise Http404('Group not found')
 
             if permission not in permissions:
                 raise PermissionDenied()
+
+            return fn(self, *args, **kwargs)
 
         return wrapper
 

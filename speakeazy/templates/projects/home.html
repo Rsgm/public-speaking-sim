@@ -7,13 +7,13 @@
         {#        <h2>Home</h2>#}
 
         <div class="s-section">
-            <a class="s-section-link" href="{% url 'speakeazy:projectList' %}">
+            <a class="s-section-link" href="{% url 'projects:projectList' %}">
                 <h4 class="s-section-title">Upcoming Projects</h4>
             </a>
 
             <div class="s-list s-section-content">
                 {% for project in project_list %}
-                    <a class="s-list-item" href="{% url 'speakeazy:projects:projectView' project.slug %}">
+                    <a class="s-list-item" href="{% url 'projects:project:projectView' project.slug %}">
                         <h4 class="s-list-item-heading">{{ project.name }}</h4>
 
                         <div class="item-info">
@@ -33,8 +33,7 @@
 
             <div class="s-list s-section-content">
                 {% for recording in recording_list %}
-                    <a class="s-list-item">
-                        {#                       href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}">#}
+                    <a class="s-list-item" href="{% url 'projects:project:recordingView' project.slug recording.slug %}">
                         <h4 class="s-list-item-heading">{{ recording.project.name }} - {{ recording.slug }}</h4>
 
                         <div class="item-info">
@@ -46,14 +45,14 @@
 
 
         <div class="s-section">
-            <a class="s-section-link" href="{% url 'speakeazy:group-home' %}">
+            <a class="s-section-link" href="{% url 'groups:group-home' %}">
                 <h4 class="s-section-title">Groups</h4>
             </a>
 
             <div class="s-list s-section-content">
                 {% for recording in recording_list %}
                     {#                    <a class="s-list-item">#}
-                    {#                       href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}">#}
+                    {#                       href="{% url 'projects:project:recordingView' project.slug recording.slug %}">#}
                     {#                        <h4 class="s-list-item-heading">{{ recording.project.name }} - {{ recording.slug }}</h4>#}
                     {##}
                     {#                        <div class="item-info">#}

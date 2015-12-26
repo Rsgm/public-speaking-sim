@@ -10,7 +10,7 @@
 
             <div class="s-list s-section-content">
                 {% for user in group_membership_list %}
-                    <a href="{% url 'groups:user:list' group.slug user.pk %}"
+                    <a href="{% url 'groups:group:user:list' group.slug user.pk %}"
                        class="s-list-item">
                         <h4 class="s-list-item-heading">{{ user.slug }}</h4>
                     </a>

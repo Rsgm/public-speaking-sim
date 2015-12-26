@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from speakeazy.groups.views.groups.user.views import ListUsers, ViewUser, UpdateUser, DeleteUser
+from speakeazy.groups.views.group.user.views import ListUsers, ViewUser, UpdateUser, DeleteUser
 
 from django.conf.urls import url
 

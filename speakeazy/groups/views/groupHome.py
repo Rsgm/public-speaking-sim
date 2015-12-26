@@ -6,7 +6,7 @@ from vanilla.views import TemplateView
 
 
 class GroupHome(LoginRequiredMixin, TemplateView):
-    template_name = 'speakeazy/group_home.html'
+    template_name = 'groups/group_home.html'
 
     def get_context_data(self, **kwargs):
         kwargs['view'] = self

@@ -24,6 +24,6 @@ urlpatterns = [
         name="groupList"
     ),
 
-    url(r'^groups/(?P<group>[\w-]+)/', include("speakeazy.groups.views.groups.urls", namespace="groups")),
+    url(r'^groups/(?P<group>[\w-]+)/', include("speakeazy.groups.views.group.urls", namespace="group")),
     url(r'^join/', include("speakeazy.groups.views.join.urls", namespace="join")),
 ]

@@ -25,5 +25,5 @@ urlpatterns = [
         name="projectList"
     ),
 
-    url(r'^projects/(?P<project>[\w-]+)/', include("speakeazy.projects.views.projects.urls", namespace="projects")),
+    url(r'^projects/(?P<project>[\w-]+)/', include("speakeazy.projects.views.project.urls", namespace="project")),
 ]

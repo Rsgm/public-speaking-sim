@@ -7,30 +7,20 @@ from vanilla.model_views import DetailView, ListView
 
 
 class ListInvites(LoginRequiredMixin, ListView):
-    template_name = 'speakeazy/groups/invite/list.html'
+    template_name = 'groups/group/invite/list.html'
 
     def get_queryset(self):
         group = self.kwargs['group']
-        authorize(group, 'list_invite', self.request.session)
+
         return GroupInvite.objects.filter(group=group)
 
 
 class ViewInvite(LoginRequiredMixin, DetailView):
     model = GroupInvite
-    template_name = 'speakeazy/groups/invite/view.html'
+    template_name = 'groups/group/invite/view.html'
 
     def get_object(self):
         group = self.kwargs['group']
         slug = self.kwargs['slug']
 
-        authorize(group, 'view_invite', self.request.session)
-
         return get_object_or_404(GroupInvite, group=group, slug=slug)
-
-
-def authorize(group, permission, session):
-    if group not in session:
-        raise Http404("Group does not exist.")
-
-    if permission not in session[group].permissions:
-        raise Http404("Unauthorized")

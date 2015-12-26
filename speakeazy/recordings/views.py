@@ -17,7 +17,7 @@ from vanilla.views import TemplateView
 
 
 class Record(LoginRequiredMixin, TemplateView):
-    template_name = 'speakeazy/projects/record.html'
+    template_name = 'recordings/record.html'
 
     def get_context_data(self, **kwargs):
         kwargs['view'] = self

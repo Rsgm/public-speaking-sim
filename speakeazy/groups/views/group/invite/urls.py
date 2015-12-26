@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from speakeazy.groups.views.groups.invite.views import ViewInvite, ListInvites
+from speakeazy.groups.views.group.invite.views import ViewInvite, ListInvites
 
 from django.conf.urls import url
 

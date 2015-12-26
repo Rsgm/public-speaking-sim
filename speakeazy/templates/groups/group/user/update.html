@@ -3,9 +3,9 @@
 {% block title %}Update User{% endblock %}
 
 {% block s_content %}
-    <form class="form-horizontal" method="post" action="{% url 'speakeazy:groups:user:update' %}">
+    <form class="form-horizontal" method="post" action="{% url 'groups:group:user:update' %}">
         {% csrf_token %}
-        {{ form | crispy }}
+        {% crispy form %}
         <button type="submit" class="btn">Update</button>
     </form>
 {% endblock %}

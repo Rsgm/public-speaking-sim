@@ -10,7 +10,7 @@
 
             <div class="s-list s-section-content">
                 {% for project in project_list %}
-                    <a href="{% url 'speakeazy:projects:projectView' project.slug %}" class="s-list-item">
+                    <a href="{% url 'projects:project:projectView' project.slug %}" class="s-list-item">
                         <h4 class="s-list-item-heading">{{ project.name }}</h4>
 
                         <div class="project-info">
@@ -24,7 +24,7 @@
                     </a>
                 {% endfor %}
 
-                <a href="{% url 'speakeazy:newProject' %}" class="s-list-item s-list-add fa fa-plus-square-o"></a>
+                <a href="{% url 'projects:newProject' %}" class="s-list-item s-list-add fa fa-plus-square-o"></a>
             </div>
         </div>
     </div>

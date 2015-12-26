@@ -9,7 +9,7 @@ from vanilla.model_views import CreateView
 
 class NewGroup(LoginRequiredMixin, CreateView):
     model = Group
-    # template_name = 'speakeazy/projects/group_list.html'
+    # template_name = 'groups/group_list.html'
 
     # def get_queryset(self):
     # #group_memberships = GroupMembership.objects.filter(user=self.request.user)

@@ -10,7 +10,7 @@
 
             <div class="s-list s-section-content">
                 {% for recording in recording_list %}
-                    <a href="{% url 'speakeazy:projects:recordingView' project.slug recording.slug %}"
+                    <a href="{% url 'projects:project:recordingView' project.slug recording.slug %}"
                        class="s-list-item">
                         <h4 class="s-list-item-heading">{{ recording.slug }}</h4>
                         <video class="s-video" src="{{ recording.thumbnail_video.url }}"
@@ -18,7 +18,7 @@
                     </a>
                 {% endfor %}
 
-                <a href="{% url 'speakeazy:projects:record' project.slug %}"
+                <a href="{% url 'recordings:record' project.slug %}"
                    class="s-list-item s-list-add fa fa-plus-square-o"></a>
             </div>
         </div>

@@ -10,7 +10,7 @@ from vanilla.model_views import ListView
 
 class GroupList(LoginRequiredMixin, ListView):
     model = Group
-    template_name = 'speakeazy/projects/group_list.html'
+    template_name = 'groups/group_list.html'
 
     def get_queryset(self):
         # group_memberships = GroupMembership.objects.filter(user=self.request.user)
