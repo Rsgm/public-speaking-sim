@@ -35,13 +35,6 @@ module.exports = function (grunt) {
             gruntfile: {
                 files: ['Gruntfile.js']
             },
-            concat: {
-                files: ['<%= paths.sass %>/**/*.{scss,sass}'],
-                tasks: ['concat:dev'],
-                options: {
-                    atBegin: true
-                }
-            },
             sass: {
                 files: ['<%= paths.sass %>/**/*.{scss,sass}'],
                 tasks: ['sass:dev'],
@@ -62,19 +55,6 @@ module.exports = function (grunt) {
             }
         },
 
-        concat: {
-            dev: {
-                options: {
-                    separator: ';\n'
-                },
-                src: [
-                    '<%= paths.sass %>/*.scss',
-                    '!<%= paths.sass %>/build.scss'
-                ],
-                dest: '<%= paths.sass %>/build.scss'
-            }
-        },
-
         // see: https://github.com/sindresorhus/grunt-sass
         sass: {
             dev: {
@@ -84,7 +64,7 @@ module.exports = function (grunt) {
                     precision: 10
                 },
                 files: {
-                    '<%= paths.css %>/build.css': '<%= paths.sass %>/build.scss'
+                    '<%= paths.css %>/build.css': '<%= paths.sass %>/main.scss'
                 }
             },
             dist: {
@@ -94,7 +74,7 @@ module.exports = function (grunt) {
                     precision: 10
                 },
                 files: {
-                    '<%= paths.css %>/build.css': '<%= paths.sass %>/build.scss'
+                    '<%= paths.css %>/build.css': '<%= paths.sass %>/main.scss'
                 }
             }
         },

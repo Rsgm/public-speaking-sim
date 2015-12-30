@@ -6,7 +6,6 @@ from pathlib import Path
 
 from speakeazy.recordings import models
 from speakeazy.recordings.models import Recording, UploadPiece
-
 import base64
 import os
 from celery.app import shared_task

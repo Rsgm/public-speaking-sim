@@ -1,0 +1,24 @@
+{% extends "user_base.html" %}
+{% load static %}{% load i18n %}
+{% block title %}Audience List{% endblock %}
+
+{% block s_content %}
+    <div class="container">
+        <div class="s-section">
+
+            <h4 class="s-section-title">Audience List</h4>
+
+            <div class="s-list s-section-content">
+                {% for audience in audience_list %}
+                    <a href="{% url 'groups:group:audience:view' audience.group.slug audience.slug %}"
+                       class="s-list-item">
+                        <h4 class="s-list-item-heading">{{ audience.name }}</h4>
+
+{#                        <div>{{ membership.user.email }}</div>#}
+                        {# membership stats #}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

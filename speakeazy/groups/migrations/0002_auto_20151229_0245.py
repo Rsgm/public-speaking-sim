@@ -8,9 +8,9 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('groups', '0001_initial'),
         ('recordings', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='groupmembership',
-            name='authorization',
+            name='authorizations',
             field=models.ManyToManyField(to='groups.Authorization'),
         ),
         migrations.AddField(
@@ -36,13 +36,18 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='groupinvite',
+            name='authorizations',
+            field=models.ManyToManyField(to='groups.Authorization', related_name='_groupinvite_authorizations_+'),
+        ),
+        migrations.AddField(
+            model_name='groupinvite',
             name='group',
             field=models.ForeignKey(to='groups.Group'),
         ),
         migrations.AddField(
             model_name='group',
             name='parent_user_group',
-            field=models.ForeignKey(blank=True, to='groups.Group', null=True),
+            field=models.ForeignKey(blank=True, null=True, to='groups.Group'),
         ),
         migrations.AddField(
             model_name='group',
@@ -68,5 +73,10 @@ class Migration(migrations.Migration):
             model_name='authorization',
             name='permissions',
             field=models.ManyToManyField(to='groups.Permission'),
+        ),
+        migrations.AddField(
+            model_name='audience',
+            name='group',
+            field=models.ForeignKey(to='groups.Group'),
         ),
     ]

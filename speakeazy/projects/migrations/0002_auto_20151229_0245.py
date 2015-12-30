@@ -9,7 +9,6 @@ class Migration(migrations.Migration):
     dependencies = [
         ('recordings', '0001_initial'),
         ('projects', '0001_initial'),
-        ('groups', '0002_auto_20151224_0213'),
     ]
 
     operations = [
@@ -22,10 +21,5 @@ class Migration(migrations.Migration):
             model_name='evaluation',
             name='type',
             field=models.ForeignKey(to='projects.EvaluationType'),
-        ),
-        migrations.AddField(
-            model_name='audience',
-            name='group',
-            field=models.ForeignKey(to='groups.Group'),
         ),
     ]

@@ -1,18 +1,21 @@
 {% extends "user_base.html" %}
 {% load static %}{% load i18n %}
-{% block title %}{{ group.name }}{% endblock %}
+{% block title %}User List{% endblock %}
 
 {% block s_content %}
     <div class="container">
         <div class="s-section">
 
-            <h4 class="s-section-title">{{ group.name }}</h4>
+            <h4 class="s-section-title">User List</h4>
 
             <div class="s-list s-section-content">
-                {% for user in group_membership_list %}
-                    <a href="{% url 'groups:group:user:list' group.slug user.pk %}"
+                {% for membership in membership_list %}
+                    <a href="{% url 'groups:group:user:view' membership.group.slug membership.user.pk %}"
                        class="s-list-item">
-                        <h4 class="s-list-item-heading">{{ user.slug }}</h4>
+                        <h4 class="s-list-item-heading">{{ membership.user.username }}</h4>
+
+                        <div>{{ membership.user.email }}</div>
+                        {# membership stats #}
                     </a>
                 {% endfor %}
             </div>

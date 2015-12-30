@@ -7,11 +7,9 @@ from speakeazy.recordings.tasks import convert_media, concatenate_media
 from braces.views import LoginRequiredMixin
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.core.files.uploadhandler import TemporaryFileUploadHandler
 from django.http import JsonResponse
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from ratelimit.decorators import ratelimit
 from vanilla.views import TemplateView
 
@@ -43,7 +41,7 @@ def upload(request, *args, **kwargs):
     # todo: test for bad requests, is it even needed?
 
     # find recording
-    recording = get_object_or_404(Recording, project_user=request.user, project_slug=kwargs['project'],
+    recording = get_object_or_404(Recording, project__user=request.user, project__slug=kwargs['project'],
                                   slug=kwargs['recording'], state=models.UPLOADING)
 
     # create object to keep the id
@@ -69,7 +67,7 @@ def upload(request, *args, **kwargs):
 
 @login_required
 def finish(request, *args, **kwargs):
-    recording = get_object_or_404(Recording, project_user=request.user, project_slug=kwargs['project'],
+    recording = get_object_or_404(Recording, project__user=request.user, project__slug=kwargs['project'],
                                   slug=kwargs['recording'], state=models.UPLOADING)
 
     # get piece list

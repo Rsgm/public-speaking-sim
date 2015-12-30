@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
+
 from autoslug.fields import AutoSlugField
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -18,23 +19,24 @@ class Group(Model):
 
     slug = AutoSlugField(populate_from='name', unique=True)
 
-    password = models.TextField(null=True, blank=True)
-
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('speakeazy:groups:groupDetail', kwargs={'group': self.slug})
+        return reverse('groups:group:groupView', kwargs={'group': self.slug})
 
 
 class GroupMembership(Model):
     group = models.ForeignKey('Group')
     user = models.ForeignKey(User)
 
-    authorization = models.ManyToManyField('Authorization')
+    authorizations = models.ManyToManyField('Authorization', null=True, blank=True)
 
     def __str__(self):
         return '%s - %s' % (self.group.name, self.user)
+
+    def get_absolute_url(self):
+        return reverse('groups:group:user:view', kwargs={'group': self.group.slug, 'user': self.user_id})
 
 
 class Authorization(Model):
@@ -54,6 +56,19 @@ class Permission(Model):
         return self.name
 
 
+class Audience(Model):
+    name = models.CharField(_("Name of audience"), max_length=60)
+    description = models.TextField(_("Description of project"), null=True, blank=True)
+
+    file = models.FileField(upload_to='audience')  # ensure file name uniqueness
+    group = models.ForeignKey(Group)
+
+    slug = AutoSlugField(populate_from='name', unique_with='group', unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Submission(Model):
     recording = models.ForeignKey(Recording)
     group = models.ForeignKey('Group')
@@ -67,7 +82,7 @@ class Submission(Model):
         return '%s - %s' % (self.recording.project.user, self.recording.project.name)
 
     def get_absolute_url(self):
-        return reverse('speakeazy:groups:submissionDetail', kwargs={'submission': self.slug})
+        return reverse('groups:group:submission:view', kwargs={'group': Group.slug, 'submission': self.slug})
 
 
 class DefaultAuthorization(Model):
@@ -90,10 +105,20 @@ class DefaultGroupStructure(Model):
 
 class GroupInvite(Model):
     group = models.ForeignKey('Group')
-    token = models.CharField(unique=True, max_length=20)
 
-    uses = models.IntegerField()
+    name = models.CharField(_("Name of invite"), max_length=30)
+    description = models.TextField(_("Description of invite"), null=True, blank=True)
+
+    token = models.CharField(max_length=16)
+    authorizations = models.ManyToManyField('Authorization', related_name='+', null=True, blank=True)
+
+    uses = models.IntegerField(null=True, blank=True)
     expires = models.DateTimeField(null=True, blank=True)
+
+    slug = AutoSlugField(populate_from='name', unique_with='group')
+
+    def get_absolute_url(self):
+        return reverse('groups:group:invite:view', kwargs={'group': self.group.slug, 'invite': self.slug})
 
     def __str__(self):
         return '%s - %s' % (self.group, self.token)

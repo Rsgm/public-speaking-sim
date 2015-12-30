@@ -1,0 +1,16 @@
+{% extends "user_base.html" %}
+{% load static %}{% load i18n %}
+{% block title %}{% block sub_title %}{% endblock %} List{% endblock %}
+
+{% block s_content %}
+    <div class="container">
+        <div class="s-section">
+
+            <h4 class="s-section-title">{% block content_title %}{% endblock %} List</h4>
+
+            <div class="s-list s-section-content">
+                {% block object_list %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

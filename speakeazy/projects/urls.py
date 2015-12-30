@@ -14,13 +14,13 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^new-project/$',
+        regex=r'^new/$',
         view=NewProject.as_view(),
         name="newProject"
     ),
 
     url(
-        regex=r'^projects/$',
+        regex=r'^list/$',
         view=ProjectList.as_view(),
         name="projectList"
     ),

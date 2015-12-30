@@ -1,8 +1,13 @@
-{% extends "user_base.html" %}
+{% extends "base.html" %}
 {% load static %}{% load i18n %}
 {% block title %}Home{% endblock %}
 
-{% block s_content %}
+{% block breadcrumbs %}
+    <li><a href="{% url 'projects:home' %}">p</a></li>
+    <li class="uk-active"><span>home</span></li>
+{% endblock %}
+
+{% block content %}
     <div id="home" class="container">
         {#        <h2>Home</h2>#}
 
@@ -33,7 +38,8 @@
 
             <div class="s-list s-section-content">
                 {% for recording in recording_list %}
-                    <a class="s-list-item" href="{% url 'projects:project:recordingView' project.slug recording.slug %}">
+                    <a class="s-list-item"
+                       href="{% url 'projects:project:recordingView' project.slug recording.slug %}">
                         <h4 class="s-list-item-heading">{{ recording.project.name }} - {{ recording.slug }}</h4>
 
                         <div class="item-info">
@@ -45,19 +51,19 @@
 
 
         <div class="s-section">
-            <a class="s-section-link" href="{% url 'groups:group-home' %}">
+            <a class="s-section-link" {#href="{% url 'groups:group-home' %}"#}>
                 <h4 class="s-section-title">Groups</h4>
             </a>
 
             <div class="s-list s-section-content">
                 {% for recording in recording_list %}
-                    {#                    <a class="s-list-item">#}
-                    {#                       href="{% url 'projects:project:recordingView' project.slug recording.slug %}">#}
-                    {#                        <h4 class="s-list-item-heading">{{ recording.project.name }} - {{ recording.slug }}</h4>#}
-                    {##}
-                    {#                        <div class="item-info">#}
-                    {#                        </div>#}
-                    {#                    </a>#}
+                    <a class="s-list-item">
+                        href="{% url 'projects:project:recordingView' project.slug recording.slug %}">
+                        <h4 class="s-list-item-heading">{{ recording.project.name }} - {{ recording.slug }}</h4>
+
+                        <div class="item-info">
+                        </div>
+                    </a>
                 {% endfor %}
             </div>
         </div>

@@ -15,8 +15,9 @@
 
     {% block css %}
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        {#        <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">#}
+        {#        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">#}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/uikit.min.css">
 
         <!-- Your stuff: Third-party css libraries go here -->
 
@@ -29,50 +30,38 @@
 <body>
 {% hijack_notification %}
 
-{#<div class="m-b">#}
-{#    <nav class="navbar navbar-dark navbar-static-top bg-inverse">#}
-{#        <div class="container">#}
-{#            <a class="navbar-brand" href="/">Speakeazy</a>#}
-{#            <button type="button" class="navbar-toggler hidden-sm-up pull-right" data-toggle="collapse"#}
-{#                    data-target="#bs-navbar-collapse-1">#}
-{#                &#9776;#}
-{#            </button>#}
-{##}
-{#            <!-- Collect the nav links, forms, and other content for toggling -->#}
-{#            <div class="collapse navbar-toggleable-xs" id="bs-navbar-collapse-1">#}
-{#                <ul class="nav navbar-nav">#}
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link" href="{% url 'home' %}">Home</a>#}
-{#                    </li>#}
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link" href="{% url 'about' %}">About</a>#}
-{#                    </li>#}
-{#                </ul>#}
-{##}
-{#                <ul class="nav navbar-nav pull-right">#}
-{#                    {% if request.user.is_authenticated %}#}
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link"#}
-{#                               href="{% url 'users:detail' request.user.username %}">{% trans "My Profile" %}</a>#}
-{#                        </li>#}
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Logout" %}</a>#}
-{#                        </li>#}
-{#                    {% else %}#}
-{#                        <li class="nav-item">#}
-{#                            <a id="sign-up-link" class="nav-link"#}
-{#                               href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>#}
-{#                        </li>#}
-{#                        <li class="nav-item">#}
-{#                            <a id="log-in-link" class="nav-link"#}
-{#                               href="{% url 'account_login' %}">{% trans "Log In" %}</a>#}
-{#                        </li>#}
-{#                    {% endif %}#}
-{#                </ul>#}
-{#            </div>#}
-{#        </div>#}
-{#    </nav>#}
-{#</div>#}
+<noscript>
+    <div id="noscript">Speakeazy works best with JavaScript enabled</div>
+</noscript>
+
+<div id="base-header">
+    <nav class="uk-navbar">
+        <div class="uk-navbar-flip">
+            <ul class="uk-navbar-nav">
+                <li class="uk-parent" data-uk-dropdown>
+                    <a class="nav-link">{{ user|capfirst }}</a>
+
+                    <div class="uk-dropdown">
+                        <ul class="uk-nav uk-nav-dropdown">
+                            <li><a href="{% url 'projects:home' %}">Home</a></li>
+                            {% if user.isAdmin %}
+                                <li><a href="/admin/">Admin</a></li>
+                            {% endif %}
+                            <li class="uk-nav-divider"></li>
+                            <li><a href="{% url 'groups:joinGroup' %}">Join</a></li>
+                            <li><a href="{% url 'groups:newGroup' %}">Create Group</a></li>
+                            <li><a href="{% url 'groups:groupList' %}">Group List</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li><a class="nav-link" href="{% url 'account_logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="uk-breadcrumb large">{% block breadcrumbs %}{% endblock %}</ul>
+</div>
 
 <div id="error-notification" class="container">
     {% if messages %}
@@ -85,15 +74,14 @@
 
 {% block content %}{% endblock content %}
 
-{% block modal %}{% endblock modal %}
 
-<noscript>
-    <div id="noscript">Speakeazy works best with JavaScript enabled</div>
-</noscript>
+{{ ADMIN_URL }}
 
 {% block javascript %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+    {#    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.2/js/uikit.min.js"></script>
+
 
     <!-- Your stuff: Third-party javascript libraries go here -->
     {% block extra_js_libraries %}{% endblock extra_js_libraries %}

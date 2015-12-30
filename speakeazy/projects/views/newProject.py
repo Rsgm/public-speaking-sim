@@ -9,21 +9,24 @@ from vanilla.views import FormView
 
 
 class NewProject(LoginRequiredMixin, FormView):
-    template_name = 'projects/create_project.html'
+    template_name = 'projects/new_project.html'
     project = None
 
-    def get_form(self, user=None, data=None, files=None, **kwargs):
+    def get_form(self, data=None, files=None, **kwargs):
+        user = self.request.user
+
         group_list = user.group_set.values_list('id', flat=True)
         audiences = Audience.objects.filter(group__in=group_list)
+
         return ProjectCreate(audiences, data)
 
     def get(self, request, *args, **kwargs):
-        form = self.get_form(user=request.user)
+        form = self.get_form()
         context = self.get_context_data(form=form)
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
-        form = self.get_form(user=request.user, data=request.POST)
+        form = self.get_form(data=request.POST)
         if form.is_valid():
             self.project = Project()
             self.project.user = request.user

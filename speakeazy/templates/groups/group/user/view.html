@@ -1,0 +1,24 @@
+{% extends "user_base.html" %}
+{% load static %}{% load i18n %}
+{% block title %}{{ membership.user.username }}{% endblock %}
+
+{% block s_content %}
+    <div class="container">
+        <div class="s-section">
+
+            <h4 class="s-section-title">{{ membership.user.username }}</h4>
+
+            <div class="s-section-content">
+                <div>{{ membership.user.email }}</div>
+                {# membership stats #}
+
+                {% for authorization in membership.authorizations.all %}
+                    <div>{{ authorization.name }}</div>
+                {% endfor %}
+
+                <a href="{% url 'groups:group:user:update' membership.group.slug membership.user.pk %}">Update User</a>
+                <a href="{% url 'groups:group:user:delete' membership.group.slug user.pk %}">DeleteUser</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

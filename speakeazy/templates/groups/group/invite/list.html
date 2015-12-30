@@ -1,0 +1,15 @@
+{% extends "actions/list.html" %}
+{% block sub_title %}Invite{% endblock %}
+{% block content_title %}Invite{% endblock %}
+
+{% block object_list %}
+    {% for invite in invite_list %}
+        <a href="{% url 'groups:group:invite:view' invite.group.slug invite.slug %}"
+           class="s-list-item">
+            <h4 class="s-list-item-heading">{{ invite.name }}</h4>
+
+            {#                        <div>{{ invite.user.email }}</div>#}
+            {# invite stats #}
+        </a>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,4 @@
+// flip recordings on the y axis to mirror the user
+.s-preview {
+  transform: rotateY(180deg);
+}

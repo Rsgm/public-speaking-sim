@@ -12,9 +12,9 @@ urlpatterns = [
     # ),
 
     url(
-        regex=r'^/$',
+        regex=r'^$',
         view=GroupView.as_view(),
-        name='groupAdmin'
+        name='groupView'
     ),
 
     url(r'^audience/', include("speakeazy.groups.views.group.audience.urls", namespace="audience")),

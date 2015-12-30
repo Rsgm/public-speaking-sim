@@ -1,61 +1,64 @@
 from braces.views import LoginRequiredMixin
+from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
-from speakeazy.groups.decorators import require_permission
+from speakeazy.groups.mixins import LIST_USER, VIEW_USER, UPDATE_USER, DELETE_USER, GroupPermissiondMixin
 from speakeazy.groups.models import GroupMembership
+from speakeazy.groups.views.group.user.forms import UpdateForm
 from vanilla.model_views import DetailView, ListView, DeleteView, UpdateView
 
 
-class ListUsers(LoginRequiredMixin, ListView):
+class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
     model = GroupMembership
+    context_object_name = 'membership_list'
     template_name = 'groups/group/user/list.html'
 
-    @require_permission('list_users')
+    group_permission = LIST_USER
+
     def get_queryset(self):
         group = self.kwargs['group']
         return GroupMembership.objects.filter(group__slug=group)
 
 
-# class AddUser(LoginRequiredMixin, DetailView):
-#     model = GroupMembership
-#     template_name = 'groups/group/user/view.html'
-#
-#     @require_permission('add_users')
-#     def get_object(self):
-#         group = self.kwargs['group']
-#         user = self.kwargs['user']
-#         return get_object_or_404(GroupMembership, group=group, user=user)
-#
-
-class ViewUser(LoginRequiredMixin, DetailView):
+class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
     model = GroupMembership
-    # template_name = 'groups/group/user/view.html'
+    context_object_name = 'membership'
+    template_name = 'groups/group/user/view.html'
 
-    @require_permission('view_users')
+    group_permission = VIEW_USER
+
     def get_object(self):
         group = self.kwargs['group']
         user = self.kwargs['user']
-        return get_object_or_404(GroupMembership, group=group, user=user)
+        return get_object_or_404(GroupMembership, group__slug=group, user=user)
 
 
-class UpdateUser(LoginRequiredMixin, UpdateView):
+class Update(LoginRequiredMixin, GroupPermissiondMixin, UpdateView):
     model = GroupMembership
-    # template_name = 'groups/group/user/update.html'
+    context_object_name = 'membership'
+    form_class = UpdateForm
+    template_name = 'groups/group/user/update.html'
 
-    fields = ['authorization']
+    fields = ['authorizations']
 
-    @require_permission('update_users')
+    group_permission = UPDATE_USER
+
     def get_object(self):
         group = self.kwargs['group']
         user = self.kwargs['user']
-        return get_object_or_404(GroupMembership, group=group, user=user)
+        return get_object_or_404(GroupMembership, group__slug=group, user=user)
 
 
-class DeleteUser(LoginRequiredMixin, DeleteView):
+class Delete(LoginRequiredMixin, GroupPermissiondMixin, DeleteView):
     model = GroupMembership
-    # template_name = 'groups/group/user/delete.html'
+    context_object_name = 'membership'
+    template_name = 'groups/group/user/delete.html'
 
-    @require_permission('delete_users')
+    group_permission = DELETE_USER
+
     def get_object(self):
         group = self.kwargs['group']
         user = self.kwargs['user']
-        return get_object_or_404(GroupMembership, group=group, user=user)
+        return get_object_or_404(GroupMembership, group__slug=group, user=user)
+
+    def get_success_url(self):
+        return reverse('groups:group:user:list', kwargs={'group': self.group.slug})

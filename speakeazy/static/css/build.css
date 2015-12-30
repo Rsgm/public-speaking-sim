@@ -1,304 +1,467 @@
-.alert-debug {
-  background-color: #fff;
-  border-color: #d6e9c6;
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS and IE text size adjust after device orientation change,
+ *    without disabling user zoom.
+ */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */ }
+
+/**
+ * Remove default margin.
+ */
+body {
+  margin: 0; }
+
+/* HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block; }
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+audio,
+canvas,
+progress,
+video {
+  display: inline-block;
+  /* 1 */
+  vertical-align: baseline;
+  /* 2 */ }
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.
+ */
+[hidden],
+template {
+  display: none; }
+
+/* Links
+   ========================================================================== */
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+a {
+  background-color: transparent; }
+
+/**
+ * Improve readability of focused elements when they are also in an
+ * active/hover state.
+ */
+a:active,
+a:hover {
+  outline: 0; }
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+b,
+strong {
+  font-weight: bold; }
+
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+dfn {
+  font-style: italic; }
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+mark {
+  background: #ff0;
   color: #000; }
 
-.alert-error {
-  background-color: #f2dede;
-  border-color: #eed3d7;
-  color: #b94a48; }
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+small {
+  font-size: 80%; }
 
-@media (max-width: 47.9em) {
-  .navbar-nav .nav-item {
-    display: inline-block;
-    float: none;
-    width: 100%; }
-  .navbar-nav .nav-item + .nav-item {
-    margin-left: 0; }
-  .nav.navbar-nav.pull-right {
-    float: none !important; } }
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
 
-[hidden][style="display: block;"] {
-  display: block !important; }
+sup {
+  top: -0.5em; }
 
-noscript {
-  position: fixed;
-  top: 0;
-  left: 0;
+sub {
+  bottom: -0.25em; }
+
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+img {
+  border: 0; }
+
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+svg:not(:root) {
+  overflow: hidden; }
+
+/* Grouping content
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+figure {
+  margin: 1em 40px; }
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+hr {
+  box-sizing: content-box;
+  height: 0; }
+
+/**
+ * Contain overflow in all browsers.
+ */
+pre {
+  overflow: auto; }
+
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em; }
+
+/* Forms
+   ========================================================================== */
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+  margin: 0;
+  /* 3 */ }
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+button {
+  overflow: visible; }
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+button,
+select {
+  text-transform: none; }
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */ }
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled],
+html input[disabled] {
+  cursor: default; }
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+input {
+  line-height: normal; }
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto; }
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.
+ */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  box-sizing: content-box;
+  /* 2 */ }
+
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+textarea {
+  overflow: auto; }
+
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+optgroup {
+  font-weight: bold; }
+
+/* Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+td,
+th {
+  padding: 0; }
+
+/**
+ * Set up a decent box model on the root element
+ */
+html {
+  box-sizing: border-box; }
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+*, *::before, *::after {
+  box-sizing: inherit; }
+
+/**
+ * Basic styles for links
+ */
+a {
+  color: #42ae42;
+  text-decoration: none; }
+  a:hover, a:active, a:focus {
+    color: #222;
+    text-decoration: underline; }
+
+@font-face {
+  font-family: 'Open Sans', sans-serif; }
+
+/**
+ * Basic typography style for copy text
+ */
+body {
+  color: #222;
+  font: normal 125% / 1.4;
+  font-family: "Open Sans", "Arial", sans-serif !important; }
+
+* {
+  font-family: inherit !important; }
+
+/**
+ * Clear inner floats
+ */
+.clearfix::after {
+  clear: both;
+  content: '';
+  display: table; }
+
+/**
+ * Main content containers
+ * 1. Make the container full-width with a maximum width
+ * 2. Center it in the viewport
+ * 3. Leave some space on the edges, especially valuable on small screens
+ */
+.container {
+  max-width: 1200px;
+  /* 1 */
+  margin-left: auto;
+  /* 2 */
+  margin-right: auto;
+  /* 2 */
+  padding-left: 20px;
+  /* 3 */
+  padding-right: 20px;
+  /* 3 */
   width: 100%;
+  /* 1 */ }
+
+/**
+ * Hide text while making it readable for screen readers
+ * 1. Needed in WebKit-based browsers because of an implementation bug;
+ *    See: https://code.google.com/p/chromium/issues/detail?id=457146
+ */
+.hide-text {
+  overflow: hidden;
+  padding: 0;
+  /* 1 */
+  text-indent: 101%;
+  white-space: nowrap; }
+
+/**
+ * Hide element while making it readable for screen readers
+ * Shamelessly borrowed from HTML5Boilerplate:
+ * https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css#L119-L133
+ */
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+#base-header .uk-breadcrumb {
+  background: #85e085;
+  padding: 30px;
+  margin-top: 0; }
+
+.uk-breadcrumb.large *, .uk-breadcrumb.large *::before {
+  font-size: 24px; }
+
+.s-preview {
+  transform: rotateY(180deg); }
+
+noscript > * {
   background: #85de97;
   color: #217a30;
   font-weight: bold;
   text-align: center;
   padding: 4px; }
-
-html, body {
-  background: #f6f2ee;
-  height: 100%; }
-
-.s-list {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  align-content: space-between; }
-  .s-list .s-list-item {
-    border: 1px solid #6c936c;
-    border-radius: 4px;
-    min-width: 100px;
-    max-width: 160px;
-    flex: 1 1 auto;
-    margin-right: 20px;
-    margin-bottom: 30px;
-    color: black;
-    text-align: center; }
-    .s-list .s-list-item .s-list-item-heading {
-      margin-top: 5px;
-      margin-bottom: 10px; }
-    .s-list .s-list-item:hover {
-      background: #f0f4f0;
-      color: black;
-      text-decoration: none;
-      outline: none; }
-    .s-list .s-list-item:active, .s-list .s-list-item:focus {
-      background: #f0f4f0;
-      color: black;
-      text-decoration: none;
-      outline: none; }
-    .s-list .s-list-item:last-child {
-      margin-right: 0; }
-  .s-list .s-list-add {
-    border: 1px dashed #6c936c;
-    padding: 8px;
-    color: #6c936c;
-    font-size: x-large;
-    display: flex;
-    justify-content: center;
-    align-items: center; }
-    .s-list .s-list-add:hover {
-      color: #6c936c; }
-    .s-list .s-list-add:active, .s-list .s-list-add:focus {
-      color: #6c936c; }
-
-.s-preview {
-  transform: rotateY(180deg); }
-
-.s-title {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  margin-left: 20px; }
-
-.s-section {
-  background: white;
-  box-shadow: 0 0 2px #bab1ab;
-  padding-bottom: 10px;
-  margin: 5px 0; }
-  .s-section .s-section-link {
-    background: #cbe6cb;
-    box-shadow: 0 4px 2px -2px #bfd9bf;
-    display: block;
-    margin-bottom: 20px; }
-    .s-section .s-section-link .s-section-title {
-      background: none;
-      box-shadow: none;
-      margin-bottom: 0; }
-  .s-section .s-section-title {
-    background: #cbe6cb;
-    box-shadow: 0 4px 2px -2px #bfd9bf;
-    display: block;
-    color: black;
-    margin-bottom: 20px;
-    padding: 10px 10px 10px 35px; }
-  .s-section .s-section-content {
-    padding: 20px 65px 0; }
-
-#home .s-list {
-  justify-content: space-around; }
-  #home .s-list .s-list-item {
-    display: flex;
-    flex-direction: column; }
-    #home .s-list .s-list-item:last-child {
-      margin-right: 0; }
-    #home .s-list .s-list-item .item-info {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between; }
-      #home .s-list .s-list-item .item-info .project-description {
-        margin: 5px;
-        text-align: start;
-        text-indent: 10px;
-        color: #999999; }
-      #home .s-list .s-list-item .item-info .project-recording-count {
-        color: #999999; }
-
-#project-list .s-list-item {
-  display: flex;
-  flex-direction: column; }
-  #project-list .s-list-item .project-info {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: #999999; }
-    #project-list .s-list-item .project-info .project-description {
-      margin: 5px;
-      text-align: start;
-      text-indent: 10px; }
-    #project-list .s-list-item .project-info .project-bottom-info {
-      padding-top: 5px; }
-      #project-list .s-list-item .project-info .project-bottom-info * {
-        padding: 2px; }
-
-#recording-view .s-video {
-  position: relative; }
-  #recording-view .s-video video {
-    width: 100%; }
-    #recording-view .s-video video:focus {
-      outline: none; }
-  #recording-view .s-video .s-video-controls {
-    background-color: #1f471f;
-    position: absolute;
-    bottom: 5px;
-    width: 100%;
-    height: 30px;
-    z-index: 2147483647;
-    color: white;
-    padding: 0 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; }
-    #recording-view .s-video .s-video-controls .s-video-time {
-      font-size: 12px; }
-    #recording-view .s-video .s-video-controls .s-video-slider {
-      flex-grow: 1;
-      height: 100%;
-      padding: 0;
-      margin: 0 10px; }
-      #recording-view .s-video .s-video-controls .s-video-slider .s-video-points {
-        height: 50%;
-        position: relative; }
-        #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-pointer {
-          position: absolute;
-          bottom: -2px;
-          display: flex;
-          flex-direction: column-reverse;
-          justify-content: flex-start;
-          text-align: center;
-          cursor: default; }
-        #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker {
-          position: absolute;
-          bottom: 0;
-          display: flex;
-          flex-direction: column-reverse;
-          justify-content: flex-start; }
-          #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker > .fa {
-            text-align: center;
-            width: 40px;
-            cursor: pointer; }
-          #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker > .fa-caret-down {
-            margin-bottom: -3px;
-            padding-bottom: 6px; }
-          #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker > .fa-caret-up {
-            color: white;
-            margin-top: -5px;
-            margin-bottom: -9px; }
-        #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container {
-          background: rgba(230, 230, 230, 0.2);
-          border: 1px solid rgba(179, 179, 179, 0.2);
-          color: black;
-          padding: 5px;
-          display: flex;
-          flex-flow: column-reverse; }
-          #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval, #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-add {
-            position: relative;
-            margin: 3px;
-            text-align: center;
-            background: #e66300;
-            border-radius: 4px;
-            padding: 3px;
-            cursor: pointer; }
-          #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu {
-            position: absolute;
-            bottom: -8px;
-            left: 15px;
-            height: 40px;
-            padding-left: 10px;
-            display: flex;
-            align-items: center; }
-            #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu > .fa {
-              color: white;
-              text-align: center; }
-            #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu > .fa-caret-right {
-              margin-left: -1px;
-              margin-right: 5px; }
-            #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu .s-video-eval-content, #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu .s-video-eval-add-types {
-              background: rgba(230, 230, 230, 0.2);
-              border: 1px solid rgba(179, 179, 179, 0.2);
-              padding: 5px;
-              margin-left: -5px;
-              color: white;
-              display: flex; }
-              #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu .s-video-eval-content div, #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu .s-video-eval-add-types div {
-                cursor: default; }
-            #recording-view .s-video .s-video-controls .s-video-slider .s-video-points .s-video-marker-container .s-video-eval-menu .s-video-eval-add-types > a {
-              position: relative;
-              margin: 3px;
-              text-align: center;
-              background: #e66300;
-              border-radius: 4px;
-              padding: 3px;
-              cursor: pointer; }
-      #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-bar {
-        background: black;
-        height: 50%;
-        display: flex;
-        cursor: pointer; }
-        #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-bar .s-video-slider-played {
-          background-color: red;
-          width: 0;
-          height: 100%;
-          display: flex;
-          justify-content: flex-end; }
-        #recording-view .s-video .s-video-controls .s-video-slider .s-video-slider-bar .s-video-slider-buffered {
-          background-color: gray;
-          width: 0;
-          height: 100%; }
-    #recording-view .s-video .s-video-controls > * {
-      padding: 0 8px;
-      margin: 0 2px; }
-    #recording-view .s-video .s-video-controls a {
-      color: white;
-      cursor: pointer; }
-      #recording-view .s-video .s-video-controls a:hover, #recording-view .s-video .s-video-controls a:active, #recording-view .s-video .s-video-controls a:focus {
-        text-decoration: none;
-        outline: none; }
-
-#user-base-background {
-  height: 100%; }
-
-#user-base #action-bar {
-  background: white;
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 15px; }
-  #user-base #action-bar > * {
-    cursor: pointer;
-    padding: 10px 15px 10px 15px; }
-    #user-base #action-bar > *:hover {
-      background: #85e085;
-      text-decoration: none;
-      outline: none; }
-    #user-base #action-bar > *:active, #user-base #action-bar > *:focus {
-      background: #85e085;
-      text-decoration: none;
-      outline: none; }
-
-#user-base .breadcrumb {
-  background: #85e085;
-  border-radius: 0;
-  padding: 30px;
-  font-size: 24px;
-  margin: 0; }
-  #user-base .breadcrumb li.active, #user-base .breadcrumb *::before {
-    color: #798679; }

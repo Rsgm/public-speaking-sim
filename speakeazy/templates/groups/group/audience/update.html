@@ -1,0 +1,12 @@
+{% extends "user_base.html" %}
+{% load static %}{% load i18n %}{% load crispy_forms_tags %}
+{% block title %}Update User{% endblock %}
+
+{% block s_content %}
+    <form class="form-horizontal" method="post"
+          action="{% url 'groups:group:audience:update' audience.group.slug audience.slug %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn">Update</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "user_base.html" %}
+{% load static %}{% load i18n %}{% load crispy_forms_tags %}
+{% block title %}Update User{% endblock %}
+
+{% block s_content %}
+    <form class="form-horizontal" enctype="multipart/form-data" method="post"
+          action="{% url 'groups:group:audience:add' view.kwargs.group %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn">Add</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "actions/add.html" %}
+
+{% block sub_title %}Invite{% endblock %}
+
+{% block post_url %}{% url 'groups:group:invite:add' view.kwargs.group %}{% endblock %}
+

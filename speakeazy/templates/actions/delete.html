@@ -1,0 +1,10 @@
+{% extends "user_base.html" %}
+{% load static %}{% load i18n %}{% load crispy_forms_tags %}
+{% block title %}Delete {% block sub_title %}{% endblock %}{% endblock %}
+
+{% block s_content %}
+    <form class="form-horizontal" method="post" action="{% block post_url %}{% endblock %}">
+        {% csrf_token %}
+        <button type="submit" class="btn">Delete</button>
+    </form>
+{% endblock %}

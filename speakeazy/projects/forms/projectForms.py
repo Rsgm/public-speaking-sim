@@ -1,7 +1,4 @@
 import floppyforms.__future__ as forms
-from crispy_forms.bootstrap import FormActions
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Field, Submit, Layout
 
 
 class ProjectCreate(forms.Form):
@@ -13,17 +10,3 @@ class ProjectCreate(forms.Form):
     def __init__(self, audiences, *args, **kwargs):
         super(ProjectCreate, self).__init__(*args, **kwargs)
         self.fields['audience'].queryset = audiences
-
-    helper = FormHelper()
-    helper.form_class = 'form-horizontal'
-    helper.layout = Layout(
-        Field('name', css_class='input-xlarge'),
-        Field('description', rows='2', css_class='input-xlarge'),
-        Field('audience', css_class='input-xlarge'),
-        Field('due_date', css_class='input-xlarge'),
-
-        FormActions(
-            Submit('save_changes', 'Save changes', css_class="btn-primary"),
-            Submit('cancel', 'Cancel'),
-        )
-    )

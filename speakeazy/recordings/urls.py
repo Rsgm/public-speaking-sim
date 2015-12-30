@@ -6,25 +6,25 @@ from speakeazy.recordings.views import Record, start, upload, finish
 
 urlpatterns = [
     url(
-        regex=r'^record/$',
+        regex=r'^$',
         view=Record.as_view(),
         name='record'
     ),
 
     url(
-        regex=r'^/record/start/$',
+        regex=r'^start/$',
         view=start,
         name='recordStart'
     ),
 
     url(
-        regex=r'^record/(?P<recording>[\w-]+)/upload/$',
+        regex=r'^(?P<recording>[\w-]+)/upload/$',
         view=upload,
         name='recordUpload'
     ),
 
     url(
-        regex=r'^record/(?P<recording>[\w-]+)/finish/$',
+        regex=r'^(?P<recording>[\w-]+)/finish/$',
         view=finish,
         name='recordFinish'
     ),
