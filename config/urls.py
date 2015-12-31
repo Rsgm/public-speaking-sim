@@ -19,7 +19,7 @@ urlpatterns = [
 
                   # User management
                   # url(r'^users/', include("speakeazy.users.urls", namespace="users")),
-                  url(r'^account/', include('allauth.urls')),
+                  url(r'^account/', include('userena.urls')),
 
                   # Your stuff: custom urls includes go here
                   url(r'^p/', include("speakeazy.projects.urls", namespace="projects")),

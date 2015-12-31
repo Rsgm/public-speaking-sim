@@ -38,9 +38,10 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     'floppyforms',  # Form layouts
     'crispy_forms',  # Form layouts
-    'allauth',  # registration
-    'allauth.account',  # registration
-    # 'allauth.socialaccount',  # registration
+
+    'userena',
+    'guardian',
+    'easy_thumbnails',
 
     'django_js_reverse',  # https://github.com/ierror/django-js-reverse
 )
@@ -217,20 +218,27 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # AUTHENTICATION CONFIGURATION
 # ------------------------------------------------------------------------------
 AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_PASSWORD_MIN_LENGTH = 8
+ANONYMOUS_USER_ID = -1
 
-# Custom speakeazy app defaults
-# Select the correct speakeazy model
+AUTH_PROFILE_MODULE = 'users.UserProfile'
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = 'speakeazy:home'
-LOGIN_URL = 'account_login'
+
+USERENA_SIGNIN_REDIRECT_URL = '/accounts/%(username)s/'
+USERENA_ACTIVATION_NOTIFY = False
+USERENA_MUGSHOT_GRAVATAR = False
+USERENA_DEFAULT_PRIVACY = 'closed'
+USERENA_DISABLE_PROFILE_LIST = True
+USERENA_HIDE_EMAIL = True
+USERENA_HTML_EMAIL = True
+
+LOGIN_REDIRECT_URL = 'projects:home'
+LOGIN_URL = 'userena_signin'
+LOGOUT_URL = 'userena_signout'
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'

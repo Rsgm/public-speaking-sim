@@ -18,10 +18,7 @@ django-model-utils>=2.3.1
 # Images
 Pillow==3.0.0
 
-# For user registration, either via email or social
-# Well-built with regular release cycles!
-django-allauth>=0.24.1
-
+django-userena
 
 # Python-PostgreSQL Database Adapter
 psycopg2==2.6.1

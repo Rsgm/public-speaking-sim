@@ -1,17 +1,11 @@
 {% extends "base.html" %}
 {% load static %}{% load i18n %}{% load crispy_forms_tags %}
-{% block title-dash %}Speakeazy - Create Project{% endblock %}
-
-{% block title %}{% endblock %}
+{% block title %}Join Group{% endblock %}
 
 {% block content %}
-    <h2>Create Project</h2>
-
-    <form class="form-horizontal" method="post" action="{% url 'projects:newProject' %}">
-
+    <form class="form-horizontal" method="post" action="{% url 'groups:newGroup' %}">
         {% csrf_token %}
         {{ form|crispy }}
-
         <button type="submit" class="btn">Create</button>
     </form>
 {% endblock %}
