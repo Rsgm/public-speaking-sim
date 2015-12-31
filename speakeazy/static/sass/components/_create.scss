@@ -1,0 +1,18 @@
+$background: hsl(120, 60%, 70%);
+$list-item-border: $mid-grey;
+
+.s-create {
+  border: 1px dashed $list-item-border;
+  padding: 8px;
+
+  color: $list-item-border;
+  font-size: x-large;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include on-event {
+    color: $list-item-border;
+  }
+}

@@ -17,13 +17,13 @@ html {
  */
 *, *::before, *::after {
   box-sizing: inherit;
-} 
+}
 
 /**
  * Basic styles for links
  */
 a {
-  color: $brand-color;
+  color: $secondary-brand-color;
   text-decoration: none;
 
   @include on-event {

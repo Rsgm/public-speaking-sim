@@ -12,10 +12,10 @@ from speakeazy.users.models import User
 
 
 class Project(Model):
-    user = models.ForeignKey(User, editable=False)
+    user = models.ForeignKey(User)
     name = models.CharField(_("Name of project"), max_length=30)
     description = models.TextField(_("Description of project"), null=True, blank=True)
-    audience = models.ForeignKey(Audience, editable=False)
+    audience = models.ForeignKey(Audience)
 
     created_time = models.DateTimeField(auto_now_add=True)
     due_date = models.DateField()

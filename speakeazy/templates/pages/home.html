@@ -1,1 +1,11 @@
 {% extends "base.html" %}
+
+{% block content %}
+    <div id="vid-bg" class="uk-cover">
+        <video class="uk-cover-object" poster="https://static.speakeazy.co/resources/background.jpg" autoplay muted loop
+               preload="auto">
+            <source src="https://s3.amazonaws.com/speakeazy-static/resources/background.webm" type="video/webm">
+            <source src="https://s3.amazonaws.com/speakeazy-static/resources/background.mp4" type="video/mp4">
+        </video>
+    </div>
+{% endblock %}

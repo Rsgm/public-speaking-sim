@@ -1,31 +1,39 @@
-{% extends "user_base.html" %}
+{% extends "base.html" %}
 {% load static %}{% load i18n %}
 {% block title %}Projects{% endblock %}
 
-{% block s_content %}
-    <div id="project-list" class="container">
+{% block breadcrumbs %}
+    <li><a href="{% url 'projects:home' %}">p</a></li>
+    <li class="uk-active"><span>list</span></li>
+{% endblock %}
 
-        <div class="s-section">
-            <h4 class="s-section-title">Projects</h4>
+{% block content %}
+    <div id="project-list" class="uk-block uk-flex uk-grid">
 
-            <div class="s-list s-section-content">
-                {% for project in project_list %}
-                    <a href="{% url 'projects:project:projectView' project.slug %}" class="s-list-item">
-                        <h4 class="s-list-item-heading">{{ project.name }}</h4>
+        {% for project in project_list %}
+            <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
+                <a href="{% url 'projects:project:projectView' project.slug %}"
+                   class="uk-panel uk-panel-box uk-panel-header">
 
-                        <div class="project-info">
-                            <p class="project-description">{{ project.description }}</p>
+                    <h3 class="uk-panel-title">{{ project.name }}</h3>
 
-                            <div class="project-bottom-info">
-                                <div>Due: {{ project.due_date | date:"Y-m-d" }}</div>
-                                <div>{{ project.recording_set.all | length }} Recordings</div>
-                            </div>
+                    <div class="project-info">
+                        <p class="project-description">{{ project.description }}</p>
+
+                        <div class="project-bottom-info">
+                            <div>Due: {{ project.due_date|date:"Y-m-d" }}</div>
+                            <div>{{ project.recording_set.all|length }}
+                                Recording{{ project.recording_set.all|pluralize:"s" }}</div>
                         </div>
-                    </a>
-                {% endfor %}
-
-                <a href="{% url 'projects:newProject' %}" class="s-list-item s-list-add fa fa-plus-square-o"></a>
+                    </div>
+                </a>
             </div>
+        {% endfor %}
+
+        <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
+            <a href="{% url 'projects:newProject' %}" class="uk-panel uk-panel-box-secondary">
+                <i class="uk-text-middle uk-text-center uk-icon-plus-square-o"></i>
+            </a>
         </div>
     </div>
 {% endblock %}

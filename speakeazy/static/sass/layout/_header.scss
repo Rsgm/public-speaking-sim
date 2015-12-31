@@ -1,9 +1,7 @@
-$header-background: hsl(120, 60%, 70%);
-
 #base-header {
 
   .uk-breadcrumb {
-    background: $header-background;
+    background: #82ed82;// $brand-color-compliment;
     padding: 30px;
     margin-top: 0;
   }

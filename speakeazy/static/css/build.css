@@ -373,7 +373,7 @@ html {
  * Basic styles for links
  */
 a {
-  color: #42ae42;
+  color: #006cd7;
   text-decoration: none; }
   a:hover, a:active, a:focus {
     color: #222;
@@ -449,7 +449,7 @@ body {
   width: 1px; }
 
 #base-header .uk-breadcrumb {
-  background: #85e085;
+  background: #82ed82;
   padding: 30px;
   margin-top: 0; }
 
@@ -458,6 +458,24 @@ body {
 
 .s-preview {
   transform: rotateY(180deg); }
+
+.s-brand .green {
+  color: #00C900; }
+
+.s-create {
+  border: 1px dashed #999;
+  padding: 8px;
+  color: #999;
+  font-size: x-large;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .s-create:hover, .s-create:active, .s-create:focus {
+    color: #999; }
+
+[class*="uk-width"] > .uk-panel {
+  width: 100%;
+  height: 100%; }
 
 noscript > * {
   background: #85de97;
