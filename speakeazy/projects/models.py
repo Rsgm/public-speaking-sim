@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
-
 from autoslug.fields import AutoSlugField
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -31,8 +30,9 @@ class Project(Model):
 
 class EvaluationType(Model):
     name = models.CharField(unique=True, max_length=30)
+    descritpion = models.CharField(unique=True, max_length=120)
     color = models.CharField(unique=True, max_length=6)
-    fa_class = models.CharField(unique=True, max_length=30)
+    icon_class = models.CharField(unique=True, max_length=40)
 
     def __str__(self):
         return self.name

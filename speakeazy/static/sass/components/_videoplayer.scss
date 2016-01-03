@@ -1,0 +1,207 @@
+.s-video {
+  position: relative;
+
+  video {
+    width: 100%;
+  }
+
+  @include on-event {
+    outline: none;
+  }
+
+  .s-video-request {
+    position: absolute;
+    top: 5%;
+    right: 10%;
+  }
+
+  .s-video-controls {
+    background-color: hsl(120, 40%, 20%);
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    height: $video-player-height;
+    z-index: 2147483647;
+    color: white;
+
+    padding: 0 10px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .s-video-time {
+      font-size: 12px;
+    }
+
+    .s-video-slider {
+      flex-grow: 1;
+
+      height: 100%;
+      padding: 0;
+      margin: 0 10px;
+
+      .s-video-points {
+        height: 50%;
+        position: relative;
+
+        .s-video-pointer {
+          position: absolute;
+          bottom: -2px;
+
+          display: flex;
+          flex-direction: column-reverse;
+          justify-content: flex-start;
+          text-align: center;
+
+          cursor: default;
+        }
+
+        .s-video-marker {
+          position: absolute;
+          bottom: 0;
+
+          display: flex;
+          flex-direction: column-reverse;
+          justify-content: flex-start;
+
+          & > i {
+            text-align: center;
+            width: 40px;
+
+            cursor: pointer;
+          }
+
+          & > .uk-icon-caret-down {
+            margin-bottom: -3px;
+            padding-bottom: 6px;
+          }
+
+          & > .uk-icon-caret-up {
+            color: white;
+            margin-top: -5px;
+            margin-bottom: -9px;
+          }
+        }
+
+        .s-video-marker-container {
+          background: hsla(120, 0, 90%, 0.2);
+          border: 1px solid hsla(120, 0, 70%, 0.2);
+          color: black;
+
+          padding: 5px;
+
+          display: flex;
+          flex-flow: column-reverse;
+
+          .s-video-eval, .s-video-eval-add {
+            position: relative;
+            margin: 3px;
+            text-align: center;
+
+            background: hsl(26, 100%, 45%);
+            border-radius: 4px;
+            padding: 3px;
+
+            cursor: pointer;
+          }
+
+          .s-video-eval-menu {
+            position: absolute;
+            bottom: -8px;
+            left: 15px;
+
+            height: 40px;
+
+            padding-left: 10px;
+
+            display: flex;
+            align-items: center;
+
+            & > i {
+              color: white;
+              text-align: center;
+            }
+
+            & > .uk-icon-caret-left {
+            }
+
+            & > .uk-icon-caret-right {
+              margin-left: -1px;
+              margin-right: 5px;
+            }
+
+            .s-video-eval-content, .s-video-eval-add-types {
+              background: hsla(120, 0, 90%, 0.2);
+              border: 1px solid hsla(120, 0, 70%, 0.2);
+              padding: 5px;
+              margin-left: -5px;
+
+              color: white;
+
+              display: flex;
+
+              div {
+                cursor: default;
+              }
+            }
+
+            .s-video-eval-add-types {
+
+              & > a {
+                position: relative;
+                margin: 3px;
+                text-align: center;
+
+                background: hsl(26, 100%, 45%);
+                border-radius: 4px;
+                padding: 3px;
+
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+
+      .s-video-slider-bar {
+        background: black;
+        height: 50%;
+
+        display: flex;
+
+        cursor: pointer;
+
+        .s-video-slider-played {
+          background-color: red;
+          width: 0;
+          height: 100%;
+
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .s-video-slider-buffered {
+          background-color: hsl(0, 0, 50%);
+          width: 0;
+          height: 100%;
+        }
+      }
+    }
+
+    & > * {
+      padding: 0 8px;
+      margin: 0 2px;
+    }
+
+    a {
+      color: white;
+      cursor: pointer;
+
+      @include on-event {
+        text-decoration: none;
+        outline: none;
+      }
+    }
+  }
+}

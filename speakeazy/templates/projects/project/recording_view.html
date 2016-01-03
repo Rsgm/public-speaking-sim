@@ -1,83 +1,164 @@
-{% extends "base.html" %}
+{% extends "projects/project/project_base.html" %}
 {% load static %}{% load i18n %}
 {% block title %}{{ recording.slug }}{% endblock %}
 
+{% block p_breadcrumbs %}
+    <li class="uk-active"><span>{{ recording.slug }}</span></li>
+{% endblock %}
+
 {% block content %}
     {% csrf_token %}
+    <div id="recording-view" class="uk-block">
+        <div class="s-video">
+            {#                    <video src="{{ recording.video.url }}" autoplay></video>#}
+            <video class="uk-responsive-width uk-width-1-1"
+                   src="http://media.w3.org/2010/05/sintel/trailer.webm"></video>
 
-    <div id="recording-view" class="container">
-        <div class="s-section">
+            <div class="s-video-controller uk-contrast">
+                <div class="s-video-controller-background"></div>
 
-            <h4 class="s-section-title">{{ recording.project.name }} - {{ recording.slug }}</h4>
+                <div class="s-request-evaluation s-video-overlay"
+                     data-uk-dropdown="{mode:'click', pos:'bottom-right'}" data-uk-tooltip="{pos:'left'}"
+                     title="Request Evaluation">
+                    <i class="uk-icon-send"></i>
 
-            <div class="s-section-content">
-                <div class="s-video">
-                    {#                    <video src="{{ recording.video.url }}" autoplay></video>#}
-                    <video class="s-video-element" src="http://media.w3.org/2010/05/sintel/trailer.webm"></video>
+                    <ul class="uk-nav uk-dropdown uk-dropdown-scrollable">
+                        {#<li><a>group 1</a></li>#}
+                    </ul>
+                </div>
 
-                    <div class="s-video-controls">
-                        <a class="s-video-play">
-                            <i class="fa fa-play"></i>
-                            <i class="fa fa-pause"></i>
-                        </a>
+                {#                <div class="s-create-evaluation s-video-overlay">#}
+                {#                    <div class="s-evaluation-type uk-flex" data-uk-tooltip="{pos:'bottom'}"#}
+                {#                         title="Select Type of Evaluation">#}
+                {#                        <i class="uk-icon-eye uk-icon-hover"></i>#}
+                {#                        <i class="uk-icon-eye uk-icon-hover"></i>#}
+                {#                        <i class="uk-icon-eye uk-icon-hover"></i>#}
+                {#                    </div>#}
+                {#                    <div class="">#}
+                {#                        <input type="text" data-uk-tooltip="{pos:'bottom'}" title="Your Evaluation">#}
+                {#                    </div>#}
+                {#                </div>#}
 
-                        <div class="s-video-time">
-                            <span class="s-video-position">0:00</span>/<span class="s-video-duration"></span>
-                        </div>
+                <div class="s-evaluation-list uk-flex uk-flex-column">
+                    <div class="s-evaluation" data-uk-dropdown="{mode:'click', pos:'right-top'}">
+                        <i class="uk-icon-plus uk-icon-hover"></i>
 
-                        <div class="s-video-slider">
-                            <div class="s-video-points">
-                                <div class="s-video-pointer fa fa-chevron-down"></div>
+                        <div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">
+                            <div class="uk-panel-title">Evaluate</div>
+                            <div class="s-create-evaluation uk-flex uk-flex-column">
+                                <input type="text" data-uk-tooltip="{pos:'top'}" title="Write Your Evaluation">
 
-                                {% for point in point_list %}
-                                    <div class="s-video-marker" data-position="{{ point.time }}">
-                                        <div class="fa fa-caret-down fa-lg"></div>
-                                        <div class="fa fa-caret-up fa-lg"></div>
-
-                                        <div class="s-video-marker-container">
-
-                                            {% for eval in point.eval_list %}
-                                                <div class="s-video-eval fa {{ eval.type.fa_class }}"
-                                                     style="background: #{{ eval.type.color }};">
-                                                    <div class="s-video-eval-menu">
-                                                        <div class="fa fa-caret-left"></div>
-                                                        <div class="fa fa-caret-right"></div>
-
-                                                        <div class="s-video-eval-content">
-                                                            {{ eval.text }}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            {% endfor %}
-
-                                            <div class="s-video-eval-add fa fa-plus-square-o">
-                                                <div class="s-video-eval-menu">
-                                                    <div class="fa fa-caret-left"></div>
-                                                    <div class="fa fa-caret-right"></div>
-
-                                                    <div class="s-video-eval-add-types"></div>
-
-                                                    <div class="s-video-eval-content">
-                                                        <input type="text" title="Add evaluation">
-                                                        <i class="fa fa-share-square"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-
-                            </div>
-                            <div class="s-video-slider-bar">
-                                <div class="s-video-slider-played"></div>
-                                <div class="s-video-slider-buffered"></div>
+                                <div class="s-create-evaluation-info">Select type to finish</div>
+                                <div class="uk-flex uk-flex-wrap uk-flex-space-around">
+                                    <i class="uk-icon-eye uk-icon-button" data-uk-tooltip="{pos:'bottom'}"
+                                       title="Eye Contact"></i>
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        <a class="s-video-volume"><i class="fa fa-volume-up"></i></a>
-                        <a class="s-video-fullscreen"><i class="fa fa-expand"></i></a>
+                    <div class="s-evaluation" data-uk-dropdown="{mode:'click', pos:'right-top'}">
+                        <i class="uk-icon-eye uk-icon-hover"></i>
+
+                        <div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">
+                            <div class="uk-panel-title">user</div>
+
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit
+                            amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante
+                            hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet
+                            vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut
+                            libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit. Aenean ut gravida lorem.
+
+                            2016-01-01
+                        </div>
                     </div>
                 </div>
+
+                <div class="s-play-pause s-video-overlay">
+                    <i class="uk-icon-play uk-icon-hover"></i>
+                    <i class="uk-icon-pause uk-icon-hover"></i>
+                </div>
+
+                <div class="s-video-controls">
+                    <i class="uk-icon-volume-up uk-icon-hover s-video-volume"></i>
+
+                    <div class="s-video-time">
+                        <div class="s-time-played">0:00</div>
+
+                        <div class="s-slider">
+                            <div class="s-points">
+                                <i class="uk-icon-caret-down uk-icon-hover" data-uk-tooltip="{pos:'top'}" title=""></i>
+                            </div>
+
+                            <div class="s-slider-bar">
+                                <div class="s-slider-played"></div>
+                                <div class="s-slider-buffered"></div>
+                                <i class="s-slider-position uk-icon-dot-circle-o uk-icon-hover"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <i class="uk-icon-expand uk-icon-hover s-video-fullscreen"></i>
+                </div>
+
+                {#--------------------------------------------------#}
+                {##}
+                {#                <div class="s-video-time">#}
+                {#                    <span class="s-video-position">0:00</span>/<span class="s-video-duration"></span>#}
+                {#                </div>#}
+                {##}
+                {#                <div class="s-video-slider">#}
+                {#                    <div class="s-video-points">#}
+                {#                        <div class="s-video-pointer uk-icon-chevron-down"></div>#}
+                {##}
+                {#                        {% for point in point_list %}#}
+                {#                            <div class="s-video-marker" data-position="{{ point.time }}">#}
+                {#                                <div class="uk-icon-caret-down uk-icon-large"></div>#}
+                {#                                <div class="uk-icon-caret-up uk-icon-large"></div>#}
+                {##}
+                {#                                <div class="s-video-marker-container">#}
+                {##}
+                {#                                    {% for eval in point.eval_list %}#}
+                {#                                        <div class="s-video-eval fa {{ eval.type.fa_class }}"#}
+                {#                                             style="background: #{{ eval.type.color }};">#}
+                {#                                            <div class="s-video-eval-menu">#}
+                {#                                                <i class="uk-icon-caret-left"></i>#}
+                {#                                                <i class="uk-icon-caret-right"></i>#}
+                {##}
+                {#                                                <div class="s-video-eval-content">#}
+                {#                                                    {{ eval.text }}#}
+                {#                                                </div>#}
+                {#                                            </div>#}
+                {#                                        </div>#}
+                {#                                    {% endfor %}#}
+                {##}
+                {#                                    <div class="s-video-eval-add uk-icon-plus-square-o">#}
+                {#                                        <div class="s-video-eval-menu">#}
+                {#                                            <i class="uk-icon-caret-left"></i>#}
+                {#                                            <i class="uk-icon-caret-right"></i>#}
+                {##}
+                {#                                            <div class="s-video-eval-add-types"></div>#}
+                {##}
+                {#                                            <div class="s-video-eval-content">#}
+                {#                                                <input type="text" title="Add evaluation">#}
+                {#                                                <i class="uk-icon-share-square uk-icon-hover"></i>#}
+                {#                                            </div>#}
+                {#                                        </div>#}
+                {#                                    </div>#}
+                {#                                </div>#}
+                {#                            </div>#}
+                {#                        {% endfor %}#}
+                {##}
+                {#                    </div>#}
+                {#                    <div class="s-video-slider-bar">#}
+                {#                        <div class="s-video-slider-played"></div>#}
+                {#                        <div class="s-video-slider-buffered"></div>#}
+                {#                    </div>#}
+                {#                </div>#}
+                {##}
+                {#                <i class="uk-icon-volume-up uk-icon-hover s-video-volume"></i>#}
+                {#                <i class="uk-icon-expand uk-icon-hover s-video-fullscreen"></i>#}
             </div>
         </div>
     </div>

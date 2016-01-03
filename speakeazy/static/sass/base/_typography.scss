@@ -4,9 +4,9 @@
 body {
   color: $text-color;
   font: normal 125% / 1.4;
-  font-family: $text-font-stack !important;
+  font-family: $text-font-stack;
 }
 
-* {
-  font-family: inherit !important;
-}
+//* {
+//  font-family: inherit !important;
+//}

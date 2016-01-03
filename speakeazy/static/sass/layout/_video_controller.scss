@@ -1,0 +1,47 @@
+.s-video-controller {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  .s-video-controller-background {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .s-request-evaluation {
+    top: $video-player-offset;
+    right: $video-player-offset;
+  }
+
+  .s-evaluation-list {
+    top: $video-player-offset;
+    left: $video-player-offset;
+
+    max-height: 60%;
+  }
+
+  .s-create-evaluation {
+    top: $video-player-offset;
+    left: 35%;
+    right: 35%;
+    // make container with width:100%
+  }
+
+  .s-play-pause {
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    right: 50%;
+  }
+
+  .s-video-controls {
+    bottom: $video-player-offset;
+    left: $video-player-offset;
+    right: $video-player-offset;
+  }
+}

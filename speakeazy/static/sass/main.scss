@@ -7,7 +7,7 @@
 //
 //
 // 2. Vendors
-@import 'vendor/normalize';
+//@import 'vendor/normalize';
 //
 //
 // 3. Base stuff
@@ -20,6 +20,7 @@
 // 4. Layout-related sections
 @import 'layout/header';
 @import 'layout/footer';
+@import 'layout/video_controller';
 //
 //
 // 5. Components
@@ -28,6 +29,11 @@
 @import 'components/brand';
 @import 'components/create';
 @import 'components/panel';
+@import 'components/video';
+@import 'components/video_overlay';
+@import 'components/evaluation_list';
+@import 'components/request_evaluation';
+@import 'components/video_controls';
 //
 //
 // 6. Page-specific styles

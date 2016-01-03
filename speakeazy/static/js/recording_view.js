@@ -1,15 +1,16 @@
 (function () {
     var $videoContainer = $('.s-video');
-    var $video = $('.s-video-element');
+    var $video = $('.s-video video');
 
     // controls
-    var $controls = $('.s-video-controls'); // play and pause
-    var $play = $('.s-video-play .fa-play'); // play and pause
-    var $pause = $('.s-video-play .fa-pause'); // play and pause
+    var $controls = $('.s-video-controller');
+    var $controlsBackground = $('.s-video-controller-background');
+    var $play = $('.s-video-play');
+    var $pause = $('.s-video-pause');
     var $volume = $('.s-video-volume');
     var $fullscreen = $('.s-video-fullscreen');
-    var $position = $('.s-video-position');
-    var $duration = $('.s-video-duration');
+    var $position = $('.s-slider-position');
+    var $time = $('.s-time-played');
 
     // slider controls
     var $slider = $('.s-video-slider');
@@ -29,11 +30,9 @@
     var project = window.location.pathname.split('/')[2];
     var recording = window.location.pathname.split('/')[3];
 
-    $duration.text(calculateTime($video[0].duration));
     //$controls.hide();
     $play.hide();
     $pointer.hide();
-    //$video[0].play();
     setTimeout(startBuffer, 500);
     $markerContainer.hide();
     $evalMenu.hide();
@@ -93,7 +92,7 @@
         $video[0].muted = !$video[0].muted;
     });
 
-    $video.click(function () {
+    $controlsBackground.click(function () {
         if ($video[0].paused) {
             play();
         } else {
@@ -103,7 +102,7 @@
 
     $video.on('timeupdate', function () {
         calculateSlider();
-        $position.text(calculateTime($video[0].currentTime));
+        $time.text(calculateTime($video[0].currentTime));
     });
 
     $fullscreen.click(function () {
@@ -231,19 +230,19 @@
         var $newMarker = $('<div class="s-video-marker">');
         $newMarker.attr('data-position', Math.floor($video[0].currentTime));
 
-        $newMarker.append($('<div class="fa fa-caret-down fa-lg">'));
-        $newMarker.append($('<div class="fa fa-caret-up fa-lg">'));
+        $newMarker.append($('<div class="uk-icon-caret-down fa-lg">'));
+        $newMarker.append($('<div class="uk-icon-caret-up fa-lg">'));
 
         var $newMarkerConainer = $('<div class="s-video-marker-container">');
-        var $newMarkerAdd = $('<div class="s-video-eval-add fa fa-plus-square-o">');
+        var $newMarkerAdd = $('<div class="s-video-eval-add uk-icon-plus-square-o">');
         var $newMarkerMenu = $('<div class="s-video-eval-menu">');
-        $newMarkerMenu.append('<div class="fa fa-caret-left">');
-        $newMarkerMenu.append('<div class="fa fa-caret-right">');
+        $newMarkerMenu.append('<div class="uk-icon-caret-left">');
+        $newMarkerMenu.append('<div class="uk-icon-caret-right">');
         $newMarkerMenu.append('<div class="s-video-eval-add-types">');
 
         var $newMarkerContent = $('<div class="s-video-eval-content">');
         $newMarkerContent.append('<input type="text" title="Add evaluation">');
-        $newMarkerContent.append('<i class="fa fa-share-square">');
+        $newMarkerContent.append('<i class="uk-icon-share-square">');
 
         $points.append($newMarker);
         $newMarker.append($newMarkerConainer);
@@ -295,7 +294,7 @@
     }
 
     function addMarkerSendHandlers($m, sendCallback) {
-        $m.find('.s-video-eval-add .fa-share-square').click(function () {
+        $m.find('.s-video-eval-add .uk-icon-share-square').click(function () {
             sendEval($m, sendCallback);
         });
 
@@ -342,8 +341,8 @@
 
         for (var i = 0; i < evaluationTypes.length; i++) {
             var t = evaluationTypes[i];
-            var $type = $('<a class="fa">');
-            $type.addClass(t.fa_class);
+            var $type = $('<i>');
+            $type.addClass(t.icon_class);
             $type.css('background', '#' + t.color);
             $type.data('type', t.name);
             $types.append($type);

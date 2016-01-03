@@ -42,6 +42,9 @@ $mid-grey: #999 !default;
 /// @type Color
 $dark-grey: #444 !default;
 
+/// Very Dark grey
+/// @type Color
+$very-dark-grey: #222 !default;
 
 
 
@@ -61,10 +64,21 @@ $max-width: 1200px !default;
 /// @prop {String} keys - Keys are identifiers mapped to a given length
 /// @prop {Map} values - Values are actual breakpoints expressed in pixels
 /// @see {mixin} respond-to
+$breakpoint-sizes: (
+  'small': 320px,
+  'medium': 768px,
+  'large': 1024px,
+) !default;
+
+
+/// Breakpoint maxes map
+/// @prop {String} keys - Keys are identifiers mapped to a given length
+/// @prop {Map} values - Values are actual breakpoints expressed in pixels
+/// @see {mixin} respond-to
 $breakpoints: (
-  'small': (min-width: 320px),
-  'medium': (min-width: 768px),
-  'large': (min-width: 1024px),
+  'small': (max-width: map_get($breakpoint-sizes, 'small')),
+  'medium': (max-width: map_get($breakpoint-sizes, 'medium')),
+  'large': (max-width: map_get($breakpoint-sizes, 'large')),
 ) !default;
 
 
@@ -77,3 +91,12 @@ $breakpoints: (
 /// @example scss - When using a CDN
 ///   $base-url: 'http://cdn.example.com/assets/';
 $base-url: '/assets/' !default;
+
+
+
+
+// video player
+$video-player-offset: 30px !default;
+$video-control-active: #ee731b !default;
+$video-slider-height: 10px !default;
+$video-slider-primary-color: #1889f2 !default;

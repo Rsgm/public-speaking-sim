@@ -1,0 +1,53 @@
+.s-evaluation-list {
+  position: absolute;
+  //overflow-y: scroll; // todo: figure out what to do here
+
+  i {
+    cursor: pointer;
+  }
+
+  & > * {
+
+    & > i {
+      @extend .s-video-overlay;
+      //display: initial;
+      position: static;
+
+      width: 100%;
+      text-align: center;
+
+      margin: 10px 0;
+      cursor: pointer;
+    }
+
+    &:first-child { // will always be create evaluation
+
+      .s-create-evaluation {
+        input {
+          margin-bottom: 10px;
+        }
+
+        .s-create-evaluation-info {
+          text-align: center;
+        }
+
+        .uk-icon-button {
+          margin: 5px;
+        }
+      }
+
+      & > i {
+        margin-top: 0;
+      }
+    }
+
+    .uk-panel {
+      background: $dark-grey;
+      color: white;
+
+      .uk-panel-title {
+        color: $light-grey;;
+      }
+    }
+  }
+}

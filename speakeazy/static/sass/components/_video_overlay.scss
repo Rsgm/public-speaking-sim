@@ -1,0 +1,15 @@
+@media (max-width: map-get($breakpoint-sizes, 'small')) {
+  .s-video-overlay {
+    display: none;
+  }
+}
+
+.s-video-overlay {
+  background-color: $dark-grey;
+  position: absolute;
+  padding: 15px;
+
+  &.s-active {
+    background: $video-control-active;
+  }
+}

@@ -16,12 +16,8 @@
     {% block css %}
         <!-- Latest compiled and minified CSS -->
         {#        <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">#}
-{#                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">#}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/uikit.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/fonts/FontAwesome.otf">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/fonts/fontawesome-webfont.ttf">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/fonts/fontawesome-webfont.woff">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/fonts/fontawesome-webfont.woff2">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/components/tooltip.min.css">
 
         <!-- Your stuff: Third-party css libraries go here -->
 
@@ -40,7 +36,7 @@
 
 <div id="base-header">
     <nav class="uk-navbar">
-        <a class="uk-navbar-brand s-brand">Speak<span class="green">Eazy</span></a>
+        <a class="uk-navbar-brand s-brand" href="{% url 'projects:home' %}">Speak<span class="green">Eazy</span></a>
 
         <div class="uk-navbar-flip">
             <ul class="uk-navbar-nav">
@@ -69,9 +65,6 @@
     <ul class="uk-breadcrumb large">{% block breadcrumbs %}{% endblock %}</ul>
 </div>
 
-
-<i class="fa fa-hand-o-down"></i>
-
 <div id="error-notification" class="container">
     {% if messages %}
         {% for message in messages %}
@@ -88,6 +81,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     {#    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>#}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.2/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/js/components/tooltip.min.js"></script>
 
 
     <!-- Your stuff: Third-party javascript libraries go here -->

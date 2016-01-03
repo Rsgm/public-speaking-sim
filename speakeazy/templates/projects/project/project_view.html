@@ -1,29 +1,39 @@
-{% extends "base.html" %}
+{% extends "projects/project/project_base.html" %}
 {% load static %}{% load i18n %}
 {% block title %}{{ project.name }}{% endblock %}
 
+{% block project_breadcrumbs %}
+    <li class="uk-active"><span>{{ project.slug }}</span></li>
+{% endblock %}
+
 {% block content %}
-    <div class="container">
-        <div class="s-section">
+    <div id="project-list" class="uk-block uk-flex uk-grid">
 
-            <h4 class="s-section-title">{{ project.name }}</h4>
+        {% for recording in recording_list %}
+            <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
+                <a href="{% url 'projects:project:recordingView' project.slug recording.slug %}"
+                   class="">
 
-            <div class="s-list s-section-content">
-                {% for recording in recording_list %}
-                    <a href="{% url 'projects:project:recordingView' project.slug recording.slug %}"
-                       class="s-list-item">
-                        <h4 class="s-list-item-heading">{{ recording.slug }}</h4>
+                    <figure class="uk-overlay uk-overlay-hover">
                         <video class="s-video" src="{{ recording.thumbnail_video.url }}"
                                poster="{{ recording.thumbnail_image.url }}" loop></video>
-                    </a>
-                {% endfor %}
-
-                <a href="{% url 'recordings:record' project.slug %}"
-                   class="s-list-item s-list-add fa fa-plus-square-o"></a>
+                        <figcaption
+                                class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
+                            {{ recording.duration }}
+                        </figcaption>
+                    </figure>
+                </a>
             </div>
+        {% endfor %}
+
+        <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
+            <a href="{% url 'recordings:record' project.slug %}" class="uk-panel s-panel-add">
+                <i class="uk-text-contrast uk-icon-plus"></i>
+            </a>
         </div>
     </div>
 {% endblock %}
+
 
 {% block jquery %}
     <script src="{% static 'js/project_view.js' %}"></script>
