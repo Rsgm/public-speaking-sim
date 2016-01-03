@@ -49,7 +49,7 @@
 
         & > * {
           position: absolute;
-          top: -0.3em;
+          top: -7px;
           left: 0;
         }
       }
@@ -70,20 +70,19 @@
 
         .s-slider-played {
           background: $video-slider-primary-color;
-          width: 30%;
           height: 100%;
         }
 
         .s-slider-buffered {
           background: $mid-grey;
-          width: 30%;
           height: 100%;
         }
 
         .s-slider-position {
-          position: absolute;
+          position: relative;
           top: -2px;
-          left: 0;
+          right: 6.5px;
+          width: 0;
         }
       }
     }

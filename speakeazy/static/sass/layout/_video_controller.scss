@@ -34,9 +34,10 @@
 
   .s-play-pause {
     top: 50%;
-    bottom: 50%;
     left: 50%;
-    right: 50%;
+
+    margin-left: -$video-play-pause-width/2;
+    margin-top: -$video-play-pause-height/2;
   }
 
   .s-video-controls {

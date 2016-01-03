@@ -5,49 +5,66 @@
     // controls
     var $controls = $('.s-video-controller');
     var $controlsBackground = $('.s-video-controller-background');
-    var $play = $('.s-video-play');
-    var $pause = $('.s-video-pause');
+    var $play = $('.s-play-pause .uk-icon-play');
+    var $pause = $('.s-play-pause .uk-icon-pause');
     var $volume = $('.s-video-volume');
     var $fullscreen = $('.s-video-fullscreen');
-    var $position = $('.s-slider-position');
     var $time = $('.s-time-played');
 
     // slider controls
-    var $slider = $('.s-video-slider');
-    var $sliderBar = $('.s-video-slider-bar');
-    var $played = $('.s-video-slider-played');
-    var $buffered = $('.s-video-slider-buffered');
+    var $slider = $('.s-slider');
+    var $sliderBar = $('.s-slider-bar');
+    var $played = $('.s-slider-played');
+    var $buffered = $('.s-slider-buffered');
 
     // points
-    var $points = $('.s-video-points');
-    var $pointer = $('.s-video-pointer');
-    var $marker = $('.s-video-marker');
-    var $markerContainer = $('.s-video-marker-container');
-    var $eval = $('.s-video-eval, .s-video-eval-add');
-    var $evalMenu = $('.s-video-eval-menu');
-    var $evalAddTypes = $('.s-video-eval-add-types');
+    var $points = $('.s-points');
+    var $evaluations = $('.s-evaluation-list');
+    var $evaluation = $('.s-evaluation:not(.s-evaluation-add)');
+    var $evaluationAdd = $('.s-create-evaluation');
+    var $evaluationAddButton = $('.s-evaluation-add');
+    var $evaluationAddType = $('.s-create-evaluation .uk-icon-button');
 
-    var project = window.location.pathname.split('/')[2];
-    var recording = window.location.pathname.split('/')[3];
+    // normal variables
+    var project = window.location.pathname.split('/')[3];
+    var recording = window.location.pathname.split('/')[4];
+    var pointTimes = [];
+
+    var minDistance = 0;
+    var absoluteMinDistance = 1;
 
     //$controls.hide();
     $play.hide();
-    $pointer.hide();
     setTimeout(startBuffer, 500);
-    $markerContainer.hide();
-    $evalMenu.hide();
 
-    $marker.each(function () {
-        updateMarker($(this));
-        addEvalAddTypes($(this));
-        addMarkerHandlers($(this));
+    $video[0].load();
+    $video[0].ondurationchange = createEvaluations;
+
+    $video.on('timeupdate', function () {
+        calculateSlider();
+        $time.text(calculateTime($video[0].currentTime));
+        showEvaluations();
     });
 
-    //$videoContainer.hover(function () {
-    //    $controls.show();
-    //}, function () {
-    //    $controls.hide();
-    //});
+    $videoContainer.hover($.debounce(1000, true, function () {
+        $controls.removeClass('uk-animation-fade');
+    }), $.debounce(1000, function () {
+        $controls.addClass('uk-animation-fade');
+    }));
+
+    $videoContainer.mousemove(function () {
+        $controls.removeClass('uk-animation-fade');
+    });
+
+    $controlsBackground.mousestop(function () {
+        $controls.addClass('uk-animation-fade');
+    }, {
+        timeToStop: null,   // the amount of time the stop event has to run before it will not run at all anymore
+        delayToStop: '1200', // the delay for what is considered a "stop"
+        onMouseout: null,   // function to run when we mouseout of our element
+        onStopMove: null    // function to run when we start moving again after the stop
+    });
+
     $play.click(play);
     $pause.click(pause);
 
@@ -72,20 +89,12 @@
 
     $slider.mousemove(function (event) {
         if (event.pageX < $slider.offset().left || event.pageX > $slider.offset().left + $slider.width()) {
-            $pointer.hide();
             $(this).data('mousedown', false);
-        } else {
-            $pointer.offset({left: event.pageX - $pointer.width() / 2});
         }
     });
 
     $slider.mouseleave(function () {
-        $(this).find('.s-video-slider-bar').data('mousedown', false);
-        $pointer.hide();
-    });
-
-    $slider.mouseenter(function () {
-        $pointer.show()
+        $sliderBar.data('mousedown', false);
     });
 
     $volume.click(function () {
@@ -100,13 +109,25 @@
         }
     });
 
-    $video.on('timeupdate', function () {
-        calculateSlider();
-        $time.text(calculateTime($video[0].currentTime));
-    });
-
     $fullscreen.click(function () {
         var elem = $videoContainer[0];
+
+        //if (isFullscreen) {
+        //    $(this).removeClass('s-active');
+        //
+        //    if (elem.exitFullscreen) {
+        //        elem.exitFullscreen();
+        //    } else if (elem.mozCancelFullScreen) {
+        //        elem.mozCancelFullScreen();
+        //    } else if (elem.webkitExitFullscreen) {
+        //        elem.webkitExitFullscreen();
+        //    } else if (elem.msExitFullscreen) {
+        //        elem.msExitFullscreen();
+        //    }
+        //
+        //} else {
+        //$(this).addClass('s-active');
+
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
         } else if (elem.msRequestFullscreen) {
@@ -116,16 +137,37 @@
         } else if (elem.webkitRequestFullscreen) {
             elem.webkitRequestFullscreen();
         }
+        //}
     });
 
-    $pointer.click(function (event) {
-        $(this).hide();
-        changeCurrentTime(event);
-        createMarker();
+    $evaluationAddButton.click(function () {
+        pause();
     });
 
-    $pointer.mouseleave(function () {
-        $(this).find('.s-video-marker-container').hide();
+    $evaluationAddType.click(function () {
+        var $input = $evaluationAdd.find('input');
+        var text = $input.val();
+        var type = $(this).attr('title');
+        var time = $video[0].currentTime;
+
+        sendEval(text, type, Math.floor(time), function () {
+            $input.val('');
+
+            var createPoint = false;
+            $.each(pointTimes, function (i, point) {
+                if (Math.abs(time - point) > minDistance) {
+                    createPoint = true;
+                } else if (Math.abs(time - point) <= minDistance) {
+                    createPoint = false;
+                }
+            });
+
+            if (createPoint) {
+                addPoint(time);
+            }
+
+            addEvaluation(evaluation);
+        });
     });
 
 
@@ -153,7 +195,7 @@
         var currentBuffer = $video[0].buffered.end(0);
         var maxDuration = $video[0].duration;
         var playedPercentage = 100 * currentTime / maxDuration;
-        var bufferedPercentage = 100 * (currentBuffer - currentTime) / maxDuration;
+        var bufferedPercentage = 100 * (currentBuffer) / maxDuration - playedPercentage;
 
         $played.css('width', playedPercentage + '%');
         $buffered.css('width', bufferedPercentage + '%');
@@ -164,8 +206,8 @@
      * @param event jquery event
      */
     function changeCurrentTime(event) {
-        var x = event.pageX - $slider.offset().left;
-        $video[0].currentTime = x / $slider.width() * $video[0].duration;
+        var x = event.pageX - $sliderBar.offset().left;
+        $video[0].currentTime = x / $sliderBar.width() * $video[0].duration;
         calculateSlider();
     }
 
@@ -197,7 +239,7 @@
 
         var divisor_for_minutes = totalSeconds % (60 * 60);
         var minutes = Math.floor(divisor_for_minutes / 60);
-        var seconds = Math.ceil(divisor_for_minutes % 60);
+        var seconds = Math.floor(divisor_for_minutes % 60);
 
         if (seconds < 10) {
             seconds = '0' + seconds;
@@ -210,144 +252,101 @@
         }
     }
 
-    /**
-     * Updates the position of the marker
-     * @param $m the marker in which to update the position
-     */
-    function updateMarker($m) {
-        var played = $m.attr('data-position') / $video[0].duration;
-        var position = Math.floor($m.parent().width() * played - $m.width() / 2);
-
-        $m.css('left', position + 'px');
-    }
-
-    /**
-     * Creates a new marker at the current video time
-     */
-    function createMarker() {
-        // check for another marker at this position
-
-        var $newMarker = $('<div class="s-video-marker">');
-        $newMarker.attr('data-position', Math.floor($video[0].currentTime));
-
-        $newMarker.append($('<div class="uk-icon-caret-down fa-lg">'));
-        $newMarker.append($('<div class="uk-icon-caret-up fa-lg">'));
-
-        var $newMarkerConainer = $('<div class="s-video-marker-container">');
-        var $newMarkerAdd = $('<div class="s-video-eval-add uk-icon-plus-square-o">');
-        var $newMarkerMenu = $('<div class="s-video-eval-menu">');
-        $newMarkerMenu.append('<div class="uk-icon-caret-left">');
-        $newMarkerMenu.append('<div class="uk-icon-caret-right">');
-        $newMarkerMenu.append('<div class="s-video-eval-add-types">');
-
-        var $newMarkerContent = $('<div class="s-video-eval-content">');
-        $newMarkerContent.append('<input type="text" title="Add evaluation">');
-        $newMarkerContent.append('<i class="uk-icon-share-square">');
-
-        $points.append($newMarker);
-        $newMarker.append($newMarkerConainer);
-        $newMarkerConainer.append($newMarkerAdd);
-        $newMarkerAdd.append($newMarkerMenu);
-        $newMarkerMenu.append($newMarkerContent);
-
-        $newMarkerMenu.hide();
-        $newMarkerContent.hide();
-
-        updateMarker($newMarker);
-        addEvalAddTypes($newMarker);
-        addEvalAddHandlers($newMarker);
-
-        addMarkerSendHandlers($newMarker, function () {
-            $newMarker.off();
-            addMarkerHandlers($newMarker);
-        });
-
-        $newMarker.mouseleave(function () {
-            $newMarker.remove();
-        });
-    }
-
-    /**
-     * Add jquery handlers to marker events
-     * @param $m marker in which to add events
-     * @param sendCallback function to run after sending
-     */
-    function addMarkerHandlers($m, sendCallback) {
-        $m.hover(function () {
-            $(this).find('.s-video-marker-container').show();
-            updateMarker($(this));
-            $pointer.hide();
-        }, function () {
-            $(this).find('.s-video-marker-container').hide();
-            updateMarker($(this));
-            $pointer.show();
-        });
-
-        $m.find('.s-video-eval').hover(function () {
-            $(this).find('.s-video-eval-menu').show();
-        }, function () {
-            $(this).find('.s-video-eval-menu').hide();
-        });
-
-        addEvalAddHandlers($m);
-        addMarkerSendHandlers($m, sendCallback);
-    }
-
-    function addMarkerSendHandlers($m, sendCallback) {
-        $m.find('.s-video-eval-add .uk-icon-share-square').click(function () {
-            sendEval($m, sendCallback);
-        });
-
-        $m.find('.s-video-eval-add input').keypress(function (event) {
-            if (event.which == '13') {
-                sendEval($m, sendCallback);
-            }
-        });
-    }
-
-    function sendEval($m, sendCallback) {
+    function sendEval(type, text, time, sendCallback) {
         var data = {
-            type: $m.find('.s-video-eval-add').data('type'),
-            text: $m.find('.s-video-eval-content > input').val(),
-            seconds: $m.attr('data-position'),
+            type: type,
+            text: text,
+            seconds: time,
             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
         };
 
-        $.post('/projects/' + project + '/' + recording + '/evaluate/', data, function () {
+        $.post('/p/projects/' + project + '/' + recording + '/evaluate/', data, function () {
             sendCallback();
         });
     }
 
-    function addEvalAddHandlers($m) {
-        $m.find('.s-video-eval-add').hover(function () {
-            $(this).find('.s-video-eval-menu').show();
-            $(this).find('.s-video-eval-add-types').show();
-        }, function () {
-            $(this).find('.s-video-eval-menu').hide();
-            $(this).find('.s-video-eval-add-types').hide();
-            $(this).find('.s-video-eval-content').hide();
-            $m.find('.s-video-eval-add').data('type', undefined);
-        });
+    function createEvaluations() {
+        $video[0].ondurationchange = null;
 
-        $m.find('.s-video-eval-add-types > a').click(function () {
-            $m.find('.s-video-eval-add').data('type', $(this).data('type'));
-            $m.find('.s-video-eval-add-types').hide();
-            $m.find('.s-video-eval-content').show();
+        minDistance = 15 / $sliderBar.width() * $video[0].duration;
+        minDistance = minDistance > absoluteMinDistance ? minDistance : absoluteMinDistance;
+
+        var lastTime;
+
+        $.each(evaluations, function (i, evaluation) {
+            var distance = evaluation.time - lastTime;
+
+            if (!lastTime || distance > minDistance) {
+                lastTime = evaluation.time;
+
+                addPoint(evaluation.time);
+            }
+
+            addEvaluation(evaluation);
         });
     }
 
-    function addEvalAddTypes($m) {
-        var $types = $m.find('.s-video-eval-add-types');
+    function addPoint(time) {
+        pointTimes.push(time);
 
-        for (var i = 0; i < evaluationTypes.length; i++) {
-            var t = evaluationTypes[i];
-            var $type = $('<i>');
-            $type.addClass(t.icon_class);
-            $type.css('background', '#' + t.color);
-            $type.data('type', t.name);
-            $types.append($type);
-        }
+        var $point = $('<i class="uk-icon-caret-down uk-icon-small uk-icon-hover" data-uk-tooltip="{pos:\'top\'}">');
+        $point.attr('title', calculateTime(time));
 
-        $types.hide();
+        time += 0.5;
+
+        var timeScalar = time / $video[0].duration; // use the middle of the second
+        var position = Math.floor($sliderBar.parent().width() * timeScalar - 6);
+        $point.css('left', position + 'px');
+
+        $points.append($point);
+
+        $point.click(function () {
+            pause();
+
+            $video[0].currentTime = time;
+            calculateSlider();
+        });
+    }
+
+    function addEvaluation(evaluation) {
+        var $newEvaluation = $('<div class="s-evaluation" data-uk-dropdown="{mode:\'click\', pos:\'right-top\'}">');
+        $newEvaluation.attr('data-time', evaluation.time);
+        $newEvaluation.hide();
+
+        var $icon = $('<i class="uk-icon-hover">');
+        $icon.addClass(evaluation.icon);
+
+        var $content = $('<div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">');
+
+        var $user = $('<div class="uk-panel-title">');
+        $user.text(evaluation.evaluator);
+
+        var $text = $('<p>');
+        $text.text(evaluation.text);
+
+        var $date = $('<p>');
+
+        $content.append($user);
+        $content.append($text);
+        $content.append($date);
+
+        $newEvaluation.append($icon);
+        $newEvaluation.append($content);
+
+        $evaluations.append($newEvaluation);
+        $evaluation.push($newEvaluation);
+    }
+
+    function showEvaluations() {
+        var time = Math.floor($video[0].currentTime);
+
+        $evaluation.each(function (i, $e) {
+            var pos = parseInt($e.attr('data-time'), 10) + 0.5;
+            if (Math.abs(pos - time) <= minDistance) { // one of the few times to use rough equality
+                $e.show();
+            } else {
+                $e.hide();
+            }
+        });
     }
 })();

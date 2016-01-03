@@ -120,9 +120,9 @@ body {
     right: 35%; }
   .s-video-controller .s-play-pause {
     top: 50%;
-    bottom: 50%;
     left: 50%;
-    right: 50%; }
+    margin-left: -22px;
+    margin-top: -22px; }
   .s-video-controller .s-video-controls {
     bottom: 30px;
     left: 30px;
@@ -165,7 +165,7 @@ body {
 .s-video {
   position: relative; }
 
-@media (max-width: 320px) {
+@media (max-width: 768px) {
   .s-video-overlay, .s-evaluation-list > * > i, .s-video-controls > * {
     display: none; } }
 
@@ -238,7 +238,7 @@ body {
         height: 10px; }
         .s-video-controls .s-video-time .s-slider .s-points > * {
           position: absolute;
-          top: -0.3em;
+          top: -7px;
           left: 0; }
       .s-video-controls .s-video-time .s-slider .s-slider-bar {
         background-color: #222;
@@ -252,16 +252,18 @@ body {
         cursor: pointer; }
         .s-video-controls .s-video-time .s-slider .s-slider-bar .s-slider-played {
           background: #1889f2;
-          width: 30%;
           height: 100%; }
         .s-video-controls .s-video-time .s-slider .s-slider-bar .s-slider-buffered {
           background: #999;
-          width: 30%;
           height: 100%; }
         .s-video-controls .s-video-time .s-slider .s-slider-bar .s-slider-position {
-          position: absolute;
+          position: relative;
           top: -2px;
-          left: 0; }
+          right: 6.5px;
+          width: 0; }
+
+.s-play-pause {
+  cursor: pointer; }
 
 noscript > * {
   background: #85de97;

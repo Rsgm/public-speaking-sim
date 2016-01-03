@@ -17,7 +17,8 @@
         <!-- Latest compiled and minified CSS -->
         {#        <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">#}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/uikit.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/components/tooltip.min.css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/components/tooltip.min.css">
 
         <!-- Your stuff: Third-party css libraries go here -->
 
@@ -82,7 +83,8 @@
     {#    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>#}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.2/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/js/components/tooltip.min.js"></script>
-
+    <script src="{% static 'js/vendor/jquery.ba-throttle-debounce.min.js' %}"></script>
+    <script src="{% static 'js/vendor/mousestop.js' %}"></script>
 
     <!-- Your stuff: Third-party javascript libraries go here -->
     {% block extra_js_libraries %}{% endblock extra_js_libraries %}

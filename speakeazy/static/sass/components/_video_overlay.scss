@@ -1,4 +1,4 @@
-@media (max-width: map-get($breakpoint-sizes, 'small')) {
+@media (max-width: map-get($breakpoint-sizes, 'medium')) {
   .s-video-overlay {
     display: none;
   }
@@ -6,6 +6,7 @@
 
 .s-video-overlay {
   background-color: $dark-grey;
+  //opacity: 0.7;
   position: absolute;
   padding: 15px;
 
