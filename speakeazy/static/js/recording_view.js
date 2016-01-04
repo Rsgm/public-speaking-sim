@@ -68,6 +68,8 @@
         onStopMove: null    // function to run when we start moving again after the stop
     });
 
+    $controlsBackground.click(playPause);
+    $play.parent().click(playPause);
     $play.click(play);
     $pause.click(pause);
 
@@ -104,13 +106,6 @@
         $video[0].muted = !$video[0].muted;
     });
 
-    $controlsBackground.click(function () {
-        if ($video[0].paused) {
-            play();
-        } else {
-            pause();
-        }
-    });
 
     $fullscreen.click(function () {
         var elem = $videoContainer[0];
@@ -158,16 +153,7 @@
         sendEval(type, text, time, function () {
             $input.val('');
 
-            var createPoint = true;
-            $.each(pointTimes, function (i, point) {
-                if (Math.abs(time - point) <= minDistance) {
-                    createPoint = false;
-                }
-            });
-
-            if (createPoint) {
-                addPoint(time);
-            }
+            addPoint(time);
 
             addEvaluation({
                 evaluator: currentUser,
@@ -238,6 +224,17 @@
     }
 
     /**
+     * Toggles playing and pausing the video
+     */
+    function playPause() {
+        if ($video[0].paused) {
+            play();
+        } else {
+            pause();
+        }
+    }
+
+    /**
      * Calculates the time and returns an [h:]m:ss representation of it
      * @param totalSeconds time in seconds
      * @returns {string} [h:]m:ss
@@ -282,27 +279,35 @@
         var lastTime;
 
         $.each(evaluations, function (i, evaluation) {
-            var distance = evaluation.time - lastTime;
-
-            if (!lastTime || distance > minDistance) {
-                lastTime = evaluation.time;
-
-                addPoint(evaluation.time);
-            }
+            addPoint(evaluation.time);
 
             addEvaluation(evaluation).hide();
         });
     }
 
     function addPoint(time) {
+        var createPoint = true;
+        $.each(pointTimes, function (i, point) {
+            if (Math.abs(time - point) < minDistance) {
+                createPoint = false;
+            }
+        });
+
+        if (!createPoint) {
+            return;
+        }
+
         pointTimes.push(time);
 
         var $point = $('<i class="uk-icon-caret-down uk-icon-small uk-icon-hover" data-uk-tooltip="{pos:\'top\'}">');
         $point.attr('title', calculateTime(time));
 
-        time += 0.5;
+        var duration = $video[0].duration;
 
-        var timeScalar = time / $video[0].duration; // use the middle of the second
+        time += 0.5;
+        time = time < duration ? time : duration;
+
+        var timeScalar = time / duration; // use the middle of the second
         var position = Math.floor($sliderBar.parent().width() * timeScalar - 6);
         $point.css('left', position + 'px');
 

@@ -2,7 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
-from speakeazy.recordings.views import Record, start, upload, finish
+from speakeazy.recordings.recordView import Record, start, upload, finish
 
 urlpatterns = [
     url(

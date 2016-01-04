@@ -10,9 +10,9 @@
     {% csrf_token %}
     <div id="recording-view" class="uk-block">
         <div class="s-video">
-            {#                    <video src="{{ recording.video.url }}" autoplay></video>#}
+            {#                    <video class="uk-responsive-width uk-width-1-1" src="{{ recording.video.url }}" autoplay></video>#}
             <video class="uk-responsive-width uk-width-1-1"
-                   src="http://media.w3.org/2010/05/sintel/trailer.webm"></video>
+                   src="http://media.w3.org/2010/05/sintel/trailer.webm" autoplay></video>
 
             <div class="s-video-controller uk-contrast uk-animation-reverse uk-animation-fade">
                 <div class="s-video-controller-background"></div>

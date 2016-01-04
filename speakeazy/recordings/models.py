@@ -44,3 +44,27 @@ class UploadPiece(Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class EvaluationType(Model):
+    name = models.CharField(unique=True, max_length=30)
+    # description = models.CharField(unique=True, max_length=120)
+    # color = models.CharField(unique=True, max_length=6)
+    icon_class = models.CharField(unique=True, max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
+class Evaluation(Model):
+    evaluator = models.ForeignKey(User, null=True, blank=True)
+    recording = models.ForeignKey(Recording)
+
+    type = models.ForeignKey('EvaluationType', null=True, blank=True)
+    text = models.TextField()
+    seconds = models.IntegerField(null=True, blank=True)
+
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '%s - %s- %s' % (self.recording, self.seconds, self.type)

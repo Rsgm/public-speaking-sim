@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
 from speakeazy.projects.views.project.projectView import ProjectView
-from speakeazy.projects.views.project.recordingView import RecordingView, create_evaluation
+from speakeazy.recordings.recordingView import RecordingView, create_evaluation
 
 urlpatterns = [
     url(

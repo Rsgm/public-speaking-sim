@@ -3,17 +3,18 @@ from __future__ import absolute_import, unicode_literals
 from speakeazy.groups.mixins import ADD_SUBMISSION
 from speakeazy.groups.models import Group
 
-from speakeazy.projects.models import Recording, Evaluation, EvaluationType
+from speakeazy.projects.models import Recording
 
 from braces.views import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
+from speakeazy.recordings.models import EvaluationType, Evaluation
 from vanilla.views import TemplateView
 
 
 class RecordingView(LoginRequiredMixin, TemplateView):
-    template_name = 'projects/project/recording_view.html'
+    template_name = 'recordings/recording_view.html'
 
     def get_context_data(self, **kwargs):
         kwargs['view'] = self
