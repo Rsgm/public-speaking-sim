@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+from speakeazy.groups.mixins import ADD_SUBMISSION
+from speakeazy.groups.models import Group
 
 from speakeazy.projects.models import Recording, Evaluation, EvaluationType
 
@@ -19,7 +21,11 @@ class RecordingView(LoginRequiredMixin, TemplateView):
         kwargs['recording'] = get_object_or_404(
             Recording.objects.filter(project__user=self.request.user, project__slug=self.kwargs['project'],
                                      slug=self.kwargs['recording']))
+
         kwargs['evaluation_type_list'] = EvaluationType.objects.all()
+        kwargs['evaluation_list'] = Evaluation.objects.filter(recording=kwargs['recording']).order_by('seconds')
+        kwargs['group_list'] = Group.objects.filter(groupmembership__user=self.request.user,
+                                                    groupmembership__authorizations__permissions__name=ADD_SUBMISSION)
 
         return kwargs
 
@@ -31,6 +37,7 @@ def create_evaluation(request, *args, **kwargs):
 
     post = request.POST
     evaluation_type = get_object_or_404(EvaluationType, name=post['type'])
+
     evaluation = Evaluation(evaluator=request.user, recording=recording, type=evaluation_type, text=post['text'],
                             seconds=int(post['seconds']))
     evaluation.save()

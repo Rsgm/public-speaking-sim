@@ -44,7 +44,7 @@ class Evaluation(Model):
 
     type = models.ForeignKey('EvaluationType', null=True, blank=True)
     text = models.TextField()
-    time = models.IntegerField(null=True, blank=True)
+    seconds = models.IntegerField(null=True, blank=True)
 
     created_on = models.DateTimeField(auto_now_add=True)
 

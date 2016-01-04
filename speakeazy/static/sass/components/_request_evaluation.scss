@@ -7,7 +7,7 @@
     //max-height: 200px;
     //overflow-y: scroll;
 
-    li:not(.uk-nav-header):not(.uk-nav-divider) {
+    li:not(.uk-nav-header):not(.uk-nav-divider) > a {
       @include on-event {
         background-color: $video-control-active;
       }

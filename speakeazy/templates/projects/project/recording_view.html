@@ -18,16 +18,20 @@
                 <div class="s-video-controller-background"></div>
 
                 {% if group_list %}
-                    <div class="s-request-evaluation s-video-overlay uk-icon-hover"
-                         data-uk-dropdown="{mode:'click', pos:'bottom-right'}" data-uk-tooltip="{pos:'left'}"
-                         title="Request Evaluation">
-                        <i class="uk-icon-send"></i>
+                    <div class="s-request-evaluation s-video-overlay"
+                         data-uk-dropdown="{mode:'click', pos:'bottom-right'}">
+                        <i class="uk-icon-send uk-icon-hover"></i>
 
-                        <ul class="uk-nav uk-dropdown uk-dropdown-scrollable">
-                            {% for group in group_list %}
-                                <li><a data-group="">{{ group.name }}</a></li>
-                            {% endfor %}
-                        </ul>
+                        <div class="uk-dropdown uk-dropdown-scrollable">
+                            <ul class="uk-nav uk-nav-dropdown ">
+                                <li class="uk-nav-header">Request Evaluation</li>
+                                <li class="uk-nav-divider"></li>
+
+                                {% for group in group_list %}
+                                    <li><a data-group="{{ group.slug }}">{{ group.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                 {% endif %}
 
@@ -44,7 +48,8 @@
                                 <div class="uk-flex uk-flex-wrap uk-flex-space-around">
                                     {% for evaluation_type in evaluation_type_list %}
                                         <i class="{{ evaluation_type.icon_class }} uk-icon-button"
-                                           data-uk-tooltip="{pos:'bottom'}" title="{{ evaluation_type.name }}"></i>
+                                           data-uk-tooltip="{pos:'top'}" title="{{ evaluation_type.name }}"
+                                           data-type="{{ evaluation_type.name }}"></i>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -89,11 +94,11 @@
         var evaluations = [
             {% for evaluation in evaluation_list %}
                 {
-                    time: {{ evaluation.time }},
+                    time: {{ evaluation.seconds }},
                     evaluator: '{{ evaluation.evaluator }}',
                     icon: '{{ evaluation.type.icon_class }}',
                     text: '{{ evaluation.text }}.'
-                }
+                },
             {% endfor %}
         ];
     </script>

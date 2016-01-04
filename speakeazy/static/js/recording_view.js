@@ -48,16 +48,19 @@
 
     $videoContainer.hover($.debounce(1000, true, function () {
         $controls.removeClass('uk-animation-fade');
+        $videoContainer.css('cursor', 'default');
     }), $.debounce(1000, function () {
         $controls.addClass('uk-animation-fade');
     }));
 
     $videoContainer.mousemove(function () {
         $controls.removeClass('uk-animation-fade');
+        $videoContainer.css('cursor', 'default');
     });
 
     $controlsBackground.mousestop(function () {
         $controls.addClass('uk-animation-fade');
+        $videoContainer.css('cursor', 'none');
     }, {
         timeToStop: null,   // the amount of time the stop event has to run before it will not run at all anymore
         delayToStop: '1200', // the delay for what is considered a "stop"
@@ -145,19 +148,19 @@
     });
 
     $evaluationAddType.click(function () {
+        var $type = $(this);
+
         var $input = $evaluationAdd.find('input');
         var text = $input.val();
-        var type = $(this).attr('title');
-        var time = $video[0].currentTime;
+        var type = $(this).attr('data-type');
+        var time = Math.floor($video[0].currentTime);
 
-        sendEval(text, type, Math.floor(time), function () {
+        sendEval(type, text, time, function () {
             $input.val('');
 
-            var createPoint = false;
+            var createPoint = true;
             $.each(pointTimes, function (i, point) {
-                if (Math.abs(time - point) > minDistance) {
-                    createPoint = true;
-                } else if (Math.abs(time - point) <= minDistance) {
+                if (Math.abs(time - point) <= minDistance) {
                     createPoint = false;
                 }
             });
@@ -166,7 +169,12 @@
                 addPoint(time);
             }
 
-            addEvaluation(evaluation);
+            addEvaluation({
+                evaluator: currentUser,
+                text: text,
+                icon: $type.attr('class').split(/\s+/)[0],
+                time: time
+            });
         });
     });
 
@@ -282,7 +290,7 @@
                 addPoint(evaluation.time);
             }
 
-            addEvaluation(evaluation);
+            addEvaluation(evaluation).hide();
         });
     }
 
@@ -311,7 +319,6 @@
     function addEvaluation(evaluation) {
         var $newEvaluation = $('<div class="s-evaluation" data-uk-dropdown="{mode:\'click\', pos:\'right-top\'}">');
         $newEvaluation.attr('data-time', evaluation.time);
-        $newEvaluation.hide();
 
         var $icon = $('<i class="uk-icon-hover">');
         $icon.addClass(evaluation.icon);
@@ -335,6 +342,8 @@
 
         $evaluations.append($newEvaluation);
         $evaluation.push($newEvaluation);
+
+        return $newEvaluation;
     }
 
     function showEvaluations() {

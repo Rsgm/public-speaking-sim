@@ -204,7 +204,7 @@ body {
   cursor: pointer; }
   .s-request-evaluation .uk-dropdown {
     background-color: #444; }
-    .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider):hover, .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider):active, .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider):focus {
+    .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:hover, .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:active, .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:focus {
       background-color: #ee731b; }
 
 .s-video-controls {
@@ -238,7 +238,7 @@ body {
         height: 10px; }
         .s-video-controls .s-video-time .s-slider .s-points > * {
           position: absolute;
-          top: -7px;
+          top: -6px;
           left: 0; }
       .s-video-controls .s-video-time .s-slider .s-slider-bar {
         background-color: #222;
@@ -259,7 +259,7 @@ body {
         .s-video-controls .s-video-time .s-slider .s-slider-bar .s-slider-position {
           position: relative;
           top: -2px;
-          right: 6.5px;
+          right: 6px;
           width: 0; }
 
 .s-play-pause {
