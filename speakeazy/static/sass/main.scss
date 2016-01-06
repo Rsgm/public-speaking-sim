@@ -20,7 +20,8 @@
 // 4. Layout-related sections
 @import 'layout/header';
 @import 'layout/footer';
-@import 'layout/video_controller';
+@import 'layout/evaluation_player';
+@import 'layout/recording_player';
 //
 //
 // 5. Components
@@ -29,17 +30,20 @@
 @import 'components/brand';
 @import 'components/create';
 @import 'components/panel';
-@import 'components/video';
+@import 'components/video_button';
 @import 'components/video_overlay';
 @import 'components/evaluation_list';
 @import 'components/request_evaluation';
 @import 'components/video_controls';
 @import 'components/video_play_pause';
+@import 'components/video_button';
+@import 'components/recording_volume';
 //
 //
 // 6. Page-specific styles
 @import 'pages/base';
 @import 'pages/home';
+@import 'pages/record';
 //
 //
 // 7. Themes

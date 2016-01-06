@@ -8,11 +8,9 @@
 
 {% block content %}
     {% csrf_token %}
-    <div id="recording-view" class="uk-block">
-        <div class="s-video">
-            {#                    <video class="uk-responsive-width uk-width-1-1" src="{{ recording.video.url }}" autoplay></video>#}
-            <video class="uk-responsive-width uk-width-1-1"
-                   src="http://media.w3.org/2010/05/sintel/trailer.webm" autoplay></video>
+    <div id="recording-view" class="uk-flex uk-flex-center">
+        <div class="s-evaluation-player">
+            <video class="uk-responsive-width" src="{{ recording.video.url }}" autoplay></video>
 
             <div class="s-video-controller uk-contrast uk-animation-reverse uk-animation-fade">
                 <div class="s-video-controller-background"></div>
@@ -41,8 +39,8 @@
 
                         <div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">
                             <div class="uk-panel-title">Evaluate</div>
-                            <div class="s-create-evaluation uk-flex uk-flex-column">
-                                <input type="text" data-uk-tooltip="{pos:'top'}" title="Write Your Evaluation">
+                            <form class="s-create-evaluation uk-form uk-flex uk-flex-column">
+                                <textarea placeholder="Your Evaluation"></textarea>
 
                                 <div class="s-create-evaluation-info">Select type to finish</div>
                                 <div class="uk-flex uk-flex-wrap uk-flex-space-around">
@@ -52,7 +50,7 @@
                                            data-type="{{ evaluation_type.name }}"></i>
                                     {% endfor %}
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -80,7 +78,7 @@
                         </div>
                     </div>
 
-                    <i class="uk-icon-expand uk-icon-hover s-video-fullscreen"></i>
+{#                    <i class="uk-icon-expand uk-icon-hover s-video-fullscreen"></i>#}
                 </div>
             </div>
         </div>
@@ -89,7 +87,11 @@
 
 {% block template_scripts %}
     <script>
-        var currentUser = '{{ user.username }}';
+        var se = {
+            user: '{{ user.username }}',
+            project: '{{ recording.project.slug }}',
+            recording: '{{ recording.slug }}'
+        };
 
         var evaluations = [
             {% for evaluation in evaluation_list %}

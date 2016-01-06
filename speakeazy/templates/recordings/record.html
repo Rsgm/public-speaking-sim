@@ -1,59 +1,53 @@
 {% extends "base.html" %}
 {% load static %}{% load i18n %}
-{% block title %}Projects{% endblock %}
+{% block title %}Record{% endblock %}
+
+{% block breadcrumbs %}
+    <li><span>r</span></li>
+    <li class="uk-active"><span>{{ project.slug }}</span></li>
+{% endblock %}
 
 {% block content %}
-    {% csrf_token %}
+    <div id="record">
+        {% csrf_token %}
 
-    <div id="headingDiv">
-        <h1 class="text-center">Practice <span class="glyphicon glyphicon-question-sign"
-                                               data-tooltip-placement="bottom"
-                                               data-tooltip="Make sure you’re in the frame. Decide where you will be standing when speaking to the audience in the next step and when speaking from that distance the audio marker is well in the green."></span>
-        </h1>
-    </div>
+        <!-- preview -->
+        <div id="preview" class="uk-flex uk-flex-center">
+            <div class="s-recording-player">
+                <video id="setup-video" class="uk-responsive-width s-preview"></video>
+                <div></div>
 
+                <a id="start-recording" class="s-video-button s-video-overlay">Start Recording</a>
 
-    <div id="dashboardBody">
-        <div class="recording-page">
-            <!-- preview -->
-            <div class="preview container" id="preview">
-                <button class="btn btn-primary text-center" id="start-recording">
-                    Start Recording
-                </button>
-
-                <div class="row-fluid">
-                    <div class="col-md-4 text-center col-md-offset-4">
-                        <video class="setup-video-new s-preview" id="setup-video" width="400" height="300"></video>
-                    </div>
-
-                    <div class="col-md-2 col-md-offset-1 volume">
-                        <span class="glyphicon glyphicon-volume-up"></span>
-
-                        <div class="background">
-                            <span class="glyphicon glyphicon-menu-down slider" data-ng-style="vm.slider"></span>
-                        </div>
-                    </div>
-                </div>
+                {#            <div class="s-recording-volume s-video-overlay">#}
+                {#                <div id="volume-high"></div>#}
+                {#                <div id="volume-medium"></div>#}
+                {#                <div id="volume-low"></div>#}
+                {#                <div id="volume-slider"></div>#}
+                {#            </div>#}
             </div>
 
-            <!-- Recording -->
-            <div id="recording">
-                <button class="btn btn-primary text-center" id="stop-recording">
-                    stop
-                </button>
+            {# Make sure you’re in the frame. Decide where you will be standing when speaking to the audience in the next step and when speaking from that distance the audio marker is well in the green.#}
+        </div>
 
-                <video id="audience-video" class="embed-responsive-item" src="{{ project.audience.file.url }}"
+        <!-- Recording -->
+        <div id="recording" class="uk-flex uk-flex-center">
+            <div class="s-recording-player">
+                <video id="audience-video" class="uk-responsive-width" src="{{ project.audience.file.url }}"
                        preload></video>
+                <div></div>
+
+                <a id="stop-recording" class="s-video-button s-video-overlay">Stop</a>
 
                 <!--<timer></timer>-->
             </div>
+        </div>
 
-            <!-- uploading -->
-            <div class="upload-progress" id="finished">
-                <h1 class="text-center">Uploading</h1>
+        <!-- uploading -->
+        <div class="upload-progress" id="finished">
+            <h1 class="text-center">Uploading</h1>
 
-                <progressbar value="vm.progress" class="progress-striped active">{{ vm.progress }}%</progressbar>
-            </div>
+            <progressbar value="vm.progress" class="progress-striped active">{{ vm.progress }}%</progressbar>
         </div>
     </div>
 {% endblock content %}
@@ -64,4 +58,12 @@
 
 {% block jquery %}
     <script src="{% static 'js/record.js' %}"></script>
+{% endblock %}
+
+{% block template_scripts %}
+    <script>
+        var se = {
+            project: '{{ project.slug }}'
+        };
+    </script>
 {% endblock %}

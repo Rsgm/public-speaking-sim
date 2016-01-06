@@ -1,0 +1,33 @@
+.s-recording-player {
+  position: relative;
+
+  #start-recording {
+    position: absolute;
+    left: $video-player-offset;
+    top: $video-player-offset;
+  }
+
+  .s-recording-volume {
+    position: absolute;
+    left: $video-player-offset;
+    bottom: $video-player-offset;
+  }
+
+  #stop-recording {
+    position: absolute;
+    left: $video-player-offset;
+    top: $video-player-offset;
+  }
+
+  video {
+    max-height: 95vh;
+  }
+
+  & > div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}

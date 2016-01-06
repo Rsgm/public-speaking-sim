@@ -2,19 +2,21 @@ from string import ascii_lowercase
 
 from braces.views import LoginRequiredMixin
 from django.core.urlresolvers import reverse
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from random import choice
 from speakeazy.groups.mixins import GroupPermissiondMixin, LIST_INVITE, VIEW_INVITE, ADD_INVITE, UPDATE_INVITE, \
-    DELETE_INVITE
-from speakeazy.groups.models import Submission
+    DELETE_INVITE, EVALUATE_SUBMISSION
+from speakeazy.groups.models import Submission, SUBMISSION_READY
 from speakeazy.groups.views.group.invite.forms import UpdateForm, AddForm
+from speakeazy.recordings.models import EvaluationType, Evaluation
 from vanilla.model_views import DetailView, ListView, DeleteView, UpdateView, CreateView
+from vanilla.views import TemplateView
 
 
 class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
-    model = Submission
     template_name = 'groups/group/invite/list.html'
+    model = Submission
 
     group_permission = LIST_INVITE
 
@@ -24,8 +26,8 @@ class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
 
 
 class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
-    model = Submission
     template_name = 'groups/group/invite/view.html'
+    model = Submission
 
     group_permission = VIEW_INVITE
 
@@ -36,9 +38,9 @@ class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
 
 
 class Add(LoginRequiredMixin, GroupPermissiondMixin, CreateView):
+    template_name = 'groups/group/invite/add.html'
     model = Submission
     form_class = AddForm
-    template_name = 'groups/group/invite/add.html'
 
     group_permission = ADD_INVITE
 
@@ -72,9 +74,9 @@ class Add(LoginRequiredMixin, GroupPermissiondMixin, CreateView):
 
 
 class Update(LoginRequiredMixin, GroupPermissiondMixin, UpdateView):
+    template_name = 'actions/update.html'
     model = Submission
     form_class = UpdateForm
-    template_name = 'actions/update.html'
 
     group_permission = UPDATE_INVITE
 
@@ -86,8 +88,8 @@ class Update(LoginRequiredMixin, GroupPermissiondMixin, UpdateView):
 
 
 class Delete(LoginRequiredMixin, GroupPermissiondMixin, DeleteView):
-    model = Submission
     template_name = 'groups/group/invite/delete.html'
+    model = Submission
 
     group_permission = DELETE_INVITE
 
@@ -98,3 +100,47 @@ class Delete(LoginRequiredMixin, GroupPermissiondMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('groups:group:invite:list', kwargs={'group': self.group.slug})
+
+
+class Evaluate(LoginRequiredMixin, GroupPermissiondMixin, TemplateView):
+    template_name = 'groups/group/evaluation/evaluate_view.html'
+    group_permission = EVALUATE_SUBMISSION
+
+    def get_context_data(self, **kwargs):
+        submission = self.kwargs['submission']
+
+        kwargs['view'] = self
+        kwargs['group'] = self.group
+
+        # todo: allow viewing submissions that are not started xor started by the current user
+        kwargs['submission'] = get_object_or_404(Submission,
+                                                 group=self.group,
+                                                 pk=submission,
+                                                 for_evaluation=True,
+                                                 state=SUBMISSION_READY)
+        kwargs['evaluation_type_list'] = EvaluationType.objects.all()
+
+        return kwargs
+
+    def post(self, request, *args, **kwargs):
+        submission = kwargs['submission']
+
+        post = request.POST
+        text = post['text']
+        eval_type = post['type']
+        seconds = int(post['seconds'])
+
+        submission = get_object_or_404(Submission, group=self.group, pk=submission, for_evaluation=True)
+
+        recording = submission.recording
+
+        evaluation_type = get_object_or_404(EvaluationType, name=eval_type)
+
+        evaluation = Evaluation(evaluator=request.user,
+                                recording=recording,
+                                type=evaluation_type,
+                                text=text,
+                                seconds=seconds)
+        evaluation.save()
+
+        return HttpResponse()

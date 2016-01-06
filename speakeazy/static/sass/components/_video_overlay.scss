@@ -8,9 +8,15 @@
   background-color: $dark-grey;
   //opacity: 0.7;
   position: absolute;
-  padding: 15px;
+  padding: $video-overlay-padding;
+  color: $video-overlay-color;
 
   &.s-active {
     background: $video-control-active;
+  }
+
+  @include on-event() {
+    color: $video-overlay-color-hover;
+    text-decoration: none;
   }
 }

@@ -35,6 +35,9 @@ body {
   font: normal 125% / 1.4;
   font-family: "Open Sans", "Arial", sans-serif; }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Open Sans", "Arial", sans-serif; }
+
 /**
  * Clear inner floats
  */
@@ -95,38 +98,61 @@ body {
   padding: 25px;
   margin-top: 0; }
 
-.s-video-controller {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0; }
-  .s-video-controller .s-video-controller-background {
+.s-evaluation-player {
+  position: relative; }
+  .s-evaluation-player .s-video-controller {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0; }
-  .s-video-controller .s-request-evaluation {
-    top: 30px;
-    right: 30px; }
-  .s-video-controller .s-evaluation-list {
-    top: 30px;
+    .s-evaluation-player .s-video-controller .s-video-controller-background {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0; }
+    .s-evaluation-player .s-video-controller .s-request-evaluation {
+      top: 30px;
+      right: 30px; }
+    .s-evaluation-player .s-video-controller .s-evaluation-list {
+      top: 30px;
+      left: 30px;
+      max-height: 60%; }
+    .s-evaluation-player .s-video-controller .s-play-pause {
+      top: 50%;
+      left: 50%;
+      margin-left: -22px;
+      margin-top: -22px; }
+    .s-evaluation-player .s-video-controller .s-video-controls {
+      bottom: 30px;
+      left: 30px;
+      right: 30px; }
+  .s-evaluation-player video {
+    max-height: 95vh; }
+
+.s-recording-player {
+  position: relative; }
+  .s-recording-player #start-recording {
+    position: absolute;
     left: 30px;
-    max-height: 60%; }
-  .s-video-controller .s-create-evaluation {
-    top: 30px;
-    left: 35%;
-    right: 35%; }
-  .s-video-controller .s-play-pause {
-    top: 50%;
-    left: 50%;
-    margin-left: -22px;
-    margin-top: -22px; }
-  .s-video-controller .s-video-controls {
-    bottom: 30px;
+    top: 30px; }
+  .s-recording-player .s-recording-volume {
+    position: absolute;
     left: 30px;
-    right: 30px; }
+    bottom: 30px; }
+  .s-recording-player #stop-recording {
+    position: absolute;
+    left: 30px;
+    top: 30px; }
+  .s-recording-player video {
+    max-height: 95vh; }
+  .s-recording-player > div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; }
 
 .uk-breadcrumb.large *, .uk-breadcrumb.large *::before {
   font-size: 24px; }
@@ -162,9 +188,6 @@ body {
     padding: 50px 0;
     font-size: 22px; }
 
-.s-video {
-  position: relative; }
-
 @media (max-width: 768px) {
   .s-video-overlay, .s-evaluation-list > * > i, .s-video-controls > * {
     display: none; } }
@@ -172,9 +195,13 @@ body {
 .s-video-overlay, .s-evaluation-list > * > i, .s-video-controls > * {
   background-color: #444;
   position: absolute;
-  padding: 15px; }
+  padding: 15px;
+  color: #fff; }
   .s-video-overlay.s-active, .s-evaluation-list > * > i.s-active, .s-video-controls > .s-active {
     background: #ee731b; }
+  .s-video-overlay:hover, .s-evaluation-list > * > i:hover, .s-video-controls > :hover, .s-video-overlay:active, .s-evaluation-list > * > i:active, .s-video-controls > :active, .s-video-overlay:focus, .s-evaluation-list > * > i:focus, .s-video-controls > :focus {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none; }
 
 .s-evaluation-list {
   position: absolute; }
@@ -264,6 +291,27 @@ body {
 
 .s-play-pause {
   cursor: pointer; }
+
+.s-recording-volume {
+  display: flex;
+  flex-direction: column;
+  height: 60%; }
+  .s-recording-volume * {
+    width: 10px; }
+  .s-recording-volume #volume-high {
+    background-color: #ff530d;
+    height: 30%; }
+  .s-recording-volume #volume-medium {
+    background-color: #0bce63;
+    flex-grow: 1; }
+  .s-recording-volume #volume-low {
+    background: #ffdc0d;
+    height: 20%; }
+  .s-recording-volume #volume-slider {
+    background: blue;
+    position: absolute;
+    bottom: 15px;
+    height: 0; }
 
 noscript > * {
   background: #85de97;

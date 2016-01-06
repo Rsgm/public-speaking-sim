@@ -262,7 +262,7 @@
             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
         };
 
-        $.post('/p/projects/' + se.project + '/' + se.recording + '/', data, function () {
+        $.post('/g/group/' + se.group + '/submission/evaluate/' + se.submission + '/', data, function () {
             sendCallback();
         });
     }

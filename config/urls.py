@@ -22,6 +22,7 @@ urlpatterns = [
                   url(r'^account/', include('userena.urls')),
 
                   # Your stuff: custom urls includes go here
+                  url(r'^', include("speakeazy.speakeazy.urls", namespace="speakeazy")),
                   url(r'^p/', include("speakeazy.projects.urls", namespace="projects")),
                   url(r'^g/', include("speakeazy.groups.urls", namespace="groups")),
                   url(r'^r/(?P<project>[\w-]+)/', include("speakeazy.recordings.urls", namespace="recordings")),

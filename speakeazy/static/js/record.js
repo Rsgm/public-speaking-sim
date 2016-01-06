@@ -1,16 +1,19 @@
 (function () {
-    var rec = {};
-
     var uploadQueue = [];
     var uploadTotal;
     var stopped;
     var progress;
 
+    var mediaStream;
+    var setupVideo;
+    var audienceVideo;
+    var stopAudioAnalyzer;
+
+    var mediaRecorder;
+    var started;
+
     var uploadInterval = 3000;
     var crsf = $('input[name=csrfmiddlewaretoken]').val();
-
-    rec.project = window.location.pathname.split('/')[2];
-
 
     navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
@@ -37,19 +40,19 @@
 
 
         function onMediaSuccess(stream) {
-            rec.mediaStream = stream;
-            rec.url = window.URL.createObjectURL(rec.mediaStream);
+            mediaStream = stream;
+            url = window.URL.createObjectURL(mediaStream);
 
-            //$log.log(rec.mediaStream);
+            console.log(mediaStream);
 
-            rec.setupVideo = $('#setup-video').get(0);
-            rec.setupVideo.src = rec.url;
-            rec.setupVideo.muted = true;
-            rec.setupVideo.play();
+            setupVideo = $('#setup-video').get(0);
+            setupVideo.src = url;
+            setupVideo.muted = true;
+            setupVideo.play();
 
-            rec.audienceVideo = $('#audience-video').get(0);
-            rec.audienceVideo.requestFullscreen = ( rec.audienceVideo.requestFullscreen || rec.audienceVideo.mozRequestFullScreen || rec.audienceVideo.webkitRequestFullscreen);
-            rec.audienceVideo.pause();
+            audienceVideo = $('#audience-video').get(0);
+            audienceVideo.requestFullscreen = ( audienceVideo.requestFullscreen || audienceVideo.mozRequestFullScreen || audienceVideo.webkitRequestFullscreen);
+            audienceVideo.pause();
 
             $('#preview').show();
 
@@ -59,8 +62,11 @@
             var analyser = audioCtx.createAnalyser();
             source.connect(analyser);
 
+            var $volume = $('#volume-slider');
+            var totalHeight = $volume.parent().height();
+
             var lastVolumes = [0, 0, 0, 0, 0, 0];
-            rec.volumeInterval = setInterval(function () {
+            var volumeInterval = setInterval(function () {
                 var data = new Uint8Array(analyser.fftSize);
                 analyser.getByteTimeDomainData(data);
                 var sum = 0;
@@ -69,7 +75,11 @@
                     sum += (e - 127) * (e - 127);
                 });
 
-                lastVolumes.push(Math.log(Math.pow(10, (Math.sqrt(sum / data.length)) / 127)) / Math.LN2);
+                var v = Math.sqrt(sum / data.length) / 127;
+                var baseTen = Math.log(Math.pow(10, v)) / Math.LN2;
+                console.log([v, baseTen]);
+
+                lastVolumes.push(v);
                 lastVolumes.shift();
 
                 sum = 0;
@@ -77,13 +87,14 @@
                     sum += e;
                 });
 
-                rec.volume = sum / 2;
+                var volume = sum / 2;
 
-                rec.slider = {"margin-top": (200 - rec.volume * 200) + "px"};
+                var height = totalHeight - volume * totalHeight;
+                $volume.css('height', height + 'px')
             }, 200);
 
-            rec.stopAudioAnalyzer = function stopAudioAnalyzer() {
-                clearInterval(rec.volumeInterval);
+            stopAudioAnalyzer = function () {
+                clearInterval(volumeInterval);
 
                 analyser.disconnect();
                 source.disconnect();
@@ -92,7 +103,7 @@
         }
 
         function onMediaError(e) {
-            //$log.error('media error', e);
+            //console.error('media error', e);
         }
     }
 
@@ -100,28 +111,28 @@
         $('#preview').hide();
         $('#recording').show();
 
-        rec.stopAudioAnalyzer();
+        stopAudioAnalyzer();
 
-        rec.setupVideo.muted = true;
-        rec.audienceVideo.play();
-        //rec.audienceVideo.requestFullscreen();
+        setupVideo.muted = true;
+        audienceVideo.play();
+        //audienceVideo.requestFullscreen();
 
-        $.get('/r/' + rec.project + '/start/', function (result) {
-            rec.id = result.id;
+        $.post('/r/' + se.project + '/', {request: 'start', csrfmiddlewaretoken: crsf}, function (result) {
+            id = result.id;
 
             // setup recorder and start recording
 
-            rec.mediaRecorder = new MultiStreamRecorder(rec.mediaStream);
-            rec.mediaRecorder.video = rec.setupVideo;
+            mediaRecorder = new MultiStreamRecorder(mediaStream);
+            mediaRecorder.video = setupVideo;
 
-            rec.mediaRecorder.ondataavailable = function (blobs) {
-                upload(rec.id, blobs.video, blobs.audio);
-                if (!rec.started) {
-                    rec.started = true;
+            mediaRecorder.ondataavailable = function (blobs) {
+                upload(id, blobs.video, blobs.audio);
+                if (!started) {
+                    started = true;
                 }
             };
 
-            rec.mediaRecorder.start(uploadInterval);
+            mediaRecorder.start(uploadInterval);
         });
     }
 
@@ -129,11 +140,11 @@
         $('#recording').hide();
         $('#finished').show();
 
-        rec.audienceVideo.pause();
-        rec.mediaRecorder.stop();
+        audienceVideo.pause();
+        mediaRecorder.stop();
 
-        finish(rec.id, function progress(size, uploadTotal) {
-            rec.progress = Math.floor((uploadTotal - size) * 100 / uploadTotal);
+        finish(id, function progress(size, uploadTotal) {
+            progress = Math.floor((uploadTotal - size) * 100 / uploadTotal);
         });
     }
 
@@ -162,8 +173,10 @@
                 if (uploadQueue.length > 0) {
                     var data = uploadQueue[0];
                     data.csrfmiddlewaretoken = crsf;
+                    data.recording = id;
+                    data.request = 'upload';
 
-                    $.post('/r/' + rec.project + '/' + rec.id + '/upload/', data, function () {
+                    $.post('/r/' + se.project + '/', data, function () {
                         uploadQueue.shift();
                         if (stopped) {
                             progress(uploadQueue.length, uploadTotal);
@@ -171,9 +184,14 @@
                         uploadPiece();
                     });
                 } else if (stopped) {
-                    $.get('/r/' + rec.project + '/' + rec.id + '/finish/');
+                    $.post('/r/' + se.project + '/', {
+                        recording: id,
+                        request: 'finish',
+                        csrfmiddlewaretoken: crsf
+                    }, function (response) {
+                        window.location.href = response;
+                    });
                 }
-
             }
         }
 

@@ -1,5 +1,5 @@
 // thumbnail hover effect
-$('a figure').hover(function () {
+$('#recent-recordings .uk-flex > div').hover(function () {
     $(this).find('video').get(0).play();
 }, function () {
     var video = $(this).find('video').get(0);

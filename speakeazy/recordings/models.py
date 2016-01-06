@@ -6,20 +6,20 @@ from django.db import models
 from django.db.models.base import Model
 from speakeazy.users.models import User
 
-UPLOADING = 'u'
-PROCESSING = 'p'  # may not be needed
-FINISHED = 'r'
-STATE_CHOICES = [
-    (UPLOADING, 'uploading'),
-    (PROCESSING, 'processing'),
-    (FINISHED, 'finished')
+RECORDING_UPLOADING = 'u'
+RECORDING_PROCESSING = 'p'  # may not be needed
+RECORDING_FINISHED = 'f'
+RECORDING_STATE_CHOICES = [
+    (RECORDING_UPLOADING, 'uploading'),
+    (RECORDING_PROCESSING, 'processing'),
+    (RECORDING_FINISHED, 'finished')
 ]
 
 
 class Recording(Model):
-    project = models.ForeignKey('projects.Project', editable=False)  # not sure why this needs to be a string
+    project = models.ForeignKey('projects.Project', editable=False)
 
-    state = models.CharField(max_length=1, choices=STATE_CHOICES, default=UPLOADING)
+    state = models.CharField(max_length=1, choices=RECORDING_STATE_CHOICES, default=RECORDING_UPLOADING)
     finish_time = models.DateTimeField(null=True, blank=True)
     start_time = models.DateTimeField(auto_now_add=True)
 
@@ -35,7 +35,7 @@ class Recording(Model):
         return '%s - %s' % (self.project, self.slug)
 
     def get_absolute_url(self):
-        return reverse('speakeazy:projects:recordingView', kwargs={'recording': self.slug})
+        return reverse('projects:project:recordingView', kwargs={'project': self.project.slug, 'recording': self.slug})
 
 
 class UploadPiece(Model):
@@ -65,6 +65,8 @@ class Evaluation(Model):
     seconds = models.IntegerField(null=True, blank=True)
 
     created_on = models.DateTimeField(auto_now_add=True)
+
+    submission = models.ForeignKey('groups.Submission', null=True, blank=True)
 
     def __str__(self):
         return '%s - %s- %s' % (self.recording, self.seconds, self.type)

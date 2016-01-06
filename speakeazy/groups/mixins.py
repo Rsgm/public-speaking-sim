@@ -6,8 +6,7 @@ class GroupPermissiondMixin(object):
     """
     View mixin which verifies that the user is authenticated.
 
-    NOTE:
-        This should be the left-most mixin of a view after the LoginRequiredMixin.
+    NOTE: This should be the left-most mixin of a view after the LoginRequiredMixin.
     """
 
     group_permission = None
@@ -52,6 +51,8 @@ VIEW_SUBMISSION = 'view_submission'
 ADD_SUBMISSION = 'add_submission'
 UPDATE_SUBMISSION = 'update_submission'
 DELETE_SUBMISSION = 'delete_submission'
+EVALUATE_SUBMISSION = 'evaluate_submission'
+
 
 # LIST_ = 'list_'
 # VIEW_ = 'view_'

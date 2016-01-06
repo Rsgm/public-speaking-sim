@@ -9,6 +9,15 @@ from django.utils.translation import ugettext_lazy as _
 from speakeazy.recordings.models import Recording
 from speakeazy.users.models import User
 
+SUBMISSION_READY = 'r'
+SUBMISSION_IN_PROGRESS = 'i'
+SUBMISSION_FINISHED = 'f'
+SUBMISSION_STATE_CHOICES = [
+    (SUBMISSION_READY, 'ready'),
+    (SUBMISSION_IN_PROGRESS, 'in progress'),
+    (SUBMISSION_FINISHED, 'finished')
+]
+
 
 class Group(Model):
     name = models.CharField(_("Name of group"), max_length=30)
@@ -70,16 +79,18 @@ class Audience(Model):
 
 
 class Submission(Model):
-    recording = models.ForeignKey(Recording)
     group = models.ForeignKey('Group')
+    recording = models.ForeignKey(Recording)
 
     for_evaluation = models.BooleanField()
     group_visibility = models.ForeignKey('Authorization')
 
-    slug = AutoSlugField(populate_from='recording.project.name', unique_with='group')
+    state = models.CharField(max_length=1, choices=SUBMISSION_STATE_CHOICES, default=SUBMISSION_READY)
 
-    def __str__(self):
-        return '%s - %s' % (self.recording.project.user, self.recording.project.name)
+    # slug = AutoSlugField(populate_from='recording__project__name', unique_with='group')
+
+    # def __str__(self):
+    #     return '%s - %s' % (self.recording.project, self.recording.project.name)
 
     def get_absolute_url(self):
         return reverse('groups:group:submission:view', kwargs={'group': Group.slug, 'submission': self.slug})

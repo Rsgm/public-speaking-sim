@@ -11,15 +11,15 @@
 
         {% for recording in recording_list %}
             <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
-                <a href="{% url 'projects:project:recordingView' project.slug recording.slug %}"
-                   class="">
+                <a href="{% url 'projects:project:recordingView' project.slug recording.slug %}">
 
                     <figure class="uk-overlay uk-overlay-hover">
                         <video class="s-video" src="{{ recording.thumbnail_video.url }}"
                                poster="{{ recording.thumbnail_image.url }}" loop></video>
                         <figcaption
                                 class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
-                            {{ recording.duration }}
+                            <div>id: {{ recording.slug }}</div>
+                            <div>duration: {{ recording.duration }}</div>
                         </figcaption>
                     </figure>
                 </a>

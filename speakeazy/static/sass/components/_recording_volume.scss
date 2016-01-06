@@ -1,0 +1,32 @@
+.s-recording-volume {
+  display: flex;
+  flex-direction: column;
+
+  height: $volume-height;
+
+  * {
+    width: $volume-width;
+  }
+
+  #volume-high {
+    background-color: #ff530d;
+    height: 30%;
+  }
+
+  #volume-medium {
+    background-color: #0bce63;
+    flex-grow: 1;
+  }
+
+  #volume-low {
+    background: #ffdc0d;
+    height: 20%;
+  }
+
+  #volume-slider {
+    background: blue;
+    position: absolute;
+    bottom: $video-overlay-padding;
+    height: 0;
+  }
+}

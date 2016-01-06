@@ -54,6 +54,7 @@ LOCAL_APPS = (
     'speakeazy.projects',
     'speakeazy.recordings',
     'speakeazy.groups',
+    'speakeazy.speakeazy',
 )
 
 # apps that need to be added last
@@ -228,7 +229,8 @@ ANONYMOUS_USER_ID = -1
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 AUTH_USER_MODEL = 'users.User'
 
-USERENA_SIGNIN_REDIRECT_URL = '/accounts/%(username)s/'
+# USERENA_SIGNIN_REDIRECT_URL = '/accounts/%(username)s/'
+USERENA_SIGNIN_REDIRECT_URL = 'speakeazy:home'
 USERENA_ACTIVATION_NOTIFY = False
 USERENA_MUGSHOT_GRAVATAR = False
 USERENA_DEFAULT_PRIVACY = 'closed'
