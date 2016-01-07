@@ -1,19 +1,18 @@
-postgres:
-  image: postgres:9.4
-  volumes:
-    - /data/speakeazy/postgres:/var/lib/postgresql/data
-  env_file: .env
+#postgres:
+#  image: postgres:9.4
+#  volumes:
+#    - /data/speakeazy/postgres:/var/lib/postgresql/data
+#  env_file: .env
 
-django:
+django: # django app
   build: .
   user: django
   links:
-    - postgres
     - redis
   command: /gunicorn.sh
   env_file: .env
 
-nginx:
+nginx: # reverse proxy
   build: ./compose/nginx
   links:
     - django
@@ -23,20 +22,18 @@ nginx:
 redis:
   image: redis:3.0
 
-celeryworker:
+celeryworker: # runs tasks
   build: .
   user: django
   env_file: .env
   links:
-   - postgres
    - redis
   command: celery -A speakeazy.taskapp worker -l INFO
 
-celerybeat:
+celerybeat: # assigns tasks to workers I think
   build: .
   user: django
   env_file: .env
   links:
-    - postgres
     - redis
   command: celery -A speakeazy.taskapp beat -l INFO
