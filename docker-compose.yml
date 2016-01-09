@@ -4,6 +4,7 @@
 #    - /data/speakeazy/postgres:/var/lib/postgresql/data
 #  env_file: .env
 
+# https://093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server
 django: # django app
   build: .
   user: django
@@ -12,6 +13,7 @@ django: # django app
   command: /gunicorn.sh
   env_file: .env
 
+# https://093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx
 nginx: # reverse proxy
   build: ./compose/nginx
   links:
@@ -22,6 +24,7 @@ nginx: # reverse proxy
 redis:
   image: redis:3.0
 
+# part of speakeazy/server
 celeryworker: # runs tasks
   build: .
   user: django
@@ -30,6 +33,7 @@ celeryworker: # runs tasks
    - redis
   command: celery -A speakeazy.taskapp worker -l INFO
 
+# part of speakeazy/server
 celerybeat: # assigns tasks to workers I think
   build: .
   user: django

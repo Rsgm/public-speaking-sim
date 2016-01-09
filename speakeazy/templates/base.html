@@ -47,9 +47,9 @@
                     <div class="uk-dropdown">
                         <ul class="uk-nav uk-nav-dropdown">
                             <li><a href="{% url 'speakeazy:home' %}">Home</a></li>
-                            {% if user.isAdmin %}
-                                <li><a href="/admin/">Admin</a></li>
-                            {% endif %}
+                            {#                            {% if user.isAdmin %}#}
+{#                            <li><a href="{% url 'admin:index' %}">Admin</a></li>#}
+                            {#                            {% endif %}#}
                             <li class="uk-nav-divider"></li>
                             <li><a href="{% url 'groups:groupList' %}">Group List</a></li>
                             <li><a href="{% url 'groups:joinGroup' %}">Join</a></li>

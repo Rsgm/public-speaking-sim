@@ -31,8 +31,8 @@ DJANGO_APPS = (
     # 'django.contrib.humanize',
 
     # Admin
-    'jet.dashboard',
-    'jet',  # admin theme https://github.com/geex-arts/django-jet
+    # 'jet.dashboard',
+    # 'jet',  # admin theme https://github.com/geex-arts/django-jet
     'django.contrib.admin',
 )
 THIRD_PARTY_APPS = (

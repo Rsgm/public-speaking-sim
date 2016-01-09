@@ -49,3 +49,5 @@ django-hijack>=2.0.0
 pathlib>=1.0.1
 django-ratelimit>=0.6.0
 bcrypt>=2.0.0
+
+PyMySQL

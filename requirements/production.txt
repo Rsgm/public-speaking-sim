@@ -19,6 +19,4 @@ django-mailgun==0.8.0
 # --------------------------
 raven
 
-PyMySQL
-
 boto

@@ -47,7 +47,7 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS
 SECURE_FRAME_DENY = env.bool("DJANGO_SECURE_FRAME_DENY", default=True)
 SECURE_CONTENT_TYPE_NOSNIFF = env.bool("DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", default=True)
 SECURE_BROWSER_XSS_FILTER = True
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True
 SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
 
@@ -122,14 +122,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'speakeazy',
-        'USER': env.db("DATABASE_USER"),
-        'PASSWORD': env.db("DATABASE_PASSWORD"),
-        'HOST': env.db("DATABASE_URL"),  # Or an IP Address that your DB is hosted on
+        'USER': 'admin',  # env.db("DATABASE_USER"),
+        'PASSWORD': 'gW7B6HbjUDsOHKdONMk3h3N7oAiv89UDnTy28qOg2',  # env.db("DATABASE_PASSWORD"),
+        'HOST': 'speakeazy-db-django-test.cwrnk6vpjdiq.us-east-1.rds.amazonaws.com',
+        # env.db("DATABASE_URL"),  # Or an IP Address that your DB is hosted on
         'PORT': '3306',
         'ATOMIC_REQUESTS': True,
     }
 }
-
 
 # CACHING
 # ------------------------------------------------------------------------------
@@ -203,7 +203,6 @@ CACHES = {
 # }
 
 # Custom Admin URL, use {% url 'admin:index' %}
-ADMIN_URL = env('DJANGO_ADMIN_URL')
+ADMIN_URL = env('DJANGO_ADMIN_URL', default=r'^admin/')
 
 # Your production stuff: Below this line define 3rd party library settings
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
