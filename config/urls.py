@@ -12,8 +12,6 @@ urlpatterns = [
                   url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name="about"),
 
                   # Django Admin, use {% url 'admin:index' %}
-                  # url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
-                  # url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
                   url(settings.ADMIN_URL, include(admin.site.urls)),
                   url(r'^hijack/', include('hijack.urls')),
 

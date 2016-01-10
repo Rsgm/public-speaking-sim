@@ -47,3 +47,9 @@
     @content;
   }
 }
+
+// use hardware acceleration for filters
+@mixin filter() {
+  transform: translate3d(0, 0, 0);
+  @content;
+}

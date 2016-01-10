@@ -131,7 +131,7 @@ Heroku
 ^^^^^^
 
 .. image:: https://www.herokucdn.com/deploy/button.png
-    :target: https://heroku.com/deploy
+:target: https://heroku.com/deploy
 
 See detailed `cookiecutter-django Heroku documentation`_.
 
@@ -143,3 +143,39 @@ Docker
 See detailed `cookiecutter-django Docker documentation`_.
 
 .. _`cookiecutter-django Docker documentation`: http://cookiecutter-django.readthedocs.org/en/latest/deployment-with-docker.html
+
+
+Deployment Commands
+^^^^^^^^^^^^^^^^^^^
+
+Gather static files:
+`python manage.py collectstatic`
+
+Update s3 static files:
+`aws s3 sync staticfiles/ s3://speakeazy-django-test/static/`
+
+Build production images:
+`docker-compass build`
+
+This creates the following needed images:
+
+    speakeazydjango_nginx
+
+    speakeazydjango_django
+    speakeazydjango_celeryworker
+    speakeazydjango_celerybeat
+
+The last three are different names for the same image
+
+Tag and push:
+`sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:x.x.x`
+`sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest`
+`sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:x.x.x`
+`sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:latest`
+
+`sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:x.x.x`
+`sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest`
+`sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:x.x.x`
+`sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:latest`
+
+nginx does not need to be built/pushed every deploy.
