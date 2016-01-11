@@ -135,7 +135,7 @@
         //}
     });
 
-    $evaluationAddButton.click(function () {
+    $evaluations.click(function () {
         pause();
     });
 
