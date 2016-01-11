@@ -1,0 +1,193 @@
+{% load staticfiles %}{% load staticfiles i18n %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Speakeazy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/uikit.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/components/tooltip.min.css">
+
+    <!-- Your stuff: Third-party css libraries go here -->
+
+    <!-- This file store project specific CSS -->
+    <link href="{% static 'css/build.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+<noscript>
+    <div id="noscript">Speakeazy works best with JavaScript enabled</div>
+</noscript>
+
+{% if messages %}
+    <div id="error-notification" class="container">
+        {% for message in messages %}
+            <div class="uk-alert {% if message.tags %}uk-alert-{{ message.tags }}"{% endif %} data-uk-alert>
+                <a href="" class="uk-alert-close uk-close"></a>
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div id="landing-page">
+
+    <nav class="uk-navbar uk-navbar-attached" id="nav-bar">
+        <a class="uk-navbar-brand s-brand">Speak<span class="green">Eazy</span></a>
+
+        <div class="uk-navbar-flip">
+            <ul class="uk-navbar-nav">
+                <li><a>About</a></li>
+                <li><a>Pricing</a></li>
+                <li><a>Support</a></li>
+                <li><a>Blog</a></li>
+                <li><a>Tech Blog</a></li>
+                <li><a>Login</a></li>
+                <li><a>Signup</a></li>
+{#            </ul>#}
+{#        </div>#}
+{##}
+{#        <div class="uk-navbar-content uk-navbar-center">#}
+{#            <ul class="uk-navbar-nav">#}
+            </ul>
+        </div>
+    </nav>
+
+    <div id="main" class="uk-block uk-block-large uk-cover">
+        <video class="uk-cover-object" poster="https://static.speakeazy.co/resources/background.jpg" autoplay muted loop
+               preload="auto">
+            <source src="https://s3.amazonaws.com/speakeazy-static/resources/background.webm" type="video/webm">
+            <source src="https://s3.amazonaws.com/speakeazy-static/resources/background.mp4" type="video/mp4">
+        </video>
+
+        <div class="container">
+
+        </div>
+    </div>
+
+    <div id="points" class="uk-block uk-block-large">
+        <div class="container uk-grid">
+            <div class="s-point uk-panel uk-panel-space uk-flex uk-flex-middle uk-flex-space-around">
+                <i class="uk-icon-hourglass uk-icon-large"></i>
+
+                <div class="uk-panel uk-panel-space uk-flex-grow">
+                    <h3>Improve</h3>
+
+                    <p>Improve your public speaking skills by practicing delivery of the </p>
+                </div>
+            </div>
+
+            <div class="s-point uk-panel uk-panel-space uk-flex uk-flex-middle uk-flex-space-around">
+                <div class="uk-flex-grow">
+                    <h3>Practice</h3>
+
+                    <p>Mauris et nisi lorem. Aliquam nibh diam, posuere vel sagittis ut, fringilla sed velit. Morbi a
+                        odio sem. Duis justo orci, vestibulum sit amet dapibus nec, lobortis et ipsum. Proin sodales
+                        feugiat commodo.</p>
+                </div>
+
+                <i class="uk-icon-hourglass uk-icon-large"></i>
+            </div>
+
+            <div class="s-point uk-panel uk-panel-space uk-flex uk-flex-middle uk-flex-space-around">
+                <i class="uk-icon-hourglass uk-icon-large"></i>
+
+                <div class="uk-flex-grow">
+                    <h3>Practice</h3>
+
+                    <p>Nunc nec molestie justo. Fusce molestie condimentum diam, bibendum bibendum ante ultrices eu.
+                        Fusce cursus dui vitae euismod malesuada. Proin dolor leo, pharetra quis condimentum eu, congue
+                        nec tellus.</p>
+                </div>
+            </div>
+            <div class="s-point uk-panel uk-panel-space uk-flex uk-flex-middle uk-flex-space-around">
+                <div class="uk-flex-grow">
+                    <h3>Practice</h3>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam feugiat odio molestie tempor
+                        tincidunt. Maecenas rhoncus interdum feugiat. Duis arcu lacus, aliquam ac luctus quis, imperdiet
+                        facilisis diam.</p>
+                </div>
+
+                <i class="uk-icon-hourglass uk-icon-large"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="process" class="uk-block uk-block-large uk-block-primary">
+        <div id="process-background"></div>
+
+        <div class="container uk-grid">
+            <div id="wiki-link" class="uk-panel uk-panel-space uk-width-small-1-1 uk-width-medium-1-3">
+                <h2 class="uk-text-center">Record</h2>
+
+                <p>Record your speech in front of our simulated audience.</p>
+            </div>
+            <div id="wiki-link" class="uk-panel uk-panel-space uk-width-small-1-1 uk-width-medium-1-3">
+                <h2 class="uk-text-center">Evaluate</h2>
+
+                <p>Evaluate the delivery of your speech. Pick out the parts you liked and the parts you didn't.</p>
+            </div>
+            <div id="wiki-link" class="uk-panel uk-panel-space uk-width-small-1-1 uk-width-medium-1-3">
+                <h2 class="uk-text-center">Share</h2>
+
+                <p>Receive feedback on your recordings from friends, teachers, even professional public speakers.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="resources" class="uk-block uk-block-large">
+        <div class="container uk-grid">
+            <div id="blog-link" class="uk-panel uk-panel-space uk-width-small-1-1 uk-width-medium-1-3">
+                <i class="uk-icon-bookmark-o uk-icon-large uk-width-1-1 uk-text-center"></i>
+
+                <h2 class="uk-text-center"><a href="/blog/">Speakeazy Blog</a></h2>
+
+                <p>A blog full of wonderful articles from the Speakeazy team. Here you will find everything from site
+                    updates to public speaking research. </p>
+            </div>
+
+            <div id="wiki-link" class="uk-panel uk-panel-space uk-width-small-1-1 uk-width-medium-1-3">
+                <i class="uk-icon-book uk-icon-large uk-width-1-1 uk-text-center"></i>
+
+                <h2 class="uk-text-center"><a href="/wiki/">Speakeazy Wiki</a></h2>
+
+                <p>An expansive wealth of public speaking resources and material.</p>
+            </div>
+
+            <div id="support-link" class="uk-panel uk-panel-space uk-width-small-1-1 uk-width-medium-1-3">
+                <i class="uk-icon-question-circle uk-icon-large uk-width-1-1 uk-text-center"></i>
+
+                <h2 class="uk-text-center"><a href="/support/">Speakeazy Support</a></h2>
+
+                <p>Support for all of your questions, listeners for all of your feedback.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="landing-footer" class="uk-block uk-block-large uk-block-secondary">
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+{#    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>#}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.2/js/uikit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/js/components/tooltip.min.js"></script>
+
+<!-- Your stuff: Third-party javascript libraries go here -->
+
+<!-- place project specific Javascript in this file -->
+<script src="{% static 'js/project.js' %}"></script>
+</body>
+</html>

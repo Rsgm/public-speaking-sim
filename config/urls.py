@@ -8,8 +8,7 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
 urlpatterns = [
-                  url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
-                  url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name="about"),
+                  url(r'^$', TemplateView.as_view(template_name='speakeazy/landing.html'), name="home"),
 
                   # Django Admin, use {% url 'admin:index' %}
                   url(settings.ADMIN_URL, include(admin.site.urls)),
@@ -19,8 +18,10 @@ urlpatterns = [
                   # url(r'^users/', include("speakeazy.users.urls", namespace="users")),
                   url(r'^account/', include('userena.urls')),
 
+                  url(r'^blog/', include('puput.urls')),
+
                   # Your stuff: custom urls includes go here
-                  url(r'^', include("speakeazy.speakeazy.urls", namespace="speakeazy")),
+                  url(r'', include("speakeazy.speakeazy.urls", namespace="speakeazy")),
                   url(r'^p/', include("speakeazy.projects.urls", namespace="projects")),
                   url(r'^g/', include("speakeazy.groups.urls", namespace="groups")),
                   url(r'^r/(?P<project>[\w-]+)/', include("speakeazy.recordings.urls", namespace="recordings")),

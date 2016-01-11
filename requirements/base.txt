@@ -31,7 +31,7 @@ django-autoslug>=1.9.3
 pytz==2015.7
 
 # Redis support
-django-redis==4.3.0
+django-redis>=4.3.0
 redis>=2.10.0
 
 
@@ -42,13 +42,13 @@ celery>=3.1.19
 django-storages-redux==1.3
 
 # Your custom requirements go here
+
 django-vanilla-views>=1.0.4
 django-js-reverse>=0.6.1
 django-hijack>=2.0.0
 pathlib>=1.0.1
 django-ratelimit>=0.6.0
 bcrypt>=2.0.0
-
 PyMySQL
-
 django-flat-theme
+puput

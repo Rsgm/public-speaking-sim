@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
 import environ
+from puput import PUPUT_APPS
 
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('speakeazy')
@@ -63,7 +64,7 @@ LAST_APPS = (
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + LAST_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PUPUT_APPS + LOCAL_APPS + LAST_APPS
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -75,6 +76,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'wagtail.wagtailcore.middleware.SiteMiddleware',
+    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 )
 
 # MIGRATIONS CONFIGURATION
@@ -275,3 +278,5 @@ RECORDING_PATHS = {
     'THUMBNAILS': RECORDING_ROOT_PATH.path('thumbnails'),
     'FINISHED': RECORDING_ROOT_PATH.path('finished')
 }
+
+WAGTAIL_SITE_NAME = 'Speakeazy blog'

@@ -319,3 +319,38 @@ noscript > * {
   font-weight: bold;
   text-align: center;
   padding: 4px; }
+
+#landing-page p {
+  font-size: medium;
+  line-height: 1.8em; }
+
+#landing-page #nav-bar {
+  background: white; }
+
+#landing-page #main {
+  background: rgba(0, 0, 0, 0.2) none repeat scroll 0 0;
+  height: 100vh; }
+  #landing-page #main video {
+    min-height: 105%;
+    min-width: 105%;
+    filter: blur(5px);
+    transform: translate3d(-50%, -50%, 0px); }
+
+#landing-page #points {
+  background: white; }
+  #landing-page #points i {
+    padding: 0 100px; }
+  #landing-page #points .s-point {
+    margin-bottom: 50px; }
+
+#landing-page #process #process-background {
+  background: url(http://image.shutterstock.com/z/stock-photo-speaker-at-business-conference-and-presentation-audience-at-the-conference-hall-217119211.jpg);
+  background-size: cover;
+  height: 300px;
+  margin-bottom: 70px; }
+
+#landing-page #process p {
+  color: white; }
+
+#landing-page #resources {
+  background: white; }

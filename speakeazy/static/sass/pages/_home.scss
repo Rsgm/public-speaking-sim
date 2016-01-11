@@ -1,3 +1,83 @@
 // -----------------------------------------------------------------------------
 // This file contains styles that are specific to the home page.
 // -----------------------------------------------------------------------------
+
+#landing-page {
+  p {
+    font-size: medium;
+    line-height: 1.8em;
+  }
+
+  //#vid-bg {
+  //  position: absolute;
+  //  top: 0;
+  //  right: 0;
+  //  bottom: 0;
+  //  left: 0;
+  //  overflow: hidden;
+  //  z-index: -100;
+  //
+  //}
+
+  #nav-bar {
+    background: white;
+  }
+
+  #main {
+    background: rgba(0, 0, 0, 0.2) none repeat scroll 0 0;
+    height: 100vh;
+
+    video {
+      min-height: 105%;
+      min-width: 105%;
+
+      filter: blur(5px);
+      transform: translate3d(-50%, -50%, 0px);
+    }
+  }
+
+  #points {
+    background: white;
+
+    i {
+      padding: 0 100px;
+    }
+
+    .s-point {
+      margin-bottom: 50px;
+    }
+  }
+
+  #process {
+    #process-background {
+      background: url(http://image.shutterstock.com/z/stock-photo-speaker-at-business-conference-and-presentation-audience-at-the-conference-hall-217119211.jpg);
+      background-size: cover;
+      height: 300px;
+      margin-bottom: 70px;
+    }
+
+    h3 {
+
+    }
+
+    p {
+      color: white;
+    }
+  }
+
+  #resources {
+    background: white;
+
+    #blog-link {
+    }
+
+    #wiki-link {
+    }
+
+    #support-link {
+    }
+  }
+
+  #landing-footer {
+  }
+}

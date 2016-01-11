@@ -15,7 +15,6 @@
 
     {% block css %}
         <!-- Latest compiled and minified CSS -->
-        {#        <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">#}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/uikit.min.css">
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/components/tooltip.min.css">
@@ -36,7 +35,7 @@
 </noscript>
 
 <div id="base-header">
-    <nav class="uk-navbar">
+    <nav class="uk-navbar uk-navbar-attached">
         <a class="uk-navbar-brand s-brand" href="{% url 'speakeazy:home' %}">Speak<span class="green">Eazy</span></a>
 
         <div class="uk-navbar-flip">
@@ -48,7 +47,7 @@
                         <ul class="uk-nav uk-nav-dropdown">
                             <li><a href="{% url 'speakeazy:home' %}">Home</a></li>
                             {#                            {% if user.isAdmin %}#}
-{#                            <li><a href="{% url 'admin:index' %}">Admin</a></li>#}
+                            {#                            <li><a href="{% url 'admin:index' %}">Admin</a></li>#}
                             {#                            {% endif %}#}
                             <li class="uk-nav-divider"></li>
                             <li><a href="{% url 'groups:groupList' %}">Group List</a></li>
@@ -66,16 +65,16 @@
     <ul class="uk-breadcrumb large">{% block breadcrumbs %}{% endblock %}</ul>
 </div>
 
-<div id="error-notification" class="container">
-    {% if messages %}
+{% if messages %}
+    <div id="error-notification" class="container">
         {% for message in messages %}
             <div class="uk-alert {% if message.tags %}uk-alert-{{ message.tags }}"{% endif %} data-uk-alert>
                 <a href="" class="uk-alert-close uk-close"></a>
                 {{ message }}
             </div>
         {% endfor %}
-    {% endif %}
-</div>
+    </div>
+{% endif %}
 
 <div class="container">
     {% block content %}{% endblock content %}
