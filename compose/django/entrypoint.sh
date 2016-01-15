@@ -6,13 +6,15 @@ set -e
 # does all this for us.
 export REDIS_URL=redis://redis:6379/0
 
-# the official postgres image uses 'postgres' as default user if not set explictly.
-if [ -z "$POSTGRES_ENV_POSTGRES_USER" ]; then
-    export POSTGRES_ENV_POSTGRES_USER=postgres
-fi 
+## the official postgres image uses 'postgres' as default user if not set explictly.
+#if [ -z "$POSTGRES_ENV_POSTGRES_USER" ]; then
+#    export POSTGRES_ENV_POSTGRES_USER=postgres
+#fi
 
-export DATABASE_URL=postgres://$POSTGRES_ENV_POSTGRES_USER:$POSTGRES_ENV_POSTGRES_PASSWORD@postgres:5432/$POSTGRES_ENV_POSTGRES_USER
+#export DATABASE_URL=postgres://$POSTGRES_ENV_POSTGRES_USER:$POSTGRES_ENV_POSTGRES_PASSWORD@postgres:5432/$POSTGRES_ENV_POSTGRES_USER
 
 export CELERY_BROKER_URL=$REDIS_URL
+
+grep -e '^\w*=\S*$' /.env | xargs -d '\n' -L 1 export
 
 exec "$@"

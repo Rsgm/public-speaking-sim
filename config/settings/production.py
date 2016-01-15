@@ -4,11 +4,9 @@ Production Configurations
 
 - Use djangosecure
 - Use Amazon's S3 for storing static files and uploaded media
-- Use mailgun to send emails
 - Use Redis on Heroku
 
 - Use sentry for error logging
-
 
 '''
 from __future__ import absolute_import, unicode_literals
@@ -47,15 +45,17 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS
 SECURE_FRAME_DENY = env.bool("DJANGO_SECURE_FRAME_DENY", default=True)
 SECURE_CONTENT_TYPE_NOSNIFF = env.bool("DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", default=True)
 SECURE_BROWSER_XSS_FILTER = True
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=True)
+CSRF_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=True)
 SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
 SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
 
 # SITE CONFIGURATION
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['speakeazy.co'])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 # END SITE CONFIGURATION
 
 INSTALLED_APPS += ("gunicorn",)
@@ -99,13 +99,14 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # EMAIL
 # ------------------------------------------------------------------------------
-# DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
-#                          default='Speakeazy <noreply@speakeazy.co>')
-# EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-# MAILGUN_ACCESS_KEY = env('DJANGO_MAILGUN_API_KEY')
-# MAILGUN_SERVER_NAME = env('DJANGO_MAILGUN_SERVER_NAME')
-# EMAIL_SUBJECT_PREFIX = env("DJANGO_EMAIL_SUBJECT_PREFIX", default='[Speakeazy] ')
-# SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+
 
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -123,10 +124,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'speakeazy',
-        'USER': 'admin',  # env.db("DATABASE_USER"),
-        'PASSWORD': 'gW7B6HbjUDsOHKdONMk3h3N7oAiv89UDnTy28qOg2',  # env.db("DATABASE_PASSWORD"),
-        'HOST': 'speakeazy-db-django-test.cwrnk6vpjdiq.us-east-1.rds.amazonaws.com',
-        # env.db("DATABASE_URL"),  # Or an IP Address that your DB is hosted on
+        'USER': env.db("DATABASE_USER"),
+        'PASSWORD': env.db("DATABASE_PASSWORD"),
+        'HOST': env.db("DATABASE_URL"),  # Or an IP Address that your DB is hosted on
         'PORT': '3306',
         'ATOMIC_REQUESTS': True,
     }
@@ -207,3 +207,4 @@ CACHES = {
 ADMIN_URL = env('DJANGO_ADMIN_URL', default=r'^admin/')
 
 # Your production stuff: Below this line define 3rd party library settings
+BCRYPT_ROUNDS = env('BCRYPT_ROUNDS', default=12)

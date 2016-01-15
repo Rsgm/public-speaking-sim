@@ -97,13 +97,9 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # FIXTURE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
-FIXTURE_DIRS = (
-    str(APPS_DIR.path('fixtures')),
-)
-
-# EMAIL CONFIGURATION
-# ------------------------------------------------------------------------------
-# EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+# FIXTURE_DIRS = (
+#     str(APPS_DIR.path('fixtures')),
+# )
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -114,15 +110,6 @@ ADMINS = (
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
-
-# DATABASE CONFIGURATION
-# ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-# DATABASES = {
-#     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-#     'default': env.db("DATABASE_URL", default="postgres:///speakeazy"),
-# }
-# DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
