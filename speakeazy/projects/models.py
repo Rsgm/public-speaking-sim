@@ -42,4 +42,3 @@ class Settings(Model):
 
     def get_absolute_url(self):
         return reverse('projects:project:projectView', kwargs={'project': self.slug})
-

@@ -13,7 +13,7 @@ urlpatterns = [
     # ),
 
     url(
-        regex=r'^list/$',
+        regex=r'^$',
         view=GroupList.as_view(),
         name="groupList"
     ),
@@ -30,5 +30,5 @@ urlpatterns = [
         name="joinGroup"
     ),
 
-    url(r'^group/(?P<group>[\w-]+)/', include("speakeazy.groups.views.group.urls", namespace="group")),
+    url(r'^g/(?P<group>[\w-]+)/', include("speakeazy.groups.views.group.urls", namespace="group")),
 ]

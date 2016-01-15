@@ -13,10 +13,10 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^list/$',
+        regex=r'^$',
         view=ProjectList.as_view(),
         name="projectList"
     ),
 
-    url(r'^projects/(?P<project>[\w-]+)/', include("speakeazy.projects.views.project.urls", namespace="project")),
+    url(r'^p/(?P<project>[\w-]+)/', include("speakeazy.projects.views.project.urls", namespace="project")),
 ]

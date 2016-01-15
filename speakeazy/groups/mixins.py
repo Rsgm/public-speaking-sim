@@ -11,20 +11,22 @@ class GroupPermissiondMixin(object):
 
     group_permission = None
     group = None
+    permissions = None
 
     # cache these
     def dispatch(self, request, *args, **kwargs):
         self.group = get_object_or_404(Group, slug=kwargs['group'])
         user = request.user
 
-        # permissions = user.groupmembership_set.filter(group=self.group).values_list(
-        #     'authorizations__permissions__name', flat=True)
+        self.permissions = user.groupmembership_set.filter(group=self.group) \
+            .values_list('authorizations__permissions__name', flat=True)
+
+        # if self.group_permission:
+        #     if not self.permissions:
+        #         raise Http404('Group not found')
         #
-        # if not permissions:
-        #     raise Http404('Group not found')
-        #
-        # if self.group_permission not in permissions:
-        #     raise PermissionDenied()
+        #     if self.group_permission not in self.permissions:
+        #         raise PermissionDenied()
 
         return super(GroupPermissiondMixin, self).dispatch(request, *args, **kwargs)
 

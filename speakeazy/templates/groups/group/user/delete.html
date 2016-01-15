@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load static %}{% load i18n %}{% load crispy_forms_tags %}
-{% block title %}Delete User{% endblock %}
+{% block title %} - Delete User{% endblock %}
+
+{% block breadcrumbs %}
+    {% include "groups/group/user/breadcrumb.html" %}
+    <li><span>delete</span></li>
+    <li><span>{{ membership.user.username }}</span></li>
+{% endblock %}
 
 {% block content %}
     <form class="form-horizontal" method="post"

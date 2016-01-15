@@ -24,15 +24,22 @@
   }
 
   #main {
-    background: rgba(0, 0, 0, 0.2) none repeat scroll 0 0;
+    background: rgba(0, 0, 0, 0.3) none repeat scroll 0 0;
     height: 100vh;
 
     video {
+      position: absolute;
+      z-index: -100;
+
       min-height: 105%;
       min-width: 105%;
 
       filter: blur(5px);
       transform: translate3d(-50%, -50%, 0px);
+    }
+
+    h1, h2 {
+      color: #83F783;
     }
   }
 
@@ -40,6 +47,7 @@
     background: white;
 
     i {
+      color: #0c0cf3;
       padding: 0 100px;
     }
 
@@ -49,15 +57,20 @@
   }
 
   #process {
+    background-color: #0D81FD;
+
     #process-background {
       background: url(http://image.shutterstock.com/z/stock-photo-speaker-at-business-conference-and-presentation-audience-at-the-conference-hall-217119211.jpg);
       background-size: cover;
       height: 300px;
-      margin-bottom: 70px;
     }
 
-    h3 {
+    .uk-panel {
+      margin-top: 70px;
+    }
 
+    h2 {
+      color: $light-grey
     }
 
     p {

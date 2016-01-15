@@ -8,27 +8,11 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('groups', '0001_initial'),
-        ('recordings', '0001_initial'),
+        ('groups', '0002_auto_20160115_0544'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='submission',
-            name='recording',
-            field=models.ForeignKey(to='recordings.Recording'),
-        ),
-        migrations.AddField(
-            model_name='groupmembership',
-            name='authorizations',
-            field=models.ManyToManyField(to='groups.Authorization'),
-        ),
-        migrations.AddField(
-            model_name='groupmembership',
-            name='group',
-            field=models.ForeignKey(to='groups.Group'),
-        ),
         migrations.AddField(
             model_name='groupmembership',
             name='user',
@@ -37,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='groupinvite',
             name='authorizations',
-            field=models.ManyToManyField(to='groups.Authorization', related_name='_groupinvite_authorizations_+'),
+            field=models.ManyToManyField(blank=True, to='groups.Authorization', related_name='_groupinvite_authorizations_+', null=True),
         ),
         migrations.AddField(
             model_name='groupinvite',
@@ -47,12 +31,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='group',
             name='parent_user_group',
-            field=models.ForeignKey(blank=True, null=True, to='groups.Group'),
+            field=models.ForeignKey(null=True, to='groups.Group', blank=True),
         ),
         migrations.AddField(
             model_name='group',
             name='users',
-            field=models.ManyToManyField(through='groups.GroupMembership', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, through='groups.GroupMembership'),
         ),
         migrations.AddField(
             model_name='defaultgroupstructure',

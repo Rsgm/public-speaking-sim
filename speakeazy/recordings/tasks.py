@@ -134,10 +134,11 @@ def concatenate_media(recording_id, piece_list):
     recording.finish_time = datetime.now()
     recording.state = models.RECORDING_FINISHED
     recording.duration = duration
+    recording.save()
+
     recording.video.save('%s.webm' % recording_id, File(open(str(finished_path), mode='rb')))
     recording.thumbnail_image.save('%s.png' % recording_id, File(open(str(thumbnail_image_paths[0]), mode='rb')))
     recording.thumbnail_video.save('%s.webm' % recording_id, File(open(str(thumbnail_video_path), mode='rb')))
-    recording.save()
 
     # clean up scripts and converted pieces
     os.remove(str(list_path))

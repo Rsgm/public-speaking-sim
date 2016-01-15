@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block base_title %}Speakeazy{% endblock %}</title>
+    <title>Speakeazy{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -51,7 +51,7 @@
                             {#                            {% endif %}#}
                             <li class="uk-nav-divider"></li>
                             <li><a href="{% url 'groups:groupList' %}">Group List</a></li>
-                            <li><a href="{% url 'groups:joinGroup' %}">Join</a></li>
+                            <li><a href="{% url 'groups:joinGroup' %}">Join Group</a></li>
                             <li><a href="{% url 'groups:newGroup' %}">Create Group</a></li>
                         </ul>
                     </div>

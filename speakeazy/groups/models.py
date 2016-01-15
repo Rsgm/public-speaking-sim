@@ -26,6 +26,7 @@ class Group(Model):
 
     parent_user_group = models.ForeignKey('self', blank=True, null=True)
 
+    created_time = models.DateTimeField(auto_now_add=True)
     slug = AutoSlugField(populate_from='name', unique=True)
 
     def __str__(self):
@@ -40,6 +41,8 @@ class GroupMembership(Model):
     user = models.ForeignKey(User)
 
     authorizations = models.ManyToManyField('Authorization', null=True, blank=True)
+
+    created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '%s - %s' % (self.group.name, self.user)
@@ -87,6 +90,7 @@ class Submission(Model):
 
     state = models.CharField(max_length=1, choices=SUBMISSION_STATE_CHOICES, default=SUBMISSION_READY)
 
+    created_time = models.DateTimeField(auto_now_add=True)
     # slug = AutoSlugField(populate_from='recording__project__name', unique_with='group')
 
     # def __str__(self):

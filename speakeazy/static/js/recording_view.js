@@ -67,8 +67,8 @@
 
     $controlsBackground.click(playPause);
     $play.parent().click(playPause);
-    $play.click(play);
-    $pause.click(pause);
+    //$play.click(play);
+    //$pause.click(pause);
 
     $sliderBar.mousedown(function (event) {
         $(this).data('mousedown', true);

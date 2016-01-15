@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load static %}{% load i18n %}{% load crispy_forms_tags %}
-{% block title %}Update User{% endblock %}
+{% block title %}Add{% endblock %}
+
 
 {% block content %}
-    <form class="form-horizontal" enctype="multipart/form-data" method="post"
-          action="{% block post_url %}{% endblock %}">
+    <form class="uk-form" enctype="multipart/form-data" method="post" action="{% block post_url %}{% endblock %}">
         {% csrf_token %}
         {{ form|crispy }}
         <button type="submit" class="btn">Add</button>

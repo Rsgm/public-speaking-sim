@@ -8,16 +8,12 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('projects', '0002_auto_20151229_0245'),
+        ('projects', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='project',
-            name='audience',
-            field=models.ForeignKey(to='groups.Audience'),
-        ),
-        migrations.AlterField(
+        migrations.AddField(
             model_name='project',
             name='user',
             field=models.ForeignKey(to=settings.AUTH_USER_MODEL),

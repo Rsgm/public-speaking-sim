@@ -40,8 +40,11 @@ THIRD_PARTY_APPS = (
     'crispy_forms',  # Form layouts
 
     'userena',
+
     'guardian',
     'easy_thumbnails',
+
+    'djkombu',
 
     'django_js_reverse',  # https://github.com/ierror/django-js-reverse
 )
@@ -183,7 +186,7 @@ TEMPLATES = [
 ]
 
 # See: http://django-crispy-forms.readthedocs.org/en/latest/install.html#template-packs
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------

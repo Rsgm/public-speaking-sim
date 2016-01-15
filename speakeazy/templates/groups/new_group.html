@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load static %}{% load i18n %}{% load crispy_forms_tags %}
-{% block title %}Join Group{% endblock %}
+{% block title %} - New Group{% endblock %}
+
+{% block breadcrumbs %}
+    {% include "groups/breadcrumb.html" %}
+    <li class="uk-active"><span>new</span></li>
+{% endblock %}
 
 {% block content %}
     <form class="form-horizontal" method="post" action="{% url 'groups:newGroup' %}">

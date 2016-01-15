@@ -157,6 +157,10 @@ Update s3 static files:
 Build production images:
 `docker-compass build`
 
+Build individually:
+`sudo docker build -t 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest .`
+`sudo docker tag 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:x.x.x`
+
 This creates the following needed images:
 
     speakeazydjango_nginx

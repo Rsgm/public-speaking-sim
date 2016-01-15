@@ -1,6 +1,10 @@
 {% extends "actions/list.html" %}
 {% block sub_title %}Invite{% endblock %}
-{% block content_title %}Invite{% endblock %}
+{% block content_title %} - Invite List{% endblock %}
+
+{% block breadcrumbs %}
+    {% include "groups/group/invite/breadcrumb.html" %}
+{% endblock %}
 
 {% block object_list %}
     {% for invite in invite_list %}

@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load static %}{% load i18n %}
-{% block title %}{{ membership.user.username }}{% endblock %}
+{% block title %} - {{ membership.user.username }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% include "groups/group/user/breadcrumb.html" %}
+    <li><span>view</span></li>
+    <li><span>{{ membership.user.username }}</span></li>
+{% endblock %}
 
 {% block content %}
     <div class="container">

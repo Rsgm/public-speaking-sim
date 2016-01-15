@@ -1,6 +1,18 @@
+{% extends "actions/add.html" %}
+
+{% block sub_title %} - Invite Add{% endblock %}
+
+{% block post_url %}{% url 'groups:group:invite:add' view.kwargs.group %}{% endblock %}
+
+
 {% extends "base.html" %}
 {% load static %}{% load i18n %}{% load crispy_forms_tags %}
-{% block title %}Update User{% endblock %}
+{% block subtitle %} - Audience Add{% endblock %}
+
+{% block breadcrumbs %}
+    {% include "groups/group/audience/breadcrumb.html" %}
+    <li><span>add</span></li>
+{% endblock %}
 
 {% block content %}
     <form class="form-horizontal" enctype="multipart/form-data" method="post"

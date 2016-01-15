@@ -1,23 +1,39 @@
 {% extends "base.html" %}
 {% load static %}{% load i18n %}
-{% block title %}{{ membership.user.username }}{% endblock %}
+{% block title %} - Invite View{% endblock %}
+
+{% block breadcrumbs %}
+    {% include "groups/group/invite/breadcrumb.html" %}
+    <li><span>view</span></li>
+    <li><span>{{ invite.slug }}</span></li>
+{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="s-section">
+    <div class="">
 
-            <h4 class="s-section-title">{{ invite.name }}</h4>
+        <h4 class="">{{ invite.name }}</h4>
 
-            <div class="s-section-content">
-                <p>{{ invite.description }}</p>
+        <div class="">
+            <p>{{ invite.description }}</p>
 
-                <div>{{ invite.token }}</div>
-                <div>{{ invite.uses }}</div>
-                <div>{{ invite.expires }}</div>
+            <div>Token: {{ invite.token }}</div>
 
-                {% for authorization in invite.authorizations.all %}
-                    <div>{{ authorization.name }}</div>
-                {% endfor %}
+            {% if invite.uses %}
+                <div>Uses left: {{ invite.uses }}</div>
+            {% endif %}
+
+            {% if invite.uses %}
+                <div>Expires on: {{ invite.expires }}</div>
+            {% endif %}
+
+            <div class="uk-margin">
+                Authorizations:
+
+                <ul class="uk-list uk-list-line">
+                    {% for authorization in invite.authorizations.all %}
+                        <li>{{ authorization.name }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>

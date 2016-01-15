@@ -48,8 +48,7 @@ class Add(LoginRequiredMixin, GroupPermissiondMixin, CreateView):
         return AddForm(self.group, data=data, files=files, **kwargs)
 
     def form_valid(self, form):
-        group = form.instance['token']
-        form.instance['token'] = self.random_token(group.pk)
+        form.instance.token = self.random_token(self.group.pk)
 
         self.object = form.save()
         return HttpResponseRedirect(self.get_success_url())

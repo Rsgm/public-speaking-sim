@@ -1,8 +1,10 @@
-{% extends "base.html" %}
+{% extends "projects/p_base.html" %}
 {% load static %}{% load i18n %}{% load crispy_forms_tags %}
-{% block title-dash %}Speakeazy - Create Project{% endblock %}
+{% block title %} - Create Project{% endblock %}
 
-{% block title %}{% endblock %}
+{% block p_breadcrumbs %}
+    <li class="uk-active"><span>list</span></li>
+{% endblock %}
 
 {% block content %}
     <h2>Create Project</h2>

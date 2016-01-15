@@ -14,7 +14,11 @@ class Home(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         kwargs['view'] = self
 
-        kwargs['project_list'] = Project.objects.filter(user=self.request.user).order_by('-due_date')[:5]
+        projects = Project.objects.filter(user=self.request.user)
+
+        kwargs['project_recent_list'] = projects.order_by('-created_time')[:6]
+        kwargs['project_due_list'] = projects.order_by('-due_date')[:6]
+        kwargs['project_list'] = Project.objects.filter(user=self.request.user).order_by('-due_date')[:6]
         kwargs['recording_list'] = Recording.objects.filter(project__user=self.request.user,
-                                                            state=RECORDING_FINISHED).order_by('-finish_time')[:5]
+                                                            state=RECORDING_FINISHED).order_by('-finish_time')[:6]
         return kwargs

@@ -22,9 +22,9 @@ urlpatterns = [
 
                   # Your stuff: custom urls includes go here
                   url(r'', include("speakeazy.speakeazy.urls", namespace="speakeazy")),
-                  url(r'^p/', include("speakeazy.projects.urls", namespace="projects")),
-                  url(r'^g/', include("speakeazy.groups.urls", namespace="groups")),
-                  url(r'^r/(?P<project>[\w-]+)/', include("speakeazy.recordings.urls", namespace="recordings")),
+                  url(r'^projects/', include("speakeazy.projects.urls", namespace="projects")),
+                  url(r'^groups/', include("speakeazy.groups.urls", namespace="groups")),
+                  url(r'^record/(?P<project>[\w-]+)/', include("speakeazy.recordings.urls", namespace="recordings")),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}{% load i18n %}
-{% block title %}Audience List{% endblock %}
+{% block title %} - Audience List{% endblock %}
+
+{% block breadcrumbs %}
+    {% include "groups/group/audience/breadcrumb.html" %}
+{% endblock %}
 
 {% block content %}
     <div class="container">

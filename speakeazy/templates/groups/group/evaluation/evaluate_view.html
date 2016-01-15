@@ -1,9 +1,10 @@
-{% extends "projects/project/project_base.html" %}
+{% extends "base.html" %}
 {% load static %}{% load i18n %}
-{% block title %}{{ submission.slug }}{% endblock %}
+{% block title %} - {{ submission.slug }}{% endblock %}
 
-{% block p_breadcrumbs %}
-    {#    <li class="uk-active"><span>{{ recording.slug }}</span></li>#}
+{% block breadcrumbs %}
+    {% include "groups/group/evaluation/breadcrumb.html" %}
+    <li><span>evaluate</span></li>
 {% endblock %}
 
 {% block content %}
@@ -68,7 +69,7 @@
                         </div>
                     </div>
 
-{#                    <i class="uk-icon-expand uk-icon-hover s-video-fullscreen"></i>#}
+                    {#                    <i class="uk-icon-expand uk-icon-hover s-video-fullscreen"></i>#}
                 </div>
             </div>
         </div>
