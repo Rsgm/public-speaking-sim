@@ -15,6 +15,6 @@ export REDIS_URL=redis://redis:6379/0
 
 export CELERY_BROKER_URL=$REDIS_URL
 
-/bin/sh /app/.env.sh
+source /app/.env.sh
 
 exec "$@"

@@ -74,5 +74,7 @@ speakeazy/static/sass/build.scss
 speakeazy/static/css/build.css
 
 
+#Production Files
 .env
 .env.sh
+config/settings/production.py

@@ -107,7 +107,6 @@ EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 
-
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See:
@@ -124,9 +123,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'speakeazy',
-        'USER': env.db("DATABASE_USER"),
-        'PASSWORD': env.db("DATABASE_PASSWORD"),
-        'HOST': env.db("DATABASE_URL"),  # Or an IP Address that your DB is hosted on
+        'USER': 'admin',  # env.db("DATABASE_USER"),
+        'PASSWORD': 'FLcX0y5KXnlZ7uVh8pLmLeJcdhHvFOkZtzTgQHkhK',  # env.db("DATABASE_PASSWORD"),
+        'HOST': 'speakeazy-django.cwrnk6vpjdiq.us-east-1.rds.amazonaws.com',
+        # env.db("DATABASE_URL"),  # Or an IP Address that your DB is hosted on
         'PORT': '3306',
         'ATOMIC_REQUESTS': True,
     }
