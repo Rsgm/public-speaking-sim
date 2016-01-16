@@ -3,4 +3,4 @@ from django.contrib.auth.hashers import BCryptSHA256PasswordHasher
 
 
 class Bcrypt(BCryptSHA256PasswordHasher):
-    rounds = Settings.BCRYPT_ROUNDS
+    rounds = 12
