@@ -1,5 +1,6 @@
 # .dockerignore
 .git/
+.env
 docs/
 node_modules/
 tests/
@@ -7,15 +8,11 @@ venv/
 speakeazy.db
 
 .travis.yml
-install_python_dependencies.sh
 env.example
 .gitattributes
-install_os_dependencies.sh
 .coveragerc
 docker-compose.yml
 Dockerfile-dev
-Dockerfile
-.dockerignore
 app.json
 .editorconfig
 .gitignore
@@ -23,9 +20,4 @@ Gruntfile.js
 dev.yml
 .pylintrc
 package.json
-requirements.apt
-requirements.txt
-README.rst
-runtime.txt
 LICENSE
-setup.cfg

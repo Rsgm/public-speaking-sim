@@ -148,6 +148,11 @@ See detailed `cookiecutter-django Docker documentation`_.
 Deployment Commands
 ^^^^^^^^^^^^^^^^^^^
 
+deploy script(currently only builds docker files):
+`python deploy.py`
+
+for manual deployment:
+
 Gather static files:
 `python manage.py collectstatic`
 
