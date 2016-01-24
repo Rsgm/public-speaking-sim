@@ -19,7 +19,7 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^add/(?P<submission>[\w-]+)/$',
+        regex=r'^add/$',
         view=Add.as_view(),
         name='add'
     ),
