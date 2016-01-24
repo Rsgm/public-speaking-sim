@@ -204,7 +204,7 @@
             videoReader.onload = function () {
                 result.v = videoReader.result.match(/,(.*)$/)[1]; // move this to the resource
 
-                if (!audio || !hasAudio || result.audioData) { // upload when both are ready
+                if (!audio || !hasAudio || result.a) { // upload when both are ready
                     uploadBlob(result);
                 }
             };
@@ -218,7 +218,7 @@
             audioReader.onload = function () {
                 result.a = audioReader.result.match(/,(.*)$/)[1]; // move this to the resource
 
-                if (!video || !hasVideo || result.videoData) { // upload when both are ready, or there is no video
+                if (!video || !hasVideo || result.v) { // upload when both are ready, or there is no video
                     uploadBlob(result);
                 }
             };
