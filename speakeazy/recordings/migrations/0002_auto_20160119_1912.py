@@ -8,16 +8,16 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('groups', '0003_auto_20160115_0544'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('recordings', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('groups', '0003_auto_20160119_1912'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='evaluation',
             name='evaluator',
-            field=models.ForeignKey(null=True, to=settings.AUTH_USER_MODEL, blank=True),
+            field=models.ForeignKey(null=True, blank=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='evaluation',
@@ -27,11 +27,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='evaluation',
             name='submission',
-            field=models.ForeignKey(null=True, to='groups.Submission', blank=True),
+            field=models.ForeignKey(null=True, blank=True, to='groups.Submission'),
         ),
         migrations.AddField(
             model_name='evaluation',
             name='type',
-            field=models.ForeignKey(null=True, to='recordings.EvaluationType', blank=True),
+            field=models.ForeignKey(null=True, blank=True, to='recordings.EvaluationType'),
         ),
     ]

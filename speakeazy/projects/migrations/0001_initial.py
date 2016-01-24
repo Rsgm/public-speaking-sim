@@ -15,22 +15,22 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Project',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
-                ('name', models.CharField(verbose_name='Name of project', max_length=30)),
-                ('description', models.TextField(verbose_name='Description of project', blank=True, null=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('name', models.CharField(max_length=30, verbose_name='Name of project')),
+                ('description', models.TextField(null=True, blank=True, verbose_name='Description of project')),
                 ('created_time', models.DateTimeField(auto_now_add=True)),
                 ('due_date', models.DateField()),
-                ('slug', autoslug.fields.AutoSlugField(editable=False, unique_with=('user',), populate_from='name')),
+                ('slug', autoslug.fields.AutoSlugField(populate_from='name', unique_with=('user',), editable=False)),
                 ('audience', models.ForeignKey(to='groups.Audience')),
             ],
         ),
         migrations.CreateModel(
             name='Settings',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('last_updated', models.DateTimeField(auto_now=True)),
                 ('due_date', models.DateField()),
-                ('slug', autoslug.fields.AutoSlugField(editable=False, unique_with=('user',), populate_from='name')),
+                ('slug', autoslug.fields.AutoSlugField(populate_from='name', unique_with=('user',), editable=False)),
                 ('audience', models.ForeignKey(to='groups.Audience')),
                 ('project', models.OneToOneField(to='projects.Project')),
             ],

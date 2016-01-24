@@ -4,7 +4,8 @@ set -e
 # Since docker-compose relies heavily on environment variables itself for configuration, we'd have to define multiple
 # environment variables just to support cookiecutter out of the box. That makes no sense, so this little entrypoint
 # does all this for us.
-export REDIS_URL=redis://redis:6379/0
+export REDIS_URL=redis://$REDIS_PORT_6379_TCP_ADDR:$REDIS_PORT_6379_TCP_PORT/0
+#export REDIS_URL=redis://redis:6379/0
 
 ## the official postgres image uses 'postgres' as default user if not set explictly.
 #if [ -z "$POSTGRES_ENV_POSTGRES_USER" ]; then
@@ -15,6 +16,9 @@ export REDIS_URL=redis://redis:6379/0
 
 export CELERY_BROKER_URL=$REDIS_URL
 
-source /app/.env.sh
+. /app/.env.sh
+
+#python manage.py makemigrations                  # Apply database migrations
+#python manage.py collectstatic --noinput  # Collect static files
 
 exec "$@"

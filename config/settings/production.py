@@ -84,18 +84,21 @@ AWS_EXPIRY = 60 * 60 * 24 * 7
 # Revert the following and use str after the above-mentioned bug is fixed in
 # either django-storage-redux or boto
 AWS_HEADERS = {
-    'Cache-Control': six.b('max-age=%d, s-maxage=%d, must-revalidate' % (
-        AWS_EXPIRY, AWS_EXPIRY))
+    'Cache-Control': six.b('max-age=%d, s-maxage=%d, must-revalidate' % (AWS_EXPIRY, AWS_EXPIRY))
 }
 
 # URL that handles the media served from MEDIA_ROOT, used for managing
 # stored files.
-MEDIA_URL = 'https://s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
-# STATIC_ROOT = 'https://s3.amazonaws.com/%s/static/' % AWS_STORAGE_BUCKET_NAME
+MEDIA_ROOT = '/media/'
+MEDIA_URL = 'https://s3.amazonaws.com/%s/%s' % (AWS_STORAGE_BUCKET_NAME, MEDIA_ROOT)
 
 # Static Assets
 # ------------------------
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATIC_HOST = env('DJANGO_STATIC_HOST')
+STATIC_URL = '/static/'  # STATIC_HOST + '/static/'
+
 
 # EMAIL
 # ------------------------------------------------------------------------------
@@ -138,6 +141,7 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
+        # "LOCATION": "redis://%s:%s/%s" % (env('REDIS_PORT_6379_TCP_ADDR'), env('REDIS_PORT_6379_TCP_PORT'), 0),
         "LOCATION": "{0}/{1}".format(env.cache_url('REDIS_URL', default="redis://127.0.0.1:6379"), 0),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
@@ -208,3 +212,5 @@ ADMIN_URL = env('DJANGO_ADMIN_URL', default=r'^admin/')
 
 # Your production stuff: Below this line define 3rd party library settings
 BCRYPT_ROUNDS = env('BCRYPT_ROUNDS', default=12)
+
+DEBUG = True

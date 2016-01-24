@@ -1,6 +1,6 @@
 {% extends "projects/project/project_base.html" %}
-{% load static %}{% load i18n %}
-{% block title %}{{ project.name }}{% endblock %}
+{% load static from staticfiles %}{% load i18n %}
+{% block title %} - {{ project.name }}{% endblock %}
 
 {% block project_breadcrumbs %}
     <li class="uk-active"><span>{{ project.slug }}</span></li>

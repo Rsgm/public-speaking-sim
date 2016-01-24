@@ -12,6 +12,8 @@ from celery.app import shared_task
 from django.conf import settings
 from django.core.files.base import File
 
+LOG_LEVEL = settings.FFMPEG_LOG_LEVEL
+
 
 @shared_task
 def convert_media(piece_id):
@@ -55,18 +57,18 @@ def convert_media(piece_id):
 
     # I suppose we will leave these as cpu-used 2, I may downgrade this later if it takes too long
     if combined:
-        command = 'ffmpeg -loglevel quiet -i %s ' \
+        command = 'ffmpeg -loglevel %s -i %s ' \
                   '-c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
-                  % (video_path, converted_path)
+                  % (LOG_LEVEL, video_path, converted_path)
     elif video_path and audio_path:
-        command = 'ffmpeg -loglevel quiet -i %s -i %s ' \
+        command = 'ffmpeg -loglevel %s -i %s -i %s ' \
                   '-map 0 -map 1 -c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
-                  % (video_path, audio_path, converted_path)
+                  % (LOG_LEVEL, video_path, audio_path, converted_path)
     elif video_path:
-        command = 'ffmpeg -loglevel quiet -i %s video_path -c:v libvpx -cpu-used 2' % converted_path
+        command = 'ffmpeg -loglevel %s -i %s video_path -c:v libvpx -cpu-used 2' % (LOG_LEVEL, converted_path)
     elif audio_path:
-        command = 'ffmpeg -loglevel quiet -i %s -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
-                  % (audio_path, converted_path)
+        command = 'ffmpeg -loglevel %s -i %s -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
+                  % (LOG_LEVEL, audio_path, converted_path)
     else:
         command = 'Echo Error - No video or audio'
 
@@ -98,13 +100,13 @@ def concatenate_media(recording_id, piece_list):
             print('file \'%s/%s.webm\'' % (settings.RECORDING_PATHS['CONVERTED_PIECES'], i), file=list)
 
     # concat pieces
-    command = 'ffmpeg -loglevel quiet -f concat -i %s -c copy %s' % (list_path, finished_path)
+    command = 'ffmpeg -loglevel %s -f concat -i %s -c copy %s' % (LOG_LEVEL, list_path, finished_path)
     print(command)
     subprocess.call(command.split())
 
     # create thumbnail image and video
     # find video length
-    command = 'ffprobe -i %s -v quiet -print_format json -show_format' % finished_path
+    command = 'ffprobe -v %s -i %s -print_format json -show_format' % (LOG_LEVEL, finished_path)
     print(command)
     output = subprocess.check_output(command.split())
 
@@ -119,13 +121,14 @@ def concatenate_media(recording_id, piece_list):
         offset_time = timedelta(seconds=offset * (i + 1))
         path = Path('%s/%s-%s.png' % (settings.RECORDING_PATHS['THUMBNAILS'], recording_id, i)).absolute()
         thumbnail_image_paths.append(path)
-        command = 'ffmpeg -v quiet -i %s -vf scale=150:-1 -ss %s -vframes 1 %s' % (finished_path, offset_time, path)
+        command = 'ffmpeg -v %s -i %s -vf scale=150:-1 -ss %s -vframes 1 %s' \
+                  % (LOG_LEVEL, finished_path, offset_time, path)
         print(command)
         subprocess.call(command.split())
 
     # create thumbnail slideshow
-    command = 'ffmpeg -v quiet -framerate 2/3 -i %s/%s-%s -c:v libvpx -cpu-used 2 -an %s' \
-              % (settings.RECORDING_PATHS['THUMBNAILS'], recording_id, '%1d.png', thumbnail_video_path)
+    command = 'ffmpeg -v %s -framerate 2/3 -i %s/%s-%s -c:v libvpx -cpu-used 2 -an %s' \
+              % (LOG_LEVEL, settings.RECORDING_PATHS['THUMBNAILS'], recording_id, '%1d.png', thumbnail_video_path)
     print(command)
     subprocess.call(command.split())
 

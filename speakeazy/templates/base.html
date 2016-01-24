@@ -1,4 +1,4 @@
-{% load staticfiles %}{% load hijack_tags %}{% load staticfiles i18n %}<!DOCTYPE html>
+{% load static from staticfiles %}{#{% load hijack_tags %}#}{% load staticfiles i18n %}<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -23,12 +23,12 @@
 
         <!-- This file store project specific CSS -->
         <link href="{% static 'css/build.css' %}" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>
+{#        <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>#}
     {% endblock %}
 </head>
 
 <body>
-{% hijack_notification %}
+{#{% hijack_notification %}#}
 
 <noscript>
     <div id="noscript">Speakeazy works best with JavaScript enabled</div>

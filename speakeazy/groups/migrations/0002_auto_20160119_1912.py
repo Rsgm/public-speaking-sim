@@ -7,8 +7,8 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('groups', '0001_initial'),
         ('recordings', '0001_initial'),
+        ('groups', '0001_initial'),
     ]
 
     operations = [
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='groupmembership',
             name='authorizations',
-            field=models.ManyToManyField(blank=True, to='groups.Authorization', null=True),
+            field=models.ManyToManyField(null=True, blank=True, to='groups.Authorization'),
         ),
         migrations.AddField(
             model_name='groupmembership',

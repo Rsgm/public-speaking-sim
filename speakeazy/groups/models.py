@@ -40,7 +40,7 @@ class GroupMembership(Model):
     group = models.ForeignKey('Group')
     user = models.ForeignKey(User)
 
-    authorizations = models.ManyToManyField('Authorization', null=True, blank=True)
+    authorizations = models.ManyToManyField('Authorization', blank=True)
 
     created_time = models.DateTimeField(auto_now_add=True)
 
@@ -125,7 +125,7 @@ class GroupInvite(Model):
     description = models.TextField(_("Description of invite"), null=True, blank=True)
 
     token = models.CharField(max_length=16)
-    authorizations = models.ManyToManyField('Authorization', related_name='+', null=True, blank=True)
+    authorizations = models.ManyToManyField('Authorization', related_name='+', blank=True)
 
     uses = models.IntegerField(null=True, blank=True)
     expires = models.DateTimeField(null=True, blank=True)

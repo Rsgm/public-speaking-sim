@@ -9,6 +9,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
+from django.core.exceptions import ImproperlyConfigured
 import environ
 from puput import PUPUT_APPS
 
@@ -44,7 +45,7 @@ THIRD_PARTY_APPS = (
     'guardian',
     'easy_thumbnails',
 
-    'djkombu',
+    "kombu.transport.django",
 
     'django_js_reverse',  # https://github.com/ierror/django-js-reverse
 )
@@ -62,7 +63,7 @@ LOCAL_APPS = (
 
 # apps that need to be added last
 LAST_APPS = (
-    'hijack',  # http://django-hijack.readthedocs.org/en/latest/
+    # 'hijack',  # http://django-hijack.readthedocs.org/en/latest/
     'compat',
 )
 
@@ -166,7 +167,6 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 # Your stuff: custom template context processors go here
-                "django.core.context_processors.request",
             ],
         },
     },
@@ -241,7 +241,6 @@ AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 ########## CELERY
 INSTALLED_APPS += ('speakeazy.taskapp.celery.CeleryConfig',)
 # if you are not using the django database broker (e.g. rabbitmq, redis, memcached), you can remove the next line.
-# INSTALLED_APPS += ('kombu.transport.django',)
 BROKER_URL = env("CELERY_BROKER_URL", default='django://')
 ########## END CELERY
 
@@ -256,10 +255,14 @@ PASSWORD_HASHERS = (
     # 'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 )
 
-HIJACK_USE_BOOTSTRAP = True
-HIJACK_LOGIN_REDIRECT_URL = '/home/'
+# HIJACK_USE_BOOTSTRAP = False
+# HIJACK_LOGIN_REDIRECT_URL = '/home/'
 
-RECORDING_ROOT_PATH = env("RECORDING_ROOT_PATH", default=ROOT_DIR.path('recordings'))
+try:
+    RECORDING_ROOT_PATH = environ.Path(env("RECORDING_ROOT_PATH"))
+except ImproperlyConfigured:
+    RECORDING_ROOT_PATH = ROOT_DIR.path('recordings')
+
 RECORDING_PATHS = {
     'VIDEO_PIECES': RECORDING_ROOT_PATH.path('video_pieces'),
     'AUDIO_PIECES': RECORDING_ROOT_PATH.path('audio_pieces'),
@@ -270,3 +273,4 @@ RECORDING_PATHS = {
 }
 
 WAGTAIL_SITE_NAME = 'Speakeazy blog'
+FFMPEG_LOG_LEVEL = 'quiet'

@@ -8,8 +8,8 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('groups', '0002_auto_20160115_0544'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('groups', '0002_auto_20160119_1912'),
     ]
 
     operations = [
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='groupinvite',
             name='authorizations',
-            field=models.ManyToManyField(blank=True, to='groups.Authorization', related_name='_groupinvite_authorizations_+', null=True),
+            field=models.ManyToManyField(related_name='_groupinvite_authorizations_+', null=True, blank=True, to='groups.Authorization'),
         ),
         migrations.AddField(
             model_name='groupinvite',
@@ -31,12 +31,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='group',
             name='parent_user_group',
-            field=models.ForeignKey(null=True, to='groups.Group', blank=True),
+            field=models.ForeignKey(null=True, blank=True, to='groups.Group'),
         ),
         migrations.AddField(
             model_name='group',
             name='users',
-            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, through='groups.GroupMembership'),
+            field=models.ManyToManyField(through='groups.GroupMembership', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='defaultgroupstructure',
@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='defaultauthorization',
             name='permissions',
-            field=models.ManyToManyField(to='groups.Permission', related_name='_defaultauthorization_permissions_+'),
+            field=models.ManyToManyField(related_name='_defaultauthorization_permissions_+', to='groups.Permission'),
         ),
         migrations.AddField(
             model_name='authorization',

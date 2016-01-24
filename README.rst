@@ -148,23 +148,28 @@ See detailed `cookiecutter-django Docker documentation`_.
 Deployment Commands
 ^^^^^^^^^^^^^^^^^^^
 
-deploy script(currently only builds docker files):
-`python deploy.py`
+deploy script(currently only builds docker files)::
+
+  $ python deploy.py
 
 for manual deployment:
 
-Gather static files:
-`python manage.py collectstatic`
+Gather static files::
 
-Update s3 static files:
-`aws s3 sync staticfiles/ s3://speakeazy-django-test/static/`
+  $ python manage.py collectstatic
 
-Build production images:
-`docker-compass build`
+Update s3 static files::
 
-Build individually:
-`sudo docker build -t 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest .`
-`sudo docker tag 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:x.x.x`
+  $ aws s3 sync staticfiles/ s3://speakeazy-django-test/static/
+
+Build production images::
+
+  $ docker-compass build
+
+Build individually::
+
+  $ sudo docker build -t 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest .
+  $ sudo docker tag 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:x.x.x
 
 This creates the following needed images:
 
@@ -176,15 +181,22 @@ This creates the following needed images:
 
 The last three are different names for the same image
 
-Tag and push:
-`sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:x.x.x`
-`sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest`
-`sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:x.x.x`
-`sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:latest`
+Tag and push::
 
-`sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:x.x.x`
-`sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest`
-`sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:x.x.x`
-`sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:latest`
+  $ sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:x.x.x
+  $ sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest
+  $ sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:x.x.x
+  $ sudo docker tag speakeazydjango_django 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:latest
+
+  $ sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:x.x.x
+  $ sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest
+  $ sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:x.x.x
+  $ sudo docker push 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx:latest
+
 
 nginx does not need to be built/pushed every deploy.
+
+Update database::
+
+  $ sudo docker run -it 093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server:latest /bin/bash -c "python manage.py makemigrations && python manage.py migrate"
+
