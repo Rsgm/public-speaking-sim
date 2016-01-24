@@ -52,7 +52,7 @@ class GroupMembership(Model):
 
 
 class Authorization(Model):
-    name = models.CharField(_("Name of authorization"), max_length=30, unique=True)
+    name = models.CharField(_("Name of authorization"), max_length=30)
 
     group = models.ForeignKey('Group')
     permissions = models.ManyToManyField('Permission')
