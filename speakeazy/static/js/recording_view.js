@@ -10,6 +10,7 @@
     var $volume = $('.s-video-volume');
     var $fullscreen = $('.s-video-fullscreen');
     var $time = $('.s-time-played');
+    var $group = $('.s-group-submit');
 
     // slider controls
     var $slider = $('.s-slider');
@@ -160,6 +161,16 @@
             });
         });
     });
+
+    //$group.click(function () {
+    //    var data = {
+    //        group: $(this).attr('data-group')
+    //    };
+    //
+    //    $.post('/projects/p/' + se.project + '/' + se.recording + '/', data, function () {
+    //        sendCallback();
+    //    });
+    //});
 
 
     /**

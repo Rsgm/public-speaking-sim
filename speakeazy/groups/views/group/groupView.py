@@ -3,29 +3,26 @@ from __future__ import absolute_import, unicode_literals
 
 from braces.views import LoginRequiredMixin
 from django.db.models.aggregates import Count
-from speakeazy.groups.mixins import LIST_SUBMISSION
-from speakeazy.groups.models import Group, GroupMembership
+from speakeazy.groups.mixins import LIST_SUBMISSION, GroupPermissiondMixin, LIST_USER, LIST_INVITE
+from speakeazy.groups.models import Group, GroupMembership, Permission, GroupInvite, Submission
 from speakeazy.recordings.models import Recording
 from vanilla.views import TemplateView
 
 
-class GroupView(LoginRequiredMixin, TemplateView):
+class GroupView(LoginRequiredMixin, GroupPermissiondMixin, TemplateView):
     template_name = 'groups/group/group_view.html'
 
     def get_context_data(self, **kwargs):
         kwargs['view'] = self
+        kwargs['group'] = self.group
 
-        group_memberships = self.request.user.groupmembership_set
-        groups = group_memberships.values_list('group', flat=True)
+        if LIST_SUBMISSION in self.permissions:
+            kwargs['submission_list'] = Submission.objects.filter(group=self.group).order_by('-created_time')[:6]
 
-        kwargs['group_list'] = groups.order_by('-created_time')
+        if LIST_INVITE in self.permissions:
+            kwargs['invite_list'] = GroupInvite.objects.filter(group=self.group).order_by('-created_time')[:6]
 
-        kwargs['recently_joined_list'] = group_memberships.order_by('-created_time') \
-                                             .values_list('group', flat=True)[:6]
-
-        # list all groups with submissions that you have permission to list
-        kwargs['groups_with_submission_list'] = group_memberships.filter(authorizations__permissions=LIST_SUBMISSION) \
-                                                    .annotate(submission_count=Count('submission')) \
-                                                    .order_by('-submission_count')[:6]
+        if LIST_USER in self.permissions:
+            kwargs['user_list'] = GroupMembership.objects.filter(group=self.group).order_by('-created_time')[:6]
 
         return kwargs

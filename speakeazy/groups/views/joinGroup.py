@@ -21,4 +21,4 @@ class JoinGroup(LoginRequiredMixin, FormView):
         return JoinForm(user, **kwargs)
 
     def form_valid(self, form):
-        return HttpResponseRedirect(reverse('groups:group:groupView', kwargs={'group': form.membership.group.name}))
+        return HttpResponseRedirect(reverse('groups:group:groupView', kwargs={'group': form.membership.group.slug}))

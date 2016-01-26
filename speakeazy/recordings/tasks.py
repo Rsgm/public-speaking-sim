@@ -145,10 +145,10 @@ def concatenate_media(recording_id, piece_list):
 
     # clean up scripts and converted pieces
     os.remove(str(list_path))
-    # os.remove(str(finished_path))
-    # os.remove(str(thumbnail_video_path))
-    # for path in thumbnail_image_paths:
-    #     os.remove(str(path))
+    os.remove(str(finished_path))
+    os.remove(str(thumbnail_video_path))
+    for path in thumbnail_image_paths:
+        os.remove(str(path))
     for i in piece_list:
         os.remove('%s/%s.webm' % (settings.RECORDING_PATHS['CONVERTED_PIECES'], i))
     UploadPiece.objects.filter(recording=recording).delete()  # clear out database pieces

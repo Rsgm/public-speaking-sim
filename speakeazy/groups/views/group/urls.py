@@ -20,5 +20,5 @@ urlpatterns = [
     url(r'^audience/', include("speakeazy.groups.views.group.audience.urls", namespace="audience")),
     url(r'^invite/', include("speakeazy.groups.views.group.invite.urls", namespace="invite")),
     url(r'^user/', include("speakeazy.groups.views.group.user.urls", namespace="user")),
-    url(r'^submission/', include("speakeazy.groups.views.group.submission.urls", namespace="user")),
+    url(r'^submission/', include("speakeazy.groups.views.group.submission.urls", namespace="submission")),
 ]

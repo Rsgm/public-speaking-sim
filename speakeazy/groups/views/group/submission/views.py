@@ -20,21 +20,12 @@ class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
 
     group_permission = LIST_INVITE
 
-    def get_queryset(self):
-        group = self.kwargs['group']
-        return Submission.objects.filter(group__slug=group)
-
 
 class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
     template_name = 'groups/group/invite/view.html'
     model = Submission
 
     group_permission = VIEW_INVITE
-
-    def get_object(self):
-        group = self.kwargs['group']
-        invite = self.kwargs['invite']
-        return get_object_or_404(Submission, group__slug=group, slug=invite)
 
 
 class Add(LoginRequiredMixin, GroupPermissiondMixin, CreateView):
@@ -80,23 +71,12 @@ class Update(LoginRequiredMixin, GroupPermissiondMixin, UpdateView):
 
     group_permission = UPDATE_INVITE
 
-    def get_object(self):
-        group = self.kwargs['group']
-        invite = self.kwargs['invite']
-        object = get_object_or_404(Submission, group__slug=group, slug=invite)
-        return object
-
 
 class Delete(LoginRequiredMixin, GroupPermissiondMixin, DeleteView):
     template_name = 'groups/group/invite/delete.html'
     model = Submission
 
     group_permission = DELETE_INVITE
-
-    def get_object(self):
-        group = self.kwargs['group']
-        invite = self.kwargs['invite']
-        return get_object_or_404(Submission, group__slug=group, slug=invite)
 
     def get_success_url(self):
         return reverse('groups:group:invite:list', kwargs={'group': self.group.slug})
@@ -107,7 +87,7 @@ class Evaluate(LoginRequiredMixin, GroupPermissiondMixin, TemplateView):
     group_permission = EVALUATE_SUBMISSION
 
     def get_context_data(self, **kwargs):
-        submission = self.kwargs['submission']
+        submission = self.kwargs['pk']
 
         kwargs['view'] = self
         kwargs['group'] = self.group
@@ -123,7 +103,7 @@ class Evaluate(LoginRequiredMixin, GroupPermissiondMixin, TemplateView):
         return kwargs
 
     def post(self, request, *args, **kwargs):
-        submission = kwargs['submission']
+        submission = kwargs['pk']
 
         post = request.POST
         text = post['text']

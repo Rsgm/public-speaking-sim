@@ -212,5 +212,3 @@ ADMIN_URL = env('DJANGO_ADMIN_URL', default=r'^admin/')
 
 # Your production stuff: Below this line define 3rd party library settings
 BCRYPT_ROUNDS = env('BCRYPT_ROUNDS', default=12)
-
-DEBUG = True

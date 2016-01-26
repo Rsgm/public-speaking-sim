@@ -58,7 +58,7 @@ class Authorization(Model):
     permissions = models.ManyToManyField('Permission')
 
     def __str__(self):
-        return self.name
+        return '%s - %s' % (self.group, self.name)
 
 
 class Permission(Model):
@@ -130,6 +130,7 @@ class GroupInvite(Model):
     uses = models.IntegerField(null=True, blank=True)
     expires = models.DateTimeField(null=True, blank=True)
 
+    created_time = models.DateTimeField(auto_now_add=True)
     slug = AutoSlugField(populate_from='name', unique_with='group')
 
     def get_absolute_url(self):

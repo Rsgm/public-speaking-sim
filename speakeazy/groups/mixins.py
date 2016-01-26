@@ -1,3 +1,5 @@
+from django.core.exceptions import PermissionDenied
+from django.http.response import Http404
 from django.shortcuts import get_object_or_404
 from speakeazy.groups.models import Group
 
@@ -21,12 +23,12 @@ class GroupPermissiondMixin(object):
         self.permissions = user.groupmembership_set.filter(group=self.group) \
             .values_list('authorizations__permissions__name', flat=True)
 
-        # if self.group_permission:
-        #     if not self.permissions:
-        #         raise Http404('Group not found')
-        #
-        #     if self.group_permission not in self.permissions:
-        #         raise PermissionDenied()
+        if self.group_permission:
+            if not self.permissions:
+                raise Http404('Group not found')
+
+            if self.group_permission not in self.permissions:
+                raise PermissionDenied()
 
         return super(GroupPermissiondMixin, self).dispatch(request, *args, **kwargs)
 
