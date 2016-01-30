@@ -139,3 +139,11 @@ class GroupInvite(Model):
 
     def __str__(self):
         return '%s - %s' % (self.group, self.token)
+
+
+class SignupMembership(Model):
+    group = models.ForeignKey('Group')
+    authorizations = models.ManyToManyField('Authorization', related_name='+', blank=True)
+
+    def __str__(self):
+        return '%s - %s' % (self.group.name, self.user)
