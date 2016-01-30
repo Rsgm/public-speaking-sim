@@ -45,7 +45,7 @@ THIRD_PARTY_APPS = (
     'guardian',
     'easy_thumbnails',
 
-    "kombu.transport.django",
+    'kombu.transport.django',
 
     'django_js_reverse',  # https://github.com/ierror/django-js-reverse
 )
@@ -275,3 +275,5 @@ RECORDING_PATHS = {
 
 WAGTAIL_SITE_NAME = 'Speakeazy blog'
 FFMPEG_LOG_LEVEL = 'quiet'
+
+COMPRESS_OFFLINE = True

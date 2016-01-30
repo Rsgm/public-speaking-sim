@@ -52,3 +52,4 @@ bcrypt>=2.0.0
 PyMySQL
 django-flat-theme
 puput
+django_compressor
