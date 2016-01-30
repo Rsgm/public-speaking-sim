@@ -14,6 +14,10 @@
     <div class="uk-block">
         <h1>{{ group.name }} Home</h1>
 
+        {% if group.logo %}
+            <img src="{{ group.logo.url }}">
+        {% endif %}
+
         {% if submission_list %}
             <h2><a href={% url 'groups:group:submission:list' group.slug %}></a>Submissions</h2>
 

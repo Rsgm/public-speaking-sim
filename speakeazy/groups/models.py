@@ -25,6 +25,7 @@ class Group(Model):
     users = models.ManyToManyField(User, through='GroupMembership')
 
     parent_user_group = models.ForeignKey('self', blank=True, null=True)
+    logo = models.FileField(upload_to='group-logos', null=True, blank=True)
 
     created_time = models.DateTimeField(auto_now_add=True)
     slug = AutoSlugField(populate_from='name', unique=True)

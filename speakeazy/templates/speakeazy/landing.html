@@ -48,13 +48,13 @@
 
         <div class="uk-navbar-flip">
             <ul class="uk-navbar-nav">
-                <li><a>About</a></li>
-                <li><a>Pricing</a></li>
-                <li><a>Support</a></li>
-                <li><a>Blog</a></li>
-                <li><a>Tech Blog</a></li>
-                <li><a>Login</a></li>
-                <li><a>Signup</a></li>
+                {#                <li><a>About</a></li>#}
+                {#                <li><a>Pricing</a></li>#}
+                {#                <li><a>Support</a></li>#}
+                <li><a href="{% url 'wagtail_serve' '' %}">Blog</a></li>
+                {#                <li><a>Tech Blog</a></li>#}
+                <li><a href="{% url 'userena_signin' %}">Login</a></li>
+                <li><a href="{% url 'userena_signup' %}">Signup</a></li>
                 {#            </ul>#}
                 {#        </div>#}
                 {##}
@@ -165,7 +165,7 @@
             <div id="blog-link" class="uk-panel uk-panel-space uk-width-small-1-1 uk-width-medium-1-3">
                 <i class="uk-icon-bookmark-o uk-icon-large uk-width-1-1 uk-text-center"></i>
 
-                <h2 class="uk-text-center"><a href="/blog/">Speakeazy Blog</a></h2>
+                <h2 class="uk-text-center"><a href="{% url 'wagtail_serve' '' %}">Speakeazy Blog</a></h2>
 
                 <p>A blog full of wonderful articles from the Speakeazy team. Here you will find everything from site
                     updates to public speaking research. </p>
@@ -174,7 +174,7 @@
             <div id="wiki-link" class="uk-panel uk-panel-space uk-width-small-1-1 uk-width-medium-1-3">
                 <i class="uk-icon-book uk-icon-large uk-width-1-1 uk-text-center"></i>
 
-                <h2 class="uk-text-center"><a href="/wiki/">Speakeazy Wiki</a></h2>
+                <h2 class="uk-text-center"><span>Speakeazy Wiki</span></h2>
 
                 <p>An expansive wealth of public speaking resources and material.</p>
             </div>
@@ -182,7 +182,7 @@
             <div id="support-link" class="uk-panel uk-panel-space uk-width-small-1-1 uk-width-medium-1-3">
                 <i class="uk-icon-question-circle uk-icon-large uk-width-1-1 uk-text-center"></i>
 
-                <h2 class="uk-text-center"><a href="/support/">Speakeazy Support</a></h2>
+                <h2 class="uk-text-center"><span>Speakeazy Support</span></h2>
 
                 <p>Support for all of your questions, listeners for all of your feedback.</p>
             </div>

@@ -15,9 +15,7 @@ urlpatterns = [
                   url(r'^hijack/', include('hijack.urls')),
 
                   # User management
-                  # url(r'^users/', include("speakeazy.users.urls", namespace="users")),
                   url(r'^account/', include('userena.urls')),
-
                   url(r'^blog/', include('puput.urls')),
 
                   # Your stuff: custom urls includes go here

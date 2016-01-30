@@ -18,10 +18,10 @@ html {
  * Basic styles for links
  */
 a {
-  color: #006cd7;
+  color: #1976d2;
   text-decoration: none; }
   a:hover, a:active, a:focus {
-    color: #222;
+    color: #212121;
     text-decoration: underline; }
 
 @font-face {
@@ -31,7 +31,7 @@ a {
  * Basic typography style for copy text
  */
 body {
-  color: #222;
+  color: #212121;
   font: normal 125% / 1.4;
   font-family: "Open Sans", "Arial", sans-serif; }
 
@@ -94,7 +94,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 1px; }
 
 #base-header .uk-breadcrumb {
-  background: #82ed82;
+  background: #00e676;
   padding: 25px;
   margin-top: 0; }
 
@@ -129,7 +129,7 @@ h1, h2, h3, h4, h5, h6 {
       left: 30px;
       right: 30px; }
   .s-evaluation-player video {
-    max-height: 95vh; }
+    height: 95vh; }
 
 .s-recording-player {
   position: relative; }
@@ -146,7 +146,7 @@ h1, h2, h3, h4, h5, h6 {
     left: 30px;
     top: 30px; }
   .s-recording-player video {
-    max-height: 95vh; }
+    height: 95vh; }
   .s-recording-player > div {
     position: absolute;
     top: 0;
@@ -161,18 +161,18 @@ h1, h2, h3, h4, h5, h6 {
   transform: rotateY(180deg); }
 
 .s-brand .green {
-  color: #00C900; }
+  color: #00e676; }
 
 .s-create {
-  border: 1px dashed #999;
+  border: 1px dashed #9e9e9e;
   padding: 8px;
-  color: #999;
+  color: #9e9e9e;
   font-size: x-large;
   display: flex;
   justify-content: center;
   align-items: center; }
   .s-create:hover, .s-create:active, .s-create:focus {
-    color: #999; }
+    color: #9e9e9e; }
 
 [class*="uk-width"] > .uk-panel {
   width: 100%;
@@ -182,7 +182,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #444; }
+  background: #616161; }
   .s-panel-add i {
     margin-bottom: -2px !important;
     padding: 50px 0;
@@ -193,7 +193,7 @@ h1, h2, h3, h4, h5, h6 {
     display: none; } }
 
 .s-video-overlay, .s-evaluation-list > * > i, .s-video-controls > * {
-  background-color: #444;
+  background-color: #616161;
   position: absolute;
   padding: 15px;
   color: #fff; }
@@ -222,15 +222,15 @@ h1, h2, h3, h4, h5, h6 {
   .s-evaluation-list > *:first-child > i {
     margin-top: 0; }
   .s-evaluation-list > * .uk-panel {
-    background: #444;
+    background: #616161;
     color: white; }
     .s-evaluation-list > * .uk-panel .uk-panel-title {
-      color: #EDEDED; }
+      color: #eeeeee; }
 
 .s-request-evaluation {
   cursor: pointer; }
   .s-request-evaluation .uk-dropdown {
-    background-color: #444; }
+    background-color: #616161; }
     .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:hover, .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:active, .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:focus {
       background-color: #ee731b; }
 
@@ -268,7 +268,7 @@ h1, h2, h3, h4, h5, h6 {
           top: -6px;
           left: 0; }
       .s-video-controls .s-video-time .s-slider .s-slider-bar {
-        background-color: #222;
+        background-color: #212121;
         border-radius: 4px;
         overflow: hidden;
         position: relative;
@@ -281,7 +281,7 @@ h1, h2, h3, h4, h5, h6 {
           background: #1889f2;
           height: 100%; }
         .s-video-controls .s-video-time .s-slider .s-slider-bar .s-slider-buffered {
-          background: #999;
+          background: #9e9e9e;
           height: 100%; }
         .s-video-controls .s-video-time .s-slider .s-slider-bar .s-slider-position {
           position: relative;
@@ -320,46 +320,76 @@ noscript > * {
   text-align: center;
   padding: 4px; }
 
-#landing-page p {
-  font-size: medium;
-  line-height: 1.8em; }
-
-#landing-page #nav-bar {
-  background: white; }
-
-#landing-page #main {
-  background: rgba(0, 0, 0, 0.3) none repeat scroll 0 0;
-  height: 100vh; }
-  #landing-page #main video {
-    position: absolute;
-    z-index: -100;
-    min-height: 105%;
-    min-width: 105%;
-    filter: blur(5px);
-    transform: translate3d(-50%, -50%, 0px); }
+#landing-page {
+  /* Logged in view */ }
+  #landing-page p {
+    font-size: medium;
+    line-height: 1.8em; }
+  #landing-page #nav-bar {
+    background: white; }
+  #landing-page #main {
+    background: rgba(0, 0, 0, 0.3) none repeat scroll 0 0;
+    height: 100vh; }
+    #landing-page #main video {
+      position: absolute;
+      z-index: -100;
+      min-height: 105%;
+      min-width: 105%;
+      -webkit-filter: blur(5px);
+      filter: blur(5px);
+      transform: translate3d(-50%, -50%, 0px); }
+    #landing-page #main h1, #landing-page #main h2 {
+      color: #83F783; }
+  #landing-page #points {
+    background: white; }
+    #landing-page #points i {
+      color: #0c0cf3;
+      padding: 0 100px; }
+    #landing-page #points .s-point {
+      margin-bottom: 50px; }
+  #landing-page #process {
+    background-color: #1e88e5; }
+    #landing-page #process #process-background {
+      background: url(http://image.shutterstock.com/z/stock-photo-speaker-at-business-conference-and-presentation-audience-at-the-conference-hall-217119211.jpg);
+      background-size: cover;
+      height: 300px; }
+    #landing-page #process .uk-panel {
+      margin-top: 70px; }
+    #landing-page #process h2 {
+      color: #eeeeee; }
+    #landing-page #process p {
+      color: white; }
+  #landing-page #resources {
+    background: white; }
+  #landing-page .uk-navbar {
+    height: 50px; }
+  #landing-page .s-brand img {
+    margin-top: 12px;
+    height: 30px; }
+  #landing-page .uk-navbar-nav {
+    margin-top: 5px;
+    margin-right: 10px; }
+  #landing-page .uk-navbar-nav li {
+    padding-left: 5px; }
+  #landing-page .uk-navbar-nav li:first-child {
+    padding-left: 0; }
+  #landing-page .uk-navbar-nav li a {
+    text-align: center;
+    border-radius: 3px; }
+  #landing-page .uk-navbar-nav li:last-child a, #landing-page .uk-navbar-nav li:nth-last-child(2) a {
+    background-color: #1DE9B6;
+    color: #fff;
+    width: 75px; }
   #landing-page #main h1, #landing-page #main h2 {
-    color: #83F783; }
-
-#landing-page #points {
-  background: white; }
+    text-align: center;
+    color: #fff; }
   #landing-page #points i {
-    color: #0c0cf3;
-    padding: 0 100px; }
-  #landing-page #points .s-point {
-    margin-bottom: 50px; }
-
-#landing-page #process {
-  background-color: #0D81FD; }
-  #landing-page #process #process-background {
-    background: url(http://image.shutterstock.com/z/stock-photo-speaker-at-business-conference-and-presentation-audience-at-the-conference-hall-217119211.jpg);
-    background-size: cover;
-    height: 300px; }
-  #landing-page #process .uk-panel {
-    margin-top: 70px; }
+    color: #1DE9B6;
+    padding: 0;
+    padding-right: 40px;
+    font-size: 80px; }
   #landing-page #process h2 {
-    color: #EDEDED; }
-  #landing-page #process p {
-    color: white; }
-
-#landing-page #resources {
-  background: white; }
+    color: #fff; }
+  #landing-page #base-header .uk-breadcrumb {
+    color: #fff;
+    background-color: #1DE9B6; }

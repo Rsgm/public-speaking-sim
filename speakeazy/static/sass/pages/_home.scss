@@ -34,6 +34,7 @@
       min-height: 105%;
       min-width: 105%;
 
+      -webkit-filter: blur(5px);
       filter: blur(5px);
       transform: translate3d(-50%, -50%, 0px);
     }
@@ -57,7 +58,7 @@
   }
 
   #process {
-    background-color: #0D81FD;
+    background-color: #1e88e5;
 
     #process-background {
       background: url(http://image.shutterstock.com/z/stock-photo-speaker-at-business-conference-and-presentation-audience-at-the-conference-hall-217119211.jpg);
@@ -93,4 +94,66 @@
 
   #landing-footer {
   }
+
+  // cody.css
+  .uk-navbar {
+    height: 50px;
+  }
+
+  .s-brand img {
+    margin-top: 12px;
+    height: 30px;
+  }
+
+  .uk-navbar-nav {
+    margin-top: 5px;
+    margin-right: 10px;
+  }
+
+  .uk-navbar-nav li {
+    padding-left: 5px;
+  }
+
+  .uk-navbar-nav li:first-child {
+    padding-left: 0;
+  }
+
+  .uk-navbar-nav li a {
+    text-align: center;
+    border-radius: 3px;
+  }
+
+  .uk-navbar-nav li:last-child a, .uk-navbar-nav li:nth-last-child(2) a {
+    background-color: #1DE9B6;
+    color: #fff;
+    width: 75px;
+  }
+
+  #main h1, #main h2 {
+    text-align: center;
+    color: #fff;
+  }
+
+  #points i {
+    color: #1DE9B6;
+    padding: 0;
+    padding-right: 40px;
+    font-size: 80px;
+  }
+
+  //#process {
+  //    background-color: #1DE9B6;
+  //}
+
+  #process h2 {
+    color: #fff;
+  }
+
+  /* Logged in view */
+
+  #base-header .uk-breadcrumb {
+    color: #fff;
+    background-color: #1DE9B6;
+  }
+
 }

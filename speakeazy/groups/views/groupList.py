@@ -13,5 +13,4 @@ class GroupList(LoginRequiredMixin, ListView):
     template_name = 'groups/group_list.html'
 
     def get_queryset(self):
-        # group_memberships = GroupMembership.objects.filter(user=self.request.user)
-        return Group.objects.filter(groupmembership__user=User)
+        return Group.objects.filter(groupmembership__user=self.request.user)

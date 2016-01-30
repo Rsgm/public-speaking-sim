@@ -8,7 +8,7 @@ from vanilla.model_views import CreateView
 
 class NewGroup(LoginRequiredMixin, CreateView):
     model = Group
-    fields = ['name', 'description', 'parent_user_group']
+    fields = ['name', 'description', 'logo']
     template_name = 'groups/new_group.html'
 
     # def get_queryset(self):

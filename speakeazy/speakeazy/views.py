@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+from speakeazy.groups.models import Group
 
 from speakeazy.projects.models import Project
 
@@ -21,4 +22,7 @@ class Home(LoginRequiredMixin, TemplateView):
         kwargs['project_list'] = Project.objects.filter(user=self.request.user).order_by('-due_date')[:6]
         kwargs['recording_list'] = Recording.objects.filter(project__user=self.request.user,
                                                             state=RECORDING_FINISHED).order_by('-finish_time')[:6]
+
+        kwargs['group_list'] = Group.objects.filter(groupmembership__user=self.request.user).order_by('-created_time')
+
         return kwargs
