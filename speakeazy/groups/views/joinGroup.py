@@ -5,20 +5,36 @@ from django.http.response import HttpResponseRedirect
 from django.views.generic.edit import FormView
 
 from braces.views import LoginRequiredMixin
+from speakeazy.groups.models import GroupInvite, GroupMembership
 from speakeazy.groups.views.forms import JoinForm
 
 
 class JoinGroup(LoginRequiredMixin, FormView):
     template_name = 'groups/join_group.html'
-
-    def get_form(self, form_class=None):
-        kwargs = self.get_form_kwargs()
-        user = None
-
-        if self.request.method in ('POST', 'PUT'):
-            user = self.request.user
-
-        return JoinForm(user, **kwargs)
+    form_class = JoinForm
 
     def form_valid(self, form):
-        return HttpResponseRedirect(reverse('groups:group:groupView', kwargs={'group': form.membership.group.slug}))
+        user = self.request.user
+        invite = form.invite
+
+        if invite.uses and invite.uses > 0:
+            # subtract from uses
+            invite.uses -= 1
+            invite.save()
+
+        membership_queryset = GroupMembership.objects.filter(group=invite.group, user=user)
+
+        # check for existing membership
+        if membership_queryset.count() == 0:
+            # create membership if none exists
+            membership = GroupMembership(group=invite.group, user=user)
+            membership.save()
+            membership.authorizations.add(*invite.authorizations.all())
+        else:
+            # add authorizations to existing memberships
+            membership = membership_queryset.get()
+            membership.authorizations.add(*invite.authorizations.all())
+
+        membership.save()
+
+        return HttpResponseRedirect(reverse('groups:group:groupView', kwargs={'group': membership.group.slug}))

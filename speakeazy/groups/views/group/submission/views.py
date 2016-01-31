@@ -20,6 +20,10 @@ class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
 
     group_permission = LIST_INVITE
 
+    def get_queryset(self):
+        group = self.kwargs['group']
+        return Submission.objects.filter(group__slug=group)
+
 
 class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
     template_name = 'groups/group/invite/view.html'

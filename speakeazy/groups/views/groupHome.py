@@ -17,15 +17,16 @@ class GroupHome(LoginRequiredMixin, TemplateView):
 
         # group_memberships = GroupMembership.objects.filter(user=self.request.user)
         group_memberships = self.request.user.groupmembership_set
-        groups = group_memberships.values_list('group', flat=True)
+        # groups = group_memberships.values_list('group', flat=True)
 
         # kwargs['group_list'] = groups.order_by('-created_time')
 
-        kwargs['recently_joined_list'] = group_memberships.order_by('-created_time')[:6]
+        kwargs['recently_joined_list'] = group_memberships.select_related('group').order_by('-created_time')[:6]
 
         # list all groups with submissions that you have permission to list
         kwargs['groups_with_submission_list'] = group_memberships \
                                                     .filter(authorizations__permissions__name=LIST_SUBMISSION) \
+                                                    .select_related('group') \
                                                     .annotate(submission_count=Count('group__submission')) \
                                                     .order_by('-submission_count')[:6]
 

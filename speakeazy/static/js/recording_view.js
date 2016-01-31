@@ -162,15 +162,17 @@
         });
     });
 
-    //$group.click(function () {
-    //    var data = {
-    //        group: $(this).attr('data-group')
-    //    };
-    //
-    //    $.post('/projects/p/' + se.project + '/' + se.recording + '/', data, function () {
-    //        sendCallback();
-    //    });
-    //});
+    $group.click(function () {
+        var data = {
+            action: 'request',
+            group: $(this).attr('data-group'),
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        };
+
+        $.post('/projects/p/' + se.project + '/' + se.recording + '/', data, function () {
+            // success notification
+        });
+    });
 
 
     /**
@@ -267,6 +269,7 @@
 
     function sendEval(type, text, time, sendCallback) {
         var data = {
+            action: 'eval',
             type: type,
             text: text,
             seconds: time,

@@ -15,6 +15,6 @@ class SpeakeazySignupForm(SignupForm):
             new_membership.group = membership.group
             new_membership.save()
 
-            new_membership.authorizations.add(membership.authorizations.all())
+            new_membership.authorizations.add(*membership.authorizations.all())
 
         return new_user

@@ -86,9 +86,10 @@ class Submission(Model):
     group = models.ForeignKey('Group')
     recording = models.ForeignKey(Recording)
 
-    for_evaluation = models.BooleanField()
-    group_visibility = models.ForeignKey('Authorization')
+    for_evaluation = models.BooleanField()  # does nothing currently
+    group_visibility = models.ForeignKey('Authorization', null=True, blank=True)  # does nothing currently
 
+    # does nothing currently
     state = models.CharField(max_length=1, choices=SUBMISSION_STATE_CHOICES, default=SUBMISSION_READY)
 
     created_time = models.DateTimeField(auto_now_add=True)
@@ -142,8 +143,8 @@ class GroupInvite(Model):
 
 
 class SignupMembership(Model):
-    group = models.ForeignKey('Group')
+    group = models.OneToOneField('Group')
     authorizations = models.ManyToManyField('Authorization', related_name='+', blank=True)
 
     def __str__(self):
-        return '%s - %s' % (self.group.name, self.user)
+        return '%s' % self.group.name

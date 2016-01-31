@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from speakeazy.users.forms import SpeakeazySignupForm
 
 urlpatterns = [
                   url(r'^$', TemplateView.as_view(template_name='speakeazy/landing.html'), name="home"),
@@ -15,7 +16,9 @@ urlpatterns = [
                   url(r'^hijack/', include('hijack.urls')),
 
                   # User management
+                  url(r'^account/signup/$', 'userena.views.signup', {'signup_form': SpeakeazySignupForm}),
                   url(r'^account/', include('userena.urls')),
+
                   url(r'^blog/', include('puput.urls')),
 
                   # Your stuff: custom urls includes go here
