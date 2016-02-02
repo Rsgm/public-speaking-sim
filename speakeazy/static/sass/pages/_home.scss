@@ -5,7 +5,7 @@
 #landing-page {
   p {
     font-size: medium;
-    line-height: 1.8em;
+    line-height: 2em;
   }
 
   //#vid-bg {
@@ -54,20 +54,43 @@
 
     .s-point {
       margin-bottom: 50px;
+      //@include card(1);
+      //background-color: #4db6ac;
+
+    }
+  }
+
+  #demo {
+    background-color: #64b5f6;
+    display: flex;
+    justify-content: space-around;
+
+    a {
+      font-size: 1.5em;
+      padding: 10px 20px;
+      background-color: #f44336;
+      color: white;
+      @include card(2)
     }
   }
 
   #process {
-    background-color: #1e88e5;
+    //background-color: #1e88e5;
+    background-color: #311b92;
 
-    #process-background {
-      background: url(http://image.shutterstock.com/z/stock-photo-speaker-at-business-conference-and-presentation-audience-at-the-conference-hall-217119211.jpg);
-      background-size: cover;
-      height: 300px;
+    //#process-background {
+    //  background: url(http://image.shutterstock.com/z/stock-photo-speaker-at-business-conference-and-presentation-audience-at-the-conference-hall-217119211.jpg);
+    //  background-size: cover;
+    //  height: 300px;
+    //}
+
+    .uk-grid > * {
+      margin-top: 70px;
     }
 
     .uk-panel {
-      margin-top: 70px;
+      @include card(1);
+      background-color: #3f51b5;
     }
 
     h2 {

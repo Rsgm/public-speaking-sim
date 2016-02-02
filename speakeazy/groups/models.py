@@ -143,7 +143,7 @@ class GroupInvite(Model):
 
 
 class SignupMembership(Model):
-    group = models.OneToOneField('Group')
+    group = models.OneToOneField('Group')  # not needed since the group is in authorizations
     authorizations = models.ManyToManyField('Authorization', related_name='+', blank=True)
 
     def __str__(self):

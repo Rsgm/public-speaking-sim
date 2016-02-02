@@ -324,7 +324,7 @@ noscript > * {
   /* Logged in view */ }
   #landing-page p {
     font-size: medium;
-    line-height: 1.8em; }
+    line-height: 2em; }
   #landing-page #nav-bar {
     background: white; }
   #landing-page #main {
@@ -347,14 +347,23 @@ noscript > * {
       padding: 0 100px; }
     #landing-page #points .s-point {
       margin-bottom: 50px; }
+  #landing-page #demo {
+    background-color: #64b5f6;
+    display: flex;
+    justify-content: space-around; }
+    #landing-page #demo a {
+      font-size: 1.5em;
+      padding: 10px 20px;
+      background-color: #f44336;
+      color: white;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.23), 0 3px 12px rgba(0, 0, 0, 0.16); }
   #landing-page #process {
-    background-color: #1e88e5; }
-    #landing-page #process #process-background {
-      background: url(http://image.shutterstock.com/z/stock-photo-speaker-at-business-conference-and-presentation-audience-at-the-conference-hall-217119211.jpg);
-      background-size: cover;
-      height: 300px; }
-    #landing-page #process .uk-panel {
+    background-color: #311b92; }
+    #landing-page #process .uk-grid > * {
       margin-top: 70px; }
+    #landing-page #process .uk-panel {
+      box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+      background-color: #3f51b5; }
     #landing-page #process h2 {
       color: #eeeeee; }
     #landing-page #process p {
