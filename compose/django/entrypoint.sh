@@ -18,7 +18,4 @@ export CELERY_BROKER_URL=$REDIS_URL
 
 . /app/.env.sh
 
-#python manage.py makemigrations                  # Apply database migrations
-#python manage.py collectstatic --noinput  # Collect static files
-
 exec "$@"
