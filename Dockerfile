@@ -26,6 +26,7 @@ RUN apt-get -y --force-yes update \
 # Install python and add python3 link
 RUN apt-get -y --force-yes update \
     && apt-get -y --force-yes install python3 python3-pip \
+    && pip3 install --upgrade pip \
     \
     && cd /usr/bin \
 	&& rm python \
