@@ -1,0 +1,195 @@
+// -----------------------------------------------------------------------------
+// This file contains styles that are specific to the landing page.
+// -----------------------------------------------------------------------------
+
+#landing-page {
+  p {
+    font-size: medium;
+    line-height: 2em;
+  }
+
+  //#vid-bg {
+  //  position: absolute;
+  //  top: 0;
+  //  right: 0;
+  //  bottom: 0;
+  //  left: 0;
+  //  overflow: hidden;
+  //  z-index: -100;
+  //
+  //}
+
+  #nav-bar {
+    background: #fff;
+  }
+
+  #main {
+    background: rgba(0, 0, 0, 0.3) none repeat scroll 0 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+
+    video {
+      position: absolute;
+      z-index: -100;
+
+      min-height: 105%;
+      min-width: 105%;
+
+      -webkit-filter: blur(5px);
+      filter: blur(5px);
+      transform: translate3d(-50%, -50%, 0px);
+    }
+
+    h1, h2 {
+      color: #83F783;
+    }
+
+    h1 {
+        margin-top: 0;
+    }
+    h2 {
+        margin-bottom: 0;
+    }
+  }
+
+  #points {
+    background: white;
+
+    i {
+      color: #0c0cf3;
+      padding: 0 100px;
+    }
+
+    .s-point {
+      margin-bottom: 50px;
+      //@include card(1);
+      //background-color: #4db6ac;
+
+    }
+
+    img {
+        height: 100%;
+    }
+  }
+
+  #demo {
+    background-color: #1E88E5;
+    text-align: center;
+    padding: 30px 0;
+    color: white;
+
+    h2{
+        color: #fff
+    }
+
+    a {
+        width: 240px;
+        margin:0 auto;
+        display: block;
+      font-size: 1.5em;
+      padding: 10px 20px;
+      background-color: #f44336;
+      color: white;
+      @include card(2)
+    }
+  }
+
+  #process {
+    //background-color: #1e88e5;
+    background-color: #311b92;
+
+    //#process-background {
+    //  background: url(http://image.shutterstock.com/z/stock-photo-speaker-at-business-conference-and-presentation-audience-at-the-conference-hall-217119211.jpg);
+    //  background-size: cover;
+    //  height: 300px;
+    //}
+
+    .uk-grid > * {
+      margin-top: 70px;
+    }
+
+    .uk-panel {
+      @include card(1);
+      background-color: #3f51b5;
+    }
+
+    h2 {
+      color: $light-grey
+    }
+
+    p {
+      color: white;
+    }
+  }
+
+  #resources {
+    background: white;
+
+    #blog-link {
+    }
+
+    #wiki-link {
+    }
+
+    #support-link {
+    }
+  }
+
+  #landing-footer {
+  }
+
+  // cody.css
+  .uk-navbar {
+    height: 50px;
+  }
+
+  .s-brand img {
+    margin-top: 12px;
+    height: 30px;
+  }
+
+  .uk-navbar-nav {
+    margin-top: 5px;
+    margin-right: 10px;
+  }
+
+  .uk-navbar-nav li {
+    padding-left: 5px;
+  }
+
+  .uk-navbar-nav li:first-child {
+    padding-left: 0;
+  }
+
+  .uk-navbar-nav li a {
+    text-align: center;
+    border-radius: 3px;
+  }
+
+  .uk-navbar-nav li:last-child a, .uk-navbar-nav li:nth-last-child(2) a {
+    background-color: #1DE9B6;
+    color: #fff;
+    width: 75px;
+  }
+
+  #main h1, #main h2 {
+    text-align: center;
+    color: #fff;
+  }
+
+  #points i {
+    color: #1DE9B6;
+    padding: 0;
+    padding-right: 40px;
+    font-size: 80px;
+  }
+
+  //#process {
+  //    background-color: #1DE9B6;
+  //}
+
+  #process h2 {
+    color: #fff;
+  }
+}
