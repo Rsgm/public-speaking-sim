@@ -8,10 +8,13 @@
 
 {% block content %}
     <div id="home" class="">
-
         <div id="upcoming-projects" class="uk-block">
-            <h2><a href="{% url 'projects:projectList' %}">Projects</a></h2>
-
+            <h4>Welcome! Create a new project to start preparing for your next presentation.</h4>
+            <div class="home-dashboard-flex-box">
+                <h2  class="home-dashboard-header">Projects</h2>
+                <a  class="home-dashboard-button" href="{% url 'projects:projectList' %}">See all</a>
+                <a  class="home-dashboard-button" href="https://speakeazy.io/projects/new/">Create New</a>
+            </div>
             {% if project_recent_list %}
                 <h3>Recent</h3>
 
@@ -57,7 +60,7 @@
 
 
         <div id="recent-recordings" class="uk-block">
-            <h2><a>Recent Recordings</a></h2>
+            <h2 class="home-dashboard-button">Recent Recordings</h2>
 
             <div class="uk-flex uk-grid">
                 {% for recording in recording_list %}
@@ -80,8 +83,11 @@
         </div>
 
         <div id="Groups" class="uk-block">
-            <h2><a href="{% url 'groups:groupHome' %}">Groups</a></h2>
 
+            <div class="home-dashboard-flex-box">
+                <h2  class="home-dashboard-header" >Groups</h2>
+                <a  class="home-dashboard-button" href="{% url 'groups:groupHome' %}">See all</a>
+            </div>
             <div class="uk-flex uk-grid">
                 {% for group in group_list %}
                     <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">

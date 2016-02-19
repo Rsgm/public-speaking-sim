@@ -8,3 +8,31 @@
   color: #fff;
   background-color: #1DE9B6;
 }
+
+
+.home-dashboard-flex-box{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin:30px 0;
+}
+
+.home-dashboard-header{
+    margin-bottom: 0;
+
+}
+
+a.home-dashboard-button{
+    @include card(2);
+    background-color: $secondary-brand-color;
+    color:#fff;
+    font-size: 14px;
+    padding:4px 15px;
+    border-radius: 3px;
+    margin: 0 6px;
+
+    &:hover, &:active, &:focus{
+        text-decoration: none;
+        background-color: $secondary-brand-color - $hover;
+    }
+}

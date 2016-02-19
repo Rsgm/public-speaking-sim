@@ -3,18 +3,62 @@
   height: 100%;
 }
 
+#project-list{
+    align-items: center;
+    margin-top: 60px;
+}
+
+.created-project-panel{
+    @include card(2);
+    border-radius: 3px;
+    padding:0;
+    margin-left: 35px;
+
+}
+
+.uk-panel-box{
+    @include card(2);
+    padding:17px;
+    border-radius: 3px;
+    &:hover, &:active, &:focus{
+        background-color: #F5F5F5 - $hover;
+    }
+}
+
+.uk-panel-title{
+    font-size: 16px;
+}
+.project-info, .item-info{
+    font-style: italic;
+}
+
 .s-panel-add {
+  @include card(2);
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  border-radius: 3px;
+  background: $secondary-brand-color;
 
-  background: $dark-grey;
+  padding:0;
+
+  &:hover, &:active, &:focus{
+      text-decoration: none;
+      background-color: $secondary-brand-color - $hover;
+  }
 
   //min-height: 120px;
 
   i {
     margin-bottom: -2px !important;
-    padding: 50px 0;
-    font-size: 22px;
+    padding: 40px 0 20px 0;
+    font-size: 45px;
   }
+}
+
+.text-under-panel-add {
+    font-family: $text-font-stack;
+    text-align:center;
+    color:#fff;
 }
