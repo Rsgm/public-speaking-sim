@@ -1,11 +1,35 @@
+
+#record {
+
+    & h5 {
+        max-width: 900px;
+        margin: 20px auto;
+        text-align: left;;
+
+    }
+    & h2{
+        max-width: 900px;
+        margin:0 auto;
+    }
+}
+
 .s-recording-player {
   position: relative;
 
   #start-recording {
+
     position: absolute;
     left: $video-player-offset;
     top: $video-player-offset;
+    background-color: $secondary-brand-color;
+
   }
+
+    .s-video-button{
+        @include card(3);
+        border-radius: 3px;
+    }
+
 
   .s-recording-volume {
     position: absolute;
@@ -17,6 +41,7 @@
     position: absolute;
     left: $video-player-offset;
     top: $video-player-offset;
+    background-color: $secondary-brand-color;
   }
 
   video {
