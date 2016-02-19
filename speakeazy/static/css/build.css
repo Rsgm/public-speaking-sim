@@ -373,7 +373,7 @@ html {
  * Basic styles for links
  */
 a {
-  color: #1E88E5;
+  color: #0091EA;
   text-decoration: none; }
   a:hover, a:active, a:focus {
     color: #212121;
@@ -501,7 +501,7 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     left: 30px;
     top: 30px;
-    background-color: #1E88E5; }
+    background-color: #0091EA; }
   .s-recording-player .s-video-button {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.23), 0 10px 40px rgba(0, 0, 0, 0.19);
     border-radius: 3px; }
@@ -513,7 +513,7 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     left: 30px;
     top: 30px;
-    background-color: #1E88E5; }
+    background-color: #0091EA; }
   .s-recording-player video {
     height: 95vh; }
   .s-recording-player > div {
@@ -577,11 +577,11 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   flex-direction: column;
   border-radius: 3px;
-  background: #1E88E5;
+  background: #0091EA;
   padding: 0; }
   .s-panel-add:hover, .s-panel-add:active, .s-panel-add:focus {
     text-decoration: none;
-    background-color: #046ecb; }
+    background-color: #0077d0; }
   .s-panel-add i {
     margin-bottom: -2px !important;
     padding: 40px 0 17px 0;
@@ -763,7 +763,7 @@ noscript > * {
     height: 100%; }
 
 #landing-page #demo {
-  background-color: #1E88E5;
+  background-color: #0091EA;
   text-align: center;
   padding: 30px 0;
   color: white; }
@@ -849,7 +849,7 @@ noscript > * {
 
 a.home-dashboard-button {
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.23), 0 3px 12px rgba(0, 0, 0, 0.16);
-  background-color: #1E88E5;
+  background-color: #0091EA;
   color: #fff;
   font-size: 14px;
   padding: 4px 15px;
@@ -857,4 +857,4 @@ a.home-dashboard-button {
   margin: 0 6px; }
   a.home-dashboard-button:hover, a.home-dashboard-button:active, a.home-dashboard-button:focus {
     text-decoration: none;
-    background-color: #046ecb; }
+    background-color: #0077d0; }
