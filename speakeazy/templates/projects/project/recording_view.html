@@ -1,8 +1,10 @@
-{% extends "projects/project/project_base.html" %}
+{% extends "base.html" %}
 {% load static from staticfiles %}{% load i18n %}
 {% block title %}{{ recording.slug }}{% endblock %}
 
-{% block p_breadcrumbs %}
+{% block breadcrumbs %}
+    {% include 'projects/project/breadcrumb.html' %}
+    <li><a href="{% url 'projects:project:projectView' recording.project.slug %}">{{ recording.project.slug }}</a></li>
     <li class="uk-active"><span>{{ recording.slug }}</span></li>
 {% endblock %}
 
@@ -78,7 +80,7 @@
                         </div>
                     </div>
 
-{#                    <i class="uk-icon-expand uk-icon-hover s-video-fullscreen"></i>#}
+                    {#                    <i class="uk-icon-expand uk-icon-hover s-video-fullscreen"></i>#}
                 </div>
             </div>
         </div>

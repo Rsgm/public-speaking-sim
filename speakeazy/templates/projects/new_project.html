@@ -1,9 +1,10 @@
-{% extends "projects/p_base.html" %}
+{% extends 'base.html' %}
 {% load static from staticfiles %}{% load i18n %}{% load crispy_forms_tags %}
 {% block title %} - Create Project{% endblock %}
 
-{% block p_breadcrumbs %}
-    <li class="uk-active"><span>list</span></li>
+{% block breadcrumbs %}
+    {% include 'projects/breadcrumb.html' %}
+    <li class="uk-active"><span>new</span></li>
 {% endblock %}
 
 {% block content %}

@@ -1,7 +1,0 @@
-{% extends "base.html" %}
-{% load static from staticfiles %}{% load i18n %}
-
-{% block breadcrumbs %}
-    <li><a href="{% url 'projects:projectList' %}">projects</a></li>
-    {% block p_breadcrumbs %}{% endblock %}
-{% endblock %}
