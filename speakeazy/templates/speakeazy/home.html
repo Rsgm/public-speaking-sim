@@ -13,7 +13,7 @@
             <div class="home-dashboard-flex-box">
                 <h2  class="home-dashboard-header">Projects</h2>
                 <a  class="home-dashboard-button" href="{% url 'projects:projectList' %}">See all</a>
-                <a  class="home-dashboard-button" href="https://speakeazy.io/projects/new/">Create New</a>
+		<a  class="home-dashboard-button" href="{% url 'projects:newProject' %}">Create New</a>
             </div>
             {% if project_recent_list %}
                 <h3>Recent</h3>
