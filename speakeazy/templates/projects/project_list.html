@@ -10,9 +10,9 @@
     <div id="project-list" class="uk-flex uk-grid">
 
         {% for project in project_list %}
-            <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6 created-project-panel">
+            <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
                 <a href="{% url 'projects:project:projectView' project.slug %}"
-                   class="uk-panel uk-panel-box uk-panel-header">
+                   class="uk-panel uk-panel-box panel-card uk-panel-header">
 
                     <h3 class="uk-panel-title">{{ project.name }}</h3>
 
@@ -32,12 +32,11 @@
             </div>
         {% endfor %}
 
-        <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6 new-project-panel">
-            <a href="{% url 'projects:newProject' %}" class="uk-panel s-panel-add">
+        <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
+            <a class="uk-panel uk-panel-box panel-add" href="{% url 'projects:newProject' %}">
                 <i class="uk-icon-plus uk-contrast new-project-panel-icon"></i>
-                <div class="text-under-panel-add">Create New Project</div>
+                <div class="add-text">Create New Project</div>
             </a>
-
         </div>
     </div>
 {% endblock %}

@@ -3,49 +3,45 @@
   height: 100%;
 }
 
-#project-list{
-    align-items: center;
-    margin-top: 60px;
+#project-list {
+  align-items: center;
+  margin-top: 60px;
 }
 
-.created-project-panel{
-    @include card(2);
-    border-radius: 3px;
-    padding:0;
-    margin-left: 35px;
+.panel-card {
+  &:not(.panel-add) {
+    @include card(1);
+  }
 
-}
+  border-radius: 3px;
 
-.uk-panel-box{
-    @include card(2);
-    padding:17px;
-    border-radius: 3px;
-    &:hover, &:active, &:focus{
+  &:only-of-type(a) {
+    &:hover, &:active, &:focus {
         background-color: #F5F5F5 - $hover;
     }
+  }
 }
 
-.uk-panel-title{
-    font-size: 16px;
-}
-.project-info, .item-info{
-    font-style: italic;
-}
+.panel-add {
+  @extend .panel-card;
 
-.s-panel-add {
   @include card(2);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  border-radius: 3px;
   background: $secondary-brand-color;
 
-  padding:0;
+  padding: 0;
 
-  &:hover, &:active, &:focus{
-      text-decoration: none;
-      background-color: $secondary-brand-color - $hover;
+  .add-text {
+    color: #fff;
+    padding-bottom: 10px;
+  }
+
+  &:hover, &:active, &:focus {
+    text-decoration: none;
+    background-color: $secondary-brand-color - $hover;
   }
 
   //min-height: 120px;
@@ -57,9 +53,10 @@
   }
 }
 
-.text-under-panel-add {
-    font-family: $text-font-stack;
-    text-align:center;
-    color:#fff;
-    padding-bottom: 3px;
+.uk-panel-title {
+  font-size: 16px;
+}
+
+.project-info, .item-info {
+  font-style: italic;
 }

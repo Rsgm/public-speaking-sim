@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-from speakeazy.groups.views.groupHome import GroupHome
+from speakeazy.groups.views.groupDashboard import GroupDashboard
 from speakeazy.groups.views.groupList import GroupList
 from django.conf.urls import include, url
 from speakeazy.groups.views.joinGroup import JoinGroup
@@ -15,8 +15,8 @@ urlpatterns = [
 
     url(
         regex=r'^home$',
-        view=GroupHome.as_view(),
-        name="groupHome"
+        view=GroupDashboard.as_view(),
+        name="groupDashboard"
     ),
 
     url(

@@ -2,37 +2,31 @@
 // This file contains styles that are specific to the home page.
 // -----------------------------------------------------------------------------
 
-/* Logged in view */
-
-#base-header .uk-breadcrumb {
-  color: #fff;
-  background-color: #1DE9B6;
-}
-
-
-.home-dashboard-flex-box{
+#dashboard {
+  .home-dashboard-flex-box {
     display: flex;
     justify-content: left;
     align-items: center;
-    margin:30px 0;
-}
+    margin: 30px 0;
+  }
 
-.home-dashboard-header{
+  .home-dashboard-header {
     margin-bottom: 0;
 
-}
+  }
 
-a.home-dashboard-button{
+  a.home-dashboard-button {
     @include card(2);
     background-color: $secondary-brand-color;
-    color:#fff;
+    color: #fff;
     font-size: 14px;
-    padding:4px 15px;
+    padding: 4px 15px;
     border-radius: 3px;
     margin: 0 6px;
 
-    &:hover, &:active, &:focus{
-        text-decoration: none;
-        background-color: $secondary-brand-color - $hover;
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+      background-color: $secondary-brand-color - $hover;
     }
+  }
 }

@@ -9,8 +9,8 @@ from speakeazy.recordings.models import Recording, RECORDING_FINISHED
 from vanilla.views import TemplateView
 
 
-class Home(LoginRequiredMixin, TemplateView):
-    template_name = 'speakeazy/home.html'
+class Dashboard(LoginRequiredMixin, TemplateView):
+    template_name = 'speakeazy/dashboard.html'
 
     def get_context_data(self, **kwargs):
         kwargs['view'] = self

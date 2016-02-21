@@ -23,7 +23,7 @@
 
         <!-- This file store project specific CSS -->
         <link href="{% static 'css/build.css' %}" rel="stylesheet">
-{#        <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>#}
+        {#        <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>#}
     {% endblock %}
 </head>
 
@@ -36,7 +36,8 @@
 
 <div id="base-header">
     <nav class="uk-navbar uk-navbar-attached">
-        <a class="uk-navbar-brand s-brand" href="{% url 'speakeazy:home' %}">Speak<span class="green">Eazy</span></a>
+        <a class="uk-navbar-brand s-brand" href="{% url 'speakeazy:dashboard' %}">Speak<span
+                class="green">Eazy</span></a>
 
         <div class="uk-navbar-flip">
             <ul class="uk-navbar-nav">
@@ -45,14 +46,17 @@
 
                     <div class="uk-dropdown">
                         <ul class="uk-nav uk-nav-dropdown">
-                            <li><a href="{% url 'speakeazy:home' %}">Home</a></li>
-                            {#                            {% if user.isAdmin %}#}
-                            {#                            <li><a href="{% url 'admin:index' %}">Admin</a></li>#}
-                            {#                            {% endif %}#}
+                            <li><a href="{% url 'speakeazy:dashboard' %}">Dashboard</a></li>
                             <li class="uk-nav-divider"></li>
+
                             <li><a href="{% url 'groups:groupList' %}">Group List</a></li>
                             <li><a href="{% url 'groups:joinGroup' %}">Join Group</a></li>
                             <li><a href="{% url 'groups:newGroup' %}">Create Group</a></li>
+
+                            {% if user.is_staff %}
+                                <li class="uk-nav-divider"></li>
+                                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </li>

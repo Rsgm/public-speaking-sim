@@ -9,8 +9,8 @@ from speakeazy.recordings.models import Recording
 from vanilla.views import TemplateView
 
 
-class GroupHome(LoginRequiredMixin, TemplateView):
-    template_name = 'groups/group_home.html'
+class GroupDashboard(LoginRequiredMixin, TemplateView):
+    template_name = 'groups/group_dashboard.html'
 
     def get_context_data(self, **kwargs):
         kwargs['view'] = self

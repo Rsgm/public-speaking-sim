@@ -1,7 +1,7 @@
 noscript {
   & > * {
-    background: #85de97;
-    color: #217a30;
+    background: $brand-color;
+    color: rgba(0, 0, 0, .54);
     font-weight: bold;
     text-align: center;
     padding: 4px;
