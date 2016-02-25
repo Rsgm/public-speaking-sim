@@ -1,0 +1,8 @@
+{% if form.form_html %}{% spaceless %}
+    {% if form_show_errors %}
+        {% include "speakeazy_forms/errors.html" %}
+    {% endif %}
+    {{ form.form_html }}
+{% endspaceless %}{% else %}{% spaceless %}
+    {% include "speakeazy_forms/uni_form.html" %}
+{% endspaceless %}{% endif %}
