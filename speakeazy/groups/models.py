@@ -71,7 +71,7 @@ class Permission(Model):
 
 class Audience(Model):
     name = models.CharField(_("Name of audience"), max_length=60)
-    description = models.TextField(_("Description of project"), null=True, blank=True)
+    description = models.TextField(_("Description of audience"), null=True, blank=True)
 
     file = models.FileField(upload_to='audience')  # ensure file name uniqueness
     group = models.ForeignKey(Group)

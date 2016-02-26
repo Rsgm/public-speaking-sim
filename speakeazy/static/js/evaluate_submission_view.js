@@ -43,24 +43,15 @@
         showEvaluations();
     });
 
-    $videoContainer.hover($.debounce(1000, true, function () {
-        $controls.removeClass('uk-animation-fade');
-        $videoContainer.css('cursor', 'default');
-    }), $.debounce(1000, function () {
-        $controls.addClass('uk-animation-fade');
+    $videoContainer.hover(function () {}, $.debounce(600, function () {
+        hideControls();
     }));
 
-    $videoContainer.mousemove(function () {
-        $controls.removeClass('uk-animation-fade');
-        $videoContainer.css('cursor', 'default');
-    });
+    $videoContainer.mousemove(showControls);
 
-    $controlsBackground.mousestop(function () {
-        $controls.addClass('uk-animation-fade');
-        $videoContainer.css('cursor', 'none');
-    }, {
+    $videoContainer.mousestop(hideControls, {
         timeToStop: null,   // the amount of time the stop event has to run before it will not run at all anymore
-        delayToStop: '1200', // the delay for what is considered a "stop"
+        delayToStop: '800', // the delay for what is considered a "stop"
         onMouseout: null,   // function to run when we mouseout of our element
         onStopMove: null    // function to run when we start moving again after the stop
     });
@@ -208,7 +199,9 @@
     function play() {
         $pause.show();
         $play.hide();
-        $video[0].play()
+        $video[0].play();
+
+        setTimeout(hideControls, 1200);
     }
 
     /**
@@ -218,6 +211,8 @@
         $play.show();
         $pause.hide();
         $video[0].pause();
+
+        showControls();
     }
 
     /**
@@ -229,6 +224,24 @@
         } else {
             pause();
         }
+    }
+
+    /**
+     * Hide control overlay if not paused
+     */
+    function hideControls() {
+        if (!$video[0].paused) {
+            $controls.addClass('uk-animation-fade');
+            $videoContainer.css('cursor', 'none');
+        }
+    }
+
+    /**
+     * Show control overlay no matter what
+     */
+    function showControls() {
+        $controls.removeClass('uk-animation-fade');
+        $videoContainer.css('cursor', 'default');
     }
 
     /**
