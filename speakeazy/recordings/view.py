@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+from celery.canvas import group
 from speakeazy.projects.models import Project
 from speakeazy.recordings import models
 from speakeazy.recordings.models import Recording, UploadPiece
@@ -47,6 +48,7 @@ class Record(LoginRequiredMixin, TemplateView):
         slug = 1 + Recording.objects.filter(project=project).count()
         recording = Recording(project=project, slug=slug)
         recording.save()
+
         return JsonResponse({'id': recording.slug})
 
     def upload(self, project_slug, recording_slug, request):
@@ -57,9 +59,11 @@ class Record(LoginRequiredMixin, TemplateView):
                                       project__slug=project_slug,
                                       slug=recording_slug,
                                       state=models.RECORDING_UPLOADING)
+
         # create object to keep the id
         piece = UploadPiece(recording=recording)
         piece.save()
+
         # write video data
         if 'v' in request.POST:
             video = open('%s/%s.b64' % (settings.RECORDING_PATHS['VIDEO_PIECES'], piece.id), 'w')
@@ -84,6 +88,7 @@ class Record(LoginRequiredMixin, TemplateView):
                                       state=models.RECORDING_UPLOADING)
         # get piece list
         piece_list = UploadPiece.objects.filter(recording=recording).values_list('pk', flat=True)
+
         # run concat task
         concatenate_media.delay(recording.id, piece_list)
         return HttpResponse(recording.project.get_absolute_url())

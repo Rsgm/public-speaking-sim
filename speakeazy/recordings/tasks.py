@@ -1,5 +1,5 @@
 import subprocess
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from json import loads
 from math import floor
 from pathlib import Path
@@ -57,17 +57,17 @@ def convert_media(piece_id):
 
     # I suppose we will leave these as cpu-used 2, I may downgrade this later if it takes too long
     if combined:
-        command = 'ffmpeg -loglevel %s -i %s ' \
+        command = 'ffmpeg -v %s -i %s ' \
                   '-c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
                   % (LOG_LEVEL, video_path, converted_path)
     elif video_path and audio_path:
-        command = 'ffmpeg -loglevel %s -i %s -i %s ' \
+        command = 'ffmpeg -v %s -i %s -i %s ' \
                   '-map 0 -map 1 -c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
                   % (LOG_LEVEL, video_path, audio_path, converted_path)
     elif video_path:
-        command = 'ffmpeg -loglevel %s -i %s video_path -c:v libvpx -cpu-used 2' % (LOG_LEVEL, converted_path)
+        command = 'ffmpeg -v %s -i %s video_path -c:v libvpx -cpu-used 2' % (LOG_LEVEL, converted_path)
     elif audio_path:
-        command = 'ffmpeg -loglevel %s -i %s -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
+        command = 'ffmpeg -v %s -i %s -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
                   % (LOG_LEVEL, audio_path, converted_path)
     else:
         command = 'Echo Error - No video or audio'
@@ -92,19 +92,42 @@ def concatenate_media(recording_id, piece_list):
 
     list_path = Path('%s/%s.txt' % (settings.RECORDING_PATHS['LISTS'], recording_id)).absolute()
     finished_path = Path('%s/%s.webm' % (settings.RECORDING_PATHS['FINISHED'], recording_id)).absolute()
-    thumbnail_video_path = Path('%s/%s.webm' % (settings.RECORDING_PATHS['THUMBNAILS'], recording_id)).absolute()
 
     # fill list with piece paths
-    with list_path.open(mode='w') as list:
+    with list_path.open(mode='w') as list_file:
         for i in piece_list:
-            print('file \'%s/%s.webm\'' % (settings.RECORDING_PATHS['CONVERTED_PIECES'], i), file=list)
+            print('file \'%s/%s.webm\'' % (settings.RECORDING_PATHS['CONVERTED_PIECES'], i), file=list_file)
 
     # concat pieces
-    command = 'ffmpeg -loglevel %s -f concat -i %s -c copy %s' % (LOG_LEVEL, list_path, finished_path)
+    command = 'ffmpeg -v %s -f concat -i %s -c copy %s' % (LOG_LEVEL, list_path, finished_path)
     print(command)
     subprocess.call(command.split())
 
-    # create thumbnail image and video
+    # set object finished flags and save media
+    recording = Recording.objects.get(id=recording_id)
+    recording.finish_time = datetime.now()
+    recording.state = models.RECORDING_FINISHED
+    recording.save()
+
+    recording.video.save('%s.webm' % recording_id, File(open(str(finished_path), mode='rb')))
+
+    # create thumbnails in separate task
+    create_thumbnails.delay(recording_id)
+
+    # clean up scripts and converted pieces
+    os.remove(str(list_path))
+    for i in piece_list:
+        os.remove('%s/%s.webm' % (settings.RECORDING_PATHS['CONVERTED_PIECES'], i))
+    UploadPiece.objects.filter(recording=recording).delete()  # clear out database pieces
+
+
+@shared_task
+def create_thumbnails(recording_id):
+    finished_path = Path('%s/%s.webm' % (settings.RECORDING_PATHS['FINISHED'], recording_id)).absolute()
+    thumbnail_video_path = Path('%s/%s.webm' % (settings.RECORDING_PATHS['THUMBNAILS'], recording_id)).absolute()
+
+    recording = Recording.objects.get(id=recording_id)
+
     # find video length
     command = 'ffprobe -v %s -i %s -print_format json -show_format' % (LOG_LEVEL, finished_path)
     print(command)
@@ -114,6 +137,10 @@ def concatenate_media(recording_id, piece_list):
     m = loads(output.decode("utf-8"))  # map
     duration = float(m['format']['duration'])
     offset = floor(duration / 9)  # nine so the first is not at t=0
+
+    # set recording duration
+    recording.duration = duration
+    recording.save()
 
     # create 8 thumbnails
     thumbnail_image_paths = []
@@ -126,29 +153,21 @@ def concatenate_media(recording_id, piece_list):
         print(command)
         subprocess.call(command.split())
 
+        # save first image when possible
+        if i == 0:
+            recording.thumbnail_image.save('%s.png' % recording_id,
+                                           File(open(str(thumbnail_image_paths[0]), mode='rb')))
+
     # create thumbnail slideshow
     command = 'ffmpeg -v %s -framerate 2/3 -i %s/%s-%s -c:v libvpx -cpu-used 2 -an %s' \
               % (LOG_LEVEL, settings.RECORDING_PATHS['THUMBNAILS'], recording_id, '%1d.png', thumbnail_video_path)
     print(command)
     subprocess.call(command.split())
 
-    # set object finished flags and save media
-    recording = Recording.objects.filter(id=recording_id).get()
-    recording.finish_time = datetime.now()
-    recording.state = models.RECORDING_FINISHED
-    recording.duration = duration
-    recording.save()
-
-    recording.video.save('%s.webm' % recording_id, File(open(str(finished_path), mode='rb')))
-    recording.thumbnail_image.save('%s.png' % recording_id, File(open(str(thumbnail_image_paths[0]), mode='rb')))
     recording.thumbnail_video.save('%s.webm' % recording_id, File(open(str(thumbnail_video_path), mode='rb')))
 
-    # clean up scripts and converted pieces
-    os.remove(str(list_path))
+    # clean up thumbnails and finished video files
     os.remove(str(finished_path))
     os.remove(str(thumbnail_video_path))
     for path in thumbnail_image_paths:
         os.remove(str(path))
-    for i in piece_list:
-        os.remove('%s/%s.webm' % (settings.RECORDING_PATHS['CONVERTED_PIECES'], i))
-    UploadPiece.objects.filter(recording=recording).delete()  # clear out database pieces
