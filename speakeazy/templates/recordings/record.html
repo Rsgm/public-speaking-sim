@@ -12,10 +12,11 @@
         {% csrf_token %}
 
         <!-- preview -->
-        <h2>Webcam and Microphone Setup</h2>
-        <h5>Allow webcam and microphone access. Use this screen to double check you are in view of your webcam.</h5>
-        <div id="preview" class="uk-flex uk-flex-center">
-            <div class="s-recording-player">
+        <div id="preview" class="">
+            <h2>Webcam and Microphone Setup</h2>
+            <h5>Allow webcam and microphone access. Use this screen to double check you are in view of your webcam.</h5>
+
+            <div class="s-recording-player uk-flex uk-flex-center">
                 <video id="setup-video" class="uk-responsive-width s-preview"></video>
                 <div></div>
 

@@ -65,41 +65,41 @@
       var $volume = $('#volume-slider');
       var totalHeight = $volume.parent().height();
 
-      var lastVolumes = [0, 0, 0, 0, 0, 0];
-      var volumeInterval = setInterval(function () {
-        var data = new Uint8Array(analyser.fftSize);
-        analyser.getByteTimeDomainData(data);
-        var sum = 0;
-
-        data.forEach(function (e) {
-          sum += (e - 127) * (e - 127);
-        });
-
-        var v = Math.sqrt(sum / data.length) / 127;
-        var baseTen = Math.log(Math.pow(10, v)) / Math.LN2;
-        console.log([v, baseTen]);
-
-        lastVolumes.push(v);
-        lastVolumes.shift();
-
-        sum = 0;
-        lastVolumes.forEach(function (e) {
-          sum += e;
-        });
-
-        var volume = sum / 2;
-
-        var height = totalHeight - volume * totalHeight;
-        $volume.css('height', height + 'px')
-      }, 200);
-
-      stopAudioAnalyzer = function () {
-        clearInterval(volumeInterval);
-
-        analyser.disconnect();
-        source.disconnect();
-        audioCtx.close();
-      };
+      //var lastVolumes = [0, 0, 0, 0, 0, 0];
+      //var volumeInterval = setInterval(function () {
+      //  var data = new Uint8Array(analyser.fftSize);
+      //  analyser.getByteTimeDomainData(data);
+      //  var sum = 0;
+      //
+      //  data.forEach(function (e) {
+      //    sum += (e - 127) * (e - 127);
+      //  });
+      //
+      //  var v = Math.sqrt(sum / data.length) / 127;
+      //  var baseTen = Math.log(Math.pow(10, v)) / Math.LN2;
+      //  //console.log([v, baseTen]);
+      //
+      //  lastVolumes.push(v);
+      //  lastVolumes.shift();
+      //
+      //  sum = 0;
+      //  lastVolumes.forEach(function (e) {
+      //    sum += e;
+      //  });
+      //
+      //  var volume = sum / 2;
+      //
+      //  var height = totalHeight - volume * totalHeight;
+      //  $volume.css('height', height + 'px')
+      //}, 200);
+      //
+      //stopAudioAnalyzer = function () {
+      //  clearInterval(volumeInterval);
+      //
+      //  analyser.disconnect();
+      //  source.disconnect();
+      //  audioCtx.close();
+      //};
     }
 
     function onMediaError(e) {
@@ -110,8 +110,9 @@
   function startRecording() {
     $('#preview').hide();
     $('#recording').show();
+    fullscreen();
 
-    stopAudioAnalyzer();
+    //stopAudioAnalyzer();
 
     setupVideo.muted = true;
     audienceVideo.play();
@@ -137,6 +138,8 @@
   }
 
   function stopRecording() {
+    exitFullscreen();
+
     $('#recording').hide();
     $('#finished').show();
 
@@ -230,4 +233,31 @@
     uploadTotal = uploadQueue.length;
     stopped = record;
   }
+
+  function fullscreen() {
+    var elem = $('#recording .s-recording-player')[0];
+
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    }
+  }
+
+  function exitFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+
 })();
