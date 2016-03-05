@@ -173,7 +173,8 @@ TEMPLATES = [
 ]
 
 # See: http://django-crispy-forms.readthedocs.org/en/latest/install.html#template-packs
-CRISPY_TEMPLATE_PACK = 'bootstrap4'  # 'speakeazy_forms'
+CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form', 'bootstrap3', 'bootstrap4', 'speakeazy_form')
+CRISPY_TEMPLATE_PACK = 'speakeazy_form'
 
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------

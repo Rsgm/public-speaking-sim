@@ -1,4 +1,4 @@
-{% for fieldset in form.fieldsets %}{% spaceless %}
+{% for fieldset in form.fieldsets %}
     <fieldset class="fieldset-{{ forloop.counter }} {{ fieldset.classes }}">
         {% if fieldset.legend %}
             <legend>{{ fieldset.legend }}</legend>
@@ -12,11 +12,11 @@
             {% if field.is_hidden %}
                 {{ field }}
             {% else %}
-                {% include "speakeazy_forms/field.html" %}
+                {% include "uni_form/field.html" %}
             {% endif %}
         {% endfor %}
     {% if not forloop.last or not fieldset_open %}
         </fieldset>
     {% endif %}
-{% endspaceless %}{% endfor %}
+{% endfor %}
 
