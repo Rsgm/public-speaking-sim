@@ -7,7 +7,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     url(
-        regex=r'^list/$',
+        regex=r'^$',
         view=List.as_view(),
         name='list'
     ),
