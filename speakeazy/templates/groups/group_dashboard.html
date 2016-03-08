@@ -1,7 +1,6 @@
 {% extends "base.html" %}
-{% load static from staticfiles %}{% load i18n %}
+{% load static from staticfiles %}{% load i18n %}{% load tz %}
 {% block title %} - {{ group.name }}{% endblock %}
-
 
 {% block breadcrumbs %}
     {% include 'groups/breadcrumb.html' %}
@@ -24,7 +23,7 @@
 
                             <div class="item-info">
                                 <div>{{ group_membership.group.description }}</div>
-                                <div>{{ group_membership.created_time | date:"D, d M Y" }}</div>
+                                <div>{{ group_membership.created_time | localtime }}</div>
                             </div>
                         </a>
                     </div>

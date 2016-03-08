@@ -48,6 +48,7 @@ THIRD_PARTY_APPS = (
     'kombu.transport.django',
 
     'django_js_reverse',  # https://github.com/ierror/django-js-reverse
+    'easy_timezones',  # https://github.com/Miserlou/django-easy-timezones
 )
 
 # Apps specific for this project go here.
@@ -82,6 +83,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'easy_timezones.middleware.EasyTimezoneMiddleware'
 )
 
 # MIGRATIONS CONFIGURATION
@@ -278,3 +280,6 @@ WAGTAIL_SITE_NAME = 'Speakeazy blog'
 FFMPEG_LOG_LEVEL = 'quiet'
 
 COMPRESS_OFFLINE = True
+
+GEOIP_DATABASE = str(ROOT_DIR.path('resources/GeoLiteCity.dat'))
+GEOIPV6_DATABASE = str(ROOT_DIR.path('resources/GeoLiteCityv6.dat'))

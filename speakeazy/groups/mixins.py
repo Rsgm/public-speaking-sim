@@ -52,7 +52,7 @@ DELETE_INVITE = 'delete_invite'
 
 LIST_SUBMISSION = 'list_submission'
 VIEW_SUBMISSION = 'view_submission'
-ADD_SUBMISSION = 'add_submission'
+ADD_SUBMISSION = 'add_submission' # rename to submit, group with evaluate
 UPDATE_SUBMISSION = 'update_submission'
 DELETE_SUBMISSION = 'delete_submission'
 EVALUATE_SUBMISSION = 'evaluate_submission'
