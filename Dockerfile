@@ -3,8 +3,9 @@ FROM debian:jessie
 ENV PYTHONUNBUFFERED 1
 ENV LANG C.UTF-8
 
-#todo: fix public key issue here
-#todo: maybe replace with compiling from source to remove unneeded x11 and playback libraries
+# todo: https://ffmpeg.org/releases/ffmpeg-3.0.tar.bz2
+# https://ffmpeg.org/releases/ffmpeg-3.0.tar.xz.asc
+
 # Install ffmpeg
 RUN echo deb http://www.deb-multimedia.org jessie main non-free >> /etc/apt/sources.list \
     && echo deb-src http://www.deb-multimedia.org jessie main non-free >> /etc/apt/sources.list \
@@ -17,6 +18,7 @@ RUN echo deb http://www.deb-multimedia.org jessie main non-free >> /etc/apt/sour
 
 # Install npm
 # This tries to install python 2.7, do this after installing python
+# todo: https://github.com/nodejs/docker-node/blob/b2c7f6e357359b7b8f30caada05f1d412d926d7b/5.7/wheezy/Dockerfile
 RUN apt-get -y --force-yes update \
     && apt-get -y --force-yes install nodejs-legacy \
     && apt-get -y --force-yes install npm \
@@ -49,6 +51,7 @@ COPY . /app
 
 # install npm dependencies and fix file permissions
 RUN cd /app \
+    && mv ./prod_package.json ./package.json \
     && npm install \
     && grunt build \
     \

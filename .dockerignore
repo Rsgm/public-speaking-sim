@@ -20,3 +20,4 @@ app.json
 dev.yml
 .pylintrc
 LICENSE
+package.json

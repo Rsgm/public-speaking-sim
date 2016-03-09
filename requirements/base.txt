@@ -53,4 +53,4 @@ PyMySQL
 django-flat-theme
 puput
 django_compressor
-wiki==0.1
+django-easy-timezones
