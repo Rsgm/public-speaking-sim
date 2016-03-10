@@ -1,11 +1,23 @@
-{% extends "actions/add.html" %}
-
-{% block sub_title %} - Invite Add{% endblock %}
-
-{% block post_url %}{% url 'groups:group:invite:add' view.kwargs.group %}{% endblock %}
-
+{% extends 'base.html' %}
+{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}
+{% block title %} - Create Invite{% endblock %}
 
 {% block breadcrumbs %}
     {% include "groups/group/invite/breadcrumb.html" %}
     <li class="uk-active"><span>add</span></li>
+{% endblock %}
+
+{% block content %}
+    <h2>Create Invite</h2>
+
+    <form class="uk-form" enctype="multipart/form-data" method="post"
+          action="{% url 'groups:group:invite:add' view.group %}">
+        {% csrf_token %}
+
+        {% form form %}
+
+        <div class="uk-form-row">
+            <button type="submit" class="uk-button">Add</button>
+        </div>
+    </form>
 {% endblock %}

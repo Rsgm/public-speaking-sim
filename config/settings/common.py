@@ -16,7 +16,7 @@ from puput import PUPUT_APPS
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('speakeazy')
 
-env = environ.Env()
+env = environ.Env()  # https://github.com/jpadilla/django-dotenv
 
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -37,8 +37,7 @@ DJANGO_APPS = (
     'django.contrib.admin',
 )
 THIRD_PARTY_APPS = (
-    'floppyforms',  # Form layouts
-    'crispy_forms',  # Form layouts
+    'floppyforms',
 
     'userena',
 
@@ -173,10 +172,6 @@ TEMPLATES = [
         },
     },
 ]
-
-# See: http://django-crispy-forms.readthedocs.org/en/latest/install.html#template-packs
-CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form', 'bootstrap3', 'bootstrap4', 'speakeazy_form')
-CRISPY_TEMPLATE_PACK = 'speakeazy_form'
 
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------

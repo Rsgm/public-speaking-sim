@@ -1,6 +1,6 @@
 import floppyforms.__future__ as forms
 from django.utils import timezone
-from speakeazy.groups.models import GroupInvite, GroupMembership
+from speakeazy.groups.models import GroupInvite, GroupMembership, Group, Authorization
 
 
 class JoinForm(forms.Form):
@@ -30,3 +30,31 @@ class JoinForm(forms.Form):
             return False
 
         return True
+
+
+class NewGroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ('name', 'description', 'logo')
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user  # todo: try setting initial
+
+        super(NewGroupForm, self).__init__(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.instance.save()
+
+        admin_authorization = Authorization(name='admin')
+        admin_authorization.group = self.instance
+        admin_authorization.save()
+        # admin_authorization.permissions.add() # what to use?
+
+        membership = GroupMembership()
+        membership.group = self.instance
+        membership.user = self.request.user
+        membership.save()
+        membership.authorizations.add(admin_authorization)
+
+        self.instance.user = self.user
+        return super(NewGroupForm, self).save()

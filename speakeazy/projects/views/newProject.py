@@ -2,7 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from braces.views import LoginRequiredMixin
-from speakeazy.projects.forms.projectForms import NewProjectForm
+from speakeazy.projects.forms import NewProjectForm
 from speakeazy.projects.models import Audience
 from vanilla.model_views import CreateView
 

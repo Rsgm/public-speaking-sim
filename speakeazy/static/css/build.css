@@ -524,6 +524,9 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     right: 0; }
 
+.uk-form textarea {
+  height: 10em !important; }
+
 .uk-breadcrumb.large *, .uk-breadcrumb.large *::before {
   font-size: 24px; }
 
