@@ -1,10 +1,13 @@
 {% extends "base.html" %}
-{% load static from staticfiles %}{% load i18n %}{% load crispy_forms_tags %}
+{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}
 {% block title %}Delete {% block sub_title %}{% endblock %}{% endblock %}
 
 {% block content %}
-    <form class="form-horizontal" method="post" action="{% block post_url %}{% endblock %}">
+    <form class="uk-form uk-form-stacked" method="post" action="{% block post_url %}{% endblock %}">
         {% csrf_token %}
-        <button type="submit" class="btn">Delete</button>
+
+        <div class="uk-form-row">
+            <button type="submit" class="uk-button uk-button-danger">Delete</button>
+        </div>
     </form>
 {% endblock %}

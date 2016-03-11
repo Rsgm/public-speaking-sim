@@ -1,11 +1,16 @@
 {% extends "base.html" %}
-{% load static from staticfiles %}{% load i18n %}{% load crispy_forms_tags %}
+{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}
 {% block title %}Update {% block sub_title %}{% endblock %}{% endblock %}
 
 {% block content %}
-    <form class="uk-form" method="post" enctype="multipart/form-data" action="{% block post_url %}{% endblock %}">
+    <form class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
+          action="{% block post_url %}{% endblock %}">
         {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn">Update</button>
+
+        {% form form %}
+
+        <div class="uk-form-row">
+            <button type="submit" class="uk-button">Update</button>
+        </div>
     </form>
 {% endblock %}

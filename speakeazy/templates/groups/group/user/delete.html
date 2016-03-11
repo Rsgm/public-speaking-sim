@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static from staticfiles %}{% load i18n %}{% load crispy_forms_tags %}
+{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}
 {% block title %} - Delete User{% endblock %}
 
 {% block breadcrumbs %}
@@ -9,9 +9,12 @@
 {% endblock %}
 
 {% block content %}
-    <form class="form-horizontal" method="post"
+    <form class="uk-form uk-form-stacked" method="post"
           action="{% url 'groups:group:user:delete' membership.group.slug membership.user.pk %}">
         {% csrf_token %}
-        <button type="submit" class="btn">Delete</button>
+
+        <div class="uk-form-row">
+            <button type="submit" class="uk-button">Delete</button>
+        </div>
     </form>
 {% endblock %}
