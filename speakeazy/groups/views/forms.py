@@ -52,7 +52,7 @@ class NewGroupForm(forms.ModelForm):
 
         membership = GroupMembership()
         membership.group = self.instance
-        membership.user = self.request.user
+        membership.user = self.user
         membership.save()
         membership.authorizations.add(admin_authorization)
 
