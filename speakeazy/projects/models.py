@@ -11,7 +11,6 @@ from speakeazy.users.models import User
 
 
 class Project(Model):
-    user = models.ForeignKey(User)
     name = models.CharField(_("Name of project"), max_length=30)
     description = models.TextField(_("Description of project"), null=True, blank=True)
     audience = models.ForeignKey(Audience)
@@ -21,15 +20,22 @@ class Project(Model):
 
     slug = AutoSlugField(populate_from='name', unique_with='user')
 
+    class Meta:
+        abstract = True
+
     def __str__(self):
         return self.name
+
+
+class UserProject(Project):
+    user = models.ForeignKey(User)
 
     def get_absolute_url(self):
         return reverse('projects:project:projectView', kwargs={'project': self.slug})
 
 
 class Settings(Model):
-    project = models.OneToOneField('Project')
+    project = models.OneToOneField('UserProject')
     audience = models.ForeignKey(Audience)
 
     last_updated = models.DateTimeField(auto_now=True)

@@ -17,7 +17,7 @@ RECORDING_STATE_CHOICES = [
 
 
 class Recording(Model):
-    project = models.ForeignKey('projects.Project', editable=False)
+    project = models.ForeignKey('projects.UserProject', editable=False)
 
     state = models.CharField(max_length=1, choices=RECORDING_STATE_CHOICES, default=RECORDING_UPLOADING)
     finish_time = models.DateTimeField(null=True, blank=True)

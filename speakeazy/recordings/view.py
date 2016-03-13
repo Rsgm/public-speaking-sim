@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from celery.canvas import group
-from speakeazy.projects.models import Project
+from speakeazy.projects.models import UserProject
 from speakeazy.recordings import models
 from speakeazy.recordings.models import Recording, UploadPiece
 from speakeazy.recordings.tasks import convert_media, concatenate_media
@@ -25,7 +25,7 @@ class Record(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         kwargs['view'] = self
-        kwargs['project'] = get_object_or_404(Project, user=self.request.user, slug=self.kwargs['project'])
+        kwargs['project'] = get_object_or_404(UserProject, user=self.request.user, slug=self.kwargs['project'])
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -43,7 +43,7 @@ class Record(LoginRequiredMixin, TemplateView):
             return self.finish(project_slug, recording_slug, request)
 
     def start(self, project_slug, request):
-        project = get_object_or_404(Project, user=request.user, slug=project_slug)
+        project = get_object_or_404(UserProject, user=request.user, slug=project_slug)
         # create recording
         slug = 1 + Recording.objects.filter(project=project).count()
         recording = Recording(project=project, slug=slug)

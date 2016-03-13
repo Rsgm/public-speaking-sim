@@ -1,10 +1,10 @@
 import floppyforms.__future__ as forms
-from speakeazy.projects.models import Project
+from speakeazy.projects.models import UserProject
 
 
 class NewProjectForm(forms.ModelForm):
     class Meta:
-        model = Project
+        model = UserProject
         fields = ('name', 'description', 'audience', 'due_date')
 
     def __init__(self, user, audiences, *args, **kwargs):
