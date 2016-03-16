@@ -150,8 +150,6 @@
       var $progressBar = $('#finished .uk-progress-bar');
       var progress = Math.floor((uploadTotal - size) * 100 / uploadTotal);
 
-      console.log(progress);
-
       $progressBar.css('width', progress + '%');
       $progressBar.text(progress + '%');
     });
