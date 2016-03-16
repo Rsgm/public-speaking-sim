@@ -147,7 +147,13 @@
     mediaRecorder.stop();
 
     finish(id, function progress(size, uploadTotal) {
-      progress = Math.floor((uploadTotal - size) * 100 / uploadTotal);
+      var $progressBar = $('#finished .uk-progress-bar');
+      var progress = Math.floor((uploadTotal - size) * 100 / uploadTotal);
+
+      console.log(progress);
+
+      $progressBar.css('width', progress + '%');
+      $progressBar.text(progress + '%');
     });
   }
 

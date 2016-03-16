@@ -49,7 +49,9 @@
         <div class="upload-progress" id="finished">
             <h1 class="text-center">Uploading</h1>
 
-            <progressbar value="vm.progress" class="progress-striped active">{{ vm.progress }}%</progressbar>
+            <div class="uk-progress uk-progress-striped active">
+                <div class="uk-progress-bar" style="width: 0;">0%</div>
+            </div>
         </div>
     </div>
 {% endblock content %}
