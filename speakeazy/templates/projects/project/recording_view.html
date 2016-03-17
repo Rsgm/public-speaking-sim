@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}
+{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}{% load tz %}
 {% block title %}{{ recording.slug }}{% endblock %}
 
 {% block breadcrumbs %}
@@ -84,6 +84,22 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="uk-block">
+        <h3 class="uk-panel-title">General Comments</h3>
+        <ul class="uk-comment-list">
+            {% for comment in comment_list %}
+                  <li class="uk-comment">
+                      <header class="uk-comment-header">
+{#                          <img class="uk-comment-avatar" src="" alt="">#}
+                          <h4 class="uk-comment-title">{{ comment.user }}</h4>
+                          <div class="uk-comment-meta">{{ comment.created_on|localtime }}</div>
+                      </header>
+                      <div class="uk-comment-body">{{ comment.text }}</div>
+                  </li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}
 

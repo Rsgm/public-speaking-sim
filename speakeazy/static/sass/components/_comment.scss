@@ -1,0 +1,9 @@
+.uk-comment {
+  @include card(1);
+  padding: 20px;
+  background: #fafafa;
+
+  .uk-comment-body{
+    margin-left: 10px;
+  }
+}

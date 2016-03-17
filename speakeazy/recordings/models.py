@@ -69,4 +69,16 @@ class Evaluation(Model):
     submission = models.ForeignKey('groups.Submission', null=True, blank=True)
 
     def __str__(self):
-        return '%s - %s- %s' % (self.recording, self.seconds, self.type)
+        return '%s - %s - %s' % (self.recording, self.seconds, self.type)
+
+
+class Comment(Model):
+    user = models.ForeignKey(User)
+    recording = models.ForeignKey(Recording)
+
+    text = models.TextField()
+
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '%s - %s' % (self.recording, self.user)

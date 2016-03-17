@@ -3,13 +3,10 @@ from __future__ import absolute_import, unicode_literals
 from speakeazy.groups.mixins import ADD_SUBMISSION
 from speakeazy.groups.models import Group, GroupMembership, Submission
 
-from speakeazy.projects.models import Recording
-
 from braces.views import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
-from speakeazy.recordings.models import EvaluationType, Evaluation
+from speakeazy.recordings.models import EvaluationType, Evaluation, Recording
 from vanilla.views import TemplateView
 
 EVALUATION = 'eval'
@@ -22,13 +19,14 @@ class RecordingView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         kwargs['view'] = self
 
-        kwargs['recording'] = get_object_or_404(
-            Recording.objects.filter(project__user=self.request.user,
-                                     project__slug=self.kwargs['project'],
+        recording = get_object_or_404(
+            Recording.objects.filter(project__user=self.request.user, project__slug=self.kwargs['project'],
                                      slug=self.kwargs['recording']))
+        kwargs['recording'] = recording
 
         kwargs['evaluation_type_list'] = EvaluationType.objects.all()
-        kwargs['evaluation_list'] = Evaluation.objects.filter(recording=kwargs['recording'])
+        kwargs['evaluation_list'] = recording.evaluation_set.all()
+        kwargs['comment_list'] = recording.comment_set.all()
         kwargs['group_list'] = Group.objects.filter(groupmembership__user=self.request.user,
                                                     groupmembership__authorizations__permissions__name=ADD_SUBMISSION)
 
