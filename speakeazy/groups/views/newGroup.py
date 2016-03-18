@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-from django.http.response import HttpResponseRedirect
-from speakeazy.groups.models import Group, GroupMembership, Authorization
+from speakeazy.groups.models import Group
 from braces.views import LoginRequiredMixin
 from speakeazy.groups.views.forms import NewGroupForm
 from vanilla.model_views import CreateView

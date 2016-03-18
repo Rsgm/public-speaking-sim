@@ -2,10 +2,9 @@
 from __future__ import absolute_import, unicode_literals
 
 from braces.views import LoginRequiredMixin
-from django.db.models.aggregates import Count
-from speakeazy.groups.mixins import LIST_SUBMISSION, GroupPermissiondMixin, LIST_USER, LIST_INVITE
-from speakeazy.groups.models import Group, GroupMembership, Permission, GroupInvite, Submission
-from speakeazy.recordings.models import Recording
+from speakeazy.groups.mixins import GroupPermissiondMixin
+from speakeazy.groups.models import GroupMembership, GroupInvite, Submission
+from speakeazy.groups.permissions import LIST_SUBMISSION, LIST_INVITE, LIST_USER
 from vanilla.views import TemplateView
 
 

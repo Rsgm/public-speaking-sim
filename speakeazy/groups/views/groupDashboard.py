@@ -3,9 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from braces.views import LoginRequiredMixin
 from django.db.models.aggregates import Count
-from speakeazy.groups.mixins import LIST_SUBMISSION, GroupPermissiondMixin
-from speakeazy.groups.models import Group, GroupMembership, Permission
-from speakeazy.recordings.models import Recording
+from speakeazy.groups.permissions import LIST_SUBMISSION
 from vanilla.views import TemplateView
 
 

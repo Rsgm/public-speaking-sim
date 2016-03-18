@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-from speakeazy.groups.mixins import ADD_SUBMISSION
+from speakeazy.groups.permissions import ADD_SUBMISSION
 from speakeazy.groups.models import Group, GroupMembership, Submission
 
 from braces.views import LoginRequiredMixin

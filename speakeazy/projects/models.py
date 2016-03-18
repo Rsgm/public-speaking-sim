@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.base import Model
 from django.utils.translation import ugettext_lazy as _
-from speakeazy.groups.models import Group, Audience
 from speakeazy.recordings.models import Recording
 from speakeazy.users.models import User
 
@@ -13,7 +12,7 @@ from speakeazy.users.models import User
 class Project(Model):
     name = models.CharField(_("Name of project"), max_length=30)
     description = models.TextField(_("Description of project"), null=True, blank=True)
-    audience = models.ForeignKey(Audience)
+    audience = models.ForeignKey('groups.Audience')
 
     created_time = models.DateTimeField(auto_now_add=True)
     due_date = models.DateField()
@@ -36,7 +35,7 @@ class UserProject(Project):
 
 class Settings(Model):
     project = models.OneToOneField('UserProject')
-    audience = models.ForeignKey(Audience)
+    audience = models.ForeignKey('groups.Audience')
 
     last_updated = models.DateTimeField(auto_now=True)
     due_date = models.DateField()

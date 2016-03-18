@@ -5,8 +5,8 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from random import choice
-from speakeazy.groups.mixins import GroupPermissiondMixin, LIST_INVITE, VIEW_INVITE, ADD_INVITE, UPDATE_INVITE, \
-    DELETE_INVITE
+from speakeazy.groups.mixins import GroupPermissiondMixin
+from speakeazy.groups.permissions import LIST_INVITE, VIEW_INVITE, ADD_INVITE, UPDATE_INVITE, DELETE_INVITE
 from speakeazy.groups.models import GroupInvite
 from speakeazy.groups.views.group.invite.forms import UpdateForm, AddForm
 from vanilla.model_views import DetailView, ListView, DeleteView, UpdateView, CreateView

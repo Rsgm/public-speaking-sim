@@ -5,7 +5,7 @@ from django.http.response import HttpResponseRedirect
 from django.views.generic.edit import FormView
 
 from braces.views import LoginRequiredMixin
-from speakeazy.groups.models import GroupInvite, GroupMembership
+from speakeazy.groups.models import GroupMembership
 from speakeazy.groups.views.forms import JoinForm
 
 

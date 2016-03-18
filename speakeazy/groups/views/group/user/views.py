@@ -1,7 +1,8 @@
 from braces.views import LoginRequiredMixin
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
-from speakeazy.groups.mixins import LIST_USER, VIEW_USER, UPDATE_USER, DELETE_USER, GroupPermissiondMixin
+from speakeazy.groups.mixins import GroupPermissiondMixin
+from speakeazy.groups.permissions import LIST_USER, VIEW_USER, UPDATE_USER, DELETE_USER
 from speakeazy.groups.models import GroupMembership
 from speakeazy.groups.views.group.user.forms import UpdateForm
 from vanilla.model_views import DetailView, ListView, DeleteView, UpdateView

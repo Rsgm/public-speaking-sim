@@ -1,15 +1,13 @@
-from string import ascii_lowercase
-
 from braces.views import LoginRequiredMixin
 from django.core.urlresolvers import reverse
-from django.http.response import HttpResponseRedirect, HttpResponse
+from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
-from random import choice
-from speakeazy.groups.mixins import GroupPermissiondMixin, LIST_SUBMISSION, VIEW_SUBMISSION, ADD_SUBMISSION, UPDATE_SUBMISSION, \
-    DELETE_SUBMISSION, EVALUATE_SUBMISSION, LIST_SUBMISSION
+from speakeazy.groups.mixins import GroupPermissiondMixin
+from speakeazy.groups.permissions import VIEW_SUBMISSION, DELETE_SUBMISSION, \
+    EVALUATE_SUBMISSION, LIST_SUBMISSION
 from speakeazy.groups.models import Submission, SUBMISSION_READY
 from speakeazy.recordings.models import EvaluationType, Evaluation
-from vanilla.model_views import DetailView, ListView, DeleteView, UpdateView, CreateView
+from vanilla.model_views import DetailView, ListView, DeleteView
 from vanilla.views import TemplateView
 
 

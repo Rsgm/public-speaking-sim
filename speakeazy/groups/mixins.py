@@ -31,35 +31,3 @@ class GroupPermissiondMixin(object):
                 raise PermissionDenied()
 
         return super(GroupPermissiondMixin, self).dispatch(request, *args, **kwargs)
-
-
-LIST_AUDIENCE = 'list_audience'
-VIEW_AUDIENCE = 'view_audience'
-ADD_AUDIENCE = 'add_audience'
-UPDATE_AUDIENCE = 'update_audience'
-DELETE_AUDIENCE = 'delete_audience'
-
-LIST_USER = 'list_user'
-VIEW_USER = 'view_user'
-UPDATE_USER = 'update_user'
-DELETE_USER = 'delete_user'
-
-LIST_INVITE = 'list_invite'
-VIEW_INVITE = 'view_invite'
-ADD_INVITE = 'add_invite'
-UPDATE_INVITE = 'update_invite'
-DELETE_INVITE = 'delete_invite'
-
-LIST_SUBMISSION = 'list_submission'
-VIEW_SUBMISSION = 'view_submission'
-ADD_SUBMISSION = 'add_submission' # rename to submit, group with evaluate
-UPDATE_SUBMISSION = 'update_submission'
-DELETE_SUBMISSION = 'delete_submission'
-EVALUATE_SUBMISSION = 'evaluate_submission'
-
-
-# LIST_ = 'list_'
-# VIEW_ = 'view_'
-# ADD_ = 'add_'
-# UPDATE_ = 'update_'
-# DELETE_ = 'delete_'

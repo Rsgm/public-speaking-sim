@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.base import Model
 from django.utils.translation import ugettext_lazy as _
+from speakeazy.groups.permissions import PERMISSIONS
 from speakeazy.recordings.models import Recording
 from speakeazy.users.models import User
 
@@ -63,7 +64,7 @@ class Authorization(Model):
 
 
 class Permission(Model):
-    name = models.CharField(_("Name of permission"), max_length=30, unique=True)
+    name = models.CharField(_("Name of permission"), max_length=30, unique=True, choices=PERMISSIONS)
 
     def __str__(self):
         return self.name
@@ -74,7 +75,7 @@ class Audience(Model):
     description = models.TextField(_("Description of audience"), null=True, blank=True)
 
     file = models.FileField(upload_to='audience')  # ensure file name uniqueness
-    group = models.ForeignKey(Group)
+    group = models.ForeignKey('Group')
 
     slug = AutoSlugField(populate_from='name', unique_with='group', unique=True)
 
