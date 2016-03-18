@@ -21,6 +21,7 @@ class AddForm(forms.ModelForm):
 
     def save(self, commit=True):
         self.instance.group = self.group
+        # return super(AddForm, self).save()
 
 
 class UpdateForm(forms.ModelForm):

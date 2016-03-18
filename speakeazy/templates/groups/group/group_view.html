@@ -12,13 +12,13 @@
 
 {% block content %}
     <div class="uk-block">
-        <h1>{{ group.name }} Home</h1>
+        <h1>{{ group.name }} Dashboard</h1>
 
         {% if group.logo %}
             <img src="{{ group.logo.url }}">
         {% endif %}
 
-        {% if submission_list %}
+        {% if 'list_submission' in view.permissions %}
             <h2><a href={% url 'groups:group:submission:list' group.slug %}></a>Submissions</h2>
 
             <div class="uk-flex uk-grid">
@@ -40,8 +40,8 @@
         {% endif %}
 
 
-        {% if invite_list %}
-            <h2><a href={% url 'groups:group:invite:list' group.slug %}></a>Invites</h2>
+        {% if 'list_invite' in view.permissions %}
+            <h2><a href={% url 'groups:group:invite:list' group.slug %}>Invites</a></h2>
 
             <a href="{% url 'groups:group:invite:add' group.slug %}">Create Invite</a>
 
@@ -68,7 +68,7 @@
         {% endif %}
 
 
-        {% if user_list %}
+        {% if 'list_user' in view.permissions %}
             <h2><a href={% url 'groups:group:user:list' group.slug %}></a>Users</h2>
 
             <div class="uk-flex uk-grid">
