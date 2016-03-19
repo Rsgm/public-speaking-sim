@@ -16,7 +16,13 @@ urlpatterns = [
                   url(r'^hijack/', include('hijack.urls')),
 
                   # User management
-                  url(r'^account/signup/$', 'userena.views.signup', {'signup_form': SpeakeazySignupForm}),
+                  url(r'^account/signup/$', 'userena.views.signup',
+                      {'success_url': 'speakeazy:dashboard',
+                       'signup_form': SpeakeazySignupForm
+                       }),
+                  url(r'^account/activate/(?P<activation_key>\w+)/$',
+                      'userena.views.activate',
+                      {'success_url': 'speakeazy:dashboard'}),
                   url(r'^account/', include('userena.urls')),
 
                   url(r'^blog/', include('puput.urls')),
