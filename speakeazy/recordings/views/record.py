@@ -91,4 +91,5 @@ class Record(LoginRequiredMixin, TemplateView):
 
         # run concat task
         concatenate_media.delay(recording.id, piece_list)
+
         return HttpResponse(recording.project.get_absolute_url())

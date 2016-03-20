@@ -118,7 +118,7 @@ module.exports = function (grunt) {
                 cmd: 'python <%= paths.manageScript %> runserver'
             },
             runCelery: {
-                cmd: 'celery -A speakeazy.taskapp worker -l info'
+                cmd: 'celery -A speakeazy.taskapp worker -l info --autoreload'
             },
             runMailHog: {
                 cmd: './mailhog'

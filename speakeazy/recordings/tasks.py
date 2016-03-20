@@ -10,7 +10,7 @@ import base64
 import os
 from celery.app import shared_task
 from django.conf import settings
-from django.core.files.base import File
+from django.core.files.base import File, ContentFile
 
 LOG_LEVEL = settings.FFMPEG_LOG_LEVEL
 
@@ -107,6 +107,8 @@ def concatenate_media(recording_id, piece_list):
     recording = Recording.objects.get(id=recording_id)
     recording.finish_time = datetime.now()
     recording.state = models.RECORDING_FINISHED
+    recording.thumbnail_image.save('%s-temp.png' % recording_id, ContentFile(''))
+    recording.thumbnail_video.save('%s-temp.png' % recording_id, ContentFile(''))
     recording.save()
 
     recording.video.save('%s.webm' % recording_id, File(open(str(finished_path), mode='rb')))
