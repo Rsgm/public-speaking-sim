@@ -156,13 +156,13 @@
 
   $group.click(function () {
     var data = {
-      action: 'request',
-      group: $(this).attr('data-group'),
+      project: se.project,
+      recording: se.recording,
       csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
     };
 
-    $.post('/projects/p/' + se.project + '/' + se.recording + '/', data, function () {
-      // success notification
+    $.post(Urls['groups:group:submissions:request']($(this).attr('data-group')), data, function () {
+      // todo: success notification
     });
   });
 
@@ -290,7 +290,7 @@
       csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
     };
 
-    $.post('/projects/p/' + se.project + '/' + se.recording + '/', data, function () {
+    $.post(Urls['recordings:recording:evaluations:create'](se.project, se.recording), data, function () {
       sendCallback();
     });
   }

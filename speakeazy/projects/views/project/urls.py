@@ -2,8 +2,9 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
+from django.views.generic.base import RedirectView
 from speakeazy.projects.views.project.projectView import ProjectView
-from speakeazy.projects.views.project.recordingView import RecordingView
+from speakeazy.recordings.views.recording.views import View
 
 urlpatterns = [
     url(
@@ -14,7 +15,7 @@ urlpatterns = [
 
     url(
         regex=r'^(?P<recording>\d+)/$',
-        view=RecordingView.as_view(),
+        view=RedirectView.as_view(pattern_name='recordings:recording:view', permanent=True),
         name='recordingView'
-    ),  # since recording slugs are always numbers, it will not collide with /record or others
+    ),
 ]

@@ -1,0 +1,21 @@
+.comment-form {
+  @include card(1);
+  padding: 20px;
+  background: #fafafa;
+
+  display: flex;
+  flex-flow: row-reverse wrap;
+  flex-shrink: 0;
+
+  textarea {
+    resize: vertical;
+    height: 5em;
+    width: 100%;
+  }
+
+  button {
+    //@include card(2);
+    margin-top: 15px;
+    //align-self: flex-end;
+  }
+}

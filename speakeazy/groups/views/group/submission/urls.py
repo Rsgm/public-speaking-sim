@@ -2,7 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
-from speakeazy.groups.views.group.submission.views import List, View, Delete, Evaluate
+from speakeazy.groups.views.group.submission.views import List, View, Delete, Evaluate, Request
 
 urlpatterns = [
     url(
@@ -39,5 +39,11 @@ urlpatterns = [
         regex=r'^evaluate/(?P<pk>[\w-]+)/$',
         view=Evaluate.as_view(),
         name='evaluate'
+    ),
+
+    url(
+        regex=r'^request/(?P<pk>[\w-]+)/$',
+        view=Request.as_view(),
+        name='request'
     ),
 ]

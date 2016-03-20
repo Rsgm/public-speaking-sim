@@ -1,9 +1,0 @@
-.add-comment {
-  @include card(2);
-  padding: 20px;
-  background: #fafafa;
-
-  button {
-    @include card(3);
-  }
-}

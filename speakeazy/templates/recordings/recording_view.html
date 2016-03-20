@@ -28,7 +28,7 @@
                                 <li class="uk-nav-divider"></li>
 
                                 {% for group in group_list %}
-                                    <li><a class="s-group-submit" data-group="{{ group.pk }}">{{ group.name }}</a></li>
+                                    <li><a class="s-group-submit" data-group="{{ group.slug }}">{{ group.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -41,7 +41,7 @@
 
                         <div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">
                             <div class="uk-panel-title">Evaluate</div>
-                            <form class="s-create-evaluation uk-form uk-flex uk-flex-column">
+                            <div class="s-create-evaluation uk-form uk-flex uk-flex-column">
                                 <textarea placeholder="Your Evaluation"></textarea>
 
                                 <div class="s-create-evaluation-info">Select type to finish</div>
@@ -52,7 +52,7 @@
                                            data-type="{{ evaluation_type.name }}"></i>
                                     {% endfor %}
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -90,26 +90,33 @@
         <h3 class="uk-panel-title">General Comments</h3>
         <ul class="uk-comment-list">
             {% for comment in comment_list %}
-                  <li class="uk-comment">
-                      <header class="uk-comment-header">
-{#                          <img class="uk-comment-avatar" src="" alt="">#}
-                          <h4 class="uk-comment-title">{{ comment.user }}</h4>
-                          <div class="uk-comment-meta">{{ comment.created_on|localtime }}</div>
-                      </header>
-                      <div class="uk-comment-body">{{ comment.text }}</div>
-                  </li>
+                <li class="uk-comment">
+                    <header class="uk-comment-header">
+                        {#                          <img class="uk-comment-avatar" src="" alt="">#}
+                        <h4 class="uk-comment-title">{{ comment.user }}</h4>
+                        <div class="uk-comment-meta">{{ comment.created_on|localtime }}</div>
+                    </header>
+                    <div class="uk-comment-body">{{ comment.text }}</div>
+                </li>
             {% endfor %}
         </ul>
-    </div>
-{% endblock %}
 
-{% block template_scripts %}
+        {#  {% if comment_url %}#}
+           <div class="uk-form comment-form">
+               <textarea placeholder="Add a comment..."></textarea>
+               <button class="uk-button uk-button-primary">Submit</button>
+           </div>
+
+           <script type="text/javascript">
+               se.comment_url = '{{ comment_url }}'
+           </script>
+        {#  {% endif %}#}
+    </div>
+
     <script>
-        var se = {
-            user: '{{ user.username }}',
-            project: '{{ recording.project.slug }}',
-            recording: '{{ recording.slug }}'
-        };
+        se.user='{{ user.username }}';
+        se.project='{{ recording.project.slug }}';
+        se.recording='{{ recording.slug }}';
 
         var evaluations = [
             {% for evaluation in evaluation_list %}
@@ -126,4 +133,5 @@
 
 {% block jquery %}
     <script src="{% static 'js/recording_view.js' %}"></script>
+    <script src="{% static 'js/comment_form.js' %}"></script>
 {% endblock %}

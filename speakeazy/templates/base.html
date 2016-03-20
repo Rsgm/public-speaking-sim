@@ -1,113 +1,118 @@
 {% load static from staticfiles %}{#{% load hijack_tags %}#}{% load i18n %}<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Speakeazy{% block title %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Speakeazy{% block title %}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
       <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    {% block css %}
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/uikit.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/tooltip.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/autocomplete.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/datepicker.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/progress.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/timepicker.min.css">
+  {% block css %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/uikit.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/tooltip.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/autocomplete.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/progress.min.css">
 
-        <!-- Your stuff: Third-party css libraries go here -->
+    <!-- Your stuff: Third-party css libraries go here -->
 
-        <!-- This file store project specific CSS -->
-        <link href="{% static 'css/build.css' %}" rel="stylesheet">
-        {#        <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>#}
-    {% endblock %}
+    <!-- This file store project specific CSS -->
+    <link href="{% static 'css/build.css' %}" rel="stylesheet">
+    {#        <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>#}
+  {% endblock %}
+
+  <script type="text/javascript">
+    var se = {};
+  </script>
 </head>
 
 <body>
 {#{% hijack_notification %}#}
 
 <noscript>
-    <div id="noscript">Speakeazy works best with JavaScript enabled</div>
+  <div id="noscript">Speakeazy works best with JavaScript enabled</div>
 </noscript>
 
 <div id="base-header">
-    <nav class="uk-navbar uk-navbar-attached">
-        <a class="uk-navbar-brand s-brand" href="{% url 'speakeazy:dashboard' %}">Speak<span
-                class="green">Eazy</span></a>
+  <nav class="uk-navbar uk-navbar-attached">
+    <a class="uk-navbar-brand s-brand" href="{% url 'speakeazy:dashboard' %}">Speak<span
+        class="green">Eazy</span></a>
 
-        <div class="uk-navbar-flip">
-            <ul class="uk-navbar-nav">
-                <li class="uk-parent" data-uk-dropdown="{mode:'click'}">
-                    <a class="nav-link">{{ user|capfirst }}</a>
+    <div class="uk-navbar-flip">
+      <ul class="uk-navbar-nav">
+        <li class="uk-parent" data-uk-dropdown="{mode:'click'}">
+          <a class="nav-link">{{ user|capfirst }}</a>
 
-                    <div class="uk-dropdown">
-                        <ul class="uk-nav uk-nav-dropdown">
-                            <li><a href="{% url 'speakeazy:dashboard' %}">Dashboard</a></li>
-                            <li class="uk-nav-divider"></li>
+          <div class="uk-dropdown">
+            <ul class="uk-nav uk-nav-dropdown">
+              <li><a href="{% url 'speakeazy:dashboard' %}">Dashboard</a></li>
+              <li class="uk-nav-divider"></li>
 
-                            <li><a href="{% url 'groups:groupList' %}">Group List</a></li>
-                            <li><a href="{% url 'groups:joinGroup' %}">Join Group</a></li>
-                            <li><a href="{% url 'groups:newGroup' %}">Create Group</a></li>
+              <li><a href="{% url 'groups:groupList' %}">Group List</a></li>
+              <li><a href="{% url 'groups:joinGroup' %}">Join Group</a></li>
+              <li><a href="{% url 'groups:newGroup' %}">Create Group</a></li>
 
-                            {% if user.is_staff %}
-                                <li class="uk-nav-divider"></li>
-                                <li><a href="{% url 'admin:index' %}">Admin</a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </li>
-
-                <li><a class="nav-link" href="{% url 'userena_signout' %}">Logout</a></li>
+              {% if user.is_staff %}
+                <li class="uk-nav-divider"></li>
+                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+              {% endif %}
             </ul>
-        </div>
-    </nav>
+          </div>
+        </li>
 
-    <ul class="uk-breadcrumb large">{% block breadcrumbs %}{% endblock %}</ul>
+        <li><a class="nav-link" href="{% url 'userena_signout' %}">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="uk-breadcrumb large">{% block breadcrumbs %}{% endblock %}</ul>
 </div>
 
 {% if messages %}
-    <div id="error-notification" class="container">
-        {% for message in messages %}
-            <div class="uk-alert {% if message.tags %}uk-alert-{{ message.tags }}"{% endif %} data-uk-alert>
-                <a href="" class="uk-alert-close uk-close"></a>
-                {{ message }}
-            </div>
-        {% endfor %}
-    </div>
+  <div id="error-notification" class="container">
+    {% for message in messages %}
+      <div class="uk-alert {% if message.tags %}uk-alert-{{ message.tags }}"{% endif %} data-uk-alert>
+        <a href="" class="uk-alert-close uk-close"></a>
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
 {% endif %}
 
 <div class="container">
-    {% block content %}{% endblock content %}
+  {% block content %}{% endblock content %}
 </div>
 
 {% block javascript %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/uikit.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/tooltip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/autocomplete.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/datepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/timepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/uikit.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/tooltip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/autocomplete.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/timepicker.min.js"></script>
 
-    <script src="{% static 'js/vendor/jquery.ba-throttle-debounce.min.js' %}"></script>
-    <script src="{% static 'js/vendor/mousestop.js' %}"></script>
+  <script src="{% static 'js/vendor/jquery.ba-throttle-debounce.min.js' %}"></script>
+  <script src="{% static 'js/vendor/mousestop.js' %}"></script>
+  <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
 
-    <!-- Your stuff: Third-party javascript libraries go here -->
-    {% block extra_js_libraries %}{% endblock extra_js_libraries %}
+  <!-- Your stuff: Third-party javascript libraries go here -->
+  {% block extra_js_libraries %}{% endblock extra_js_libraries %}
 
-    <!-- place project specific Javascript in this file -->
-    {% block template_scripts %}{% endblock template_scripts %}
+  <!-- place project specific Javascript in this file -->
+  {% block template_scripts %}{% endblock template_scripts %}
 
-    <script src="{% static 'js/project.js' %}"></script>
-    {% block jquery %}{% endblock jquery %}
-    {% block extra_end_scripts %}{% endblock extra_end_scripts %}
+  <script src="{% static 'js/project.js' %}"></script>
+  {% block jquery %}{% endblock jquery %}
+  {% block extra_end_scripts %}{% endblock extra_end_scripts %}
 {% endblock javascript %}
 
 </body>

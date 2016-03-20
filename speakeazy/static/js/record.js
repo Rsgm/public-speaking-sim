@@ -118,7 +118,7 @@
     audienceVideo.play();
     //audienceVideo.requestFullscreen();
 
-    $.post('/record/' + se.project + '/', {request: 'start', csrfmiddlewaretoken: crsf}, function (result) {
+    $.post('/recordings/record/' + se.project + '/', {request: 'start', csrfmiddlewaretoken: crsf}, function (result) {
       id = result.id;
 
       // setup recorder and start recording
@@ -183,7 +183,7 @@
           data.recording = id;
           data.request = 'upload';
 
-          $.post('/record/' + se.project + '/', data, function () {
+          $.post('/recordings/record/' + se.project + '/', data, function () {
             uploadQueue.shift();
             if (stopped) {
               progress(uploadQueue.length, uploadTotal);
@@ -191,7 +191,7 @@
             uploadPiece();
           });
         } else if (stopped) {
-          $.post('/record/' + se.project + '/', {
+          $.post('/recordings/record/' + se.project + '/', {
             recording: id,
             request: 'finish',
             csrfmiddlewaretoken: crsf

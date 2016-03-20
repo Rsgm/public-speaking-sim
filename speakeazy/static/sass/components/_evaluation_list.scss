@@ -23,8 +23,9 @@
     &:first-child { // will always be create evaluation
 
       .s-create-evaluation {
-        input {
+        textarea {
           margin-bottom: 10px;
+          resize: vertical;
         }
 
         .s-create-evaluation-info {

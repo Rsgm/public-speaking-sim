@@ -111,6 +111,9 @@ module.exports = function (grunt) {
             _defaults: {
                 bg: true
             },
+            collectUrls: {
+                cmd: 'python <%= paths.manageScript %> collectstatic_js_reverse'
+            },
             runDjango: {
                 cmd: 'python <%= paths.manageScript %> runserver'
             },
@@ -125,6 +128,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('serve', [
         'bgShell:runMailHog',
+        'bgShell:collectUrls',
         'bgShell:runDjango',
         'bgShell:runCelery',
         'watch'

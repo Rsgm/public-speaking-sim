@@ -1,14 +1,15 @@
 from braces.views import LoginRequiredMixin
 from django.core.urlresolvers import reverse
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from speakeazy.groups.mixins import GroupPermissiondMixin
 from speakeazy.groups.permissions import VIEW_SUBMISSION, DELETE_SUBMISSION, \
     EVALUATE_SUBMISSION, LIST_SUBMISSION
 from speakeazy.groups.models import Submission, SUBMISSION_READY
-from speakeazy.recordings.models import EvaluationType, Evaluation
+from speakeazy.recordings.models import EvaluationType, Evaluation, Recording
+from speakeazy.util.views import PostView
 from vanilla.model_views import DetailView, ListView, DeleteView
-from vanilla.views import TemplateView
+from vanilla.views import TemplateView, GenericView
 
 
 class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
@@ -123,5 +124,20 @@ class Evaluate(LoginRequiredMixin, GroupPermissiondMixin, TemplateView):
                                 text=text,
                                 seconds=seconds)
         evaluation.save()
+
+        return HttpResponse()
+
+
+class Request(LoginRequiredMixin, GroupPermissiondMixin, PostView):
+    group_permission = EVALUATE_SUBMISSION
+
+    def post(self, request, *args, **kwargs):
+        post = request.POST
+
+        submission = Submission()
+        submission.group = self.group
+        submission.recording = get_object_or_404(Recording, project=post['project'], slug=post['recording'])
+        submission.for_evaluation = True
+        submission.save()
 
         return HttpResponse()

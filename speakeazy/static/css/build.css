@@ -524,8 +524,8 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     right: 0; }
 
-.uk-form textarea {
-  height: 10em !important; }
+form.uk-form textarea {
+  height: 10em; }
 
 .uk-breadcrumb.large *, .uk-breadcrumb.large *::before {
   font-size: 24px; }
@@ -542,6 +542,20 @@ h1, h2, h3, h4, h5, h6 {
   background: #fafafa; }
   .uk-comment .uk-comment-body {
     margin-left: 10px; }
+
+.comment-form {
+  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+  padding: 20px;
+  background: #fafafa;
+  display: flex;
+  flex-flow: row-reverse wrap;
+  flex-shrink: 0; }
+  .comment-form textarea {
+    resize: vertical;
+    height: 5em;
+    width: 100%; }
+  .comment-form button {
+    margin-top: 15px; }
 
 .s-create {
   border: 1px dashed #9e9e9e;
@@ -619,8 +633,9 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     margin: 10px 0;
     cursor: pointer; }
-  .s-evaluation-list > *:first-child .s-create-evaluation input {
-    margin-bottom: 10px; }
+  .s-evaluation-list > *:first-child .s-create-evaluation textarea {
+    margin-bottom: 10px;
+    resize: vertical; }
   .s-evaluation-list > *:first-child .s-create-evaluation .s-create-evaluation-info {
     text-align: center; }
   .s-evaluation-list > *:first-child .s-create-evaluation .uk-icon-button {

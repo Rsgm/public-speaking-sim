@@ -31,7 +31,7 @@ urlpatterns = [
                   url(r'', include("speakeazy.speakeazy.urls", namespace="speakeazy")),
                   url(r'^projects/', include("speakeazy.projects.urls", namespace="projects")),
                   url(r'^groups/', include("speakeazy.groups.urls", namespace="groups")),
-                  url(r'^record/(?P<project>[\w-]+)/', include("speakeazy.recordings.urls", namespace="recordings")),
+                  url(r'^recordings/', include("speakeazy.recordings.urls", namespace="recordings")),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

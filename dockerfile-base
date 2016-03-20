@@ -1,0 +1,17 @@
+###############################
+# Speakeazy django base
+#
+# This file builds the base for the django server.
+# This build takes very long as it compiles ffmpeg.
+# The point of this is to have daily builds so server builds are faster
+###############################
+FROM gcr.io/google_appengine/python
+
+RUN git clone git@github.com:FFmpeg/FFmpeg.git
+
+
+
+
+
+# Build python
+RUN virtualenv /env -p python3.4

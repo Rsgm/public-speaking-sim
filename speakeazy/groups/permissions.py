@@ -18,7 +18,7 @@ DELETE_INVITE = 'delete_invite'
 
 LIST_SUBMISSION = 'list_submission'
 VIEW_SUBMISSION = 'view_submission'
-ADD_SUBMISSION = 'add_submission'  # rename to submit, group with evaluate
+REQUEST_SUBMISSION = 'request_submission'
 UPDATE_SUBMISSION = 'update_submission'
 DELETE_SUBMISSION = 'delete_submission'
 EVALUATE_SUBMISSION = 'evaluate_submission'
@@ -57,7 +57,7 @@ PERMISSIONS = (
     ("Submission", (
         (LIST_SUBMISSION, "List submission"),
         (VIEW_SUBMISSION, "View submission"),
-        (ADD_SUBMISSION, "Add submission"),
+        (REQUEST_SUBMISSION, "Request submission"),
         (UPDATE_SUBMISSION, "Update submission"),
         (DELETE_SUBMISSION, "Delete submission"),
         (EVALUATE_SUBMISSION, "Evaluate submission"),
