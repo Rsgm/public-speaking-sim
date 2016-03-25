@@ -1,7 +1,7 @@
 from string import ascii_lowercase
 
 from braces.views import LoginRequiredMixin
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from random import choice
@@ -100,4 +100,4 @@ class Delete(LoginRequiredMixin, GroupPermissiondMixin, DeleteView):
         return get_object_or_404(GroupInvite, group__slug=group, slug=invite)
 
     def get_success_url(self):
-        return reverse('groups:group:invite:list', kwargs={'group': self.group.slug})
+        return reverse_lazy('groups:group:invite:list', kwargs={'group': self.group.slug})

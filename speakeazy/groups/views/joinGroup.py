@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.http.response import HttpResponseRedirect
 from django.views.generic.edit import FormView
 
@@ -37,4 +37,4 @@ class JoinGroup(LoginRequiredMixin, FormView):
 
         membership.save()
 
-        return HttpResponseRedirect(reverse('groups:group:groupView', kwargs={'group': membership.group.slug}))
+        return HttpResponseRedirect(reverse_lazy('groups:group:groupView', kwargs={'group': membership.group.slug}))

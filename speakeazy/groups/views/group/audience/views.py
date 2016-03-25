@@ -1,5 +1,5 @@
 from braces.views import LoginRequiredMixin
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
 from speakeazy.groups.mixins import GroupPermissiondMixin
 from speakeazy.groups.permissions import LIST_AUDIENCE, VIEW_AUDIENCE, ADD_AUDIENCE, UPDATE_AUDIENCE, DELETE_AUDIENCE
@@ -71,4 +71,4 @@ class Delete(LoginRequiredMixin, GroupPermissiondMixin, DeleteView):
         return get_object_or_404(Audience, group__slug=group, slug=audience)
 
     def get_success_url(self):
-        return reverse('groups:group:audience:list', kwargs={'group': self.group.slug})
+        return reverse_lazy('groups:group:audience:list', kwargs={'group': self.group.slug})

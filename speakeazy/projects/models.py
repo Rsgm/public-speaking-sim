@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 from autoslug.fields import AutoSlugField
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.db import models
 from django.db.models.base import Model
 from django.utils.translation import ugettext_lazy as _
@@ -30,7 +30,7 @@ class UserProject(Project):
     user = models.ForeignKey(User)
 
     def get_absolute_url(self):
-        return reverse('projects:project:projectView', kwargs={'project': self.slug})
+        return reverse_lazy('projects:project:projectView', kwargs={'project': self.slug})
 
 
 class Settings(Model):
@@ -46,4 +46,4 @@ class Settings(Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('projects:project:projectView', kwargs={'project': self.slug})
+        return reverse_lazy('projects:project:projectView', kwargs={'project': self.slug})

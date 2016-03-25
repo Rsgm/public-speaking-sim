@@ -1,5 +1,5 @@
 from braces.views import LoginRequiredMixin
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.http.response import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from speakeazy.groups.mixins import GroupPermissiondMixin
@@ -81,7 +81,7 @@ class Delete(LoginRequiredMixin, GroupPermissiondMixin, DeleteView):
     group_permission = DELETE_SUBMISSION
 
     def get_success_url(self):
-        return reverse('groups:group:submission:list', kwargs={'group': self.group.slug})
+        return reverse_lazy('groups:group:submission:list', kwargs={'group': self.group.slug})
 
 
 class Evaluate(LoginRequiredMixin, GroupPermissiondMixin, TemplateView):

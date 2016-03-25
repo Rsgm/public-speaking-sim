@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.db import models
 from django.db.models.base import Model
 from speakeazy.users.models import User
@@ -35,7 +35,7 @@ class Recording(Model):
         return '%s - %s' % (self.project, self.slug)
 
     def get_absolute_url(self):
-        return reverse('projects:project:recordingView', kwargs={'project': self.project.slug, 'recording': self.slug})
+        return reverse_lazy('projects:project:recordingView', kwargs={'project': self.project.slug, 'recording': self.slug})
 
 
 class UploadPiece(Model):

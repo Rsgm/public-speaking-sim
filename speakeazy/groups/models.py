@@ -2,7 +2,7 @@
 from __future__ import unicode_literals, absolute_import
 
 from autoslug.fields import AutoSlugField
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.db import models
 from django.db.models.base import Model
 from django.utils.translation import ugettext_lazy as _
@@ -35,7 +35,7 @@ class Group(Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('groups:group:groupView', kwargs={'group': self.slug})
+        return reverse_lazy('groups:group:groupView', kwargs={'group': self.slug})
 
 
 class GroupMembership(Model):
@@ -50,7 +50,7 @@ class GroupMembership(Model):
         return '%s - %s' % (self.group.name, self.user)
 
     def get_absolute_url(self):
-        return reverse('groups:group:user:view', kwargs={'group': self.group.slug, 'user': self.user_id})
+        return reverse_lazy('groups:group:user:view', kwargs={'group': self.group.slug, 'user': self.user_id})
 
 
 class Authorization(Model):
@@ -100,7 +100,7 @@ class Submission(Model):
     #     return '%s - %s' % (self.recording.project, self.recording.project.name)
 
     def get_absolute_url(self):
-        return reverse('groups:group:submission:view', kwargs={'group': Group.slug, 'submission': self.slug})
+        return reverse_lazy('groups:group:submission:view', kwargs={'group': Group.slug, 'submission': self.slug})
 
 
 class DefaultAuthorization(Model):
@@ -137,7 +137,7 @@ class GroupInvite(Model):
     slug = AutoSlugField(populate_from='name', unique_with='group')
 
     def get_absolute_url(self):
-        return reverse('groups:group:invite:view', kwargs={'group': self.group.slug, 'invite': self.slug})
+        return reverse_lazy('groups:group:invite:view', kwargs={'group': self.group.slug, 'invite': self.slug})
 
     def __str__(self):
         return '%s - %s' % (self.group, self.token)
