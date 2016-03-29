@@ -1,7 +1,14 @@
 // flip recordings on the y axis to mirror the user
-.s-brand {
+.uk-navbar-brand::before {
+    display: none;
+}
 
-  .green {
-    color: $brand-color;
+.s-brand {
+  // .green {
+  //   color: $brand-color;
+  // }
+    svg{
+        height: 91%;
+        margin-top: 3px;
   }
 }
