@@ -51,10 +51,10 @@
                 {#                <li><a>About</a></li>#}
                 {#                <li><a>Pricing</a></li>#}
                 {#                <li><a>Support</a></li>#}
-                <li><a href="{% url 'wagtail_serve' '' %}">Blog</a></li>
+                <!-- <li><a href="{% url 'wagtail_serve' '' %}">Blog</a></li> -->
                 {#                <li><a>Tech Blog</a></li>#}
-                <li><a href="{% url 'userena_signin' %}">Login</a></li>
-                <li><a href="{% url 'userena_signup' %}">Signup</a></li>
+                <li><a href="{% url 'userena_signin' %}">Log In</a></li>
+                <li><a href="{% url 'userena_signup' %}">Sign Up</a></li>
                 {#            </ul>#}
                 {#        </div>#}
                 {##}
@@ -83,14 +83,14 @@
     <div id="demo" class="uk-block">
         <div class="container">
             <div class="uk-grid">
-                <div class="uk-width-medium-7-10 uk-container-center">
-                    <h2>Institutions & Organizations</h2>
+                <div class="uk-width-medium-8-10 uk-container-center">
+                    <h2>Get your students and employees ready for presentations!</h2>
 
                     <p>SpeakEazy is a perfect addition to your school's, organization’s, or non-profit’s resource arsenal. Give
                         all of your students or employees access to SpeakEazy so they can prepare for their presentations the
                         best way possible.</p>
 
-                    <div class="uk-align-center uk-margin-large uk-margin-medium-bottom">
+                    <div class="uk-align-center uk-margin-medium uk-margin-medium-bottom demo-button">
                         <a href="mailto:support@speakeazy.co?Subject=SpeakEazy%20Demo%20Request" target="_top">Request a live Demo</a>
                     </div>
                 </div>
@@ -130,42 +130,41 @@
     </div>
 
     <div id="process" class="uk-block uk-block-large">
+            <div class="process-header">How SpeakEazy Works</div>
         <div class="container uk-grid">
-            <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-4">
-                <div class="uk-panel uk-panel-space">
+            <div class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-3">
+                <div class="uk-panel uk-panel-space process-panel">
                     <h2 class="uk-text-center">Record</h2>
 
                     <p>Record your speech in front of our simulated audience.</p>
                 </div>
             </div>
             <div id="wiki-link"
-                 class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-4">
-                <div class="uk-panel uk-panel-space">
-                    <h2 class="uk-text-center">Evaluate</h2>
+                 class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-3">
+                <div class="uk-panel uk-panel-space process-panel">
+                    <h2 class="uk-text-center">Review</h2>
 
-                    <p>Evaluate the delivery of your speech. Pick out the parts you liked and the parts you didn't.</p>
+                    <p>See and hear how you look while presenting.</p>
                 </div>
             </div>
-            <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-4">
-                <div class="uk-panel uk-panel-space">
+            <div class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-3">
+                <div class="uk-panel uk-panel-space process-panel">
                     <h2 class="uk-text-center">Share</h2>
 
-                    <p>Receive feedback on your recordings from friends, teachers, even professional public
-                        speakers.</p>
+                    <p>Share your recording with others for feedback.</p>
                 </div>
             </div>
-            <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-4">
+            <!-- <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-4">
                 <div class="uk-panel uk-panel-space">
                     <h2 class="uk-text-center">Improve</h2>
 
-                    <p>Receive feedback on your recordings from friends, teachers, even professional public
-                        speakers.</p>
+                    <p>Continue to utlize SpeakEazy while you prepare for the best results!</p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
-    <div id="resources" class="uk-block uk-block-large">
+    <!-- <div id="resources" class="uk-block uk-block-large">
         <div class="container uk-grid">
             <div id="blog-link" class="uk-panel uk-panel-space uk-width-small-1-1 uk-width-medium-1-3">
                 <i class="uk-icon-bookmark-o uk-icon-large uk-width-1-1 uk-text-center"></i>
@@ -193,9 +192,10 @@
                 <p>Support for all of your questions, listeners for all of your feedback.</p>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div id="landing-footer" class="uk-block uk-block-large uk-block-secondary">
+        <a  class="footer-signup" href="{% url 'userena_signup' %}">Get Started</a>
     </div>
 </div>
 

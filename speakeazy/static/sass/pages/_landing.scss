@@ -80,18 +80,32 @@
     color: white;
 
     h2{
-        color: #fff
+        color: #fff;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #fff;
+        max-width: 750px;
+        margin: 0 auto 40px auto;
+    }
+
+    p {
+
     }
 
     a {
-        width: 240px;
-        margin:0 auto;
-        display: block;
-      font-size: 1.5em;
+      width: 240px;
+      margin:0 auto;
+      display: block;
+      font-size: 1.3em;
       padding: 10px 20px;
       background-color: #f44336;
       color: white;
+      border-radius: 4px;
       @include card(2)
+
+      &:hover, &:active, &:focus {
+        text-decoration: none;
+        background-color: #f44336 - $hover;
+      }
     }
   }
 
@@ -114,13 +128,27 @@
       background-color: #3f51b5;
     }
 
-    h2 {
+    .process-header{
+        text-align: center;
+        width: 400px;
+        margin:0 auto;
+        padding-bottom: 15px;
+        display: block;
+        color:#fff;
+        font-size:2.3em;
+        border-bottom: 2px solid #fff;
+
+    }
+    h3 {
       color: $light-grey
     }
 
     p {
       color: white;
     }
+  }
+
+  .process-panel {
   }
 
   #resources {
@@ -137,6 +165,23 @@
   }
 
   #landing-footer {
+      a.footer-signup {
+            width: 240px;
+            margin:0 auto;
+            display: block;
+            font-size: 1.3em;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
+            @include card(1)
+
+            &:hover, &:active, &:focus {
+              text-decoration: none;
+              background-color: #f44336 - $hover;
+            }
+      }
   }
 
   // cody.css
@@ -170,7 +215,7 @@
   .uk-navbar-nav li:last-child a, .uk-navbar-nav li:nth-last-child(2) a {
     background-color: #1DE9B6;
     color: #fff;
-    width: 75px;
+    width: 82px;
   }
 
   #main h1, #main h2 {
