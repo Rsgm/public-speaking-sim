@@ -20,8 +20,10 @@
                 {% if group_list %}
                     <div class="s-request-evaluation s-video-overlay"
                          data-uk-dropdown="{mode:'click', pos:'bottom-right'}">
-                        <i class="uk-icon-send uk-icon-hover"></i>
-
+                         <div class="video-player-send">
+                             <i class="uk-icon-send uk-icon-hover"></i>
+                             <span>Send</span>
+                        </div>
                         <div class="uk-dropdown uk-dropdown-scrollable">
                             <ul class="uk-nav uk-nav-dropdown ">
                                 <li class="uk-nav-header">Request Evaluation</li>
@@ -134,7 +136,7 @@
 {% block jquery %}
     <script src="{% static 'js/recording_view.js' %}"></script>
     <script src="{% static 'js/comment_form.js' %}"></script>
-    
+
     <!--Start of Tawk.to Script-->
         <script type="text/javascript">
             var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

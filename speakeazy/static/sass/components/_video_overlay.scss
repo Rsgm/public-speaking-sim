@@ -5,11 +5,13 @@
 }
 
 .s-video-overlay {
-  background-color: $dark-grey;
+  background-color: $secondary-brand-color;
   //opacity: 0.7;
   position: absolute;
   padding: $video-overlay-padding;
   color: $video-overlay-color;
+  border-radius: 4px;
+  @include card(1);
 
   &.s-active {
     background: $video-control-active;
@@ -19,4 +21,14 @@
     color: $video-overlay-color-hover;
     text-decoration: none;
   }
+}
+
+// because I couldn't get a video to upload I had to make most of these edits from the live site with the element inspector in my browser. Please double check this. My goal was to have the text Share next to the paper airplane.
+.video-player-send {
+    display: flex;
+    align-items: center;
+        span {
+            margin-left: 6px;
+            font-family: $text-font-stack;
+        }
 }

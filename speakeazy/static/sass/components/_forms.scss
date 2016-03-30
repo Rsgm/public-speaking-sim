@@ -1,0 +1,49 @@
+// This page is for styling forms
+
+// signup form styles
+.auth-form {
+    width:300px;
+    margin: 0 auto;
+}
+
+.auth-form-field {
+    margin: 0;
+
+    input {
+        padding: .5em .6em;
+        border: 1px solid #ccc;
+        box-shadow: inset 0 1px 3px #ddd;
+        border-radius: 4px;
+        vertical-align: middle;
+        width:280px;
+
+        &:focus {
+            outline: 0;
+            border-color: #129FEA;
+        }
+    }
+    // label {
+    //     display:none;
+    // }
+}
+
+.form-submit {
+    @include card(1);
+    background-color: $secondary-brand-color;
+    width: 300px;
+    border-radius: 3px;
+    border: none;
+    color: #fff;
+    margin-top: 6px;
+
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+      background-color: $secondary-brand-color - $hover;
+    }
+}
+
+// sign in form styles
+
+#id_remember_me {
+    width:auto;
+}
