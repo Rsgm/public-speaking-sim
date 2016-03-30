@@ -111,7 +111,7 @@
 
   #process {
     //background-color: #1e88e5;
-    background-color: #311b92;
+    background-color: $brand-color-dark;
 
     //#process-background {
     //  background: url(http://image.shutterstock.com/z/stock-photo-speaker-at-business-conference-and-presentation-audience-at-the-conference-hall-217119211.jpg);
@@ -125,7 +125,7 @@
 
     .uk-panel {
       @include card(1);
-      background-color: #3f51b5;
+      background-color: $brand-color-dark - $hover;
     }
 
     .process-header{
