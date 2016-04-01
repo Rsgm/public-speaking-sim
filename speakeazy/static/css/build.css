@@ -379,6 +379,9 @@ a {
     color: #212121;
     text-decoration: underline; }
 
+svg {
+  display: block; }
+
 @font-face {
   font-family: 'Open Sans', sans-serif; }
 
@@ -449,7 +452,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 1px; }
 
 #base-header .uk-breadcrumb {
-  background: #82ed82;
+  background: #53b08b;
   color: #fff;
   padding: 25px;
   margin-top: 0; }
@@ -533,8 +536,12 @@ form.uk-form textarea {
 .s-preview {
   transform: rotateY(180deg); }
 
-.s-brand .green {
-  color: #82ed82; }
+.uk-navbar-brand::before {
+  display: none; }
+
+.s-brand svg {
+  height: 91%;
+  margin-top: 3px; }
 
 .uk-comment {
   box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
