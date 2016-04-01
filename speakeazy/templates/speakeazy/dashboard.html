@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block content %}
-<<<<<<< HEAD
     <h3 class="uk-text-center">Welcome! Create a new project to start preparing for your next presentation.</h3>
     <div id="dashboard" class="uk-flex">
             <div class="projects-parent uk-width-7-10">
@@ -18,17 +17,6 @@
                         <a class="home-dashboard-button" href="{% url 'projects:projectList' %}">See all</a>
                         <a class="home-dashboard-button" href="{% url 'projects:newProject' %}"><i class="uk-icon-plus"></i> Create New</a>
                     </div>
-=======
-    <div id="dashboard" class="">
-        <div id="upcoming-projects" class="uk-block">
-            <h2>Welcome! Create a new project to start preparing for your next presentation.</h2>
-
-            <div class="home-dashboard-flex-box">
-                <h2 class="home-dashboard-header">Projects</h2>
-                <a class="home-dashboard-button" href="{% url 'projects:projectList' %}">See all</a>
-                <a class="home-dashboard-button" href="{% url 'projects:newProject' %}">Create New</a>
-            </div>
->>>>>>> prod
 
                     {% if project_recent_list %}
                         <h3>Recently Created</h3>

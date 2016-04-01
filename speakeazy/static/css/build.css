@@ -609,8 +609,9 @@ form.uk-form textarea {
     padding: 40px 0 17px 0;
     font-size: 45px; }
 
-.uk-panel-title {
-  font-size: 16px; }
+.uk-panel-header .uk-panel-title {
+  font-size: 16px;
+  border-bottom: 1px solid #53b08b; }
 
 .project-info, .item-info {
   font-style: italic; }
@@ -795,6 +796,8 @@ noscript > * {
 
 #landing-page #nav-bar {
   background: #fff; }
+  #landing-page #nav-bar .uk-navbar-nav li a {
+    background-color: #53b08b; }
 
 #landing-page #main {
   background: rgba(0, 0, 0, 0.3) none repeat scroll 0 0;
@@ -833,7 +836,7 @@ noscript > * {
     flex-wrap: wrap;
     padding: 16px 16px 0px 16px;
     width: 220px;
-    background-color: rgba(255, 255, 255, 0.36);
+    background-color: rgba(255, 255, 255, 0.4);
     margin-right: 8px;
     position: absolute;
     bottom: 20px;
@@ -996,7 +999,8 @@ noscript > * {
   text-transform: uppercase;
   color: #000;
   font-weight: 200;
-  font-size: 20px; }
+  font-size: 20px;
+  padding-right: 5px; }
 
 #dashboard a.home-dashboard-button {
   box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);

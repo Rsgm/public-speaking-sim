@@ -53,8 +53,9 @@
   }
 }
 
-.uk-panel-title {
+.uk-panel-header .uk-panel-title {
   font-size: 16px;
+  border-bottom: 1px solid $brand-color-dark;
 }
 
 .project-info, .item-info {
