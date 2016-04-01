@@ -16,6 +16,10 @@
     padding: $video-overlay-padding;
   }
 
+  &.s-video-time {
+    padding: $video-overlay-padding;
+  }
+
   &.s-active {
     background: $video-control-active;
   }
