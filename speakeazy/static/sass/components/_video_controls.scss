@@ -4,10 +4,6 @@
   display: flex;
   align-content: space-between;
 
-  i {
-    cursor: pointer;
-  }
-
   & > * {
     @extend .s-video-overlay;
     display: initial;

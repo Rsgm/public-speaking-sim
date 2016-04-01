@@ -11,6 +11,6 @@ urlpatterns = [
         name='record'
     ),
 
-    url(r'^r/(?P<project>[\w-]+)/(?P<recording>\d+)/',
+    url(r'^r/(?P<type>[\w]+)/(?P<key>\d+)/',
         include("speakeazy.recordings.views.recording.urls", namespace="recording")),
 ]

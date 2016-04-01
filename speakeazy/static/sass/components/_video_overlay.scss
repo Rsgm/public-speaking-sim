@@ -8,10 +8,13 @@
   background-color: $secondary-brand-color;
   //opacity: 0.7;
   position: absolute;
-  padding: $video-overlay-padding;
   color: $video-overlay-color;
   border-radius: 4px;
   @include card(1);
+
+  &.s-video-time {
+    padding: $video-overlay-padding;
+  }
 
   &.s-active {
     background: $video-control-active;

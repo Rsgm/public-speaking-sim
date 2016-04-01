@@ -4,7 +4,7 @@ from speakeazy.groups.models import GroupInvite, GroupMembership, Group, Authori
 
 
 class JoinForm(forms.Form):
-    group = forms.CharField()
+    group = forms.CharField(help_text='help text',label='label', label_suffix=' - label suffix:')
     token = forms.CharField()
 
     invite = None

@@ -87,8 +87,7 @@ class Submission(Model):
     group = models.ForeignKey('Group')
     recording = models.ForeignKey(Recording)
 
-    for_evaluation = models.BooleanField()  # does nothing currently
-    group_visibility = models.ForeignKey('Authorization', null=True, blank=True)  # does nothing currently
+    # group_visibility = models.ForeignKey('Authorization', null=True, blank=True)  # does nothing currently
 
     # does nothing currently
     state = models.CharField(max_length=1, choices=SUBMISSION_STATE_CHOICES, default=SUBMISSION_READY)

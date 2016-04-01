@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import models
 from django.db.models.base import Model
-from speakeazy.users.models import User
+from django.utils.translation import ugettext_lazy as _
 
 RECORDING_UPLOADING = 'u'
 RECORDING_PROCESSING = 'p'  # may not be needed
@@ -35,7 +35,10 @@ class Recording(Model):
         return '%s - %s' % (self.project, self.slug)
 
     def get_absolute_url(self):
-        return reverse_lazy('projects:project:recordingView', kwargs={'project': self.project.slug, 'recording': self.slug})
+        '''
+        Don't use for shared videos
+        '''
+        return reverse_lazy ('recordings:recording:view', kwargs={'type': 'owner', 'key': self.pk})
 
 
 class UploadPiece(Model):
@@ -57,7 +60,7 @@ class EvaluationType(Model):
 
 
 class Evaluation(Model):
-    evaluator = models.ForeignKey(User, null=True, blank=True)
+    evaluator = models.ForeignKey('users.User', null=True, blank=True)
     recording = models.ForeignKey(Recording)
 
     type = models.ForeignKey('EvaluationType', null=True, blank=True)
@@ -73,7 +76,7 @@ class Evaluation(Model):
 
 
 class Comment(Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey('users.User')
     recording = models.ForeignKey(Recording)
 
     text = models.TextField()
@@ -82,3 +85,33 @@ class Comment(Model):
 
     def __str__(self):
         return '%s - %s' % (self.recording, self.user)
+
+
+# user authorization may be a better name
+class SharedUser(Model):
+    recording = models.ForeignKey('Recording')
+    user = models.ForeignKey('users.User')
+
+    comments = models.BooleanField(_('Users may comment'))
+    evaluations = models.BooleanField(_('Users may evaluate'))
+
+    def __str__(self):
+        return '%s - %s' % (self.recording, self.user)
+
+
+# link authorization may be a better name
+class SharedLink(Model):
+    recording = models.ForeignKey('Recording')
+    uuid = models.UUIDField(unique=True)
+
+    comments = models.BooleanField(_('Users may comment'))
+    evaluations = models.BooleanField(_('Users may evaluate'))
+
+    login_required = models.BooleanField(_('Users must be logged in'))
+    uses = models.IntegerField(_('Amount of times this link can be used'), null=True, blank=True)
+    expires = models.DateTimeField(_('The date this link expires'), null=True, blank=True)
+
+    def __str__(self):
+        return '%s - %s' % (self.recording, self.user)
+
+# todo: SharedGroup

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}
+{% block title %} - Create Shared User{% endblock %}
+
+{% block breadcrumbs %}
+  {#    {% include 'projects/breadcrumb.html' %}#}
+  {#    <li class="uk-active"><span>new</span></li>#}
+{% endblock %}
+
+{% block content %}
+  <h2>Create Shared User</h2>
+
+  <form class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
+        action="{% url 'recordings:recording:share:user' 'owner' view.recording.pk %}">
+    {% csrf_token %}
+
+    {% form form %}
+
+    <div class="uk-form-row">
+      <button type="submit" class="uk-button">Add</button>
+    </div>
+  </form>
+{% endblock %}

@@ -1,5 +1,5 @@
 from braces.views import LoginRequiredMixin
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
 from speakeazy.groups.mixins import GroupPermissiondMixin
 from speakeazy.groups.permissions import LIST_USER, VIEW_USER, UPDATE_USER, DELETE_USER

@@ -112,13 +112,14 @@ module.exports = function (grunt) {
                 bg: true
             },
             collectUrls: {
-                cmd: 'python <%= paths.manageScript %> collectstatic_js_reverse'
+                cmd: 'rm ./staticfiles/django_js_reverse/js/reverse.js ;' +
+                'python <%= paths.manageScript %> collectstatic_js_reverse'
             },
             runDjango: {
                 cmd: 'python <%= paths.manageScript %> runserver'
             },
             runCelery: {
-                cmd: 'celery -A speakeazy.taskapp worker -l info --autoreload'
+                cmd: 'celery -A speakeazy.taskapp worker -l info'
             },
             runMailHog: {
                 cmd: './mailhog'

@@ -15,4 +15,4 @@ class NewProjectForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         self.instance.user = self.user
-        return super(NewProjectForm, self).save()
+        return super(NewProjectForm, self).save(*args, **kwargs)
