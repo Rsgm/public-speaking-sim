@@ -1,22 +1,53 @@
 // -----------------------------------------------------------------------------
-// This file contains styles that are specific to the home page.
+// This file contains styles that are specific to the dashboard page.
 // -----------------------------------------------------------------------------
 
 #dashboard {
-  .home-dashboard-flex-box {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin: 30px 0;
-  }
+
+    .projects-parent {
+        border-right: 1px solid #ECECEC;
+        margin-right: 20px;
+        padding-right:20px;
+        box-sizing: border-box;
+    }
+      .home-project-flex-box {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 30px 0;
+          /* text-transform: uppercase; */
+          background-color: #E0E0E0;
+          padding: 5px;
+          border-radius: 4px;
+          max-width: 50%;
+          box-sizing: border-box;
+          @include card(1);
+      }
+      .home-group-flex-box {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 30px 0;
+          /* text-transform: uppercase; */
+          background-color: #E0E0E0;
+          padding: 5px;
+          border-radius: 4px;
+          max-width: 350px;
+          box-sizing: border-box;
+          @include card(1);
+      }
+
 
   .home-dashboard-header {
-    margin-bottom: 0;
-
+      margin-bottom: 0;
+      text-transform: uppercase;
+      color: #000;
+      font-weight: 200;
+      font-size:20px;
   }
 
   a.home-dashboard-button {
-    @include card(2);
+    @include card(1);
     background-color: $secondary-brand-color;
     color: #fff;
     font-size: 14px;
