@@ -793,7 +793,8 @@ noscript > * {
   background: rgba(0, 0, 0, 0.3) none repeat scroll 0 0;
   height: 100vh;
   display: flex;
-  align-items: center; }
+  align-items: center;
+  flex-direction: column; }
   #landing-page #main video {
     position: absolute;
     z-index: -100;
@@ -805,9 +806,38 @@ noscript > * {
   #landing-page #main h1, #landing-page #main h2 {
     color: #83F783; }
   #landing-page #main h1 {
-    margin-top: 0; }
+    margin-bottom: 10px;
+    font-size: 36px; }
   #landing-page #main h2 {
-    margin-bottom: 0; }
+    margin: 0;
+    font-size: 20px; }
+  #landing-page #main .video-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100%; }
+  #landing-page #main .browser-compatability {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    align-self: flex-end;
+    flex-wrap: wrap;
+    padding: 16px 16px 0px 16px;
+    width: 220px;
+    background-color: rgba(255, 255, 255, 0.36);
+    margin-right: 8px;
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+    color: #000; }
+    #landing-page #main .browser-compatability h6 {
+      margin-top: 6px; }
+  #landing-page #main .uk-icon-chrome {
+    padding-right: 8px; }
+  #landing-page #main i {
+    font-size: 60px; }
 
 #landing-page #points {
   background: white; }
@@ -935,11 +965,11 @@ noscript > * {
   margin: 30px 0;
   /* text-transform: uppercase; */
   background-color: #E0E0E0;
-  padding: 5px;
+  padding: 8px 5px;
   border-radius: 4px;
   max-width: 50%;
   box-sizing: border-box;
-  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
+  box-shadow: none; }
 
 #dashboard .home-group-flex-box {
   display: flex;
@@ -948,11 +978,11 @@ noscript > * {
   margin: 30px 0;
   /* text-transform: uppercase; */
   background-color: #E0E0E0;
-  padding: 5px;
+  padding: 8px 5px;
   border-radius: 4px;
   max-width: 350px;
   box-sizing: border-box;
-  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
+  box-shadow: none; }
 
 #dashboard .home-dashboard-header {
   margin-bottom: 0;
