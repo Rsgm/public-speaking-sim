@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 from autoslug.fields import AutoSlugField
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import models
 from django.db.models.base import Model
 from django.utils.translation import ugettext_lazy as _

@@ -1,7 +1,7 @@
 from string import ascii_lowercase
 
 from braces.views import LoginRequiredMixin
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from random import choice

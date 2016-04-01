@@ -10,7 +10,6 @@
   var $volume = $('.s-video-volume');
   var $fullscreen = $('.s-video-fullscreen');
   var $time = $('.s-time-played');
-  var $group = $('.s-group-submit');
 
   // slider controls
   var $slider = $('.s-slider');
@@ -25,6 +24,12 @@
   var $evaluationAdd = $('.s-create-evaluation');
   var $evaluationAddButton = $('.s-evaluation-add');
   var $evaluationAddType = $('.s-create-evaluation .uk-icon-button');
+
+  // sharing
+  var $share = $('#share-with');
+  var $userSubmit = $('#share-user-modal button');
+  //var $submissionSubmit = $('#share-with .submission');
+
 
   // normal variables
   var pointTimes = [];
@@ -96,40 +101,38 @@
     $video[0].muted = !$video[0].muted;
   });
 
+  // these actions cause the video to pause
+  $('.s-evaluation-list, .s-share-video').click(function () {
+    pause();
+  });
 
   $fullscreen.click(function () {
     var elem = $videoContainer[0];
 
-    //if (isFullscreen) {
-    //    $(this).removeClass('s-active');
-    //
-    //    if (elem.exitFullscreen) {
-    //        elem.exitFullscreen();
-    //    } else if (elem.mozCancelFullScreen) {
-    //        elem.mozCancelFullScreen();
-    //    } else if (elem.webkitExitFullscreen) {
-    //        elem.webkitExitFullscreen();
-    //    } else if (elem.msExitFullscreen) {
-    //        elem.msExitFullscreen();
-    //    }
-    //
-    //} else {
-    //$(this).addClass('s-active');
+    if ($videoContainer.hasClass('fullscreen-container')) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
 
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.msRequestFullscreen) {
-      elem.msRequestFullscreen();
-    } else if (elem.mozRequestFullScreen) {
-      elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) {
-      elem.webkitRequestFullscreen();
+    } else {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      } else if (elem.mozRequestFullScreen) {
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      }
     }
-    //}
-  });
 
-  $evaluations.click(function () {
-    pause();
+    $videoContainer.toggleClass('fullscreen-container');
   });
 
   $evaluationAddType.click(function () {
@@ -154,9 +157,23 @@
     });
   });
 
-  $group.click(function () {
+  $submission.click(function () {
     var data = {
       project: se.project,
+      recording: se.recording,
+      csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+    };
+
+    $.post(Urls['groups:group:submissions:request']($(this).attr('data-group')), data, function () {
+      // todo: success notification
+    });
+  });
+
+  $userSubmit.click(function () {
+    var $form = $(this).parent();
+
+    var data = {
+      project: $form.find('').val,
       recording: se.recording,
       csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
     };
@@ -283,14 +300,13 @@
 
   function sendEval(type, text, time, sendCallback) {
     var data = {
-      action: 'eval',
       type: type,
       text: text,
       seconds: time,
       csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
     };
 
-    $.post(Urls['recordings:recording:evaluations:create'](se.project, se.recording), data, function () {
+    $.post(Urls['recordings:recording:evaluations:create'](se.authorization.type, se.authorization.key), data, function () {
       sendCallback();
     });
   }
@@ -347,28 +363,13 @@
   }
 
   function addEvaluation(evaluation) {
-    var $newEvaluation = $('<div class="s-evaluation" data-uk-dropdown="{mode:\'click\', pos:\'right-top\'}">');
-    $newEvaluation.attr('data-time', evaluation.time);
-
-    var $icon = $('<i class="uk-icon-hover">');
-    $icon.addClass(evaluation.icon);
-
-    var $content = $('<div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">');
-
-    var $user = $('<div class="uk-panel-title">');
-    $user.text(evaluation.evaluator);
-
-    var $text = $('<p>');
-    $text.text(evaluation.text);
-
-    var $date = $('<p>');
-
-    $content.append($user);
-    $content.append($text);
-    $content.append($date);
-
-    $newEvaluation.append($icon);
-    $newEvaluation.append($content);
+    var $newEvaluation = $('<div class="s-evaluation" data-time=' + evaluation.time + ' data-uk-dropdown="{mode:\'click\', pos:\'right-top\'}">'
+        + '<i class="uk-icon-hover s-video-button ' + evaluation.icon + '"></i>'
+        + '<div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">'
+        + '<div class="uk-panel-title">' + evaluation.evaluator + '</div>'
+        + '<p>' + evaluation.text + '</p>'
+        + '</div>'
+        + '</div>');
 
     $evaluations.append($newEvaluation);
     $evaluation.push($newEvaluation);

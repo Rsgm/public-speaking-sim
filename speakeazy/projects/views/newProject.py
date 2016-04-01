@@ -17,8 +17,3 @@ class NewProject(LoginRequiredMixin, CreateView):
         audiences = Audience.objects.filter(group__in=group_list)
 
         return NewProjectForm(user, audiences, data=data, files=files)
-
-    def get(self, request, *args, **kwargs):
-        form = self.get_form()
-        context = self.get_context_data(form=form)
-        return self.render_to_response(context)

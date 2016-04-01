@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 
 from braces.views import LoginRequiredMixin
@@ -21,11 +21,10 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
     def get_redirect_url(self):
         return reverse_lazy("users:detail",
-                       kwargs={"username": self.request.user.username})
+                            kwargs={"username": self.request.user.username})
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
-
     fields = ['name', ]
 
     # we already imported User in the view code above, remember?
@@ -34,9 +33,9 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     # send the speakeazy back to their own page after a successful update
     def get_success_url(self):
         return reverse_lazy("users:detail",
-                       kwargs={"username": self.request.user.username})
+                            kwargs={"username": self.request.user.username})
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         # Only get the User projects for the speakeazy making the request
         return User.objects.get(username=self.request.user.username)
 

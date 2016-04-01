@@ -376,7 +376,7 @@ a {
   color: #0091EA;
   text-decoration: none; }
   a:hover, a:active, a:focus {
-    color: #212121;
+    color: rgba(0, 0, 0, 0.87);
     text-decoration: underline; }
 
 @font-face {
@@ -386,7 +386,7 @@ a {
  * Basic typography style for copy text
  */
 body {
-  color: #212121;
+  color: rgba(0, 0, 0, 0.87);
   font: normal 125% / 1.4;
   font-family: "Open Sans", "Arial", sans-serif; }
 
@@ -608,6 +608,12 @@ form.uk-form textarea {
 .project-info, .item-info {
   font-style: italic; }
 
+.s-video-button {
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  padding: 15px; }
+
 @media (max-width: 768px) {
   .s-video-overlay, .s-evaluation-list > * > i, .s-video-controls > * {
     display: none; } }
@@ -615,8 +621,9 @@ form.uk-form textarea {
 .s-video-overlay, .s-evaluation-list > * > i, .s-video-controls > * {
   background-color: #616161;
   position: absolute;
-  padding: 15px;
   color: #fff; }
+  .s-video-overlay.s-video-time, .s-evaluation-list > * > i.s-video-time, .s-video-controls > .s-video-time {
+    padding: 15px; }
   .s-video-overlay.s-active, .s-evaluation-list > * > i.s-active, .s-video-controls > .s-active {
     background: #ee731b; }
   .s-video-overlay:hover, .s-evaluation-list > * > i:hover, .s-video-controls > :hover, .s-video-overlay:active, .s-evaluation-list > * > i:active, .s-video-controls > :active, .s-video-overlay:focus, .s-evaluation-list > * > i:focus, .s-video-controls > :focus {
@@ -648,19 +655,22 @@ form.uk-form textarea {
     .s-evaluation-list > * .uk-panel .uk-panel-title {
       color: #eeeeee; }
 
-.s-request-evaluation {
-  cursor: pointer; }
-  .s-request-evaluation .uk-dropdown {
+.s-share-video {
+  cursor: pointer;
+  top: 30px;
+  right: 30px; }
+  .s-share-video .uk-dropdown {
     background-color: #616161; }
-    .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:hover, .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:active, .s-request-evaluation .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:focus {
-      background-color: #ee731b; }
+    .s-share-video .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a {
+      color: #ffffff; }
+      .s-share-video .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:hover, .s-share-video .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:active, .s-share-video .uk-dropdown li:not(.uk-nav-header):not(.uk-nav-divider) > a:focus {
+        background-color: #ee731b;
+        color: rgba(0, 0, 0, 0.87); }
 
 .s-video-controls {
   position: absolute;
   display: flex;
   align-content: space-between; }
-  .s-video-controls i {
-    cursor: pointer; }
   .s-video-controls > * {
     display: initial;
     position: static;
@@ -710,9 +720,6 @@ form.uk-form textarea {
           right: 6px;
           width: 0; }
 
-.s-play-pause {
-  cursor: pointer; }
-
 .s-recording-volume {
   display: flex;
   flex-direction: column;
@@ -733,6 +740,13 @@ form.uk-form textarea {
     position: absolute;
     bottom: 15px;
     height: 0; }
+
+.fullscreen-container video {
+  width: 100%;
+  height: 100%; }
+
+.uk-modal {
+  z-index: 2000; }
 
 noscript > * {
   background: #82ed82;

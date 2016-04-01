@@ -1,5 +1,7 @@
-.s-request-evaluation {
+.s-share-video {
   cursor: pointer;
+  top: $video-player-offset;
+  right: $video-player-offset;
 
   .uk-dropdown {
     background-color: $dark-grey;
@@ -8,8 +10,11 @@
     //overflow-y: scroll;
 
     li:not(.uk-nav-header):not(.uk-nav-divider) > a {
+      color: #ffffff;
+
       @include on-event {
         background-color: $video-control-active;
+        color: $text-color;
       }
     }
   }

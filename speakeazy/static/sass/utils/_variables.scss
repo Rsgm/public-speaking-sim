@@ -18,9 +18,21 @@ $code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',
 
 
 
-/// Copy text color
+/// Primary text color
 /// @type Color
-$text-color: #212121 !default;
+$text-color: rgba(0, 0, 0, .87) !default; // #212121
+
+/// Secondary text color
+/// @type Color
+$secondary-text: rgba(0, 0, 0, .54) !default;
+
+/// Icon text color
+/// @type Color
+$icon-text: rgba(0, 0, 0, .38) !default;
+
+/// Icon text color on dark background
+/// @type Color
+$dark-icon-text: rgba(255, 255, 255, .50) !default;
 
 /// Main brand color
 /// @type Color

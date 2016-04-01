@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from celery.canvas import group
 from speakeazy.projects.models import UserProject
 from speakeazy.recordings import models
-from speakeazy.recordings.models import Recording, UploadPiece
+from speakeazy.recordings.models import Recording, UploadPiece, RECORDING_FINISHED
 from speakeazy.recordings.tasks import convert_media, concatenate_media
 from braces.views import LoginRequiredMixin
 from django.conf import settings

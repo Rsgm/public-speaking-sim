@@ -1,6 +1,6 @@
 from braces.views import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
-from django.http.response import HttpResponse, Http404
+from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from speakeazy.groups.mixins import GroupPermissiondMixin
 from speakeazy.groups.permissions import VIEW_SUBMISSION, DELETE_SUBMISSION, \
@@ -9,7 +9,7 @@ from speakeazy.groups.models import Submission, SUBMISSION_READY
 from speakeazy.recordings.models import EvaluationType, Evaluation, Recording
 from speakeazy.util.views import PostView
 from vanilla.model_views import DetailView, ListView, DeleteView
-from vanilla.views import TemplateView, GenericView
+from vanilla.views import TemplateView
 
 
 class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):

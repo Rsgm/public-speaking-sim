@@ -1,7 +1,7 @@
 (function () {
   $('.comment-form button').click(function () {
     var text = $('.comment-form textarea').val();
-    $.post(Urls['recordings:recording:comments:create'](se.project, se.recording), {
+    $.post(Urls['recordings:recording:comments:create'](se.authorization.type, se.authorization.key), {
       text: text,
       csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
     }, function () {
