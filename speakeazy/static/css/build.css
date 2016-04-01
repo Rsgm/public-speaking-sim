@@ -962,6 +962,22 @@ noscript > * {
 #landing-page #process h2 {
   color: #fff; }
 
+.dashboard-welcome {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px; }
+  .dashboard-welcome h3 {
+    margin: 0; }
+  .dashboard-welcome a {
+    margin-left: 5px;
+    color: #0091EA; }
+
+.dashboard-section-header {
+  color: #828282; }
+
 #dashboard .projects-parent {
   border-right: 1px solid #ECECEC;
   margin-right: 25px;

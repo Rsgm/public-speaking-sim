@@ -2,8 +2,31 @@
 // This file contains styles that are specific to the dashboard page.
 // -----------------------------------------------------------------------------
 
-#dashboard {
 
+
+.dashboard-welcome {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+
+        h3 {
+            margin: 0;
+        }
+
+        a{
+            margin-left: 5px;
+            color:$secondary-brand-color
+        }
+  }
+
+  .dashboard-section-header {
+      color:#828282;
+  }
+
+#dashboard {
     .projects-parent {
         border-right: 1px solid #ECECEC;
         margin-right: 25px;
@@ -61,4 +84,5 @@
       background-color: $secondary-brand-color - $hover;
     }
   }
+
 }

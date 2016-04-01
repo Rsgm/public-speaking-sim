@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block content %}
-    <h3 class="uk-text-center">Welcome! Create a new project to start preparing for your next presentation.</h3>
+    <div class="dashboard-welcome">
+        <h3 class="dashboard-section-header">Welcome! Create a new project to start preparing for your next presentation.</h3><a href="javascript:void(Tawk_API.toggle())" target="_top">Need Help?</a>
+    </div>
     <div id="dashboard" class="uk-flex">
             <div class="projects-parent uk-width-7-10">
                 <div id="upcoming-projects" class="">
@@ -19,7 +21,7 @@
                     </div>
 
                     {% if project_recent_list %}
-                        <h3>Recently Created</h3>
+                        <h3 class="dashboard-section-header">Recently Created</h3>
 
                         <div class="uk-flex uk-grid">
                             {% for project in project_recent_list %}
@@ -63,7 +65,7 @@
 
 
             <div id="recent-recordings" class="uk-block">
-                <h3>Recent Recordings</h3>
+                <h3 class="dashboard-section-header">Recent Recordings</h3>
 
                 <div class="uk-flex uk-grid">
                     {% for recording in recording_list %}
