@@ -68,9 +68,10 @@
         {% endif %}
 
 
-        {% if 'list_user' in view.permissions %}
+        {% if 'add_user' in view.permissions %}
             <h2><a href={% url 'groups:group:user:list' group.slug %}></a>Users</h2>
-
+        {% endif %}
+        {% if 'list_user' in view.permissions %}
             <div class="uk-flex uk-grid">
                 {% for membership in user_list %}
                     <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
