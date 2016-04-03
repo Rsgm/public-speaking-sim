@@ -40,7 +40,7 @@
         {% endif %}
 
 
-        {% if 'list_invite' in view.permissions %}
+        {% if 'add_invite' in view.permissions or 'list_invite' in view.permissions %}
             <h2><a href={% url 'groups:group:invite:list' group.slug %}>Invites</a></h2>
 
             {% if 'add_invite' in view.permissions %}

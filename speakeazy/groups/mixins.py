@@ -20,8 +20,8 @@ class GroupPermissiondMixin(object):
         self.group = get_object_or_404(Group, slug=kwargs['group'])
         user = request.user
 
-        self.permissions = user.groupmembership_set.filter(group=self.group) \
-            .values_list('authorizations__permissions__name', flat=True)
+        self.permissions = set(user.groupmembership_set.filter(group=self.group) \
+                               .values_list('authorizations__permissions__name', flat=True))
 
         if self.group_permission:
             if not self.permissions:

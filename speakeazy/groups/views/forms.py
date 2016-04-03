@@ -1,35 +1,43 @@
 import floppyforms.__future__ as forms
 from django.utils import timezone
 from speakeazy.groups.models import GroupInvite, GroupMembership, Group, Authorization
+from django.utils.translation import ugettext_lazy as _
+
+ERROR_MESSAGE = _('Invite does not exist or is no longer usable.')
 
 
 class JoinForm(forms.Form):
-    group = forms.CharField(help_text='help text',label='label', label_suffix=' - label suffix:')
+    group = forms.CharField(help_text='help text', label='label', label_suffix=' - label suffix:')
     token = forms.CharField()
 
     invite = None
 
-    def is_valid(self):
-        group = self.data['group']
-        token = self.data['token']
+    def clean(self):
+        """
+        Validates the token and group
+
+        :return: validated data
+        """
+        group = self.cleaned_data['group']
+        token = self.cleaned_data['token']
 
         invite_queryset = GroupInvite.objects.filter(group__name=group, token=token)
 
         # make sure invite exists
         if invite_queryset.count() == 0:
-            return False
+            raise forms.ValidationError(ERROR_MESSAGE)
 
         self.invite = invite_queryset.get()
 
         # check expiration time
         if self.invite.expires and (timezone.now() > self.invite.expires):
-            return False
+            raise forms.ValidationError(ERROR_MESSAGE)
 
         # check uses left
         if self.invite.uses == 0:
-            return False
+            raise forms.ValidationError(ERROR_MESSAGE)
 
-        return True
+        return self.cleaned_data
 
 
 class NewGroupForm(forms.ModelForm):

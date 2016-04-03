@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from speakeazy.groups.views.groupDashboard import GroupDashboard
 from speakeazy.groups.views.groupList import GroupList
 from django.conf.urls import include, url
-from speakeazy.groups.views.joinGroup import JoinGroup
+from speakeazy.groups.views.joinGroup import JoinGroup, JoinGroupLink
 from speakeazy.groups.views.newGroup import NewGroup
 
 urlpatterns = [
@@ -29,6 +29,12 @@ urlpatterns = [
         regex=r'^join/$',
         view=JoinGroup.as_view(),
         name="joinGroup"
+    ),
+
+    url(
+        regex=r'^join/(?P<group>\w+)/(?P<token>\w+)/$',
+        view=JoinGroupLink.as_view(),
+        name="join_group_link"
     ),
 
     url(r'^g/(?P<group>[\w-]+)/', include("speakeazy.groups.views.group.urls", namespace="group")),

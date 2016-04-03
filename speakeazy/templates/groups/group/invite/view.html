@@ -3,38 +3,40 @@
 {% block title %} - Invite View{% endblock %}
 
 {% block breadcrumbs %}
-    {% include "groups/group/invite/breadcrumb.html" %}
-    <li><span>view</span></li>
-    <li><span>{{ invite.slug }}</span></li>
+  {% include "groups/group/invite/breadcrumb.html" %}
+  <li><span>view</span></li>
+  <li><span>{{ invite.slug }}</span></li>
 {% endblock %}
 
 {% block content %}
+  <div class="">
+
+    <h4 class="">{{ invite.name }}</h4>
+
     <div class="">
+      <p>{{ invite.description }}</p>
 
-        <h4 class="">{{ invite.name }}</h4>
+      <div>
+        Token: <a href="{% url 'groups:join_group_link' invite.group.name invite.token %}">{{ invite.token }}</a>
+      </div>
 
-        <div class="">
-            <p>{{ invite.description }}</p>
+      {% if invite.uses %}
+        <div>Uses left: {{ invite.uses }}</div>
+      {% endif %}
 
-            <div>Token: {{ invite.token }}</div>
+      {% if invite.uses %}
+        <div>Expires on: {{ invite.expires }}</div>
+      {% endif %}
 
-            {% if invite.uses %}
-                <div>Uses left: {{ invite.uses }}</div>
-            {% endif %}
+      <div class="uk-margin">
+        Authorizations:
 
-            {% if invite.uses %}
-                <div>Expires on: {{ invite.expires }}</div>
-            {% endif %}
-
-            <div class="uk-margin">
-                Authorizations:
-
-                <ul class="uk-list uk-list-line">
-                    {% for authorization in invite.authorizations.all %}
-                        <li>{{ authorization.name }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
+        <ul class="uk-list uk-list-line">
+          {% for authorization in invite.authorizations.all %}
+            <li>{{ authorization.name }}</li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
+  </div>
 {% endblock %}
