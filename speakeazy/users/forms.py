@@ -1,9 +1,24 @@
 # -*- coding: utf-8 -*-
 from speakeazy.groups.models import SignupMembership, GroupMembership
 from userena.forms import SignupForm
+from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 
 class SpeakeazySignupForm(SignupForm):
+    def clean_password1(self):
+        """
+        Check the password against common passwords
+
+        :return: the validated password
+        """
+        with open('resources/yahoo-voices.txt', 'r') as file:
+            for password in file:
+                if self.cleaned_data['password1'] == password[:-1]:
+                    raise forms.ValidationError(_('This password is too common.'))
+
+        return self.cleaned_data['password1']
+
     def save(self):
         new_user = super(SpeakeazySignupForm, self).save()
 
