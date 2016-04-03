@@ -12,6 +12,7 @@ urlpatterns = [
                   url(r'^$', TemplateView.as_view(template_name='speakeazy/landing.html'), name="home"),
 
                   # Django Admin, use {% url 'admin:index' %}
+                  url(settings.ADMIN_URL + 'docs/', include('django.contrib.admindocs.urls')),
                   url(settings.ADMIN_URL, include(admin.site.urls)),
                   url(r'^hijack/', include('hijack.urls')),
 
