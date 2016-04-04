@@ -13,13 +13,14 @@ from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from ratelimit.decorators import ratelimit
 from vanilla.views import TemplateView
+from django.contrib import messages
+from django.utils.translation import ugettext_lazy as _
 
 START = 'start'
 UPLOAD = 'upload'
 FINISH = 'finish'
 
 
-# @ratelimit(key='ip', rate='120/m', block=True)
 class Record(LoginRequiredMixin, TemplateView):
     template_name = 'recordings/record.html'
 
@@ -51,6 +52,7 @@ class Record(LoginRequiredMixin, TemplateView):
 
         return JsonResponse({'id': recording.slug})
 
+    @ratelimit(key='user', rate='1/2s', block=True)
     def upload(self, project_slug, recording_slug, request):
         # todo: test for bad requests, is it even needed?
         # find recording
@@ -92,4 +94,5 @@ class Record(LoginRequiredMixin, TemplateView):
         # run concat task
         concatenate_media.delay(recording.id, piece_list)
 
+        messages.info(request, _('Your recording is processing, check back in a few seconds.'), fail_silently=True)
         return HttpResponse(recording.project.get_absolute_url())
