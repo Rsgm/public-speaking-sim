@@ -18,17 +18,16 @@
                 <div class="s-video-controller-background"></div>
 
                 {% if authorization.evaluations %}
-                    <div class="s-share-video s-video-overlay" data-uk-dropdown="{mode:'click', pos:'bottom-right'}">
+                    <div class="s-share-video s-video-overlay" data-uk-dropdown="{mode:'click', pos:'bottom-right'}"
+                        data-uk-tooltip title="Share this recording">
                         <i class="uk-icon-share-alt s-video-button uk-icon-hover"></i>
 
                         <div class="uk-dropdown uk-dropdown-scrollable">
                             <ul class="uk-nav uk-nav-dropdown ">
-{#                                <li class="uk-nav-header">Share</li>#}
-{#                                <li class="uk-nav-divider"></li>#}
-                                <li><a class="" data-uk-modal="{target:'#share-user-modal'}">Share With User</a></li>
+{#                                <li><a class="" data-uk-modal="{target:'#share-user-modal'}">Share With User</a></li>#}
 {#                                <li><a class="" data-uk-modal="{target:'#share-link-modal'}">Share With Link</a></li>#}
                                 <li class="uk-nav-divider"></li>
-                                <li><a class="" data-uk-modal="{target:'#share-submission-modal'}">Group Submission</a></li>
+                                <li><a class="" data-uk-modal="{target:'#share-submission-modal'}">Request Evaluation</a></li>
                             </ul>
                         </div>
                     </div>
@@ -116,7 +115,10 @@
             <a class="uk-modal-close uk-close"></a>
             <div class="uk-form">
                 {% form share_user_form %}
-                <button class="uk-button uk-button-primary">Submit</button>
+
+                <div class="uk-form-row">
+                    <button class="uk-button uk-button-primary">Share</button>
+                </div>
             </div>
         </div>
     </div>
@@ -126,23 +128,11 @@
         <div class="uk-modal-dialog">
             <a class="uk-modal-close uk-close"></a>
             <div class="uk-form">
-{#                {% if group_list %}#}
-{#                    <div class="s-request-evaluation s-video-overlay"#}
-{#                         data-uk-dropdown="{mode:'click', pos:'bottom-right'}">#}
-{#                        <i class="uk-icon-send uk-icon-hover"></i>#}
-{##}
-{#                        <div class="uk-dropdown uk-dropdown-scrollable">#}
-{#                            <ul class="uk-nav uk-nav-dropdown ">#}
-{#                                <li class="uk-nav-header">Request Evaluation</li>#}
-{#                                <li class="uk-nav-divider"></li>#}
-{##}
-{#                                {% for group in group_list %}#}
-{#                                    <li><a class="s-group-submit" data-group="{{ group.slug }}">{{ group.name }}</a></li>#}
-{#                                {% endfor %}#}
-{#                            </ul>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                {% endif %}#}
+                {% form share_submission_form %}
+
+                <div class="uk-form-row">
+                    <button class="uk-button uk-button-primary">Share</button>
+                </div>
             </div>
         </div>
     </div>
