@@ -7,8 +7,8 @@ ERROR_MESSAGE = _('Invite does not exist or is no longer usable.')
 
 
 class JoinForm(forms.Form):
-    group = forms.CharField(help_text='help text', label='label', label_suffix=' - label suffix:')
-    token = forms.CharField()
+    group = forms.CharField(help_text='', label='Group Name', label_suffix=' (Case Sensitive):')
+    token = forms.CharField(help_text='', label='Token', label_suffix=' - (i.e. kfghiw)')
 
     invite = None
 

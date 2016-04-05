@@ -507,7 +507,7 @@ h1, h2, h3, h4, h5, h6 {
     top: 30px;
     background-color: #0091EA; }
   .s-recording-player .s-video-button {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.23), 0 10px 40px rgba(0, 0, 0, 0.19);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.23), 0 3px 12px rgba(0, 0, 0, 0.16);
     border-radius: 3px; }
   .s-recording-player .s-recording-volume {
     position: absolute;
@@ -618,7 +618,6 @@ form.uk-form textarea {
 
 .s-video-button {
   cursor: pointer;
-  width: 100%;
   text-align: center;
   padding: 15px; }
 
@@ -760,24 +759,34 @@ form.uk-form textarea {
     bottom: 15px;
     height: 0; }
 
-.auth-form {
+.s-form {
   width: 300px;
   margin: 0 auto; }
+  .s-form input {
+    padding: .5em .6em;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 3px #ddd;
+    border-radius: 4px;
+    vertical-align: middle;
+    width: 300px; }
+    .s-form input:focus {
+      outline: 0;
+      border-color: #129FEA; }
 
-.auth-form-field {
+.s-form-field {
   margin: 0; }
-  .auth-form-field input {
+  .s-form-field input {
     padding: .5em .6em;
     border: 1px solid #ccc;
     box-shadow: inset 0 1px 3px #ddd;
     border-radius: 4px;
     vertical-align: middle;
     width: 280px; }
-    .auth-form-field input:focus {
+    .s-form-field input:focus {
       outline: 0;
       border-color: #129FEA; }
 
-.form-submit {
+.s-form-submit {
   box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
   background-color: #0091EA;
   width: 300px;
@@ -785,7 +794,7 @@ form.uk-form textarea {
   border: none;
   color: #fff;
   margin-top: 6px; }
-  .form-submit:hover, .form-submit:active, .form-submit:focus {
+  .s-form-submit:hover, .s-form-submit:active, .s-form-submit:focus {
     text-decoration: none;
     background-color: #0077d0; }
 

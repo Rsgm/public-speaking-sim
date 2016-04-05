@@ -4,9 +4,9 @@
 {% block title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
-<form class="auth-form" action="" method="post">
+<form class="s-form" action="" method="post">
   {% csrf_token %}
-  <fieldset class="auth-form-field">
+  <fieldset class="s-form-field">
     <legend>{% trans "Sign Up" %}</legend>
     {{ form.non_field_errors }}
     {% for field in form %}
@@ -14,7 +14,7 @@
     {% comment %} Displaying checkboxes differently {% endcomment %}
     {% if field.name == 'tos' %}
     <p class="checkbox">
-    <label class="auth-form-label form-label" for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
+    <label class="s-form-label form-label" for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
     </p>
     {% else %}
     <p>
@@ -24,6 +24,6 @@
     {% endif %}
     {% endfor %}
   </fieldset>
-  <input class="form-submit" type="submit" value="{% trans "Sign Up"%}" />
+  <input class="s-form-submit" type="submit" value="{% trans "Sign Up"%}" />
 </form>
 {% endblock %}

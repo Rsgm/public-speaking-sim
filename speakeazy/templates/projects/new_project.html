@@ -8,16 +8,16 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Create Project</h2>
+    <h2 class="uk-text-center">Create Project</h2>
 
-    <form class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
+    <form class="s-form uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
           action="{% url 'projects:newProject' %}">
         {% csrf_token %}
 
         {% form form %}
 
         <div class="uk-form-row">
-            <button type="submit" class="uk-button">Add</button>
+            <button type="submit" class="s-form-submit uk-button">Create Project</button>
         </div>
     </form>
 {% endblock %}
