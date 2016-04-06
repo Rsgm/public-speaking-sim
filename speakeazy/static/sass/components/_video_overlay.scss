@@ -9,7 +9,7 @@
   //opacity: 0.7;
   position: absolute;
   color: $video-overlay-color;
-  border-radius: 4px;
+  border-radius: 2px;
   @include card(1);
 
   &.s-video-time {

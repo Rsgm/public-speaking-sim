@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+from speakeazy.groups.models import Group
 
-from django.shortcuts import get_object_or_404
 from speakeazy.recordings.mixins import RecordingAuthorizationMixin, OWNER
 from speakeazy.recordings.models import EvaluationType, Recording
-from speakeazy.recordings.views.recording.share.forms import ShareUserForm
+from speakeazy.recordings.views.recording.share.forms import ShareUserForm, ShareSubmissionForm
 from vanilla.views import TemplateView
 
 
@@ -12,6 +12,8 @@ class View(RecordingAuthorizationMixin, TemplateView):
     template_name = 'recordings/recording/recording_view.html'
 
     def get_context_data(self, **kwargs):
+        user = self.request.user
+
         # kwargs['view'] = self
 
         kwargs['recording'] = self.recording
@@ -22,6 +24,7 @@ class View(RecordingAuthorizationMixin, TemplateView):
         kwargs['comment_list'] = self.recording.comment_set.all()
 
         if self.authorization['type'] == OWNER:
-            kwargs['share_user_form'] = ShareUserForm(initial={'user': self.request.user, 'recording': self.recording})
+            kwargs['share_user_form'] = ShareUserForm(initial={'recording': self.recording})
+            kwargs['share_submission_form'] = ShareSubmissionForm(user, initial={'recording': self.recording})
 
         return kwargs

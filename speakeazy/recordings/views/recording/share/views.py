@@ -1,20 +1,27 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
+from django.http.response import HttpResponse
+from django.shortcuts import get_object_or_404
+from speakeazy.groups.mixins import GroupPermissiondMixin
+from speakeazy.groups.models import Group
+from speakeazy.groups.permissions import REQUEST_SUBMISSION
 from speakeazy.recordings.mixins import RecordingAuthorizationMixin, OWNER
 from speakeazy.recordings.models import SharedUser
 
-from speakeazy.recordings.views.recording.share.forms import ShareUserForm
+from speakeazy.recordings.views.recording.share.forms import ShareUserForm, ShareSubmissionForm
+from speakeazy.util.views import PostView
 from vanilla.model_views import CreateView
 from vanilla.views import TemplateView
+from django.utils.translation import ugettext_lazy as _
 
 
-class CreateSubmission(RecordingAuthorizationMixin, CreateView):
+class ListShared(RecordingAuthorizationMixin, TemplateView):
     pass
 
 
-class CreateSharedUser(RecordingAuthorizationMixin, CreateView):
-    template_name = 'recordings/recording/share/create_shared_user.html'
+class CreateSharedUser(RecordingAuthorizationMixin, PostView):
     allowed = [OWNER]
 
     def get_form(self, data=None, files=None, **kwargs):
@@ -22,13 +29,31 @@ class CreateSharedUser(RecordingAuthorizationMixin, CreateView):
 
         return ShareUserForm(initial={'user': user, 'recording': self.recording}, data=data, files=files)
 
-    def get_success_url(self):
-        return reverse_lazy('recordings:recording:share:list_shared', 'owner', self.object.recording.pk)
 
-
-class CreateSharedLink(RecordingAuthorizationMixin, CreateView):
+class CreateSharedLink(RecordingAuthorizationMixin, PostView):
     pass
 
 
-class ListShared(RecordingAuthorizationMixin, TemplateView):
-    pass
+class CreateGroupSubmission(RecordingAuthorizationMixin, PostView):
+    allowed = [OWNER]
+    group_permission = REQUEST_SUBMISSION
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        group = get_object_or_404(Group, pk=request.POST['group'])
+        permissions = set(user.groupmembership_set.filter(group=group) \
+                          .values_list('authorizations__permissions__name', flat=True))
+
+        if self.group_permission not in permissions:
+            raise PermissionDenied()
+
+        form = ShareSubmissionForm(request.user,
+                                   initial={'recording': self.recording},
+                                   data=request.POST,
+                                   files=request.FILES)
+
+        if not form.is_valid():
+            return HttpResponse(form.errors.items)
+
+        self.object = form.save()
+        return HttpResponse(_('Group Evaluation requested.'))

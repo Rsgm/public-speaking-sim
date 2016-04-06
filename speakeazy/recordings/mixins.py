@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
-from speakeazy.groups.models import Submission, SUBMISSION_IN_PROGRESS, SUBMISSION_READY
+from speakeazy.groups.models import Submission
 from speakeazy.groups.permissions import EVALUATE_SUBMISSION
 from speakeazy.recordings.models import SharedUser, Recording, SharedLink
 from django.utils import timezone
@@ -64,15 +64,14 @@ class RecordingAuthorizationMixin(object):
     @method_decorator(login_required)
     def grader(self, request, *args, **kwargs):
         queryset = Submission.objects.filter(pk=kwargs['key']) \
-            .select_related('group', 'recording', 'group_visibility')
+            .select_related('group', 'recording')
 
         submission = get_object_or_404(queryset)
 
-        # check submission state, todo: clean this up a  bit
-        if submission.state == SUBMISSION_IN_PROGRESS and submission.grader == request.user:
+        # check submission availability
+        if submission.grader == request.user and not submission.finished:
             pass
-        elif submission.state == SUBMISSION_READY:
-            submission.state = SUBMISSION_IN_PROGRESS
+        elif submission.grader is None:
             submission.grader = request.user
             submission.save()
         else:

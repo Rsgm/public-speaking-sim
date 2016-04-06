@@ -17,7 +17,7 @@
             <div class="s-video-controller uk-contrast uk-animation-reverse uk-animation-fade">
                 <div class="s-video-controller-background"></div>
 
-                {% if authorization.evaluations %}
+                {% if authorization.type == 'owner' %}
                     <div class="s-share-video s-video-overlay" data-uk-dropdown="{mode:'click', pos:'bottom-right'}"
                         data-uk-tooltip title="Share this recording">
                         <i class="uk-icon-share-alt s-video-button uk-icon-hover"></i>
@@ -26,7 +26,7 @@
                             <ul class="uk-nav uk-nav-dropdown ">
 {#                                <li><a class="" data-uk-modal="{target:'#share-user-modal'}">Share With User</a></li>#}
 {#                                <li><a class="" data-uk-modal="{target:'#share-link-modal'}">Share With Link</a></li>#}
-                                <li class="uk-nav-divider"></li>
+{#                                <li class="uk-nav-divider"></li>#}
                                 <li><a class="" data-uk-modal="{target:'#share-submission-modal'}">Request Evaluation</a></li>
                             </ul>
                         </div>
@@ -36,7 +36,8 @@
                 {% if authorization.evaluations %}
                     <div class="s-evaluation-list uk-flex uk-flex-column">
                         <div class="s-evaluation s-evaluation-add" data-uk-dropdown="{mode:'click', pos:'right-top'}">
-                            <i class="s-video-button uk-icon-plus uk-icon-hover"></i>
+                            <i class="s-video-button uk-icon-plus uk-icon-hover"
+                               data-uk-tooltip title="Evaluate this recording"></i>
 
                             <div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">
                                 <div class="uk-panel-title">Evaluate</div>
@@ -127,6 +128,7 @@
     <div id="share-submission-modal" class="uk-modal">
         <div class="uk-modal-dialog">
             <a class="uk-modal-close uk-close"></a>
+            <h2>Request Group Evaluation</h2>
             <div class="uk-form">
                 {% form share_submission_form %}
 

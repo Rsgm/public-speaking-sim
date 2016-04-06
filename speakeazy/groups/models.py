@@ -7,17 +7,17 @@ from django.db import models
 from django.db.models.base import Model
 from django.utils.translation import ugettext_lazy as _
 from speakeazy.groups.permissions import PERMISSIONS
-from speakeazy.recordings.models import Recording
 from speakeazy.users.models import User
 
-SUBMISSION_READY = 'r'
-SUBMISSION_IN_PROGRESS = 'i'
-SUBMISSION_FINISHED = 'f'
-SUBMISSION_STATE_CHOICES = [
-    (SUBMISSION_READY, 'ready'),
-    (SUBMISSION_IN_PROGRESS, 'in progress'),
-    (SUBMISSION_FINISHED, 'finished')
-]
+
+# SUBMISSION_READY = 'r'
+# SUBMISSION_IN_PROGRESS = 'i'
+# SUBMISSION_FINISHED = 'f'
+# SUBMISSION_STATE_CHOICES = [
+#     (SUBMISSION_READY, 'ready'),
+#     (SUBMISSION_IN_PROGRESS, 'in progress'),
+#     (SUBMISSION_FINISHED, 'finished')
+# ]
 
 
 class Group(Model):
@@ -85,12 +85,15 @@ class Audience(Model):
 
 class Submission(Model):
     group = models.ForeignKey('Group')
-    recording = models.ForeignKey(Recording)
+    recording = models.ForeignKey('recordings.Recording')
+    grader = models.ForeignKey('users.User', null=True, blank=True)
+
+    finished = models.BooleanField(default=False)
 
     # group_visibility = models.ForeignKey('Authorization', null=True, blank=True)  # does nothing currently
 
     # does nothing currently
-    state = models.CharField(max_length=1, choices=SUBMISSION_STATE_CHOICES, default=SUBMISSION_READY)
+    # state = models.CharField(max_length=1, choices=SUBMISSION_STATE_CHOICES, default=SUBMISSION_READY)
 
     created_time = models.DateTimeField(auto_now_add=True)
     # slug = AutoSlugField(populate_from='recording__project__name', unique_with='group')

@@ -52,7 +52,7 @@ class Record(LoginRequiredMixin, TemplateView):
 
         return JsonResponse({'id': recording.slug})
 
-    @ratelimit(key='user', rate='1/2s', block=True)
+    # @ratelimit(key='user', rate='2/4s', block=True)
     def upload(self, project_slug, recording_slug, request):
         # todo: test for bad requests, is it even needed?
         # find recording

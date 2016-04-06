@@ -32,7 +32,7 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^join/(?P<group>\w+)/(?P<token>\w+)/$',
+        regex=r'^join/(?P<group>.+)/(?P<token>\w+)/$',
         view=JoinGroupLink.as_view(),
         name="join_group_link"
     ),

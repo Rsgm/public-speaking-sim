@@ -28,7 +28,7 @@
   // sharing
   var $share = $('#share-with');
   var $userSubmit = $('#share-user-modal button');
-  //var $submissionSubmit = $('#share-with .submission');
+  var $submissionSubmit = $('#share-submission-modal button');
 
 
   // normal variables
@@ -157,28 +157,28 @@
     });
   });
 
-  $submission.click(function () {
+  //$userSubmit.click(function () {
+  //  var $form = $(this).parent();
+  //
+  //  var data = {
+  //    project: $form.find('').val,
+  //    recording: se.recording,
+  //    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+  //  };
+  //
+  //  $.post(Urls['recordings:recording:share:user']($(this).attr('data-group')), data, function () {
+  //    // todo: success notification
+  //  });
+  //});
+
+
+  $submissionSubmit.click(function () {
     var data = {
-      project: se.project,
-      recording: se.recording,
+      group: $('#share-submission-modal select[name=group] option:selected').val(),
       csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
     };
 
-    $.post(Urls['groups:group:submissions:request']($(this).attr('data-group')), data, function () {
-      // todo: success notification
-    });
-  });
-
-  $userSubmit.click(function () {
-    var $form = $(this).parent();
-
-    var data = {
-      project: $form.find('').val,
-      recording: se.recording,
-      csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-    };
-
-    $.post(Urls['groups:group:submissions:request']($(this).attr('data-group')), data, function () {
+    $.post(Urls['recordings:recording:share:submission'](se.authorization.type, se.authorization.key), data, function () {
       // todo: success notification
     });
   });

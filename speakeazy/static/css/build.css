@@ -629,7 +629,7 @@ form.uk-form textarea {
   background-color: #0091EA;
   position: absolute;
   color: #fff;
-  border-radius: 4px;
+  border-radius: 2px;
   box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
   .s-video-overlay.s-video-time, .s-evaluation-list > * > i.s-video-time, .s-video-controls > .s-video-time {
     padding: 15px; }

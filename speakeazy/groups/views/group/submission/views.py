@@ -2,12 +2,12 @@ from braces.views import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.views.generic.base import RedirectView
 from speakeazy.groups.mixins import GroupPermissiondMixin
 from speakeazy.groups.permissions import VIEW_SUBMISSION, DELETE_SUBMISSION, \
     EVALUATE_SUBMISSION, LIST_SUBMISSION
-from speakeazy.groups.models import Submission, SUBMISSION_READY
-from speakeazy.recordings.models import EvaluationType, Evaluation, Recording
-from speakeazy.util.views import PostView
+from speakeazy.groups.models import Submission
+from speakeazy.recordings.models import EvaluationType, Evaluation
 from vanilla.model_views import DetailView, ListView, DeleteView
 from vanilla.views import TemplateView
 
@@ -84,6 +84,13 @@ class Delete(LoginRequiredMixin, GroupPermissiondMixin, DeleteView):
         return reverse_lazy('groups:group:submission:list', kwargs={'group': self.group.slug})
 
 
+class GraderRedirectView(RedirectView):
+    permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse_lazy('recordings:recording:view', kwargs={'type': 'grader', 'key': kwargs['key']})
+
+
 class Evaluate(LoginRequiredMixin, GroupPermissiondMixin, TemplateView):
     template_name = 'groups/group/evaluation/evaluate_view.html'
     group_permission = EVALUATE_SUBMISSION
@@ -95,11 +102,7 @@ class Evaluate(LoginRequiredMixin, GroupPermissiondMixin, TemplateView):
         kwargs['group'] = self.group
 
         # todo: allow viewing submissions that are not started xor started by the current user
-        kwargs['submission'] = get_object_or_404(Submission,
-                                                 group=self.group,
-                                                 pk=submission,
-                                                 for_evaluation=True,
-                                                 state=SUBMISSION_READY)
+        kwargs['submission'] = get_object_or_404(Submission, group=self.group, pk=submission)
         kwargs['evaluation_type_list'] = EvaluationType.objects.all()
 
         return kwargs
@@ -124,20 +127,5 @@ class Evaluate(LoginRequiredMixin, GroupPermissiondMixin, TemplateView):
                                 text=text,
                                 seconds=seconds)
         evaluation.save()
-
-        return HttpResponse()
-
-
-class Request(LoginRequiredMixin, GroupPermissiondMixin, PostView):
-    group_permission = EVALUATE_SUBMISSION
-
-    def post(self, request, *args, **kwargs):
-        post = request.POST
-
-        submission = Submission()
-        submission.group = self.group
-        submission.recording = get_object_or_404(Recording, project=post['project'], slug=post['recording'])
-        submission.for_evaluation = True
-        submission.save()
 
         return HttpResponse()

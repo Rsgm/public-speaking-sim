@@ -2,6 +2,7 @@ from django.core.exceptions import PermissionDenied
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404
 from speakeazy.groups.models import Group
+from django.utils.translation import ugettext_lazy as _
 
 
 class GroupPermissiondMixin(object):
@@ -25,7 +26,7 @@ class GroupPermissiondMixin(object):
 
         if self.group_permission:
             if not self.permissions:
-                raise Http404('Group not found')
+                raise Http404(_('Group not found'))
 
             if self.group_permission not in self.permissions:
                 raise PermissionDenied()
