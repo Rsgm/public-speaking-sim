@@ -112,8 +112,7 @@ module.exports = function (grunt) {
                 bg: true
             },
             collectUrls: {
-                cmd: 'rm ./staticfiles/django_js_reverse/js/reverse.js ;' +
-                'python <%= paths.manageScript %> collectstatic_js_reverse'
+                cmd: 'python <%= paths.manageScript %> collectstatic_js_reverse'
             },
             runDjango: {
                 cmd: 'python <%= paths.manageScript %> runserver'

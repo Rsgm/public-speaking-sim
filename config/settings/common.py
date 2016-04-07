@@ -230,7 +230,7 @@ USERENA_DEFAULT_PRIVACY = 'closed'
 USERENA_DISABLE_PROFILE_LIST = True
 USERENA_HIDE_EMAIL = True
 USERENA_HTML_EMAIL = True
-USERENA_REDIRECT_ON_SIGNOUT='userena_signin'
+USERENA_REDIRECT_ON_SIGNOUT = 'userena_signin'
 
 LOGIN_REDIRECT_URL = 'projects:home'
 LOGIN_URL = 'userena_signin'
@@ -280,3 +280,6 @@ COMPRESS_OFFLINE = True
 
 GEOIP_DATABASE = str(ROOT_DIR.path('resources/GeoLiteCity.dat'))
 GEOIPV6_DATABASE = str(ROOT_DIR.path('resources/GeoLiteCityv6.dat'))
+
+JS_REVERSE_INCLUDE_ONLY_NAMESPACES = ['recordings', 'projects', 'groups']
+JS_REVERSE_OUTPUT_PATH = str(APPS_DIR.path('static/js'))

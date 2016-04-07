@@ -95,7 +95,6 @@ MEDIA_URL = 'https://s3.amazonaws.com/%s/%s' % (AWS_STORAGE_BUCKET_NAME, MEDIA_R
 # Static Assets
 # ------------------------
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # STATIC_HOST = env('DJANGO_STATIC_HOST')
 STATIC_URL = '/static/'  # STATIC_HOST + '/static/'
 
