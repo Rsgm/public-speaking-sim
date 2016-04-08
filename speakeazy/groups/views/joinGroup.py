@@ -19,7 +19,7 @@ class JoinGroup(LoginRequiredMixin, FormView):
     template_name = 'groups/join_group.html'
     form_class = JoinForm
 
-    @ratelimit(key='user', rate='10/10s', block=True)
+    # @ratelimit(key='user', rate='10/10s', block=True)
     def post(self, request, *args, **kwargs):
         form = self.get_form(data=request.POST, files=request.FILES)
         if form.is_valid():
@@ -37,7 +37,7 @@ class JoinGroupLink(LoginRequiredMixin, GenericView):
     template_name = 'groups/join_group.html'
     form_class = JoinForm
 
-    @ratelimit(key='user', rate='5/10s', block=True)
+    # @ratelimit(key='user', rate='5/10s', block=True)
     def get(self, request, *args, **kwargs):
         form = JoinForm(data=kwargs)
 
