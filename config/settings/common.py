@@ -62,14 +62,14 @@ LOCAL_APPS = (
     'speakeazy.speakeazy',
 )
 
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PUPUT_APPS + LOCAL_APPS
+
 # apps that need to be added last
-LAST_APPS = (
-    # 'hijack',  # http://django-hijack.readthedocs.org/en/latest/
+INSTALLED_APPS += (
+    'hijack',  # http://django-hijack.readthedocs.org/en/latest/
     'compat',
 )
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PUPUT_APPS + LOCAL_APPS + LAST_APPS
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -232,7 +232,7 @@ USERENA_HIDE_EMAIL = True
 USERENA_HTML_EMAIL = True
 USERENA_REDIRECT_ON_SIGNOUT = 'userena_signin'
 
-LOGIN_REDIRECT_URL = 'projects:home'
+LOGIN_REDIRECT_URL = 'speakeazy:dashboard'
 LOGIN_URL = 'userena_signin'
 LOGOUT_URL = 'userena_signout'
 
@@ -253,11 +253,10 @@ ADMIN_URL = r'^admin/'
 
 PASSWORD_HASHERS = (
     'speakeazy.users.bcryptHasher.Bcrypt',
-    # 'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 )
 
 # HIJACK_USE_BOOTSTRAP = False
-# HIJACK_LOGIN_REDIRECT_URL = '/home/'
+# HIJACK_LOGIN_REDIRECT_URL = 'projects:dashboard'
 
 try:
     RECORDING_ROOT_PATH = environ.Path(env("RECORDING_ROOT_PATH"))
