@@ -74,7 +74,8 @@ class Audience(Model):
     name = models.CharField(_("Name of audience"), max_length=60)
     description = models.TextField(_("Description of audience"), null=True, blank=True)
 
-    file = models.FileField(upload_to='audience')  # ensure file name uniqueness
+    file_webm = models.FileField(upload_to='audience', null=True, blank=True)  # ensure file name uniqueness
+    file_mp4 = models.FileField(upload_to='audience', null=True, blank=True)  # ensure file name uniqueness
     group = models.ForeignKey('Group')
 
     slug = AutoSlugField(populate_from='name', unique_with='group', unique=True)

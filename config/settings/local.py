@@ -76,10 +76,3 @@ DATABASES = {
 }
 
 BCRYPT_ROUNDS = 12
-
-# AWS ACCESS KEYS
-# ------------------------------------------------------------------------------
-# AWS_ACCESS_KEY_ID = 'AKIAJFNNATWZJMLVRIHA'
-# AWS_SECRET_ACCESS_KEY = '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'
-# AWS_BUCKET_NAME = 'speakeazy-dev'
-# AWS_STORAGE_BUCKET_NAME = AWS_BUCKET_NAME

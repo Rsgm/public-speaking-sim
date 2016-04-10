@@ -236,6 +236,8 @@ LOGIN_REDIRECT_URL = 'speakeazy:dashboard'
 LOGIN_URL = 'userena_signin'
 LOGOUT_URL = 'userena_signout'
 
+HIJACK_DISPLAY_ADMIN_BUTTON = False
+
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
@@ -255,9 +257,6 @@ PASSWORD_HASHERS = (
     'speakeazy.users.bcryptHasher.Bcrypt',
 )
 
-# HIJACK_USE_BOOTSTRAP = False
-# HIJACK_LOGIN_REDIRECT_URL = 'projects:dashboard'
-
 try:
     RECORDING_ROOT_PATH = environ.Path(env("RECORDING_ROOT_PATH"))
 except ImproperlyConfigured:
@@ -269,7 +268,8 @@ RECORDING_PATHS = {
     'CONVERTED_PIECES': RECORDING_ROOT_PATH.path('converted_pieces'),
     'LISTS': RECORDING_ROOT_PATH.path('lists'),
     'THUMBNAILS': RECORDING_ROOT_PATH.path('thumbnails'),
-    'FINISHED': RECORDING_ROOT_PATH.path('finished')
+    'FINISHED': RECORDING_ROOT_PATH.path('finished'),
+    'AUDIENCE': RECORDING_ROOT_PATH.path('audience')
 }
 
 WAGTAIL_SITE_NAME = 'Speakeazy blog'

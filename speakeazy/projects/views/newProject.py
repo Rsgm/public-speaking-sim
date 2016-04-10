@@ -14,6 +14,6 @@ class NewProject(LoginRequiredMixin, CreateView):
         user = self.request.user
 
         group_list = user.group_set.values_list('id', flat=True)
-        audiences = Audience.objects.filter(group__in=group_list)
+        audiences = Audience.objects.filter(group__in=group_list, file_webm__isnull=False)
 
         return NewProjectForm(user, audiences, data=data, files=files)
