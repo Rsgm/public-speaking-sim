@@ -98,8 +98,8 @@ def concatenate_media(recording_id, piece_list):
         for i in piece_list:
             print('file \'%s/%s.webm\'' % (settings.RECORDING_PATHS['CONVERTED_PIECES'], i), file=list_file)
 
-    # concat pieces
-    command = 'ffmpeg -v %s -f concat -i %s -c copy %s' % (LOG_LEVEL, list_path, finished_path)
+    # concat pieces, safe 0 since all paths are absolute, I don't trust relative paths to work
+    command = 'ffmpeg -v %s -f concat -safe 0 -i %s -c copy %s' % (LOG_LEVEL, list_path, finished_path)
     print(command)
     subprocess.call(command.split())
 
