@@ -37,7 +37,7 @@
             <div class="s-recording-player">
                 <video  id="audience-video" class="uk-responsive-width" loop preload>
                     <source src="{{ project.audience.file_webm.url }}" type="video/webm">
-                    <source src="{{ project.audience.file_mp4.url }}" type="video/mp4">
+                    {% if project.audience.file_mp4 %}<source src="{{ project.audience.file_mp4.url }}" type="video/mp4">{% endif %}
                 </video>
                 <div></div>
 
