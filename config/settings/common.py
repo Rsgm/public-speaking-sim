@@ -67,7 +67,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PUPUT_APPS + LOCAL_APPS
 
 # apps that need to be added last
 INSTALLED_APPS += (
-    'hijack',  # http://django-hijack.readthedocs.org/en/latest/
+    # 'hijack',  # http://django-hijack.readthedocs.org/en/latest/
     'compat',
 )
 
@@ -235,8 +235,6 @@ USERENA_REDIRECT_ON_SIGNOUT = 'userena_signin'
 LOGIN_REDIRECT_URL = 'speakeazy:dashboard'
 LOGIN_URL = 'userena_signin'
 LOGOUT_URL = 'userena_signout'
-
-HIJACK_DISPLAY_ADMIN_BUTTON = False
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
