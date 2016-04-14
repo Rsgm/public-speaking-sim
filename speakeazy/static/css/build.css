@@ -808,7 +808,27 @@ form.uk-form textarea {
 .uk-modal {
   z-index: 2000; }
 
-noscript > * {
+.uk-notify-message-debug {
+  background: #90a4ae;
+  color: rgba(0, 0, 0, 0.87); }
+
+.uk-notify-message-info {
+  background: #64b5f6;
+  color: rgba(0, 0, 0, 0.87); }
+
+.uk-notify-message-success {
+  background: #8bc34a;
+  color: rgba(0, 0, 0, 0.87); }
+
+.uk-notify-message-warning {
+  background: #ffb74d;
+  color: rgba(0, 0, 0, 0.87); }
+
+.uk-notify-message-error {
+  background: #e57373;
+  color: rgba(0, 0, 0, 0.87); }
+
+#noscript > * {
   background: #82ed82;
   color: rgba(0, 0, 0, 0.54);
   font-weight: bold;

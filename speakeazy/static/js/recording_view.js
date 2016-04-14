@@ -179,7 +179,8 @@
     };
 
     $.post(Urls['recordings:recording:share:submission'](se.authorization.type, se.authorization.key), data, function () {
-      // todo: success notification
+      UIkit.notify("Group evaluation request submitted.", {status: 'success'});
+      UIkit.modal("#share-submission-modal").hide();
     });
   });
 

@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/autocomplete.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/datepicker.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/components/progress.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/css/components/notify.min.css">
 
     <!-- Your stuff: Third-party css libraries go here -->
 
@@ -37,7 +38,9 @@
 {% hijack_notification %}
 
 <noscript>
-  <div id="noscript">Speakeazy works best with JavaScript enabled</div>
+  <div id="noscript">
+    <div>Speakeazy works best with JavaScript enabled</div>
+  </div>
 </noscript>
 
 <div id="base-header">
@@ -98,16 +101,18 @@
   <ul class="uk-breadcrumb large">{% block breadcrumbs %}{% endblock %}</ul>
 </div>
 
-{% if messages %}
-  <div id="error-notification" class="container">
-    {% for message in messages %}
-      <div class="uk-alert {% if message.tags %}uk-alert-{{ message.tags }}"{% endif %} data-uk-alert>
-        <a href="" class="uk-alert-close uk-close"></a>
-        {{ message }}
-      </div>
-    {% endfor %}
-  </div>
-{% endif %}
+<noscript>
+  {% if messages %}
+    <div id="error-notification" class="container">
+      {% for message in messages %}
+        <div class="uk-alert {% if message.tags %}uk-alert-{{ message.tags }}"{% endif %} data-uk-alert>
+          <a href="" class="uk-alert-close uk-close"></a>
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</noscript>
 
 <div class="container">
   {% block content %}{% endblock content %}
@@ -121,23 +126,32 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/autocomplete.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/datepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/components/timepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/js/components/notify.min.js"></script>
 
 <script src="{% static 'js/vendor/jquery.ba-throttle-debounce.min.js' %}"></script>
 <script src="{% static 'js/vendor/mousestop.js' %}"></script>
 <script src="{% static 'js/reverse.js' %}"></script>
 
-<!-- Your stuff: Third-party javascript libraries go here -->
+{#< Your stuff: Third-party javascript libraries go here #}
 {% block extra_js_libraries %}{% endblock extra_js_libraries %}
 
-<!-- place project specific Javascript in this file -->
+{#< place project specific Javascript in this file #}
 {% block template_scripts %}{% endblock template_scripts %}
 
 <script src="{% static 'js/project.js' %}"></script>
 {% block jquery %}{% endblock jquery %}
 {% block extra_end_scripts %}{% endblock extra_end_scripts %}
 
+{# django messaging framework #}
+{% if messages %}
+  <script type="text/javascript">
+    {% for message in messages %}
+      UIkit.notify("{{ message }}", {status: '{{ message.tags }}'});
+    {% endfor %}
+  </script>
+{% endif %}
 
-<!--Start of Tawk.to Script-->
+
 <script type="text/javascript">
   var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
   (function () {
@@ -149,7 +163,6 @@
     s0.parentNode.insertBefore(s1, s0);
   })();
 </script>
-<!--End of Tawk.to Script-->
 
 </body>
 </html>
