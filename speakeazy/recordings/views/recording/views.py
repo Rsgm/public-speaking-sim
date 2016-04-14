@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-from speakeazy.groups.models import Group
 
-from speakeazy.recordings.mixins import RecordingAuthorizationMixin, OWNER
-from speakeazy.recordings.models import EvaluationType, Recording
+from speakeazy.recordings.mixins import RecordingMixin, OWNER
+from speakeazy.recordings.models import EvaluationType
 from speakeazy.recordings.views.recording.share.forms import ShareUserForm, ShareSubmissionForm
 from vanilla.views import TemplateView
 
 
-class View(RecordingAuthorizationMixin, TemplateView):
+class View(RecordingMixin, TemplateView):
     template_name = 'recordings/recording/recording_view.html'
 
     def get_context_data(self, **kwargs):
         user = self.request.user
 
-        # kwargs['view'] = self
+        kwargs['view'] = self
 
         kwargs['recording'] = self.recording
         kwargs['authorization'] = self.authorization

@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from speakeazy.groups.mixins import GroupPermissiondMixin
 from speakeazy.groups.models import Group
 from speakeazy.groups.permissions import REQUEST_SUBMISSION
-from speakeazy.recordings.mixins import RecordingAuthorizationMixin, OWNER
+from speakeazy.recordings.mixins import RecordingMixin, OWNER
 from speakeazy.recordings.models import SharedUser
 
 from speakeazy.recordings.views.recording.share.forms import ShareUserForm, ShareSubmissionForm
@@ -17,11 +17,11 @@ from vanilla.views import TemplateView
 from django.utils.translation import ugettext_lazy as _
 
 
-class ListShared(RecordingAuthorizationMixin, TemplateView):
+class ListShared(RecordingMixin, TemplateView):
     pass
 
 
-class CreateSharedUser(RecordingAuthorizationMixin, PostView):
+class CreateSharedUser(RecordingMixin, PostView):
     allowed = [OWNER]
 
     def get_form(self, data=None, files=None, **kwargs):
@@ -30,11 +30,11 @@ class CreateSharedUser(RecordingAuthorizationMixin, PostView):
         return ShareUserForm(initial={'user': user, 'recording': self.recording}, data=data, files=files)
 
 
-class CreateSharedLink(RecordingAuthorizationMixin, PostView):
+class CreateSharedLink(RecordingMixin, PostView):
     pass
 
 
-class CreateGroupSubmission(RecordingAuthorizationMixin, PostView):
+class CreateGroupSubmission(RecordingMixin, PostView):
     allowed = [OWNER]
     group_permission = REQUEST_SUBMISSION
 

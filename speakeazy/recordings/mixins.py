@@ -1,7 +1,5 @@
-from django.contrib.auth.decorators import login_required
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404
-from django.utils.decorators import method_decorator
 from speakeazy.groups.models import Submission
 from speakeazy.groups.permissions import EVALUATE_SUBMISSION
 from speakeazy.recordings.models import SharedUser, Recording, SharedLink
@@ -13,21 +11,26 @@ SHARED_USER = 'shared-user'
 SHARED_GROUP = 'shared-group'
 SHARED_LINK = 'link'
 
+ALLOWED = {OWNER, GRADER, SHARED_USER, SHARED_LINK}
+
 
 def not_found():
     raise Http404()
 
 
-class RecordingAuthorizationMixin(object):
+class RecordingMixin(object):
     """
     View mixin which verifies that a user has access to view a recording, comment, or evaluate.
+    
+    Needs login required mixin on the view
     """
+
+    # these may be overridden
+    allowed = ALLOWED
 
     recording = None
     authorization = {}
 
-    # these may be overridden
-    allowed = [OWNER, GRADER, SHARED_USER, SHARED_LINK]
     owner_only = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -35,24 +38,28 @@ class RecordingAuthorizationMixin(object):
         self.authorization['type'] = auth_type
         self.authorization['key'] = kwargs['key']
 
+        logged_in = request.user.is_authenticated()
+
         if auth_type not in self.allowed:
             not_found()
 
-        elif auth_type == OWNER:
+        elif auth_type == OWNER and logged_in:
             self.owner(request, *args, **kwargs)
 
-        elif auth_type == GRADER:
+        elif auth_type == GRADER and logged_in:
             self.grader(request, *args, **kwargs)
 
-        elif auth_type == SHARED_USER:
+        elif auth_type == SHARED_USER and logged_in:
             self.shared_user(request, *args, **kwargs)
 
         elif auth_type == SHARED_LINK:
             self.shared_link(request, *args, **kwargs)
 
-        return super(RecordingAuthorizationMixin, self).dispatch(request, *args, **kwargs)
+        else:
+            not_found()
 
-    @method_decorator(login_required)
+        return super(RecordingMixin, self).dispatch(request, *args, **kwargs)
+
     def owner(self, request, *args, **kwargs):
         queryset = Recording.objects.filter(pk=kwargs['key'], project__user=request.user) \
             .select_related('project__user')
@@ -61,7 +68,6 @@ class RecordingAuthorizationMixin(object):
         self.authorization['comments'] = True
         self.authorization['evaluations'] = True
 
-    @method_decorator(login_required)
     def grader(self, request, *args, **kwargs):
         queryset = Submission.objects.filter(pk=kwargs['key']) \
             .select_related('group', 'recording')
@@ -87,7 +93,6 @@ class RecordingAuthorizationMixin(object):
         self.authorization['comments'] = True
         self.authorization['evaluations'] = True
 
-    @method_decorator(login_required)
     def shared_user(self, request, *args, **kwargs):
         queryset = SharedUser.objects.filter(pk=kwargs['key'], user=request.user) \
             .select_related('recording', 'user', 'recording__comments', 'recording__evaluations')
@@ -98,7 +103,6 @@ class RecordingAuthorizationMixin(object):
         self.authorization['comments'] = shared_user.comments
         self.authorization['evaluations'] = shared_user.evaluations
 
-    # No login required
     def shared_link(self, request, *args, **kwargs):
         queryset = SharedLink.objects.filter(uuid=kwargs['key']) \
             .select_related('recording', 'recording__comments', 'recording__evaluations')
@@ -106,7 +110,7 @@ class RecordingAuthorizationMixin(object):
         shared_link = get_object_or_404(queryset)
 
         # check if authorized
-        if shared_link.login_required and not request.user.is_authenticated:
+        if shared_link.login_required and not request.user.is_authenticated():
             not_found()
         if shared_link.uses == 0:
             not_found()

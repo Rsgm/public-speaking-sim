@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-from celery.canvas import group
 from speakeazy.projects.models import UserProject
 from speakeazy.recordings import models
-from speakeazy.recordings.models import Recording, UploadPiece, RECORDING_FINISHED
+from speakeazy.recordings.models import Recording, UploadPiece
 from speakeazy.recordings.tasks import convert_media, concatenate_media
 from braces.views import LoginRequiredMixin
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
-from ratelimit.decorators import ratelimit
 from vanilla.views import TemplateView
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
