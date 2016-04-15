@@ -22,7 +22,7 @@
 @import 'layout/footer';
 @import 'layout/evaluation_player';
 @import 'layout/recording_player';
-@import 'layout/textarea';
+@import 'layout/video_controls';
 //
 //
 // 5. Components
@@ -37,16 +37,17 @@
 @import 'components/video_overlay';
 @import 'components/evaluation_list';
 @import 'components/share';
-@import 'components/video_controls';
 @import 'components/recording_volume';
 @import 'components/forms';
 @import 'components/fullscreen_container';
 @import 'components/modal';
 @import 'components/notify';
+@import 'components/noscript';
+@import 'components/card';
+@import 'components/textarea';
 //
 //
 // 6. Page-specific styles
-@import 'pages/base';
 @import 'pages/landing';
 @import 'pages/dashboard';
 @import 'pages/record';

@@ -33,5 +33,10 @@ a {
 }
 
 svg {
-    display: block;
+  display: block;
+}
+
+// fix normalize.css video alignment
+video {
+  vertical-align: middle !important;
 }

@@ -1,0 +1,6 @@
+// Card class, no need to make a css class just for adding a card
+@for $i from 1 through 5 {
+  .card-#{$i} {
+    @include card($i);
+  }
+}
