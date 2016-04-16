@@ -3,95 +3,97 @@
 {% block title %} - Dashboard{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="uk-active"><span>dashboard</span></li>
+  <li class="uk-active"><span>dashboard</span></li>
 {% endblock %}
 
 {% block content %}
-    <div class="dashboard-welcome">
-        <h3 class="dashboard-section-header">Welcome! Create a new project to start preparing for your next presentation.</h3><a href="javascript:void(Tawk_API.toggle())" target="_top">Need Help?</a>
-    </div>
-    <div id="dashboard" class="uk-flex">
-        <div class="projects-parent uk-width-7-10">
-            <div id="upcoming-projects" class="">
+  <div class="dashboard-welcome">
+    <h3 class="dashboard-section-header">Welcome! Create a new project to start preparing for your next
+      presentation.</h3><a href="javascript:void(Tawk_API.toggle())" target="_top">Need Help?</a>
+  </div>
+  <div id="dashboard" class="uk-flex">
+    <div class="projects-parent uk-width-7-10">
+      <div id="upcoming-projects" class="">
 
-                <div class="home-project-flex-box">
-                    <h2 class="home-dashboard-header"><i class="uk-icon-folder-o"></i> Projects</h2>
-                    <a class="home-dashboard-button" href="{% url 'projects:projectList' %}">See all</a>
-                    <a class="home-dashboard-button" href="{% url 'projects:newProject' %}"><i class="uk-icon-plus"></i> Create New</a>
-                </div>
-
-                {% if project_recent_list %}
-                    <h3 class="dashboard-section-header">Recently Created</h3>
-
-                    <div class="uk-flex uk-grid">
-                        {% for project in project_recent_list %}
-                            <div class="uk-width-small-1-3 uk-width-medium-1-5 uk-width-large-1-4">
-                                <a href="{% url 'projects:project:projectView' project.slug %}"
-                                   class="uk-panel uk-panel-box panel-card uk-panel-header">
-
-                                    <h3 class="uk-panel-title">{{ project.name }}</h3>
-
-                                    <div class="item-info">
-                                        <div class="project-due-date">Due: {{ project.due_date | date:"D, d M Y" }}</div>
-                                        <div class="project-recording-count">{{ project.recording_set.all | length }}</div>
-                                    </div>
-                                </a>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-
-
-            <div id="recent-recordings" class="uk-block">
-                <h3 class="dashboard-section-header">Recent Recordings</h3>
-
-                <div class="uk-flex uk-grid">
-                    {% for recording in recording_list %}
-                        <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-4">
-                            <a class="" href="{% url 'recordings:recording:view' 'owner' recording.pk %}">
-                                <figure class="uk-overlay uk-overlay-hover">
-                                    <video class="" src="{{ recording.thumbnail_video.url }}"
-                                           poster="{{ recording.thumbnail_image.url }}" loop></video>
-                                    <figcaption
-                                            class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
-                                        {{ recording.project.name }} - {{ recording.slug }}
-                                    </figcaption>
-                                </figure>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
+        <div class="home-project-flex-box">
+          <h2 class="home-dashboard-header"><i class="uk-icon-folder-o"></i> Projects</h2>
+          <a class="home-dashboard-button" href="{% url 'projects:projectList' %}">See all</a>
+          <a class="home-dashboard-button" href="{% url 'projects:newProject' %}"><i class="uk-icon-plus"></i> Create
+            New</a>
         </div>
 
-        <div id="Groups" class="uk-width-3-10">
+        {% if project_recent_list %}
+          <h3 class="dashboard-section-header">Recently Created</h3>
 
-            <div class="home-group-flex-box">
-                <h2 class="home-dashboard-header"><i class="uk-icon-group"></i> Groups</h2>
-                <a class="home-dashboard-button" href="{% url 'groups:groupDashboard' %}">See all</a>
-                <a class="home-dashboard-button" href="{% url 'groups:joinGroup' %}"><i class="uk-icon-plus"></i> Join Group</a>
+          <div class="uk-flex uk-grid">
+            {% for project in project_recent_list %}
+              <div class="uk-width-small-1-3 uk-width-medium-1-5 uk-width-large-1-4">
+                <a href="{% url 'projects:project:projectView' project.slug %}"
+                   class="uk-panel uk-panel-box panel-card uk-panel-header">
+
+                  <h3 class="uk-panel-title">{{ project.name }}</h3>
+
+                  <div class="item-info">
+                    <div class="project-due-date">Due: {{ project.due_date | date:"D, d M Y" }}</div>
+                    <div class="project-recording-count">{{ project.recording_set.all | length }}</div>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+
+      <div id="recent-recordings" class="uk-block">
+        <h3 class="dashboard-section-header">Recent Recordings</h3>
+
+        <div class="uk-flex uk-grid">
+          {% for recording in recording_list %}
+            <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-4">
+              <a class="" href="{% url 'recordings:recording:view' 'owner' recording.pk %}">
+                <figure class="uk-overlay uk-overlay-hover">
+                  <video class="" src="{{ recording.thumbnail_video.url }}"
+                         poster="{{ recording.thumbnail_image.url }}" loop></video>
+                  <figcaption
+                      class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
+                    {{ recording.project.name }} - {{ recording.slug }}
+                  </figcaption>
+                </figure>
+              </a>
             </div>
-
-            <div class="uk-flex uk-grid">
-                {% for group in group_list %}
-                    <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-2">
-                        <a href="{% url 'groups:group:groupView' group.slug %}"
-                           class="uk-panel uk-panel-box panel-card uk-panel-header">
-
-                            <h3 class="uk-panel-title">{{ group.name }}</h3>
-
-                            <div class="item-info">
-                                <div>{{ group.description }}</div>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
+          {% endfor %}
         </div>
+      </div>
     </div>
+
+    <div id="Groups" class="uk-width-3-10">
+
+      <div class="home-group-flex-box">
+        <h2 class="home-dashboard-header"><i class="uk-icon-group"></i> Groups</h2>
+        <a class="home-dashboard-button" href="{% url 'groups:groupDashboard' %}">See all</a>
+        <a class="home-dashboard-button" href="{% url 'groups:joinGroup' %}"><i class="uk-icon-plus"></i> Join Group</a>
+      </div>
+
+      <div class="uk-flex uk-grid">
+        {% for group in group_list %}
+          <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-2">
+            <a href="{% url 'groups:group:groupView' group.slug %}"
+               class="uk-panel uk-panel-box panel-card uk-panel-header">
+
+              <h3 class="uk-panel-title">{{ group.name }}</h3>
+
+              <div class="item-info">
+                <div>{{ group.description }}</div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block jquery %}
-    <script src="{% static 'js/home.js' %}"></script>
+  <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

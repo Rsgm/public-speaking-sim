@@ -3,18 +3,18 @@
 {% block title %} - Audience Delete{% endblock %}
 
 {% block breadcrumbs %}
-    {% include "groups/group/audience/breadcrumb.html" %}
-    <li><span>delete</span></li>
-    <li><span>{{ audience.slug }}</span></li>
+  {% include "groups/group/audience/breadcrumb.html" %}
+  <li><span>delete</span></li>
+  <li><span>{{ audience.slug }}</span></li>
 {% endblock %}
 
 {% block content %}
-    <form class="uk-form uk-form-stacked" method="post"
-          action="{% url 'groups:group:audience:delete' view.group.slug audience.slug %}">
-        {% csrf_token %}
+  <form class="uk-form uk-form-stacked" method="post"
+        action="{% url 'groups:group:audience:delete' view.group.slug audience.slug %}">
+    {% csrf_token %}
 
-        <div class="uk-form-row">
-            <button type="submit" class="uk-button uk-button-danger">Delete</button>
-        </div>
-    </form>
+    <div class="uk-form-row">
+      <button type="submit" class="uk-button uk-button-danger">Delete</button>
+    </div>
+  </form>
 {% endblock %}

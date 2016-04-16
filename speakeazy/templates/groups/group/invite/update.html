@@ -5,7 +5,7 @@
 {% block post_url %}{% url 'groups:group:invite:add' view.kwargs.group object.slug %}{% endblock %}
 
 {% block breadcrumbs %}
-    {% include "groups/group/invite/breadcrumb.html" %}
-    <li><span>update</span></li>
-    <li><span>{{ object.slug }}</span></li>
+  {% include "groups/group/invite/breadcrumb.html" %}
+  <li><span>update</span></li>
+  <li><span>{{ object.slug }}</span></li>
 {% endblock %}

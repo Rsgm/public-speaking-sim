@@ -3,26 +3,26 @@
 {% block title %} - Audience View{% endblock %}
 
 {% block breadcrumbs %}
-    {% include "groups/group/audience/breadcrumb.html" %}
-    <li><span>view</span></li>
-    <li><span>{{ audience.slug }}</span></li>
+  {% include "groups/group/audience/breadcrumb.html" %}
+  <li><span>view</span></li>
+  <li><span>{{ audience.slug }}</span></li>
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="s-section">
+  <div class="container">
+    <div class="s-section">
 
-            <h4 class="s-section-title">{{ audience.name }}</h4>
+      <h4 class="s-section-title">{{ audience.name }}</h4>
 
-            <div class="s-section-content">
-                <div>{{ audience.description }}</div>
-                {# audience stats #}
+      <div class="s-section-content">
+        <div>{{ audience.description }}</div>
+        {# audience stats #}
 
-                <video src="{{ audience.file.url }}"></video>
+        <video src="{{ audience.file.url }}"></video>
 
-                <a href="{% url 'groups:group:audience:update' view.group.slug audience.slug %}">Update Audience</a>
-                <a href="{% url 'groups:group:audience:delete' view.group.slug audience.slug %}">Delete Audience</a>
-            </div>
-        </div>
+        <a href="{% url 'groups:group:audience:update' view.group.slug audience.slug %}">Update Audience</a>
+        <a href="{% url 'groups:group:audience:delete' view.group.slug audience.slug %}">Delete Audience</a>
+      </div>
     </div>
+  </div>
 {% endblock %}

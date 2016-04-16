@@ -3,167 +3,167 @@
 {% block title %}{{ recording.slug }}{% endblock %}
 
 {% block breadcrumbs %}
-{#    {% include 'projects/project/breadcrumb.html' %}#}
-{#    <li><a href="{% url 'projects:project:projectView' recording.project.slug %}">{{ recording.project.slug }}</a></li>#}
-{#    <li class="uk-active"><span>{{ recording.slug }}</span></li>#}
+  {#    {% include 'projects/project/breadcrumb.html' %}#}
+  {#    <li><a href="{% url 'projects:project:projectView' recording.project.slug %}">{{ recording.project.slug }}</a></li>#}
+  {#    <li class="uk-active"><span>{{ recording.slug }}</span></li>#}
 {% endblock %}
 
 {% block content %}
-    {% csrf_token %}
-    <div id="recording-view" class="uk-flex uk-flex-center">
-        <div class="s-evaluation-player">
-            <video class="uk-responsive-width" src="{{ recording.video.url }}" autoplay></video>
+  {% csrf_token %}
+  <div id="recording-view" class="uk-flex uk-flex-center">
+    <div class="s-evaluation-player">
+      <video class="uk-responsive-width" src="{{ recording.video.url }}" autoplay></video>
 
-            <div class="s-video-controller uk-contrast uk-animation-reverse uk-animation-fade">
-                <div class="s-video-controller-background"></div>
+      <div class="s-video-controller uk-contrast uk-animation-reverse uk-animation-fade">
+        <div class="s-video-controller-background"></div>
 
-                {% if authorization.type == 'owner' %}
-                    <div class="s-share-video s-video-overlay" data-uk-dropdown="{mode:'click', pos:'bottom-right'}"
-                        data-uk-tooltip title="Share with Group">
-                        <i class="uk-icon-share-alt s-video-button uk-icon-hover">Share With Group</i>
+        {% if authorization.type == 'owner' %}
+          <div class="s-share-video s-video-overlay" data-uk-dropdown="{mode:'click', pos:'bottom-right'}"
+               data-uk-tooltip title="Share with Group">
+            <i class="uk-icon-share-alt s-video-button uk-icon-hover">Share With Group</i>
 
-                        <div class="uk-dropdown uk-dropdown-scrollable">
-                            <ul class="uk-nav uk-nav-dropdown ">
-{#                                <li><a class="" data-uk-modal="{target:'#share-user-modal'}">Share With User</a></li>#}
-{#                                <li><a class="" data-uk-modal="{target:'#share-link-modal'}">Share With Link</a></li>#}
-{#                                <li class="uk-nav-divider"></li>#}
-                                <li><a class="" data-uk-modal="{target:'#share-submission-modal'}">Share with Group</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% if authorization.evaluations %}
-                    <div class="s-evaluation-list uk-flex uk-flex-column">
-                        <div class="s-evaluation s-evaluation-add" data-uk-dropdown="{mode:'click', pos:'right-top'}">
-                            <i class="s-video-button uk-icon-plus uk-icon-hover"
-                               data-uk-tooltip title="Insert Comment"></i>
-
-                            <div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">
-                                <div class="uk-panel-title">Evaluate</div>
-                                <div class="s-create-evaluation uk-form uk-flex uk-flex-column">
-                                    <textarea placeholder="Your Evaluation"></textarea>
-
-                                    <div class="s-create-evaluation-info">Select type to finish</div>
-                                    <div class="uk-flex uk-flex-wrap uk-flex-space-around">
-                                        {% for evaluation_type in evaluation_type_list %}
-                                            <i class="{{ evaluation_type.icon_class }} uk-icon-button"
-                                               data-uk-tooltip="{pos:'top'}" title="{{ evaluation_type.name }}"
-                                               data-type="{{ evaluation_type.name }}"></i>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-
-                <div class="s-play-pause s-video-overlay uk-icon-hover">
-                    <i class="s-video-button uk-icon-play uk-icon-justify"></i>
-                    <i class="s-video-button uk-icon-pause uk-icon-justify"></i>
-                </div>
-
-                <div class="s-video-controls">
-                    <div><i class="s-video-button uk-icon-volume-up uk-icon-hover s-video-volume"></i></div>
-
-                    <div class="s-video-time">
-                        <div class="s-time-played">0:00</div>
-
-                        <div class="s-slider">
-                            <div class="s-points"></div>
-
-                            <div class="s-slider-bar">
-                                <div class="s-slider-played"></div>
-                                <i class="s-slider-position uk-icon-dot-circle-o uk-icon-hover"></i>
-
-                                <div class="s-slider-buffered"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div><i class="s-video-button uk-icon-expand uk-icon-hover s-video-fullscreen"></i></div>
-                </div>
+            <div class="uk-dropdown uk-dropdown-scrollable">
+              <ul class="uk-nav uk-nav-dropdown ">
+                {#                                <li><a class="" data-uk-modal="{target:'#share-user-modal'}">Share With User</a></li>#}
+                {#                                <li><a class="" data-uk-modal="{target:'#share-link-modal'}">Share With Link</a></li>#}
+                {#                                <li class="uk-nav-divider"></li>#}
+                <li><a class="" data-uk-modal="{target:'#share-submission-modal'}">Share with Group</a></li>
+              </ul>
             </div>
+          </div>
+        {% endif %}
+
+        {% if authorization.evaluations %}
+          <div class="s-evaluation-list uk-flex uk-flex-column">
+            <div class="s-evaluation s-evaluation-add" data-uk-dropdown="{mode:'click', pos:'right-top'}">
+              <i class="s-video-button uk-icon-plus uk-icon-hover"
+                 data-uk-tooltip title="Insert Comment"></i>
+
+              <div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">
+                <div class="uk-panel-title">Evaluate</div>
+                <div class="s-create-evaluation uk-form uk-flex uk-flex-column">
+                  <textarea placeholder="Your Evaluation"></textarea>
+
+                  <div class="s-create-evaluation-info">Select type to finish</div>
+                  <div class="uk-flex uk-flex-wrap uk-flex-space-around">
+                    {% for evaluation_type in evaluation_type_list %}
+                      <i class="{{ evaluation_type.icon_class }} uk-icon-button"
+                         data-uk-tooltip="{pos:'top'}" title="{{ evaluation_type.name }}"
+                         data-type="{{ evaluation_type.name }}"></i>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="s-play-pause s-video-overlay uk-icon-hover">
+          <i class="s-video-button uk-icon-play uk-icon-justify"></i>
+          <i class="s-video-button uk-icon-pause uk-icon-justify"></i>
         </div>
+
+        <div class="s-video-controls">
+          <div><i class="s-video-button uk-icon-volume-up uk-icon-hover s-video-volume"></i></div>
+
+          <div class="s-video-time">
+            <div class="s-time-played">0:00</div>
+
+            <div class="s-slider">
+              <div class="s-points"></div>
+
+              <div class="s-slider-bar">
+                <div class="s-slider-played"></div>
+                <i class="s-slider-position uk-icon-dot-circle-o uk-icon-hover"></i>
+
+                <div class="s-slider-buffered"></div>
+              </div>
+            </div>
+          </div>
+
+          <div><i class="s-video-button uk-icon-expand uk-icon-hover s-video-fullscreen"></i></div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    {% if authorization.comments %}
-        <div class="uk-block">
-            <h3 class="uk-panel-title">General Comments</h3>
-            <ul class="uk-comment-list">
-                {% for comment in comment_list %}
-                    <li class="uk-comment">
-                        <header class="uk-comment-header">
-                            {#                          <img class="uk-comment-avatar" src="" alt="">#}
-                            <h4 class="uk-comment-title">{{ comment.user }}</h4>
-                            <div class="uk-comment-meta">{{ comment.created_on|localtime }}</div>
-                        </header>
-                        <div class="uk-comment-body">{{ comment.text }}</div>
-                    </li>
-                {% endfor %}
-            </ul>
+  {% if authorization.comments %}
+    <div class="uk-block">
+      <h3 class="uk-panel-title">General Comments</h3>
+      <ul class="uk-comment-list">
+        {% for comment in comment_list %}
+          <li class="uk-comment">
+            <header class="uk-comment-header">
+              {#                          <img class="uk-comment-avatar" src="" alt="">#}
+              <h4 class="uk-comment-title">{{ comment.user }}</h4>
+              <div class="uk-comment-meta">{{ comment.created_on|localtime }}</div>
+            </header>
+            <div class="uk-comment-body">{{ comment.text }}</div>
+          </li>
+        {% endfor %}
+      </ul>
 
-            <div class="uk-form comment-form">
-                <textarea placeholder="Add a comment..."></textarea>
-                <button class="uk-button uk-button-primary">Submit</button>
-            </div>
-        </div>
-    {% endif %}
-
-
-    <div id="share-user-modal" class="uk-modal">
-        <div class="uk-modal-dialog">
-            <a class="uk-modal-close uk-close"></a>
-            <div class="uk-form">
-                {% form share_user_form %}
-
-                <div class="uk-form-row">
-                    <button class="uk-button uk-button-primary">Share</button>
-                </div>
-            </div>
-        </div>
+      <div class="uk-form comment-form">
+        <textarea placeholder="Add a comment..."></textarea>
+        <button class="uk-button uk-button-primary">Submit</button>
+      </div>
     </div>
+  {% endif %}
 
 
-    <div id="share-submission-modal" class="uk-modal">
-        <div class="uk-modal-dialog">
-            <a class="uk-modal-close uk-close"></a>
-            <h2>Request Group Evaluation</h2>
-            <div class="uk-form">
-                {% form share_submission_form %}
+  <div id="share-user-modal" class="uk-modal">
+    <div class="uk-modal-dialog">
+      <a class="uk-modal-close uk-close"></a>
+      <div class="uk-form">
+        {% form share_user_form %}
 
-                <div class="uk-form-row">
-                    <button class="uk-button uk-button-primary">Share</button>
-                </div>
-            </div>
+        <div class="uk-form-row">
+          <button class="uk-button uk-button-primary">Share</button>
         </div>
+      </div>
     </div>
+  </div>
 
 
-    <script>
-        se.user='{{ user.username }}';
-        se.project='{{ recording.project.slug }}';
-        se.recording='{{ recording.slug }}';
+  <div id="share-submission-modal" class="uk-modal">
+    <div class="uk-modal-dialog">
+      <a class="uk-modal-close uk-close"></a>
+      <h2>Request Group Evaluation</h2>
+      <div class="uk-form">
+        {% form share_submission_form %}
 
-        se.authorization={
-            'type':'{{ authorization.type }}',
-            'key':'{{ authorization.key }}'
-        };
+        <div class="uk-form-row">
+          <button class="uk-button uk-button-primary">Share</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        var evaluations = [
-            {% for evaluation in evaluation_list %}
-                {
-                    time: {{ evaluation.seconds }},
-                    evaluator: '{{ evaluation.evaluator }}',
-                    icon: '{{ evaluation.type.icon_class }}',
-                    text: '{{ evaluation.text }}'
-                },
-            {% endfor %}
-        ];
-    </script>
+
+  <script>
+    se.user = '{{ user.username }}';
+    se.project = '{{ recording.project.slug }}';
+    se.recording = '{{ recording.slug }}';
+
+    se.authorization = {
+      'type': '{{ authorization.type }}',
+      'key': '{{ authorization.key }}'
+    };
+
+    var evaluations = [
+      {% for evaluation in evaluation_list %}
+        {
+          time: {{ evaluation.seconds }},
+          evaluator: '{{ evaluation.evaluator }}',
+          icon: '{{ evaluation.type.icon_class }}',
+          text: '{{ evaluation.text }}'
+        },
+      {% endfor %}
+    ];
+  </script>
 {% endblock %}
 
 {% block jquery %}
-    <script src="{% static 'js/recording_view.js' %}"></script>
-    <script src="{% static 'js/comment_form.js' %}"></script>
+  <script src="{% static 'js/recording_view.js' %}"></script>
+  <script src="{% static 'js/comment_form.js' %}"></script>
 {% endblock %}

@@ -3,40 +3,40 @@
 {% block title %}Projects{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="uk-active"><span>projects</span></li>
+  <li class="uk-active"><span>projects</span></li>
 {% endblock %}
 
 {% block content %}
-    <div id="project-list" class="uk-flex uk-grid">
+  <div id="project-list" class="uk-flex uk-grid">
 
-        {% for project in userproject_list %}
-            <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
-                <a href="{% url 'projects:project:projectView' project.slug %}"
-                   class="uk-panel uk-panel-box panel-card uk-panel-header">
+    {% for project in userproject_list %}
+      <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
+        <a href="{% url 'projects:project:projectView' project.slug %}"
+           class="uk-panel uk-panel-box panel-card uk-panel-header">
 
-                    <h3 class="uk-panel-title">{{ project.name }}</h3>
+          <h3 class="uk-panel-title">{{ project.name }}</h3>
 
-                    <div class="project-info">
-                        <p class="project-description">{{ project.description }}</p>
+          <div class="project-info">
+            <p class="project-description">{{ project.description }}</p>
 
-                        <div class="project-bottom-info">
-                            <div>Due: {{ project.due_date|date:"Y-m-d" }}</div>
+            <div class="project-bottom-info">
+              <div>Due: {{ project.due_date|date:"Y-m-d" }}</div>
 
-                            <div>
-                                {{ project.recording_set.all|length }}
-                                Recording{{ project.recording_set.all|pluralize:"s" }}
-                            </div>
-                        </div>
-                    </div>
-                </a>
+              <div>
+                {{ project.recording_set.all|length }}
+                Recording{{ project.recording_set.all|pluralize:"s" }}
+              </div>
             </div>
-        {% endfor %}
+          </div>
+        </a>
+      </div>
+    {% endfor %}
 
-        <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
-            <a class="uk-panel uk-panel-box panel-add" href="{% url 'projects:newProject' %}">
-                <i class="uk-icon-plus uk-contrast new-project-panel-icon"></i>
-                <div class="add-text">Create New Project</div>
-            </a>
-        </div>
+    <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
+      <a class="uk-panel uk-panel-box panel-add" href="{% url 'projects:newProject' %}">
+        <i class="uk-icon-plus uk-contrast new-project-panel-icon"></i>
+        <div class="add-text">Create New Project</div>
+      </a>
     </div>
+  </div>
 {% endblock %}

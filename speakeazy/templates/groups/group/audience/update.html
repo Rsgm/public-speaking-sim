@@ -3,20 +3,20 @@
 {% block title %} - Audience Update{% endblock %}
 
 {% block breadcrumbs %}
-    {% include "groups/group/audience/breadcrumb.html" %}
-    <li><span>update</span></li>
-    <li><span>{{ audience.slug }}</span></li>
+  {% include "groups/group/audience/breadcrumb.html" %}
+  <li><span>update</span></li>
+  <li><span>{{ audience.slug }}</span></li>
 {% endblock %}
 
 {% block content %}
-    <form class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
-          action="{% url 'groups:group:audience:update' audience.group.slug audience.slug %}">
-        {% csrf_token %}
+  <form class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
+        action="{% url 'groups:group:audience:update' audience.group.slug audience.slug %}">
+    {% csrf_token %}
 
-        {% form form %}
+    {% form form %}
 
-        <div class="uk-form-row">
-            <button type="submit" class="uk-button">Update</button>
-        </div>
-    </form>
+    <div class="uk-form-row">
+      <button type="submit" class="uk-button">Update</button>
+    </div>
+  </form>
 {% endblock %}

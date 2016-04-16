@@ -3,75 +3,75 @@
 {% block title %} - {{ group.name }}{% endblock %}
 
 {% block breadcrumbs %}
-    {% include 'groups/breadcrumb.html' %}
-    <li class="uk-active"><span>home</span></li>
+  {% include 'groups/breadcrumb.html' %}
+  <li class="uk-active"><span>home</span></li>
 {% endblock %}
 
 
 {% block content %}
-    <div id="group-dashboard">
-        <div id="recently-joined" class="uk-block">
-            <h2>Recently joined</h2>
+  <div id="group-dashboard">
+    <div id="recently-joined" class="uk-block">
+      <h2>Recently joined</h2>
 
-            <div class="uk-grid">
-                {% for group_membership in recently_joined_list %}
-                    <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
-                        <a href="{% url 'groups:group:groupView' group_membership.group.slug %}"
-                           class="uk-panel uk-panel-box panel-card uk-panel-header">
+      <div class="uk-grid">
+        {% for group_membership in recently_joined_list %}
+          <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
+            <a href="{% url 'groups:group:groupView' group_membership.group.slug %}"
+               class="uk-panel uk-panel-box panel-card uk-panel-header">
 
-                            <h3 class="uk-panel-title">{{ group_membership.group.name }}</h3>
+              <h3 class="uk-panel-title">{{ group_membership.group.name }}</h3>
 
-                            <div class="item-info">
-                                <div>{{ group_membership.group.description }}</div>
-                                <div>{{ group_membership.created_time | localtime }}</div>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        {% if groups_with_submission_list %}
-            <div id="recent-submissions" class="uk-block">
-                <h2>Groups with Evaluation Requests</h2>
-
-                <div class="uk-grid">
-                    {% for membership in groups_with_submission_list %}
-                        <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
-                            <a href="{% url 'groups:group:groupView' membership.group.slug %}"
-                               class="uk-panel uk-panel-box panel-card uk-panel-header">
-
-                                <h3 class="uk-panel-title">{{ membership.group.name }}</h3>
-
-                                <div class="item-info">
-                                    <div>{{ membership.group.description }}</div>
-                                    <div>Submissions: {{ membership.submission_count }}</div>
-                                </div>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-
-        {#        <div class="uk-block">#}
-        {#            <h2>All Groups</h2>#}
-        {##}
-        {#            <div class="uk-grid">#}
-        {#                {% for group in group_list %}#}
-        {#                    <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">#}
-        {#                        <a href="{% url 'groups:group:groupView' group.slug %}"#}
-        {#                           class="uk-panel uk-panel-box panel-card uk-panel-header">#}
-        {##}
-        {#                            <h3 class="uk-panel-title">{{ group.name }}</h3>#}
-        {##}
-        {#                            <div class="item-info">#}
-        {#                                <div>{{ group.description }}</div>#}
-        {#                            </div>#}
-        {#                        </a>#}
-        {#                    </div>#}
-        {#                {% endfor %}#}
-        {#            </div>#}
-        {#        </div>#}
+              <div class="item-info">
+                <div>{{ group_membership.group.description }}</div>
+                <div>{{ group_membership.created_time | localtime }}</div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
     </div>
+
+    {% if groups_with_submission_list %}
+      <div id="recent-submissions" class="uk-block">
+        <h2>Groups with Evaluation Requests</h2>
+
+        <div class="uk-grid">
+          {% for membership in groups_with_submission_list %}
+            <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
+              <a href="{% url 'groups:group:groupView' membership.group.slug %}"
+                 class="uk-panel uk-panel-box panel-card uk-panel-header">
+
+                <h3 class="uk-panel-title">{{ membership.group.name }}</h3>
+
+                <div class="item-info">
+                  <div>{{ membership.group.description }}</div>
+                  <div>Submissions: {{ membership.submission_count }}</div>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {#        <div class="uk-block">#}
+    {#            <h2>All Groups</h2>#}
+    {##}
+    {#            <div class="uk-grid">#}
+    {#                {% for group in group_list %}#}
+    {#                    <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">#}
+    {#                        <a href="{% url 'groups:group:groupView' group.slug %}"#}
+    {#                           class="uk-panel uk-panel-box panel-card uk-panel-header">#}
+    {##}
+    {#                            <h3 class="uk-panel-title">{{ group.name }}</h3>#}
+    {##}
+    {#                            <div class="item-info">#}
+    {#                                <div>{{ group.description }}</div>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                {% endfor %}#}
+    {#            </div>#}
+    {#        </div>#}
+  </div>
 {% endblock %}

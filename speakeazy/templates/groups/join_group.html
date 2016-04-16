@@ -3,19 +3,19 @@
 {% block title %} - Join Group{% endblock %}
 
 {% block breadcrumbs %}
-    {% include "groups/breadcrumb.html" %}
-    <li class="uk-active"><span>Join Group</span></li>
+  {% include "groups/breadcrumb.html" %}
+  <li class="uk-active"><span>Join Group</span></li>
 {% endblock %}
 
 {% block content %}
-    <form class="s-form uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
-          action="{% url 'groups:joinGroup' %}">
-        {% csrf_token %}
+  <form class="s-form uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
+        action="{% url 'groups:joinGroup' %}">
+    {% csrf_token %}
 
-        {% form form %}
+    {% form form %}
 
-        <div class="uk-form-row">
-            <button type="submit" class="s-form-submit uk-button">Join Group</button>
-        </div>
-    </form>
+    <div class="uk-form-row">
+      <button type="submit" class="s-form-submit uk-button">Join Group</button>
+    </div>
+  </form>
 {% endblock %}

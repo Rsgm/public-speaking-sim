@@ -3,21 +3,21 @@
 {% block title %} - Create Project{% endblock %}
 
 {% block breadcrumbs %}
-    {% include 'projects/breadcrumb.html' %}
-    <li class="uk-active"><span>new</span></li>
+  {% include 'projects/breadcrumb.html' %}
+  <li class="uk-active"><span>new</span></li>
 {% endblock %}
 
 {% block content %}
-    <h2 class="uk-text-center">Create Project</h2>
+  <h2 class="uk-text-center">Create Project</h2>
 
-    <form class="s-form uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
-          action="{% url 'projects:newProject' %}">
-        {% csrf_token %}
+  <form class="s-form uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
+        action="{% url 'projects:newProject' %}">
+    {% csrf_token %}
 
-        {% form form %}
+    {% form form %}
 
-        <div class="uk-form-row">
-            <button type="submit" class="s-form-submit uk-button">Create Project</button>
-        </div>
-    </form>
+    <div class="uk-form-row">
+      <button type="submit" class="s-form-submit uk-button">Create Project</button>
+    </div>
+  </form>
 {% endblock %}

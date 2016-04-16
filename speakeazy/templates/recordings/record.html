@@ -3,73 +3,74 @@
 {% block title %}Record{% endblock %}
 
 {% block breadcrumbs %}
-    <li><span>r</span></li>
-    <li class="uk-active"><span>{{ project.slug }}</span></li>
+  <li><span>r</span></li>
+  <li class="uk-active"><span>{{ project.slug }}</span></li>
 {% endblock %}
 
 {% block content %}
-    <div id="record">
-        {% csrf_token %}
+  <div id="record">
+    {% csrf_token %}
 
-        <!-- preview -->
-        <div id="preview" class="">
-            <h2>Webcam and Microphone Setup</h2>
-            <h5>Allow webcam and microphone access. Use this screen to double check you are in view of your webcam.</h5>
+    <!-- preview -->
+    <div id="preview" class="">
+      <h2>Webcam and Microphone Setup</h2>
+      <h5>Allow webcam and microphone access. Use this screen to double check you are in view of your webcam.</h5>
 
-            <div class="s-recording-player uk-flex uk-flex-center">
-                <video id="setup-video" class="uk-responsive-width s-preview"></video>
-                <div></div>
+      <div class="s-recording-player uk-flex uk-flex-center">
+        <video id="setup-video" class="uk-responsive-width s-preview"></video>
+        <div></div>
 
-                <a id="start-recording" class="s-video-button s-video-overlay">Start Rehearsal</a>
+        <a id="start-recording" class="s-video-button s-video-overlay">Start Rehearsal</a>
 
-                {#            <div class="s-recording-volume s-video-overlay">#}
-                {#                <div id="volume-high"></div>#}
-                {#                <div id="volume-medium"></div>#}
-                {#                <div id="volume-low"></div>#}
-                {#                <div id="volume-slider"></div>#}
-                {#            </div>#}
-            </div>
+        {#            <div class="s-recording-volume s-video-overlay">#}
+        {#                <div id="volume-high"></div>#}
+        {#                <div id="volume-medium"></div>#}
+        {#                <div id="volume-low"></div>#}
+        {#                <div id="volume-slider"></div>#}
+        {#            </div>#}
+      </div>
 
-        </div>
-
-        <!-- Recording -->
-        <div id="recording" class="uk-flex uk-flex-center">
-            <div class="s-recording-player">
-                <video  id="audience-video" class="uk-responsive-width" loop preload>
-                    <source src="{{ project.audience.file_webm.url }}" type="video/webm">
-                    {% if project.audience.file_mp4 %}<source src="{{ project.audience.file_mp4.url }}" type="video/mp4">{% endif %}
-                </video>
-                <div></div>
-
-                <a id="stop-recording" class="s-video-button s-video-overlay">Save</a>
-
-                <!--<timer></timer>-->
-            </div>
-        </div>
-
-        <!-- uploading -->
-        <div class="upload-progress" id="finished">
-            <h1 class="text-center">Uploading</h1>
-
-            <div class="uk-progress uk-progress-striped active">
-                <div class="uk-progress-bar" style="width: 0;">0%</div>
-            </div>
-        </div>
     </div>
+
+    <!-- Recording -->
+    <div id="recording" class="uk-flex uk-flex-center">
+      <div class="s-recording-player">
+        <video id="audience-video" class="uk-responsive-width" loop preload>
+          <source src="{{ project.audience.file_webm.url }}" type="video/webm">
+          {% if project.audience.file_mp4 %}
+            <source src="{{ project.audience.file_mp4.url }}" type="video/mp4">{% endif %}
+        </video>
+        <div></div>
+
+        <a id="stop-recording" class="s-video-button s-video-overlay">Save</a>
+
+        <!--<timer></timer>-->
+      </div>
+    </div>
+
+    <!-- uploading -->
+    <div class="upload-progress" id="finished">
+      <h1 class="text-center">Uploading</h1>
+
+      <div class="uk-progress uk-progress-striped active">
+        <div class="uk-progress-bar" style="width: 0;">0%</div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
 
 {% block extra_js_libraries %}
-    <script src="{% static 'js/vendor/MediaStreamRecorder.min.js' %}"></script>
+  <script src="{% static 'js/vendor/MediaStreamRecorder.min.js' %}"></script>
 {% endblock %}
 
 {% block jquery %}
-    <script src="{% static 'js/record.js' %}"></script>
+  <script src="{% static 'js/record.js' %}"></script>
 {% endblock %}
 
 {% block template_scripts %}
-    <script>
-        var se = {
-            project: '{{ project.slug }}'
-        };
-    </script>
+  <script>
+    var se = {
+      project: '{{ project.slug }}'
+    };
+  </script>
 {% endblock %}
