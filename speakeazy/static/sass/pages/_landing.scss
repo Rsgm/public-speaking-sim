@@ -128,9 +128,10 @@
 
     h2 {
       color: $text-light-color;
+      padding-bottom: 15px;
       border-bottom: 2px solid $text-light-color;
       max-width: 750px;
-      margin: 0 auto 30px auto;
+      margin: 0 auto 0 auto;
     }
   }
 
@@ -225,10 +226,6 @@
     padding: 0 40px 0 0;
     font-size: 80px;
   }
-
-  //#process {
-  //    background-color: #1DE9B6;
-  //}
 
   #process h2 {
     color: #fff;
