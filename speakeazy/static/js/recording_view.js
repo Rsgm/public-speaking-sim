@@ -341,7 +341,7 @@
 
     pointTimes.push(time);
 
-    var $point = $('<i class="uk-icon-caret-down uk-icon-small uk-icon-hover" data-uk-tooltip="{pos:\'top\'}">');
+    var $point = $('<i class="uk-icon-minus uk-icon-hover s-slider-comment-marker" data-uk-tooltip="{pos:\'top\'}">');
     $point.attr('title', calculateTime(time));
 
     var duration = $video[0].duration;
@@ -366,7 +366,7 @@
   function addEvaluation(evaluation) {
     var $newEvaluation = $('<div class="s-evaluation" data-time=' + evaluation.time + ' data-uk-dropdown="{mode:\'click\', pos:\'right-top\'}">'
         + '<i class="uk-icon-hover s-video-button ' + evaluation.icon + '"></i>'
-        + '<div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">'
+        + '<div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header add-evaluation-panel">'
         + '<div class="uk-panel-title">' + evaluation.evaluator + '</div>'
         + '<p>' + evaluation.text + '</p>'
         + '</div>'

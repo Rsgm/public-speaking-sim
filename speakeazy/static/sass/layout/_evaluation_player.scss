@@ -31,6 +31,7 @@
     .s-play-pause {
       top: 50%;
       left: 50%;
+      padding-right: 10px;
 
       margin-left: -$video-play-pause-width/2;
       margin-top: -$video-play-pause-height/2;
@@ -41,6 +42,23 @@
       left: $video-player-offset;
       right: $video-player-offset;
     }
+  }
+
+
+  .s-slider-comment-marker {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    font-size: 107%;
+    vertical-align: -10%;
+    top:13px !important;
+    z-index: 2;
+    color:$white;
+  }
+  .add-evaluation-panel{
+      width: 215px!important;
   }
 
   video {

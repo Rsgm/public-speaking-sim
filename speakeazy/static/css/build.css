@@ -484,12 +484,23 @@ h1, h2, h3, h4, h5, h6 {
     .s-evaluation-player .s-video-controller .s-play-pause {
       top: 50%;
       left: 50%;
+      padding-right: 10px;
       margin-left: -22px;
       margin-top: -22px; }
     .s-evaluation-player .s-video-controller .s-video-controls {
       bottom: 30px;
       left: 30px;
       right: 30px; }
+  .s-evaluation-player .s-slider-comment-marker {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    font-size: 73%;
+    vertical-align: -10%;
+    top: 13px !important;
+    z-index: 2; }
   .s-evaluation-player video {
     height: 95vh; }
 
@@ -572,7 +583,7 @@ h1, h2, h3, h4, h5, h6 {
         display: flex;
         cursor: pointer; }
         .s-video-controls .s-video-time .s-slider .s-slider-bar .s-slider-played {
-          background: #1889f2;
+          background: #151f29;
           height: 100%; }
         .s-video-controls .s-video-time .s-slider .s-slider-bar .s-slider-buffered {
           background: #9e9e9e;
@@ -637,7 +648,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 60px; }
 
 .panel-card, .panel-add {
-  border-radius: 3px; }
+  margin-bottom: 10px; }
   .panel-card:not(.panel-add), .panel-add:not(.panel-add) {
     box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
   .panel-card:only-of-type(a):hover, .panel-add:only-of-type(a):hover, .panel-card:only-of-type(a):active, .panel-add:only-of-type(a):active, .panel-card:only-of-type(a):focus, .panel-add:only-of-type(a):focus {

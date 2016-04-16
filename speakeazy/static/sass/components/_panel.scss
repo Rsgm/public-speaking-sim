@@ -9,12 +9,10 @@
 }
 
 .panel-card {
+  margin-bottom: 10px;
   &:not(.panel-add) {
     @include card(1);
   }
-
-  border-radius: 3px;
-
   &:only-of-type(a) {
     &:hover, &:active, &:focus {
         background-color: #F5F5F5 - $hover;

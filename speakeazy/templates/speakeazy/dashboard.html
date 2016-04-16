@@ -48,7 +48,7 @@
 
                 <div class="uk-flex uk-grid">
                     {% for recording in recording_list %}
-                        <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-2">
+                        <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-4">
                             <a class="" href="{% url 'recordings:recording:view' 'owner' recording.pk %}">
                                 <figure class="uk-overlay uk-overlay-hover">
                                     <video class="" src="{{ recording.thumbnail_video.url }}"
