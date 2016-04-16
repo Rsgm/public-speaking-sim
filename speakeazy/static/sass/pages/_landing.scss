@@ -99,23 +99,6 @@
     }
   }
 
-  #points {
-    background: white;
-
-    i {
-      color: #0c0cf3;
-      padding: 0 100px;
-    }
-
-    .s-point {
-      margin-bottom: 50px;
-    }
-
-    img {
-      height: 100%;
-    }
-  }
-
   #demo {
     background-color: $secondary-brand-color;
     text-align: center;
@@ -135,8 +118,21 @@
     }
   }
 
+  #points {
+    background: #e1f5fe;
+
+    .s-point {
+      margin-bottom: 50px;
+    }
+
+    img {
+      height: 100%;
+    }
+  }
+
   #process {
     background-color: $brand-color-dark;
+    color: white;
 
     .uk-grid > * {
       margin-top: 70px;
@@ -153,16 +149,12 @@
       margin: 0 auto;
       padding-bottom: 15px;
       display: block;
-      color: #fff;
       font-size: 2.3em;
+      line-height: 42px;
       border-bottom: 2px solid #fff;
     }
 
-    h3 {
-      color: $light-grey
-    }
-
-    p {
+    h2 {
       color: white;
     }
   }
@@ -214,20 +206,5 @@
     background-color: #1DE9B6;
     color: #fff;
     width: 82px;
-  }
-
-  #main h1, #main h2 {
-    text-align: center;
-    color: #fff;
-  }
-
-  #points i {
-    color: #1DE9B6;
-    padding: 0 40px 0 0;
-    font-size: 80px;
-  }
-
-  #process h2 {
-    color: #fff;
   }
 }
