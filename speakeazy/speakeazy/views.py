@@ -17,11 +17,9 @@ class Dashboard(LoginRequiredMixin, TemplateView):
 
         projects = UserProject.objects.filter(user=self.request.user)
 
-        kwargs['project_recent_list'] = projects.order_by('-created_time')[:6]
-        kwargs['project_due_list'] = projects.order_by('-due_date')[:6]
-        kwargs['project_list'] = UserProject.objects.filter(user=self.request.user).order_by('-due_date')[:6]
+        kwargs['project_list'] = projects.order_by('-created_time')[:8]
         kwargs['recording_list'] = Recording.objects.filter(project__user=self.request.user,
-                                                            state=RECORDING_FINISHED).order_by('-finish_time')[:6]
+                                                            state=RECORDING_FINISHED).order_by('-finish_time')[:8]
 
         kwargs['group_list'] = Group.objects.filter(groupmembership__user=self.request.user).order_by('-created_time')
 

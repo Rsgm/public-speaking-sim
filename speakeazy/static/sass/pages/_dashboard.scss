@@ -25,40 +25,30 @@
 }
 
 #dashboard {
-  .projects-parent {
+  #projects {
     border-right: 1px solid #ECECEC;
     margin-right: 25px;
     padding-right: 25px;
     box-sizing: border-box;
   }
-  .home-project-flex-box {
+
+  .dashboard-title {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 30px 0;
-    /* text-transform: uppercase; */
-    background-color: #E0E0E0;
+    background-color: $light-grey;
     padding: 8px 5px;
-    border-radius: 4px;
     max-width: 50%;
     box-sizing: border-box;
     @include card(0);
   }
-  .home-group-flex-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 30px 0;
-    /* text-transform: uppercase; */
-    background-color: #E0E0E0;
-    padding: 8px 5px;
-    border-radius: 4px;
+
+  #groups .dashboard-title {
     max-width: 350px;
-    box-sizing: border-box;
-    @include card(0);
   }
 
-  .home-dashboard-header {
+  h2 {
     margin-bottom: 0;
     text-transform: uppercase;
     color: #000;
@@ -67,19 +57,15 @@
     padding-right: 5px;
   }
 
-  a.home-dashboard-button {
+  .dashboard-button {
     @include card(1);
-    background-color: $secondary-brand-color;
+
     color: #fff;
     font-size: 14px;
     padding: 4px 15px;
-    border-radius: 3px;
+    border-radius: 2px;
     margin: 0 6px;
 
-    @include on-event{
-      text-decoration: none;
-      background-color: $secondary-brand-color - $hover;
-    }
+    @include button-color($secondary-brand-color);
   }
-
 }
