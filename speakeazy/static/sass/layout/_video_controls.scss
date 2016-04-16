@@ -7,7 +7,7 @@
   & > * {
     @extend .s-video-overlay;
     display: initial;
-    position: static;
+    position: static !important;
 
     margin: 0 10px;
 
