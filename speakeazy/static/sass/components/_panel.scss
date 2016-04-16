@@ -14,8 +14,8 @@
     @include card(1);
   }
   &:only-of-type(a) {
-    &:hover, &:active, &:focus {
-        background-color: #F5F5F5 - $hover;
+    @include on-event{
+      background-color: #F5F5F5 - $hover;
     }
   }
 }
@@ -37,7 +37,7 @@
     padding-bottom: 10px;
   }
 
-  &:hover, &:active, &:focus {
+  @include on-event{
     text-decoration: none;
     background-color: $secondary-brand-color - $hover;
   }

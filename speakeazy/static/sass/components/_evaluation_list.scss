@@ -20,7 +20,8 @@
       cursor: pointer;
     }
 
-    &:first-child { // will always be create evaluation
+    &:first-child {
+      // will always be create evaluation
 
       .s-create-evaluation {
         textarea {
@@ -45,6 +46,7 @@
     .uk-panel {
       background: $dark-grey;
       color: white;
+      width: 215px;
 
       .uk-panel-title {
         color: $light-grey;;

@@ -17,57 +17,53 @@ $code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',
 
 
 
-
-/// Primary text color
-/// @type Color
-$text-color: rgba(0, 0, 0, .87) !default; // #212121
-
-/// Secondary text color
-/// @type Color
-$secondary-text: rgba(0, 0, 0, .54) !default;
-
-/// Icon text color
-/// @type Color
-$icon-text: rgba(0, 0, 0, .38) !default;
-
-/// Icon text color on dark background
-/// @type Color
-$dark-icon-text: rgba(255, 255, 255, .50) !default;
-
-/// Main brand color
-/// @type Color
-$brand-color: #82ed82 !default; // #00C900
-$brand-color-dark:#53b08b;
-
-
-/// Main brand color
-/// @type Color
-$secondary-brand-color: #0091EA !default; // #006cd7
-
-/// Light grey
-/// @type Color
-$light-grey: #eeeeee !default;
-
-/// Medium grey
-/// @type Color
-$mid-grey: #9e9e9e !default;
-
-/// Dark grey
-/// @type Color
-$dark-grey: #616161 !default;
-
-/// Very Dark grey
-/// @type Color
-$very-dark-grey: #212121 !default;
-
-
 /// hover subtraction
 $hover: #1a1a1a;
 
 
+/// Primary text color
+$text-color: rgba(0, 0, 0, .87) !default; // #212121
+
+/// Secondary text color
+$secondary-text: rgba(0, 0, 0, .54) !default;
+
+/// Primary text color
+$text-light-color: #ffffff !default; // #212121
+
+/// Secondary text color
+$secondary-light-text: rgba(255, 255, 255, .7) !default;
+
+/// Icon text color
+$icon-text: rgba(0, 0, 0, .38) !default;
+
+/// Icon text color on dark background
+$dark-icon-text: rgba(255, 255, 255, .50) !default;
+
+/// Main brand color
+$brand-color: #82ed82 !default; // #00C900
+$brand-color-dark: #53b08b !default;
+
+$secondary-brand-color: #0d47a1 !default;
+
+// color for the "call to action" buttons on the landing page
+$landing-button-color: #ff5722 !default;
+
+/// Light grey
+$light-grey: #eeeeee !default;
+
+/// Medium grey
+$mid-grey: #9e9e9e !default;
+
+/// Dark grey
+$dark-grey: #616161 !default;
+
+/// Very Dark grey
+$very-dark-grey: #212121 !default;
+
+
+
 /// Container's maximum width
 /// Below that is 100%
-/// @type Length
 $max-width: 1200px !default;
 
 
@@ -118,6 +114,7 @@ $video-play-pause-height: 44px !default;
 $video-slider-primary-color: #151f29 !default;
 $video-overlay-padding: 15px !default;
 $video-overlay-color: #fff !default;
+$video-overlay-background: #2962ff !default; // use #2979ff if this is a bit too dark
 $video-overlay-color-hover: rgba(255,255,255,0.7) !default;
 
 $volume-width: 10px !default;

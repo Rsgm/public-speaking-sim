@@ -2,72 +2,69 @@
 // This file contains styles that are specific to the dashboard page.
 // -----------------------------------------------------------------------------
 
-
-
 .dashboard-welcome {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
 
-        h3 {
-            margin: 0;
-        }
-
-        a{
-            margin-left: 5px;
-            color:$secondary-brand-color
-        }
+  h3 {
+    margin: 0;
   }
 
-  .dashboard-section-header {
-      color:#828282;
+  a {
+    margin-left: 5px;
+    color: $secondary-brand-color
   }
+}
+
+.dashboard-section-header {
+  color: #828282;
+}
 
 #dashboard {
-    .projects-parent {
-        border-right: 1px solid #ECECEC;
-        margin-right: 25px;
-        padding-right:25px;
-        box-sizing: border-box;
-    }
-      .home-project-flex-box {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin: 30px 0;
-          /* text-transform: uppercase; */
-          background-color: #E0E0E0;
-          padding: 8px 5px;
-          border-radius: 4px;
-          max-width: 50%;
-          box-sizing: border-box;
-          @include card(0);
-      }
-      .home-group-flex-box {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin: 30px 0;
-          /* text-transform: uppercase; */
-          background-color: #E0E0E0;
-          padding: 8px 5px;
-          border-radius: 4px;
-          max-width: 350px;
-          box-sizing: border-box;
-          @include card(0);
-      }
-
+  .projects-parent {
+    border-right: 1px solid #ECECEC;
+    margin-right: 25px;
+    padding-right: 25px;
+    box-sizing: border-box;
+  }
+  .home-project-flex-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+    /* text-transform: uppercase; */
+    background-color: #E0E0E0;
+    padding: 8px 5px;
+    border-radius: 4px;
+    max-width: 50%;
+    box-sizing: border-box;
+    @include card(0);
+  }
+  .home-group-flex-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+    /* text-transform: uppercase; */
+    background-color: #E0E0E0;
+    padding: 8px 5px;
+    border-radius: 4px;
+    max-width: 350px;
+    box-sizing: border-box;
+    @include card(0);
+  }
 
   .home-dashboard-header {
-      margin-bottom: 0;
-      text-transform: uppercase;
-      color: #000;
-      font-weight: 200;
-      font-size:20px;
-      padding-right: 5px;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    color: #000;
+    font-weight: 200;
+    font-size: 20px;
+    padding-right: 5px;
   }
 
   a.home-dashboard-button {
@@ -79,7 +76,7 @@
     border-radius: 3px;
     margin: 0 6px;
 
-    &:hover, &:active, &:focus {
+    @include on-event{
       text-decoration: none;
       background-color: $secondary-brand-color - $hover;
     }

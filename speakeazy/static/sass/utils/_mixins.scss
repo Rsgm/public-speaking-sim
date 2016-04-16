@@ -23,6 +23,15 @@
   }
 }
 
+// Give buttons similar hover colors and behaviors
+@mixin button-hover($color) {
+  @include on-event {
+    text-decoration: none;
+    background-color: $color - $hover;
+    @content
+  }
+}
+
 /// Make a context based selector a little more friendly
 /// @author Hugo Giraudel
 /// @param {String} $context
