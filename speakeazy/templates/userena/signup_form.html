@@ -7,7 +7,7 @@
 <form class="s-form" action="" method="post">
   {% csrf_token %}
   <fieldset class="s-form-field">
-    <legend>{% trans "Sign Up" %}</legend>
+    <legend>{% trans "Register" %}</legend>
     {{ form.non_field_errors }}
     {% for field in form %}
     {{ field.errors }}
@@ -24,6 +24,6 @@
     {% endif %}
     {% endfor %}
   </fieldset>
-  <input class="s-form-submit" type="submit" value="{% trans "Sign Up"%}" />
+  <input class="s-form-submit" type="submit" value="{% trans "Register"%}" />
 </form>
 {% endblock %}
