@@ -49,14 +49,7 @@
 
           <div class="uk-flex uk-grid">
             {% for recording in recording_list %}
-              <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-4 uk-margin-bottom">
-                <a class="card-1 uk-thumbnail" href="{% url 'recordings:recording:view' 'owner' recording.pk %}">
-                  <video class="s-video-thumbnail" src="{{ recording.thumbnail_video.url }}" poster="{{ recording.thumbnail_image.url }}" loop></video>
-                  <div class="uk-thumbnail-caption">
-                    {{ recording.project.name }} - {{ recording.slug }}
-                  </div>
-                </a>
-              </div>
+              {% include 'components/recording_thumbnail.html' %}
             {% endfor %}
           </div>
         </div>
