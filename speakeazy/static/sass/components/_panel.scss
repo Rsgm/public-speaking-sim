@@ -9,21 +9,16 @@
 }
 
 .panel-card {
-  margin-bottom: 10px;
-
   &:not(.panel-add) {
     @include card(1);
   }
 
   &:only-of-type(a) {
-    @include button-color(#F5F5F5);
+    @include button(1, #F5F5F5);
   }
 }
 
 .panel-add {
-  @extend .panel-card;
-
-  @include card(2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,12 +27,12 @@
 
   padding: 0;
 
+  @include button(2, $secondary-brand-color);
+
   .add-text {
     color: #fff;
     padding-bottom: 10px;
   }
-
-  @include button-color($secondary-brand-color);
 
   i {
     margin-bottom: -2px !important;
@@ -46,7 +41,7 @@
   }
 }
 
-.uk-panel-header .uk-panel-title {
+.uk-panel-title {
   font-size: 16px;
   border-bottom: 1px solid $brand-color-dark;
 }

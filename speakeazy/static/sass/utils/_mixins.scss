@@ -23,17 +23,6 @@
   }
 }
 
-// Give buttons similar hover colors and behaviors
-@mixin button-color($color) {
-  background-color: $color;
-
-  @include on-event {
-    text-decoration: none;
-    background-color: $color - $hover;
-    @content
-  }
-}
-
 /// Make a context based selector a little more friendly
 /// @author Hugo Giraudel
 /// @param {String} $context
@@ -77,5 +66,26 @@
     @warn "Invalid $depth `#{$depth}` for mixin `card`.";
   } @else {
     box-shadow: bottom-shadow($depth), top-shadow($depth);
+  }
+}
+
+// Give buttons similar hover colors and behaviors
+@mixin button($card, $background, $text-color: false) {
+  background-color: $background;
+  @include card($card);
+  @if $text-color {
+    color: $text-color
+  }
+
+  @include on-event {
+    text-decoration: none;
+    background-color: $background - $hover;
+    @include card($card + 1);
+
+    @if $text-color {
+      color: $text-color
+    }
+
+    @content
   }
 }

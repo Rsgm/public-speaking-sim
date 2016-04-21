@@ -58,14 +58,12 @@
   }
 
   .dashboard-button {
-    @include card(1);
-
     color: #fff;
     font-size: 14px;
     padding: 4px 15px;
     border-radius: 2px;
     margin: 0 6px;
 
-    @include button-color($secondary-brand-color);
+    @include button(1, $secondary-brand-color);
   }
 }

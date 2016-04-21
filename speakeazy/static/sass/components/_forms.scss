@@ -23,12 +23,10 @@
 }
 
 .s-form-submit {
-  @include card(1);
   background-color: $secondary-brand-color;
   width: 300px;
   border: none;
-  color: #fff;
   margin-top: 6px;
 
-  @include button-color($secondary-brand-color);
+  @include button(1, $secondary-brand-color, #fff);
 }

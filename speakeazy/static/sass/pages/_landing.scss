@@ -169,8 +169,7 @@
     border-radius: 4px;
     text-align: center;
 
-    @include card(2);
-    @include button-color($landing-button-color);
+    @include button(2, $landing-button-color);
   }
 
   // cody.css

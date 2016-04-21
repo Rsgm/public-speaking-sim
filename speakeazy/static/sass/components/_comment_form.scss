@@ -14,8 +14,7 @@
   }
 
   button {
-    //@include card(2);
     margin-top: 15px;
-    //align-self: flex-end;
+    @include button(1, $secondary-brand-color)
   }
 }
