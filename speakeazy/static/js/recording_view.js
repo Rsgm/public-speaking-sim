@@ -166,8 +166,9 @@
   //    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
   //  };
   //
-  //  $.post(Urls['recordings:recording:share:user']($(this).attr('data-group')), data, function () {
-  //    // todo: success notification
+  //  $.post(Urls['recordings:settings:share:user']($(this).attr('data-group')), data, function () {
+  //    UIkit.notify("Group evaluation request submitted.", {status: 'success'});
+  //    UIkit.modal("#share-submission-modal").hide();
   //  });
   //});
 
@@ -178,7 +179,7 @@
       csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
     };
 
-    $.post(Urls['recordings:recording:share:submission'](se.authorization.type, se.authorization.key), data, function () {
+    $.post(Urls['recordings:settings:share:submission'](se.authorization.key), data, function () {
       UIkit.notify("Group evaluation request submitted.", {status: 'success'});
       UIkit.modal("#share-submission-modal").hide();
     });

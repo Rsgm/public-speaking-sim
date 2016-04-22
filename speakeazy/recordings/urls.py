@@ -13,4 +13,7 @@ urlpatterns = [
 
     url(r'^r/(?P<type>[\w]+)/(?P<key>\d+)/',
         include("speakeazy.recordings.views.recording.urls", namespace="recording")),
+
+    url(r'^settings/(?P<pk>\d+)/',
+        include("speakeazy.recordings.views.settings.urls", namespace="settings")),
 ]

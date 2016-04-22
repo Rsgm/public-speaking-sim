@@ -1,4 +1,10 @@
-// Positions the settings icon on a uk-thumbnail
-.uk-thumbnail{
+.delete-recording {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  opacity: 0.5;
 
+  &:hover {
+    opacity: .8;
+  }
 }

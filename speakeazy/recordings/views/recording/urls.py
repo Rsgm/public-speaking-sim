@@ -11,7 +11,6 @@ urlpatterns = [
         name='view'
     ),
 
-    url(r'^share/', include("speakeazy.recordings.views.recording.share.urls", namespace="share")),
     url(r'^comments/', include("speakeazy.recordings.views.recording.comments.urls", namespace="comments")),
     url(r'^evaluations/', include("speakeazy.recordings.views.recording.evaluations.urls", namespace="evaluations")),
 ]

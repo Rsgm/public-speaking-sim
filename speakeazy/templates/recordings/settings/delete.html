@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}
+{% block title %} - Delete User{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+  <h1>Are you sure you want to delete this recording?</h1>
+
+  <p>
+    This will delete all comments and evaluations of this video. Any links to this video will no longer work. Anyone
+    who had access to this recording before, will no longer have access to it.
+  </p>
+
+  <p>
+    If you wish to keep the recording, you may use the back button.
+  </p>
+
+  <form class="uk-form uk-form-stacked" method="post" action="{% url 'recordings:settings:delete' recording.pk %}">
+    {% csrf_token %}
+    <div class="uk-form-row">
+      <button type="submit" class="uk-button uk-button-danger">Delete</button>
+    </div>
+  </form>
+{% endblock %}

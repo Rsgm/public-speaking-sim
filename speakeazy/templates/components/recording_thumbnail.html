@@ -1,16 +1,10 @@
-<div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-4 uk-margin-bottom">
+<div class="uk-margin-bottom uk-position-relative">
   <a class="card-1 uk-thumbnail" href="{% url 'recordings:recording:view' 'owner' recording.pk %}">
     <video class="s-video-thumbnail" src="{{ recording.thumbnail_video.url }}" poster="{{ recording.thumbnail_image.url }}" loop></video>
     <div class="uk-thumbnail-caption">
       {{ recording.project.name }} - {{ recording.slug }}
     </div>
 
-    <div data-uk-dropdown>
-      <i class="uk-icon-cog"></i>
-
-      <!-- This is the dropdown -->
-      <div class="uk-dropdown">...</div>
-
-    </div>
+    <a class="delete-recording uk-close uk-close-alt" data-uk-tooltip title="Delete recording" href="{% url 'recordings:settings:delete' recording.pk %}"></a>
   </a>
 </div>

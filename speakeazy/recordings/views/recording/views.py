@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from speakeazy.recordings.mixins import RecordingMixin, OWNER
 from speakeazy.recordings.models import EvaluationType
-from speakeazy.recordings.views.recording.share.forms import ShareUserForm, ShareSubmissionForm
+from speakeazy.recordings.views.settings.forms import ShareUserForm, ShareSubmissionForm
 from vanilla.views import TemplateView
 
 
