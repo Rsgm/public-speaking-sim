@@ -80,7 +80,6 @@
   @include on-event {
     text-decoration: none;
     background-color: $background - $hover;
-    @include card($card + 1);
 
     @if $text-color {
       color: $text-color
