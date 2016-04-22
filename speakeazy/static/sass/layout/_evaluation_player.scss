@@ -80,8 +80,6 @@
           height: 100%;
 
           .s-points {
-            background-color: red;
-
             position: absolute;
             top: 0;
             height: 10px;
@@ -127,15 +125,6 @@
         }
       }
     }
-  }
-
-  .s-slider-comment-marker {
-    transform: rotate(90deg);
-    font-size: 107%;
-    vertical-align: -10%;
-    top: 13px !important;
-    z-index: 2;
-    color: white;
   }
 
   video {
