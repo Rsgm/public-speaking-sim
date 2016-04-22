@@ -166,7 +166,7 @@
   //    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
   //  };
   //
-  //  $.post(Urls['recordings:settings:share:user']($(this).attr('data-group')), data, function () {
+  //  $.post(Urls['recordings:settings:user']($(this).attr('data-group')), data, function () {
   //    UIkit.notify("Group evaluation request submitted.", {status: 'success'});
   //    UIkit.modal("#share-submission-modal").hide();
   //  });
@@ -179,7 +179,7 @@
       csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
     };
 
-    $.post(Urls['recordings:settings:share:submission'](se.authorization.key), data, function () {
+    $.post(Urls['recordings:settings:submission'](se.authorization.key), data, function () {
       UIkit.notify("Group evaluation request submitted.", {status: 'success'});
       UIkit.modal("#share-submission-modal").hide();
     });
@@ -318,8 +318,6 @@
 
     minDistance = 15 / $sliderBar.width() * $video[0].duration;
     minDistance = minDistance > absoluteMinDistance ? minDistance : absoluteMinDistance;
-
-    var lastTime;
 
     evaluations.map(function (evaluation) {
       addPoint(evaluation.time);
