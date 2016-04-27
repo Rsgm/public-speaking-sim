@@ -33,6 +33,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    width:100%;
 
     video {
       position: absolute;
@@ -205,4 +206,11 @@
     color: #fff;
     width: 82px;
   }
+}
+
+@media screen and (max-width: 768px) {
+    .s-brand svg {
+        height: 79%;
+        margin-top: 10px;
+    }
 }
