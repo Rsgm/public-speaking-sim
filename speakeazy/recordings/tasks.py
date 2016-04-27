@@ -104,7 +104,7 @@ def concatenate_media(recording_id, piece_list):
     subprocess.call(command.split())
 
     # set object finished flags and save media
-    recording = Recording.objects.get(id=recording_id)
+    recording = Recording.objects.get(pk=recording_id)
     recording.finish_time = datetime.now()
     recording.state = models.RECORDING_FINISHED
     recording.thumbnail_image.save('%s-temp.png' % recording_id, ContentFile(''))
