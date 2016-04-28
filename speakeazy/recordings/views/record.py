@@ -19,6 +19,7 @@ UPLOAD = 'upload'
 FINISH = 'finish'
 
 
+@sensitive_post_parameters('a', 'v')
 class Record(LoginRequiredMixin, TemplateView):
     template_name = 'recordings/record.html'
 
@@ -27,7 +28,6 @@ class Record(LoginRequiredMixin, TemplateView):
         kwargs['project'] = get_object_or_404(UserProject, user=self.request.user, slug=self.kwargs['project'])
         return kwargs
 
-    @sensitive_post_parameters('a', 'v')
     def post(self, request, *args, **kwargs):
         project_slug = kwargs['project']
         recording_pk = request.POST['recording']
