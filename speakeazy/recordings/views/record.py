@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from speakeazy.projects.models import UserProject
 from speakeazy.recordings import models
@@ -8,7 +9,7 @@ from speakeazy.recordings.tasks import convert_media, concatenate_media
 from braces.views import LoginRequiredMixin
 from django.conf import settings
 from django.http import JsonResponse
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from vanilla.views import TemplateView
 from django.contrib import messages
@@ -19,7 +20,6 @@ UPLOAD = 'upload'
 FINISH = 'finish'
 
 
-@sensitive_post_parameters('a', 'v')
 class Record(LoginRequiredMixin, TemplateView):
     template_name = 'recordings/record.html'
 
@@ -28,18 +28,23 @@ class Record(LoginRequiredMixin, TemplateView):
         kwargs['project'] = get_object_or_404(UserProject, user=self.request.user, slug=self.kwargs['project'])
         return kwargs
 
+    @method_decorator(sensitive_post_parameters('a', 'v'))
     def post(self, request, *args, **kwargs):
         project_slug = kwargs['project']
-        recording_pk = request.POST['recording']
 
         if request.POST['request'] == START:
             return self.start(project_slug, request)
 
         elif request.POST['request'] == UPLOAD:
-            return self.upload(recording_pk, recording_pk, request)
+            recording_pk = request.POST['recording']
+            return self.upload(project_slug, recording_pk, request)
 
         elif request.POST['request'] == FINISH:
+            recording_pk = request.POST['recording']
             return self.finish(project_slug, recording_pk, request)
+
+        else:
+            raise Http404()
 
     def start(self, project_slug, request):
         project = get_object_or_404(UserProject, user=request.user, slug=project_slug)

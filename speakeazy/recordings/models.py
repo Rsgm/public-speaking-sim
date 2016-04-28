@@ -29,10 +29,8 @@ class Recording(Model):
     thumbnail_image = models.FileField(upload_to='thumbnails', null=True, blank=True)
     thumbnail_video = models.FileField(upload_to='thumbnails', null=True, blank=True)
 
-    slug = models.IntegerField()
-
     def __str__(self):
-        return '%s - %s' % (self.project, self.slug)
+        return '%s - %s' % (self.project, self.pk)
 
     def get_absolute_url(self):
         '''

@@ -2,7 +2,7 @@
   <a class="card-1 uk-thumbnail" href="{% url 'recordings:recording:view' 'owner' recording.pk %}">
     <video class="s-video-thumbnail" src="{{ recording.thumbnail_video.url }}" poster="{{ recording.thumbnail_image.url }}" loop></video>
     <div class="uk-thumbnail-caption">
-      {{ recording.project.name }} - {{ recording.slug }}
+      {{ recording.project.name }} - {{ recording.pk }}
     </div>
 
     <a class="delete-recording uk-close uk-close-alt" data-uk-tooltip title="Delete recording" href="{% url 'recordings:settings:delete' recording.pk %}"></a>
