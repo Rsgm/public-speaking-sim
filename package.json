@@ -15,8 +15,15 @@
     "grunt-sass",
     "grunt-postcss",
     "cssnano",
-    "autoprefixer-core",
-    "pixrem"
+    "autoprefixer",
+    "pixrem",
+    "babel-core",
+    "babel-plugin-transform-runtime",
+    "babel-preset-es2015",
+    "vue-hot-reload-api",
+    "vueify-insert-css",
+    "vueify",
+    "grunt-vueify"
   ],
   "engines": {
     "node": ">=0.12.0"

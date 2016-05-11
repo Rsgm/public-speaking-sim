@@ -76,3 +76,5 @@ DATABASES = {
 }
 
 BCRYPT_ROUNDS = 12
+
+JWT_KEYFILE_PATH = 'resources/jwt_dev.pem'

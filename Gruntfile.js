@@ -21,12 +21,12 @@ module.exports = function (grunt) {
             fonts: this.app + '/static/fonts',
             images: this.app + '/static/images',
             js: this.app + '/static/js',
+            apps: this.app + '/static/apps',
             manageScript: 'manage.py',
         }
     };
 
     grunt.initConfig({
-
         paths: pathsConfig(),
         pkg: appConfig,
 
@@ -35,22 +35,20 @@ module.exports = function (grunt) {
             gruntfile: {
                 files: ['Gruntfile.js']
             },
-            sass: {
+
+            css: {
                 files: ['<%= paths.sass %>/**/*.{scss,sass}'],
-                tasks: ['sass:dev'],
+                tasks: ['sass:dev', 'postcss'],
                 options: {
                     atBegin: true
                 }
             },
-            livereload: {
-                files: [
-                    '<%= paths.js %>/**/*.js',
-                    '<%= paths.sass %>/**/*.{scss,sass}',
-                    '<%= paths.app %>/**/*.html'
-                ],
+
+            urls: {
+                files: ['speakeazy/**/urls.py', 'config/urls.py'],
+                tasks: ['bgShell:collectUrls'],
                 options: {
-                    spawn: false,
-                    livereload: true,
+                    atBegin: true
                 }
             }
         },
@@ -59,9 +57,9 @@ module.exports = function (grunt) {
         sass: {
             dev: {
                 options: {
-                    outputStyle: 'nested',
-                    sourceMap: false,
-                    precision: 10
+                    sourceMap: true,
+                    precision: 10,
+                    outFile: '<%= paths.css %>/build.map.css'
                 },
                 files: {
                     '<%= paths.css %>/build.css': '<%= paths.sass %>/main.scss'
@@ -69,9 +67,9 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
-                    outputStyle: 'compressed',
-                    sourceMap: false,
-                    precision: 10
+                    sourceMap: true,
+                    precision: 10,
+                    outFile: '<%= paths.css %>/build.map.css'
                 },
                 files: {
                     '<%= paths.css %>/build.css': '<%= paths.sass %>/main.scss'
@@ -86,7 +84,7 @@ module.exports = function (grunt) {
 
                 processors: [
                     require('pixrem')(), // add fallbacks for rem units
-                    require('autoprefixer-core')({
+                    require('autoprefixer')({
                         browsers: [
                             'Android 2.3',
                             'Android >= 4',
@@ -98,7 +96,7 @@ module.exports = function (grunt) {
                             'Safari >= 6'
                         ]
                     }), // add vendor prefixes
-                    require('cssnano')() // minify the result
+                    require('cssnano')({mergeRules: false}) // minify the result
                 ]
             },
             dist: {
@@ -120,15 +118,10 @@ module.exports = function (grunt) {
             runCelery: {
                 cmd: 'celery -A speakeazy.taskapp worker -l info'
             },
-            runMailHog: {
-                cmd: './mailhog'
-            }
         }
     });
 
     grunt.registerTask('serve', [
-        'bgShell:runMailHog',
-        'bgShell:collectUrls',
         'bgShell:runDjango',
         'bgShell:runCelery',
         'watch'

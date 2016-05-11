@@ -53,3 +53,4 @@ django-flat-theme
 puput
 django_compressor
 django-easy-timezones
+pyjwt

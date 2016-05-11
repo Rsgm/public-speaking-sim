@@ -72,7 +72,9 @@ recordings/*/*
 staticfiles/
 speakeazy/static/sass/build.scss
 speakeazy/static/css/build.css
+speakeazy/static/css/build.css.map
 
+/resources/jwt_prod.pem
 
 #Production Files
 .env
@@ -81,4 +83,3 @@ config/settings/production.py
 
 #Development Files
 speakeazy.db
-

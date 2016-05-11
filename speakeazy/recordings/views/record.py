@@ -1,23 +1,28 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+
+import jwt
+from braces.views import LoginRequiredMixin
+from django.conf import settings
+from django.contrib import messages
+from django.http.response import HttpResponse, Http404
+from django.shortcuts import get_object_or_404
+from django.utils.datetime_safe import datetime
 from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.debug import sensitive_post_parameters
+from vanilla.views import TemplateView
+
 from speakeazy.projects.models import UserProject
 from speakeazy.recordings import models
 from speakeazy.recordings.models import Recording, UploadPiece
 from speakeazy.recordings.tasks import convert_media, concatenate_media
-from braces.views import LoginRequiredMixin
-from django.conf import settings
-from django.http import JsonResponse
-from django.http.response import HttpResponse, Http404
-from django.shortcuts import get_object_or_404
-from vanilla.views import TemplateView
-from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
 
 START = 'start'
 UPLOAD = 'upload'
 FINISH = 'finish'
+
+PRIVATE_KEY = open(settings.JWT_KEYFILE_PATH, 'r').read()
 
 
 class Record(LoginRequiredMixin, TemplateView):
@@ -52,7 +57,14 @@ class Record(LoginRequiredMixin, TemplateView):
         recording = Recording(project=project)
         recording.save()
 
-        return JsonResponse({'id': recording.pk})
+        data = {
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60),
+            'aud': 'speakeazy:recording',
+            'id': recording.pk,
+        }
+
+        token = jwt.encode(data, PRIVATE_KEY, algorithm='ES512')
+        return HttpResponse(token)
 
     # @ratelimit(key='user', rate='2/4s', block=True)
     def upload(self, project_slug, recording_pk, request):

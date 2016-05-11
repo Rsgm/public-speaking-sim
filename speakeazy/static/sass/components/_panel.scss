@@ -15,7 +15,7 @@
   }
 }
 
-.panel-card {
+.panel-card { // todo: this is messed up after grunt build
   &:not(.panel-add) {
     @include card(1);
   }

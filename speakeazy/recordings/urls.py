@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url, include
 from speakeazy.recordings.views.record import Record
+from vanilla.views import TemplateView
 
 urlpatterns = [
     url(
@@ -10,6 +11,8 @@ urlpatterns = [
         view=Record.as_view(),
         name='record'
     ),
+
+    url(r'^new/', TemplateView.as_view(template_name='recordings/new.html'), name="home"),
 
     url(r'^view/(?P<type>[\w]+)/(?P<key>\d+)/',
         include("speakeazy.recordings.views.recording.urls", namespace="recording")),

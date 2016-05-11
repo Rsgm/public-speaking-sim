@@ -1,8 +1,5 @@
 (function () {
-  var uploadQueue = [];
-  var uploadTotal;
   var stopped;
-  var progress;
 
   var mediaStream;
   var setupVideo;
@@ -10,12 +7,14 @@
   var stopAudioAnalyzer;
 
   var mediaRecorder;
-  var started;
 
   var uploadInterval = 3000;
   var crsf = $('input[name=csrfmiddlewaretoken]').val();
 
-  navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+  var ws = new WebSocket('ws://0.0.0.0:1500', 'sync');
+  // var ws2 = new WebSocket('ws://0.0.0.0:1500', 'async');
+
+  // navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
   $('#start-recording').click(startRecording);
   $('#stop-recording').click(stopRecording);
@@ -28,7 +27,6 @@
 
   /**
    * Sets up webcam stream object.
-   * This will ask the user for permission to access the webcam (unless using tls, iirc)
    */
   function initializeMediaStream() {
     var mediaConstraints = {
@@ -51,7 +49,6 @@
       setupVideo.play();
 
       audienceVideo = $('#audience-video').get(0);
-      audienceVideo.requestFullscreen = ( audienceVideo.requestFullscreen || audienceVideo.mozRequestFullScreen || audienceVideo.webkitRequestFullscreen);
       audienceVideo.pause();
 
       $('#preview').show();
@@ -103,7 +100,7 @@
     }
 
     function onMediaError(e) {
-      //console.error('media error', e);
+      console.error('media error', e);
     }
   }
 
@@ -116,21 +113,16 @@
 
     setupVideo.muted = true;
     audienceVideo.play();
-    //audienceVideo.requestFullscreen();
 
     $.post('/recordings/record/' + se.project + '/', {request: 'start', csrfmiddlewaretoken: crsf}, function (result) {
-      id = result.id;
+      ws.send(result);
 
       // setup recorder and start recording
-
       mediaRecorder = new MultiStreamRecorder(mediaStream);
       mediaRecorder.video = setupVideo;
 
       mediaRecorder.ondataavailable = function (blobs) {
-        upload(id, blobs.video, blobs.audio);
-        if (!started) {
-          started = true;
-        }
+        upload(blobs.video, blobs.audio);
       };
 
       mediaRecorder.start(uploadInterval);
@@ -146,96 +138,40 @@
     audienceVideo.pause();
     mediaRecorder.stop();
 
-    finish(id, function progress(size, uploadTotal) {
+    stopped = true;
+
+    ws.onmessage = function (event) {
+      var data = JSON.parse(event.data);
+      
+    };
+
+    var progress = function progress(size, uploadTotal) {
       var $progressBar = $('#finished .uk-progress-bar');
       var progress = Math.floor((uploadTotal - size) * 100 / uploadTotal);
 
       $progressBar.css('width', progress + '%');
       $progressBar.text(progress + '%');
-    });
+    };
   }
 
 
-  function upload(id, video, audio) {
-    var result = {
-      recordingUuid: id
-    };
-
-    var hasVideo = video.type.startsWith("video");
-    var hasAudio = audio.type.startsWith("audio");
-
+  function upload(video, audio) {
     console.log({
-      id: id,
       video: video,
       audio: audio
     });
 
-    function uploadBlob(result) {
-      uploadQueue.push(result);
-      if (uploadQueue.length == 1) {
-        uploadPiece();
-      }
-
-      function uploadPiece() { // recursively finish uploading
-        if (uploadQueue.length > 0) {
-          var data = uploadQueue[0];
-          data.csrfmiddlewaretoken = crsf;
-          data.recording = id;
-          data.request = 'upload';
-
-          $.post('/recordings/record/' + se.project + '/', data, function () {
-            uploadQueue.shift();
-            if (stopped) {
-              progress(uploadQueue.length, uploadTotal);
-            }
-            uploadPiece();
-          });
-        } else if (stopped) {
-          $.post('/recordings/record/' + se.project + '/', {
-            recording: id,
-            request: 'finish',
-            csrfmiddlewaretoken: crsf
-          }, function (response) {
-            window.location.href = response;
-          });
-        }
-      }
+    if (video.type.startsWith("video")) {
+      ws.send(video);
     }
 
-
-    if (video && hasVideo) {
-      var videoReader = new FileReader();
-      videoReader.readAsDataURL(video);
-
-      // encode video into base64
-      videoReader.onload = function () {
-        result.v = videoReader.result.match(/,(.*)$/)[1]; // move this to the resource
-
-        if (!audio || !hasAudio || result.a) { // upload when both are ready
-          uploadBlob(result);
-        }
-      };
+    if (audio.type.startsWith("audio")) {
+      ws.send(audio);
     }
 
-    if (audio && hasAudio) {
-      var audioReader = new FileReader();
-      audioReader.readAsDataURL(audio);
-
-      // encode audio into base64
-      audioReader.onload = function () {
-        result.a = audioReader.result.match(/,(.*)$/)[1]; // move this to the resource
-
-        if (!video || !hasVideo || result.v) { // upload when both are ready, or there is no video
-          uploadBlob(result);
-        }
-      };
+    if (stopped) {
+      ws.send(JSON.stringify({finished: true}));
     }
-  }
-
-  function finish(record, progressFn) {
-    progress = progressFn;
-    uploadTotal = uploadQueue.length;
-    stopped = record;
   }
 
   function fullscreen() {
@@ -263,5 +199,4 @@
       document.webkitExitFullscreen();
     }
   }
-
 })();
