@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 from __future__ import absolute_import, unicode_literals
 from django.core.exceptions import ImproperlyConfigured
 import environ
-from puput import PUPUT_APPS
 
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('speakeazy')
@@ -63,7 +62,7 @@ LOCAL_APPS = (
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PUPUT_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # apps that need to be added last
 INSTALLED_APPS += (
@@ -191,7 +190,6 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder'
 )
 
 # MEDIA CONFIGURATION
@@ -272,8 +270,6 @@ RECORDING_PATHS = {
 
 WAGTAIL_SITE_NAME = 'Speakeazy blog'
 FFMPEG_LOG_LEVEL = 'quiet'
-
-COMPRESS_OFFLINE = True
 
 GEOIP_DATABASE = str(ROOT_DIR.path('resources/GeoLiteCity.dat'))
 GEOIPV6_DATABASE = str(ROOT_DIR.path('resources/GeoLiteCityv6.dat'))

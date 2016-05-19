@@ -50,6 +50,4 @@ django-ratelimit
 bcrypt
 PyMySQL
 django-flat-theme
-puput
-django_compressor
 django-easy-timezones

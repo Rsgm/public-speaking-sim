@@ -23,8 +23,6 @@ urlpatterns = [
                       {'success_url': 'speakeazy:dashboard'}, name='userena_activate'),
                   url(r'^account/', include('userena.urls')),
 
-                  url(r'^blog/', include('puput.urls')),
-
                   # Your stuff: custom urls includes go here
                   url(r'', include("speakeazy.speakeazy.urls", namespace="speakeazy")),
                   url(r'^projects/', include("speakeazy.projects.urls", namespace="projects")),
