@@ -8,21 +8,10 @@
     line-height: 2em;
   }
 
-  //#vid-bg {
-  //  position: absolute;
-  //  top: 0;
-  //  right: 0;
-  //  bottom: 0;
-  //  left: 0;
-  //  overflow: hidden;
-  //  z-index: -100;
-  //
-  //}
-
-  #nav-bar {
-    background: #fff;
-
-    .uk-navbar-nav li a {
+  .uk-navbar-nav li {
+    width: 90px;
+    a {
+      color: $text-light-color;
       background-color: $brand-color-dark;
     }
   }
@@ -33,7 +22,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    width:100%;
+    width: 100%;
 
     video {
       position: absolute;
@@ -200,17 +189,11 @@
     text-align: center;
     border-radius: 3px;
   }
-
-  .uk-navbar-nav li:last-child a, .uk-navbar-nav li:nth-last-child(2) a {
-    background-color: #1DE9B6;
-    color: #fff;
-    width: 82px;
-  }
 }
 
 @media screen and (max-width: 768px) {
-    .s-brand svg {
-        height: 79%;
-        margin-top: 10px;
-    }
+  .s-brand svg {
+    height: 79%;
+    margin-top: 10px;
+  }
 }
