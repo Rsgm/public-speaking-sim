@@ -26,12 +26,10 @@
 
     <!-- This file store project specific CSS -->
     <link href="{% static 'css/build.css' %}" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>
   {% endblock %}
 
-  <script type="text/javascript">
-    var se = {};
-  </script>
+  <script>var se = {};</script>
 </head>
 
 <body>
@@ -124,9 +122,9 @@
 
 {# django messaging framework #}
 {% if messages %}
-  <script type="text/javascript">
+  <script>
     {% for message in messages %}
-      UIkit.notify("{{ message }}", {status: '{{ message.tags }}'});
+      UIkit.notify("{{ message | escapejs }}", {status: '{{ message.tags | escapejs }}'});
     {% endfor %}
   </script>
 {% endif %}

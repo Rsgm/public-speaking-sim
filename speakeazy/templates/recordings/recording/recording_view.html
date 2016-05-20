@@ -141,22 +141,22 @@
 
 
   <script>
-    se.user = '{{ user.username }}';
-    se.project = '{{ recording.project.slug }}';
-    se.recording = '{{ recording.slug }}';
+    se.user = '{{ user.username | escapejs }}';
+    se.project = '{{ recording.project.slug | escapejs }}';
+    se.recording = '{{ recording.slug | escapejs }}';
 
     se.authorization = {
-      'type': '{{ authorization.type }}',
-      'key': '{{ authorization.key }}'
+      'type': '{{ authorization.type | escapejs }}',
+      'key': '{{ authorization.key | escapejs }}'
     };
 
     var evaluations = [
       {% for evaluation in evaluation_list %}
         {
           time: {{ evaluation.seconds }},
-          evaluator: '{{ evaluation.evaluator }}',
-          icon: '{{ evaluation.type.icon_class }}',
-          text: '{{ evaluation.text }}'
+          evaluator: '{{ evaluation.evaluator | escapejs }}',
+          icon: '{{ evaluation.type.icon_class | escapejs }}',
+          text: '{{ evaluation.text | escapejs }}'
         },
       {% endfor %}
     ];
