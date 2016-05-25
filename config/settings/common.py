@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 from __future__ import absolute_import, unicode_literals
 from django.core.exceptions import ImproperlyConfigured
 import environ
+import os
 
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('speakeazy')
@@ -80,7 +81,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'easy_timezones.middleware.EasyTimezoneMiddleware'
+    'easy_timezones.middleware.EasyTimezoneMiddleware',
 )
 
 # MIGRATIONS CONFIGURATION
@@ -243,8 +244,6 @@ AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 # CELERY
 # ------------------------------------------------------------------------------
 INSTALLED_APPS += ('speakeazy.taskapp.celery.CeleryConfig',)
-# if you are not using the django database broker (e.g. rabbitmq, redis, memcached), you can remove the next line.
-BROKER_URL = env("CELERY_BROKER_URL", default='django://')
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'

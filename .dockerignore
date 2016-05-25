@@ -1,24 +1,17 @@
 # .dockerignore
 .git/
-.env
+.idea/
 docs/
 node_modules/
-tests/
 recordings/
+speakeazy/media/
 staticfiles/
+tests/
 venv/
-speakeazy.db
 
-.travis.yml
-env.example
+.editorconfig
 .gitattributes
-.coveragerc
+.gitignore
 docker-compose.yml
 Dockerfile-dev
-app.json
-.editorconfig
-.gitignore
-dev.yml
-.pylintrc
-LICENSE
-package.json
+speakeazy.db
