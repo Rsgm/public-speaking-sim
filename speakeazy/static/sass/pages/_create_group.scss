@@ -1,0 +1,18 @@
+#group-form {
+  padding-bottom: 130px;
+
+  h1 {
+    color: $brand-color-dark;
+    text-align: center;
+  }
+
+  h2 {
+    color: $brand-color-dark;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  #group-settings {
+    @extend .s-form;
+  }
+}

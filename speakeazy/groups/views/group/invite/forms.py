@@ -5,7 +5,7 @@ from speakeazy.groups.models import GroupInvite
 class AddForm(forms.ModelForm):
     class Meta:
         model = GroupInvite
-        fields = ('name', 'description', 'authorizations', 'uses', 'expires')
+        fields = ('name', 'description', 'roles', 'uses', 'expires')
         widgets = {
             'expires': forms.SplitDateTimeWidget,
         }
@@ -27,7 +27,7 @@ class AddForm(forms.ModelForm):
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = GroupInvite
-        fields = ('description', 'authorizations', 'uses', 'expires')
+        fields = ('description', 'roles', 'uses', 'expires')
         widgets = {
             'expires': forms.SplitDateTimeWidget,
         }

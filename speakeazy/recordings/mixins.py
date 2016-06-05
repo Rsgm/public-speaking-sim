@@ -21,7 +21,7 @@ def not_found():
 class RecordingMixin(object):
     """
     View mixin which verifies that a user has access to view a recording, comment, or evaluate.
-    
+
     Needs login required mixin on the view
     """
 
@@ -74,14 +74,15 @@ class RecordingMixin(object):
 
         submission = get_object_or_404(queryset)
 
-        # check submission availability
-        if submission.grader == request.user and not submission.finished:
-            pass
-        elif submission.grader is None:
-            submission.grader = request.user
-            submission.save()
-        else:
-            not_found()
+        # ignore this for now
+        # # check submission availability
+        # if submission.grader == request.user and not submission.finished:
+        #     pass
+        # elif submission.grader is None:
+        #     submission.grader = request.user
+        #     submission.save()
+        # else:
+        #     not_found()
 
         # check permissions
         permissions = request.user.groupmembership_set.filter(group=submission.group) \

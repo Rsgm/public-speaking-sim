@@ -1,0 +1,5 @@
+{% extends "floppyforms/input.html" %}
+
+{% block input %}
+  <select-input class="s-select" name="{{ name }}" :choices="{{ objects }}" :multiple="{{ multiple }}" :end="{{ custom_end_object }}"></select-input>
+{% endblock %}

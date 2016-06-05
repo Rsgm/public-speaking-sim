@@ -5,8 +5,8 @@ from speakeazy.groups.models import GroupMembership
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = GroupMembership
-        fields = ('authorizations',)
+        fields = ('roles',)
 
     def __init__(self, *args, **kwargs):
         super(UpdateForm, self).__init__(*args, **kwargs)
-        self.fields['authorizations'].queryset = self.instance.group.authorization_set.all()
+        self.fields['roles'].queryset = self.instance.group.authorization_set.all()

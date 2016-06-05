@@ -45,12 +45,14 @@
 @import 'components/card';
 @import 'components/textarea';
 @import 'components/thumbnail_settings';
+@import 'components/select';
 //
 //
 // 6. Page-specific styles
 @import 'pages/landing';
 @import 'pages/dashboard';
 @import 'pages/record';
+@import 'pages/create_group';
 //
 //
 // 7. Themes

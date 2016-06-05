@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+
+from django.conf.urls import include, url
+
+from speakeazy.groups.views.createGroup import CreateGroup
 from speakeazy.groups.views.groupDashboard import GroupDashboard
 from speakeazy.groups.views.groupList import GroupList
-from django.conf.urls import include, url
 from speakeazy.groups.views.joinGroup import JoinGroup, JoinGroupLink
-from speakeazy.groups.views.newGroup import NewGroup
 
 urlpatterns = [
     url(
@@ -20,9 +22,9 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^new/$',
-        view=NewGroup.as_view(),
-        name="newGroup"
+        regex=r'^create/$',
+        view=CreateGroup.as_view(),
+        name="create_group"
     ),
 
     url(
