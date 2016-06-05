@@ -10,19 +10,19 @@ class ModelSelectWidget(forms.TextInput):
         self.custom_end_object = custom_end_object
 
         if len(display_values) >= 3:
-            queryset = queryset.prefetch_related(display_values[2])
+            full_objects = queryset.prefetch_related(display_values[2])
+        else:
+            full_objects = queryset
 
-        full_objects = queryset
-
-        for o in queryset.values('pk', *display_values):
-            obj = {'pk': o['pk']}
+        for o in full_objects:
+            obj = {'pk': o.pk}
 
             if len(display_values) >= 1:
-                obj['name'] = o[display_values[0]]
+                obj['name'] = getattr(o, display_values[0])
             if len(display_values) >= 2:
-                obj['description'] = o[display_values[1]]
+                obj['description'] = getattr(o, display_values[1])
             if len(display_values) >= 3:
-                obj['list'] = o[display_values[2]]
+                obj['list'] = getattr(o, display_values[2])
 
             self.objects.append(obj)
 
