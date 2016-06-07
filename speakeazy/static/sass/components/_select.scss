@@ -18,15 +18,16 @@
 
     &.selected {
       @include card(2);
-      transition: box-shadow .3s ease;
+      transition: box-shadow .3s ease, background .2s ease;
     }
 
     &.deselected {
       @include card(1);
-      transition: box-shadow .3s ease;
+      transition: box-shadow .3s ease, background .2s ease,;
     }
 
     @include on-event() {
+      background: $light-grey;
       cursor: pointer;
     }
   }
