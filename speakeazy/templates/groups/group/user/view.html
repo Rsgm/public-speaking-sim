@@ -18,8 +18,8 @@
         <div>{{ membership.user.email }}</div>
         {# membership stats #}
 
-        {% for authorization in membership.authorizations.all %}
-          <div>{{ authorization.name }}</div>
+        {% for role in membership.roles.all %}
+          <div>{{ role.name }}</div>
         {% endfor %}
 
         <a href="{% url 'groups:group:user:update' membership.group.slug membership.user.pk %}">Update User</a>

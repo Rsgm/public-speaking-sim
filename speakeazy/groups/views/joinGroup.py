@@ -60,11 +60,11 @@ def join(request, invite, user):
         # create membership if none exists
         membership = GroupMembership(group=invite.group, user=user)
         membership.save()
-        membership.authorizations.add(*invite.authorizations.all())
+        membership.roles.add(*invite.roles.all())
     else:
-        # add authorizations to existing memberships
+        # add roles to existing memberships
         membership = membership_queryset.get()
-        membership.authorizations.add(*invite.authorizations.all())
+        membership.roles.add(*invite.roles.all())
 
     membership.save()
     messages.success(request, _('Joined group %s.' % invite.group.name))

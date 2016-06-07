@@ -12,7 +12,7 @@ class AddForm(forms.ModelForm):
 
     def __init__(self, group, *args, **kwargs):
         self.group = group
-        self.base_fields['authorizations'].queryset = group.authorization_set.all()
+        self.base_fields['roles'].queryset = group.roles_set.all()
 
         self.base_fields['uses'].min = 0
         self.base_fields['uses'].max = 10
@@ -33,6 +33,6 @@ class UpdateForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        self.base_fields['authorizations'].queryset = self.instance.group.authorization_set.all()
+        self.base_fields['roles'].queryset = self.instance.group.role_set.all()
 
         super(UpdateForm, self).__init__(*args, **kwargs)

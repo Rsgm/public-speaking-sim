@@ -2,7 +2,7 @@ import floppyforms as forms
 
 
 class ModelSelectWidget(forms.TextInput):
-    template_name = 'widgets/select.html'
+    template_name = 'util/widgets/select.html'
 
     def __init__(self, queryset, display_values, custom_end_object=None, multiple=False, *args, **kwargs):
         self.objects = []
@@ -10,19 +10,19 @@ class ModelSelectWidget(forms.TextInput):
         self.custom_end_object = custom_end_object
 
         if len(display_values) >= 3:
-            full_objects = queryset.prefetch_related(display_values[2])
+            full_objects = queryset.prefetch_related(display_values[2][0])
         else:
             full_objects = queryset
 
         for o in full_objects:
-            obj = {'pk': o.pk}
+            obj = {'id': o.pk}
 
             if len(display_values) >= 1:
                 obj['name'] = getattr(o, display_values[0])
             if len(display_values) >= 2:
                 obj['description'] = getattr(o, display_values[1])
             if len(display_values) >= 3:
-                obj['list'] = getattr(o, display_values[2])
+                obj['list'] = getattr(o, display_values[2][0]).values_list(display_values[2][1], flat=True)
 
             self.objects.append(obj)
 
@@ -33,4 +33,5 @@ class ModelSelectWidget(forms.TextInput):
             'objects': self.objects,
             'custom_end_object': self.custom_end_object,
             'multiple': self.multiple,
+            'required': self.is_required,
         }

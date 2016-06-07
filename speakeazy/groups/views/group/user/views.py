@@ -39,7 +39,7 @@ class Update(LoginRequiredMixin, GroupPermissiondMixin, UpdateView):
     form_class = UpdateForm
     template_name = 'groups/group/user/update.html'
 
-    fields = ['authorizations']
+    fields = ['roles']
 
     group_permission = UPDATE_USER
 
