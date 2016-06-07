@@ -47,9 +47,9 @@ class CreateGroupForm(forms.ModelForm):
         model = Group
         fields = ('name', 'description', 'logo')
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, user):
         self.user = user
-        super(CreateGroupForm, self).__init__(*args, **kwargs)
+        super(CreateGroupForm, self).__init__()
 
     def save(self, *args, **kwargs):
         super(CreateGroupForm, self).save(*args, **kwargs)
@@ -72,7 +72,9 @@ class DefaultStructureForm(forms.Form):
     structure = ModelSelectField(model=DefaultGroupStructure,
                                  display_values=('name', 'description', ('default_role_types', 'name')),
                                  custom_end_object=custom_structure_choice,
-                                 required=True)
+                                 required=True,
+                                 label=_("Select a Group Structure"),
+                                 label_suffix="")
 
     def clean_structure(self):
         pk = self.cleaned_data['structure'][0]
@@ -110,7 +112,9 @@ class DefaultRolesForm(forms.Form):
     roles = ModelSelectField(model=DefaultGroupRole,
                              display_values=('name', 'description'),
                              multiple=True,
-                             required=False)
+                             required=False,
+                             label=_("What Rolls Will People Need?"),
+                             label_suffix="")
 
     def clean_roles(self):
         pks = self.cleaned_data['roles']
@@ -139,3 +143,24 @@ class DefaultRolesForm(forms.Form):
         membership.roles.add(*roles)  # it is best to give the user every role, instead of make an admin for them
 
         membership.save()  # do I need to save this here?
+
+# class CreateRolesForm(forms.ModelForm):
+#     class Meta:
+#         model = Role
+#         fields = ('name', 'permissions')
+#
+#         def save(self, group, membership):
+#             roles = []
+#
+#             for default_role in self.cleaned_data['roles']:
+#                 role = Role()
+#                 role.name = default_role.name
+#                 role.group = group
+#                 role.save()
+#                 role.permissions.add(*default_role.permissions.all())
+#
+#                 roles.append(role)
+#
+#             membership.roles.add(*roles)  # it is best to give the user every role, instead of make an admin for them
+#
+#             membership.save()  # do I need to save this here?

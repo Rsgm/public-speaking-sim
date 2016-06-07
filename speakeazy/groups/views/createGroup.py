@@ -32,13 +32,13 @@ class CreateGroup(LoginRequiredMixin, TemplateView):
         structure_form_class = DefaultStructureForm
         roles_form_class = DefaultRolesForm
 
-        group_form = group_form_class(request.user, data=request.POST, files=request.FILES)
+        group_form = group_form_class(data=request.POST, files=request.FILES)
         structure_form = structure_form_class(data=request.POST, files=request.FILES)
         roles_form = roles_form_class(data=request.POST, files=request.FILES)
 
         # validate group
         if group_form.is_valid():
-            group, membership = group_form.save()
+            group, membership = group_form.save(request.user)
         else:
             return self.form_invalid(group_form)
 
