@@ -1,14 +1,14 @@
 from braces.views import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
-from speakeazy.groups.mixins import GroupPermissiondMixin
+from speakeazy.groups.mixins import GroupMixin
 from speakeazy.groups.permissions import LIST_AUDIENCE, VIEW_AUDIENCE, ADD_AUDIENCE, UPDATE_AUDIENCE, DELETE_AUDIENCE
 from speakeazy.groups.models import Audience
 from speakeazy.groups.views.group.audience.forms import UpdateForm, AddForm
 from vanilla.model_views import DetailView, ListView, DeleteView, UpdateView, CreateView
 
 
-class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
+class List(LoginRequiredMixin, GroupMixin, ListView):
     model = Audience
     context_object_name = 'audience_list'
     template_name = 'groups/group/audience/list.html'
@@ -20,7 +20,7 @@ class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
         return Audience.objects.filter(group__slug=group)
 
 
-class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
+class View(LoginRequiredMixin, GroupMixin, DetailView):
     model = Audience
     context_object_name = 'audience'
     template_name = 'groups/group/audience/view.html'
@@ -33,7 +33,7 @@ class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
         return get_object_or_404(Audience, group__slug=group, slug=audience)
 
 
-class Add(LoginRequiredMixin, GroupPermissiondMixin, CreateView):
+class Add(LoginRequiredMixin, GroupMixin, CreateView):
     model = Audience
     form_class = AddForm
     template_name = 'groups/group/audience/add.html'
@@ -44,7 +44,7 @@ class Add(LoginRequiredMixin, GroupPermissiondMixin, CreateView):
     # convert video, upload to storage
 
 
-class Update(LoginRequiredMixin, GroupPermissiondMixin, UpdateView):
+class Update(LoginRequiredMixin, GroupMixin, UpdateView):
     model = Audience
     context_object_name = 'audience'
     form_class = UpdateForm
@@ -58,7 +58,7 @@ class Update(LoginRequiredMixin, GroupPermissiondMixin, UpdateView):
         return get_object_or_404(Audience, group__slug=group, slug=audience)
 
 
-class Delete(LoginRequiredMixin, GroupPermissiondMixin, DeleteView):
+class Delete(LoginRequiredMixin, GroupMixin, DeleteView):
     model = Audience
     context_object_name = 'audience'
     template_name = 'groups/group/audience/delete.html'

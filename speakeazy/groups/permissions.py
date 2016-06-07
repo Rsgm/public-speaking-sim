@@ -23,6 +23,12 @@ UPDATE_SUBMISSION = 'update_submission'
 DELETE_SUBMISSION = 'delete_submission'
 EVALUATE_SUBMISSION = 'evaluate_submission'
 
+LIST_ROLES = 'list_roles'
+VIEW_ROLES = 'view_roles'
+ADD_ROLES = 'add_roles'
+UPDATE_ROLES = 'update_roles'
+DELETE_ROLES = 'delete_roles'
+
 # LIST_ = 'list_'
 # VIEW_ = 'view_'
 # ADD_ = 'add_'
