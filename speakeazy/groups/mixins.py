@@ -5,7 +5,7 @@ from speakeazy.groups.models import Group
 from django.utils.translation import ugettext_lazy as _
 
 
-class GroupPermissiondMixin(object):
+class GroupMixin(object):
     """
     View mixin which verifies that the user is authenticated.
 
@@ -22,7 +22,7 @@ class GroupPermissiondMixin(object):
         user = request.user
 
         self.permissions = set(user.groupmembership_set.filter(group=self.group) \
-                               .values_list('authorizations__permissions__name', flat=True))
+                               .values_list('roles__permissions__name', flat=True))
 
         if self.group_permission:
             if not self.permissions:
@@ -31,4 +31,4 @@ class GroupPermissiondMixin(object):
             if self.group_permission not in self.permissions:
                 raise PermissionDenied()
 
-        return super(GroupPermissiondMixin, self).dispatch(request, *args, **kwargs)
+        return super(GroupMixin, self).dispatch(request, *args, **kwargs)

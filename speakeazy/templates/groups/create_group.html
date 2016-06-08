@@ -10,13 +10,20 @@
 {% endblock %}
 
 {% block content %}
-  <form id="group-form" class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post" action="{% url 'groups:create_group' %}">
+  <form id="group-form" hide="{{ structure_form.structure.name }}" class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post" action="{% url 'groups:create_group' %}">
     {% csrf_token %}
 
-    <h1>Create Your Group</h1>
-
     <div id="group-settings" class="uk-block">
-      {% form form %}
+      <h1>Create Your Group</h1>
+      {% form group_form %}
+    </div>
+
+    <div id="group-structure" class="uk-block">
+      {% form structure_form %}
+    </div>
+
+    <div id="group-roles" class="uk-block" v-show="showRoles" transition="show">
+      {% form roles_form %}
     </div>
 
     {#    <div id="custom-roles" class="uk-block" v-show="showRoles">#}

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from speakeazy.groups.views.group.invite.views import List, View, Update, Delete, Add
-
 from django.conf.urls import url
+
+from speakeazy.groups.views.group.manage.user import List, View, Update, Delete
 
 urlpatterns = [
     url(
@@ -13,25 +13,19 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^view/(?P<invite>[\w-]+)/$',
+        regex=r'^view/(?P<user>[\w-]+)/$',
         view=View.as_view(),
         name='view'
     ),
 
     url(
-        regex=r'^add/$',
-        view=Add.as_view(),
-        name='add'
-    ),
-
-    url(
-        regex=r'^update/(?P<invite>[\w-]+)/$',
+        regex=r'^update/(?P<user>[\w-]+)/$',
         view=Update.as_view(),
         name='update'
     ),
 
     url(
-        regex=r'^delete/(?P<invite>[\w-]+)/$',
+        regex=r'^delete/(?P<user>[\w-]+)/$',
         view=Delete.as_view(),
         name='delete'
     ),

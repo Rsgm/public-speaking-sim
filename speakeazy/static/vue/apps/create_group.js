@@ -8,14 +8,20 @@
       showRoles: false
     },
 
+    props: [
+      'hide'
+    ],
+
     events: {
       'end-selected': function (name) {
-        this.showRoles = true;
-        console.log(this.show)
+        if (name === this.hide) {
+          this.showRoles = true;
+        }
       },
       'end-deselected': function (name) {
-        if ('default-roles')
+        if (name === this.hide) {
           this.showRoles = false;
+        }
       }
     }
   });

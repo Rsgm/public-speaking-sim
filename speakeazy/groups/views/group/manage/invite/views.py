@@ -1,18 +1,19 @@
+from random import choice
 from string import ascii_lowercase
 
 from braces.views import LoginRequiredMixin
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse_lazy
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from random import choice
-from speakeazy.groups.mixins import GroupPermissiondMixin
-from speakeazy.groups.permissions import LIST_INVITE, VIEW_INVITE, ADD_INVITE, UPDATE_INVITE, DELETE_INVITE
-from speakeazy.groups.models import GroupInvite
-from speakeazy.groups.views.group.invite.forms import UpdateForm, AddForm
 from vanilla.model_views import DetailView, ListView, DeleteView, UpdateView, CreateView
 
+from speakeazy.groups.mixins import GroupMixin
+from speakeazy.groups.models import GroupInvite
+from speakeazy.groups.permissions import LIST_INVITE, VIEW_INVITE, ADD_INVITE, UPDATE_INVITE, DELETE_INVITE
+from speakeazy.groups.views.group.manage.invite.forms import UpdateForm, AddForm
 
-class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
+
+class List(LoginRequiredMixin, GroupMixin, ListView):
     model = GroupInvite
     context_object_name = 'invite_list'
     template_name = 'groups/group/invite/list.html'
@@ -24,7 +25,7 @@ class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
         return GroupInvite.objects.filter(group__slug=group)
 
 
-class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
+class View(LoginRequiredMixin, GroupMixin, DetailView):
     model = GroupInvite
     context_object_name = 'invite'
     template_name = 'groups/group/invite/view.html'
@@ -37,7 +38,7 @@ class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
         return get_object_or_404(GroupInvite, group__slug=group, slug=invite)
 
 
-class Add(LoginRequiredMixin, GroupPermissiondMixin, CreateView):
+class Add(LoginRequiredMixin, GroupMixin, CreateView):
     model = GroupInvite
     form_class = AddForm
     template_name = 'groups/group/invite/add.html'
@@ -72,7 +73,7 @@ class Add(LoginRequiredMixin, GroupPermissiondMixin, CreateView):
         return string
 
 
-class Update(LoginRequiredMixin, GroupPermissiondMixin, UpdateView):
+class Update(LoginRequiredMixin, GroupMixin, UpdateView):
     model = GroupInvite
     # context_object_name = 'invite'
     form_class = UpdateForm
@@ -87,7 +88,7 @@ class Update(LoginRequiredMixin, GroupPermissiondMixin, UpdateView):
         return object
 
 
-class Delete(LoginRequiredMixin, GroupPermissiondMixin, DeleteView):
+class Delete(LoginRequiredMixin, GroupMixin, DeleteView):
     model = GroupInvite
     context_object_name = 'invite'
     template_name = 'groups/group/invite/delete.html'

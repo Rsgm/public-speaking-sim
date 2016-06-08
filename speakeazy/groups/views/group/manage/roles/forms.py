@@ -9,4 +9,4 @@ class UpdateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UpdateForm, self).__init__(*args, **kwargs)
-        self.fields['roles'].queryset = self.instance.group.authorization_set.all()
+        self.fields['roles'].queryset = self.instance.group.role_set.all()

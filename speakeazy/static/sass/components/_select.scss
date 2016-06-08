@@ -12,26 +12,22 @@
       margin-bottom: 10px;
     }
 
-    h4 {
-      color: $secondary-brand-color;
-    }
-
     ul {
       margin-left: 15px;
     }
 
     &.selected {
       @include card(2);
-      transition: all .3s ease;
+      transition: box-shadow .3s ease, background .2s ease;
     }
 
     &.deselected {
       @include card(1);
-      transition: all .3s ease;
+      transition: box-shadow .3s ease, background .2s ease,;
     }
 
     @include on-event() {
-      color: $secondary-brand-color;
+      background: $light-grey;
       cursor: pointer;
     }
   }

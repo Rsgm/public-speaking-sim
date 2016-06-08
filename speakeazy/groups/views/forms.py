@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from speakeazy.groups.models import GroupInvite, GroupMembership, Group, Role, DefaultGroupStructure, DefaultGroupRole
-from speakeazy.util.inputs import ModelSelectField
+from speakeazy.util.inputs import ModelSelectField, CUSTOM_END_CHOICE_VALUE
 
 ERROR_MESSAGE = _('Invite does not exist or is no longer usable.')
 
@@ -43,68 +43,124 @@ class JoinForm(forms.Form):
 
 
 class CreateGroupForm(forms.ModelForm):
-    custom_structure_choice = {
-        'id': -1,
-        'name': 'Create Your Own',
-        'description': 'Create a group that suits your needs.'
-    }
-
-    structure = ModelSelectField(model=DefaultGroupStructure,
-                                 display_values=('name', 'description', 'default_role_types'),
-                                 custom_end_object=True,
-                                 required=True)
-
-    roles = ModelSelectField(model=DefaultGroupRole,
-                             display_values=('name', 'description'),
-                             multiple=True,
-                             required=False)
-
     class Meta:
         model = Group
         fields = ('name', 'description', 'logo')
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, user):
         self.user = user
-        super(CreateGroupForm, self).__init__(*args, **kwargs)
-
-    def clean_structure(self):
-        pk = self.cleaned_data['structure']
-
-        if pk == -1:
-            self.cleaned_data['structure'] = None
-        else:
-            self.cleaned_data['structure'] = get_object_or_404(DefaultGroupStructure, pk=pk)
+        super(CreateGroupForm, self).__init__()
 
     def save(self, *args, **kwargs):
-        self.instance.save()
+        super(CreateGroupForm, self).save(*args, **kwargs)
 
         membership = GroupMembership()
         membership.group = self.instance
         membership.user = self.user
         membership.save()
 
-        default_structure = self.cleaned_data['structure']
-        if default_structure:
-            for default_role in default_structure.roles.all():
-                role = Role()
-                role.name = default_role.name
-                role.group = self.instance
-                role.permissions.add(default_role.permissions.all())
-                role.save()
+        return self.instance, membership
 
-                membership.roles.add(role)  # it is best to give the user every role, instead of make an admin for them
 
+class DefaultStructureForm(forms.Form):
+    custom_structure_choice = {
+        'id': CUSTOM_END_CHOICE_VALUE,
+        'name': 'Create Your Own',
+        'description': 'Create a group that suits your needs.'
+    }
+
+    structure = ModelSelectField(model=DefaultGroupStructure,
+                                 display_values=('name', 'description', ('default_role_types', 'name')),
+                                 custom_end_object=custom_structure_choice,
+                                 required=True,
+                                 label=_("Select a Group Structure"),
+                                 label_suffix="")
+
+    def clean_structure(self):
+        pk = self.cleaned_data['structure'][0]
+
+        if pk == CUSTOM_END_CHOICE_VALUE:
+            return None
         else:
-            for i in self.cleaned_data['roles']:
-                default_role = get_object_or_404(DefaultGroupRole, i)
+            try:
+                return DefaultGroupStructure.objects.get(pk=pk)
+            except DefaultGroupStructure.DoesNotExist:
+                raise forms.ValidationError(_("Invalid group structure."))
 
-                role = Role()
-                role.name = default_role.name
-                role.group = self.instance
-                role.permissions.add(default_role.permissions.all())
-                role.save()
+    def save(self, group, membership):
+        default_structure = self.cleaned_data['structure']
 
-                membership.roles.add(role)  # it is best to give the user every role, instead of make an admin for them
+        if not default_structure:
+            return None
+
+        roles = []
+        for default_role in default_structure.default_role_types.all():
+            role = Role()
+            role.name = default_role.name
+            role.group = group
+            role.save()
+            role.permissions.add(*default_role.permissions.all())
+
+            roles.append(role)
+
+        membership.roles.add(*roles)  # it is best to give the user every role, instead of make an admin for them
+
+        return default_structure
+
+
+class DefaultRolesForm(forms.Form):
+    roles = ModelSelectField(model=DefaultGroupRole,
+                             display_values=('name', 'description'),
+                             multiple=True,
+                             required=False,
+                             label=_("What Rolls Will People Need?"),
+                             label_suffix="")
+
+    def clean_roles(self):
+        pks = self.cleaned_data['roles']
+        return DefaultGroupRole.objects.filter(pk__in=pks)
+
+    def is_valid(self, structure=None):
+        self.full_clean()
+
+        if not self.cleaned_data['roles']:
+            raise forms.ValidationError(_("No group roles selected."))
+
+        return super(DefaultRolesForm, self).is_valid()
+
+    def save(self, group, membership):
+        roles = []
+
+        for default_role in self.cleaned_data['roles']:
+            role = Role()
+            role.name = default_role.name
+            role.group = group
+            role.save()
+            role.permissions.add(*default_role.permissions.all())
+
+            roles.append(role)
+
+        membership.roles.add(*roles)  # it is best to give the user every role, instead of make an admin for them
 
         membership.save()  # do I need to save this here?
-        return super(CreateGroupForm, self).save()
+
+# class CreateRolesForm(forms.ModelForm):
+#     class Meta:
+#         model = Role
+#         fields = ('name', 'permissions')
+#
+#         def save(self, group, membership):
+#             roles = []
+#
+#             for default_role in self.cleaned_data['roles']:
+#                 role = Role()
+#                 role.name = default_role.name
+#                 role.group = group
+#                 role.save()
+#                 role.permissions.add(*default_role.permissions.all())
+#
+#                 roles.append(role)
+#
+#             membership.roles.add(*roles)  # it is best to give the user every role, instead of make an admin for them
+#
+#             membership.save()  # do I need to save this here?

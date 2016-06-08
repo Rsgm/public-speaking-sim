@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import include, url
+from django.views.generic.base import RedirectView
 
 from speakeazy.groups.views.createGroup import CreateGroup
 from speakeazy.groups.views.groupDashboard import GroupDashboard
@@ -16,9 +17,14 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^home$',
+        regex=r'^home/$',
+        view=RedirectView.as_view(pattern_name='groups:dashboard', permanent=True),
+    ),
+
+    url(
+        regex=r'^dashboard$',
         view=GroupDashboard.as_view(),
-        name="groupDashboard"
+        name="dashboard"
     ),
 
     url(

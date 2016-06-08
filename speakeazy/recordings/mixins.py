@@ -86,7 +86,7 @@ class RecordingMixin(object):
 
         # check permissions
         permissions = request.user.groupmembership_set.filter(group=submission.group) \
-            .values_list('authorizations__permissions__name', flat=True)
+            .values_list('roles__permissions__name', flat=True)
         if EVALUATE_SUBMISSION not in permissions:
             not_found()
 

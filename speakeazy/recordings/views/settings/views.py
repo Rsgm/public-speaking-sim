@@ -56,7 +56,7 @@ class CreateGroupSubmission(LoginRequiredMixin, PostView):
         user = request.user
         group = get_object_or_404(Group, pk=request.POST['group'])
         permissions = set(user.groupmembership_set.filter(group=group)
-                          .values_list('authorizations__permissions__name', flat=True))
+                          .values_list('roles__permissions__name', flat=True))
 
         if self.group_permission not in permissions:
             raise PermissionDenied()

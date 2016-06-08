@@ -29,11 +29,11 @@
       {% endif %}
 
       <div class="uk-margin">
-        Authorizations:
+        Roles:
 
         <ul class="uk-list uk-list-line">
-          {% for authorization in invite.authorizations.all %}
-            <li>{{ authorization.name }}</li>
+          {% for role in invite.roles.all %}
+            <li>{{ role.name }}</li>
           {% endfor %}
         </ul>
       </div>

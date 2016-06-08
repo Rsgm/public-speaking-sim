@@ -49,6 +49,7 @@
     },
 
     props: [
+      'id',
       'name',
       'choices', // in json form
       'multiple', // single or multiple select

@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic.base import RedirectView
-from speakeazy.groups.mixins import GroupPermissiondMixin
+from speakeazy.groups.mixins import GroupMixin
 from speakeazy.groups.permissions import VIEW_SUBMISSION, DELETE_SUBMISSION, \
     EVALUATE_SUBMISSION, LIST_SUBMISSION
 from speakeazy.groups.models import Submission
@@ -12,7 +12,7 @@ from vanilla.model_views import DetailView, ListView, DeleteView
 from vanilla.views import TemplateView
 
 
-class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
+class List(LoginRequiredMixin, GroupMixin, ListView):
     template_name = 'groups/group/submission/list.html'
     model = Submission
 
@@ -23,14 +23,14 @@ class List(LoginRequiredMixin, GroupPermissiondMixin, ListView):
         return Submission.objects.filter(group__slug=group)
 
 
-class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
+class View(LoginRequiredMixin, GroupMixin, DetailView):
     template_name = 'groups/group/submission/view.html'
     model = Submission
 
     group_permission = VIEW_SUBMISSION
 
 
-# class Add(LoginRequiredMixin, GroupPermissiondMixin, CreateView):
+# class Add(LoginRequiredMixin, GroupMixin, CreateView):
 #     template_name = 'groups/group/submission/add.html'
 #     model = Submission
 #     form_class = AddForm
@@ -66,7 +66,7 @@ class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
 #         return string
 
 
-# class Update(LoginRequiredMixin, GroupPermissiondMixin, UpdateView):
+# class Update(LoginRequiredMixin, GroupMixin, UpdateView):
 #     template_name = 'actions/update.html'
 #     model = Submission
 #     form_class = UpdateForm
@@ -74,7 +74,7 @@ class View(LoginRequiredMixin, GroupPermissiondMixin, DetailView):
 #     group_permission = UPDATE_SUBMISSION
 
 
-class Delete(LoginRequiredMixin, GroupPermissiondMixin, DeleteView):
+class Delete(LoginRequiredMixin, GroupMixin, DeleteView):
     template_name = 'groups/group/submission/delete.html'
     model = Submission
 
@@ -91,7 +91,7 @@ class GraderRedirectView(RedirectView):
         return reverse_lazy('recordings:recording:view', kwargs={'type': 'grader', 'key': kwargs['key']})
 
 
-class Evaluate(LoginRequiredMixin, GroupPermissiondMixin, TemplateView):
+class Evaluate(LoginRequiredMixin, GroupMixin, TemplateView):
     template_name = 'groups/group/evaluation/evaluate_view.html'
     group_permission = EVALUATE_SUBMISSION
 
