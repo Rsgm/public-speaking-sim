@@ -47,7 +47,7 @@ class Update(LoginRequiredMixin, GroupMixin, UpdateView):
     def get_object(self):
         group = self.kwargs['group']
         user = self.kwargs['user']
-        return get_object_or_404(GroupMembership, group__slug=group, user=user)
+        return get_object_or_404(GroupMembership, group__slug=group, user__name=user)
 
 
 class Delete(LoginRequiredMixin, GroupMixin, DeleteView):
@@ -60,7 +60,7 @@ class Delete(LoginRequiredMixin, GroupMixin, DeleteView):
     def get_object(self):
         group = self.kwargs['group']
         user = self.kwargs['user']
-        return get_object_or_404(GroupMembership, group__slug=group, user=user)
+        return get_object_or_404(GroupMembership, group__slug=group, user__name=user)
 
     def get_success_url(self):
         return reverse_lazy('groups:group:user:list', kwargs={'group': self.group.slug})
