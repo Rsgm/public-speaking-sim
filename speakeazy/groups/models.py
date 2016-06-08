@@ -117,6 +117,9 @@ class Submission(Model):
     # def __str__(self):
     #     return '%s - %s' % (self.recording.project, self.recording.project.name)
 
+    def __str__(self):
+        return "%s - %s - %s" % (self.recording.project.user, self.group, self.created_time)
+
     def get_absolute_url(self):
         return reverse_lazy('groups:group:submission:view', kwargs={'group': Group.slug, 'submission': self.slug})
 
