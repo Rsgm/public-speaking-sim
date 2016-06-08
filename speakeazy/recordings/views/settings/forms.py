@@ -1,7 +1,13 @@
 import floppyforms.__future__ as forms
-from speakeazy.groups.models import Submission, Group
-from speakeazy.recordings.models import SharedUser
+from django.conf import settings
+from django.core.mail.message import EmailMultiAlternatives
+from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
+
+from speakeazy.groups.models import Submission, Group, GroupMembership
+from speakeazy.groups.permissions import EVALUATE_SUBMISSION
+from speakeazy.recordings.mixins import GRADER
+from speakeazy.recordings.models import SharedUser
 
 
 class ShareUserForm(forms.ModelForm):
@@ -12,7 +18,7 @@ class ShareUserForm(forms.ModelForm):
     def save(self, *args, **kwargs):
         self.instance.user = self.initial['user']
         self.instance.recording = self.initial['recording']
-        super(ShareUserForm, self).save()
+        super(ShareUserForm, self).save(*args, **kwargs)
 
 
 class ShareSubmissionForm(forms.ModelForm):
@@ -37,4 +43,23 @@ class ShareSubmissionForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         self.instance.recording = self.initial['recording']
-        super(ShareSubmissionForm, self).save()
+        super(ShareSubmissionForm, self).save(*args, **kwargs)
+
+        context = {
+            'submission': self.instance,
+            'user': self.user,
+            'link_type': GRADER
+        }
+
+        plaintext = get_template('emails/group_submission.txt').render(context)
+        html = get_template('emails/group_submission.html').render(context)
+
+        msg = EmailMultiAlternatives(
+            _("New Group Submission"),
+            plaintext,
+            settings.EMAIL_HOST_USER,
+            [grader.user.email for grader in
+             GroupMembership.objects.filter(group=self.instance.group, roles__permissions__name=EVALUATE_SUBMISSION)],
+        )
+        msg.attach_alternative(html, "text/html")
+        msg.send()
