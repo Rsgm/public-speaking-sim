@@ -203,13 +203,14 @@ LOGGING = {
     },
 }
 
+#
 INSTALLED_APPS += (
     'opbeat.contrib.django',
 )
 OPBEAT = {
-    'ORGANIZATION_ID': '4899851b17dd4879806e16d1fddf8fe9',
-    'APP_ID': '6da82e35fa',
-    'SECRET_TOKEN': 'a06c94cbe04df8db367cf80ded40d6cced631cbe',
+    'ORGANIZATION_ID': env('OPBEAT_ORGANIZATION_ID'),
+    'APP_ID': env('OPBEAT_APP_ID'),
+    'SECRET_TOKEN': env('OPBEAT_SECRET_TOKEN'),
 }
 MIDDLEWARE_CLASSES = (
     'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
