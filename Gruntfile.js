@@ -98,7 +98,7 @@ module.exports = function (grunt) {
                             'Safari >= 6'
                         ]
                     }), // add vendor prefixes
-                    require('cssnano')() // minify the result
+                    require('cssnano')({mergeRules: false}) // minify the result
                 ]
             },
             dist: {
