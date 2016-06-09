@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
 
-from speakeazy.groups.views.group.manage.user import List, View, Update, Delete
+from speakeazy.groups.views.group.manage.user.views import List, View, Update, Delete
 
 urlpatterns = [
     url(

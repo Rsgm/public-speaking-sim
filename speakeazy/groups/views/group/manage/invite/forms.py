@@ -12,7 +12,7 @@ class AddForm(forms.ModelForm):
 
     def __init__(self, group, *args, **kwargs):
         self.group = group
-        self.base_fields['roles'].queryset = group.roles_set.all()
+        self.base_fields['roles'].queryset = group.role_set.all()
 
         self.base_fields['uses'].min = 0
         self.base_fields['uses'].max = 10

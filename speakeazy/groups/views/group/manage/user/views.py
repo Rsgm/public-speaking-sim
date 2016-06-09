@@ -6,7 +6,7 @@ from vanilla.model_views import DetailView, ListView, DeleteView, UpdateView
 from speakeazy.groups.mixins import GroupMixin
 from speakeazy.groups.models import GroupMembership
 from speakeazy.groups.permissions import LIST_USER, VIEW_USER, UPDATE_USER, DELETE_USER
-from speakeazy.groups.views.group.manage.user import UpdateForm
+from speakeazy.groups.views.group.manage.user.forms import UpdateForm
 
 
 class List(LoginRequiredMixin, GroupMixin, ListView):
