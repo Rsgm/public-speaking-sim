@@ -29,6 +29,7 @@ class RecordingMixin(object):
     allowed = ALLOWED
 
     recording = None
+    submission = None
     authorization = {}
 
     owner_only = None
@@ -70,9 +71,9 @@ class RecordingMixin(object):
 
     def grader(self, request, *args, **kwargs):
         queryset = Submission.objects.filter(pk=kwargs['key']) \
-            .select_related('group', 'recording')
+            .select_related('group', 'recording', 'recording__project', 'recording__project__user')
 
-        submission = get_object_or_404(queryset)
+        self.submission = get_object_or_404(queryset)
 
         # ignore this for now
         # # check submission availability
@@ -85,12 +86,12 @@ class RecordingMixin(object):
         #     not_found()
 
         # check permissions
-        permissions = request.user.groupmembership_set.filter(group=submission.group) \
+        permissions = request.user.groupmembership_set.filter(group=self.submission.group) \
             .values_list('roles__permissions__name', flat=True)
         if EVALUATE_SUBMISSION not in permissions:
             not_found()
 
-        self.recording = submission.recording
+        self.recording = self.submission.recording
         self.authorization['comments'] = True
         self.authorization['evaluations'] = True
 

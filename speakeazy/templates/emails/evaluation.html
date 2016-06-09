@@ -3,22 +3,20 @@
   <html>
   <head>
     <meta charset="utf-8">
-    <title>New Group Submission</title>
+    <title>New Recording Evaluation</title>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <style>body{font-family:'Open Sans',sans-serif;display:flex;flex-direction:column;width:700px}p{margin:6px 0}svg{width:200px}.email-highlight{font-weight:700;color:#53B08B}.email-button{background-color:#0091ea;padding:4px 15px;text-align:center;width:200px}a.email-button{text-decoration:none;color:#fff;border-radius:4px}</style>
   </head>
   <body>
-  <p>Hey there,</p>
+  <p>Hey there <span class="email-highlight">{{ user }}</span>,</p>
   <br>
-  <p><span class="email-highlight">{{ user }}</span> submitted a recording to the
-    <a class="email-highlight" href="https://speakeazy.io{{ submission.group.get_absolute_url }}">{{ submission.group }}</a> and would love
-    some feedback.</p>
+  <p><span class="email-highlight">{{ grader }}</span> gave you some feedback on a video that you submitted to the
+    <a class="email-highlight" href="https://speakeazy.io{{ submission.group.get_absolute_url }}">{{ submission.group }}</a></p>
   <br>
-  <a href="https://speakeazy.io{% url 'recordings:recording:view' link_type submission.pk %}" class="email-button">View
-    the Submission</a>
+  <a href="https://speakeazy.io{% url 'recordings:recording:view' link_type submission.pk %}" class="email-button"> View the Feedback </a>
   <br>
   <p>If you believe this message was sent in error or if you have any questions or comments please contact support at
-    <a href="mailto:support@speakeazy.co">support@speakeazy.co</a>.</p>
+    <a href="mailto:brandon@speakeazy.co">brandon@speakeazy.co</a>.</p>
   <br>
   Thanks,<br>
   The SpeakEazy Team
