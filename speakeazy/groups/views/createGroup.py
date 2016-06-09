@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from speakeazy.groups.models import Group
 from speakeazy.groups.views.forms import CreateGroupForm, DefaultStructureForm, DefaultRolesForm
 from vanilla.views import TemplateView
 
 
-class CreateGroup(LoginRequiredMixin, TemplateView):
+class CreateGroup(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
     model = Group
     template_name = 'groups/create_group.html'
+
+    permission_required = 'groups.add_group'
+    raise_exception = True
 
     def get_context_data(self, **kwargs):
         kwargs['view'] = self

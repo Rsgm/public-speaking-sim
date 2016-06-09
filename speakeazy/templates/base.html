@@ -60,7 +60,7 @@
 
                 <li><a href="{% url 'groups:groupList' %}">Group List</a></li>
                 <li><a href="{% url 'groups:joinGroup' %}">Join Group</a></li>
-                <li><a href="{% url 'groups:create_group' %}">Create Group</a></li>
+                <li><a title="Coming Soon"{# href="{% url 'groups:create_group' %}" #} disabled>Create Group</a></li>
 
                 {% if user.is_staff %}
                   <li class="uk-nav-divider"></li>
