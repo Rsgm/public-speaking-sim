@@ -15,11 +15,11 @@ def send_feedback_email(submission, grader):
         'link_type': OWNER
     }
 
-    plaintext = get_template('emails/evaluation.txt').render(context)
-    html = get_template('emails/evaluation.html').render(context)
+    plaintext = get_template('emails/feedback.txt').render(context)
+    html = get_template('emails/feedback.html').render(context)
 
     msg = EmailMultiAlternatives(
-        _("New Recording Evaluation"),
+        _("New Recording Feedback"),
         plaintext,
         settings.EMAIL_HOST_USER,
         [user.email],
