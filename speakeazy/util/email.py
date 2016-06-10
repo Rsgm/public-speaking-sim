@@ -15,11 +15,11 @@ def send_feedback_email(submission, grader):
         'link_type': GRADER
     }
 
-    plaintext = get_template('emails/group_submission.txt').render(context)
-    html = get_template('emails/group_submission.html').render(context)
+    plaintext = get_template('emails/evaluation.txt').render(context)
+    html = get_template('emails/evaluation.html').render(context)
 
     msg = EmailMultiAlternatives(
-        _("New Group Submission"),
+        _("New Recording Evaluation"),
         plaintext,
         settings.EMAIL_HOST_USER,
         [user.email],
