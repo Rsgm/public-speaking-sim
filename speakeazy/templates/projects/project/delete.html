@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}
+{% block title %} - Update {{ object.name }}{% endblock %}
+
+{% block breadcrumbs %}
+  {% include 'projects/project/breadcrumb.html' %}
+  <li><span>{{ object.slug }}</span></li>
+  <li class="uk-active"><span>update</span></li>
+{% endblock %}
+
+{% block content %}
+  <form class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post" action="{% url 'projects:project:update' object.slug %}">
+    {% csrf_token %}
+
+    <h2>You are about to delete {{ object.name }}</h2>
+    <p>This will delete all recordings belonging to this project.</p>
+
+    <div class="uk-form-row">
+      <button type="submit" class="uk-button uk-button-danger">Delete</button>
+    </div>
+  </form>
+{% endblock %}

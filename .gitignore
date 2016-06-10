@@ -72,7 +72,7 @@ recordings/*/*
 staticfiles/
 speakeazy/static/sass/build.scss
 speakeazy/static/css/build.css
-
+speakeazy/static/js/reverse.js
 
 #Production Files
 .env

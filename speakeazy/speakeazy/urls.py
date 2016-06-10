@@ -8,11 +8,6 @@ from speakeazy.speakeazy.views import Dashboard
 
 urlpatterns = [
     url(
-        regex=r'^home/$',
-        view=RedirectView.as_view(pattern_name='speakeazy:dashboard', permanent=True),
-    ),
-
-    url(
         regex=r'^dashboard/$',
         view=Dashboard.as_view(),
         name="dashboard"

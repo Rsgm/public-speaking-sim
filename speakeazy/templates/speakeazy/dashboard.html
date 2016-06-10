@@ -16,8 +16,8 @@
     <div id="projects" class="uk-width-7-10">
       <div class="dashboard-title">
         <h2><i class="uk-icon-folder-o"></i> Projects</h2>
-        <a class="dashboard-button" href="{% url 'projects:projectList' %}">See all</a>
-        <a class="dashboard-button" href="{% url 'projects:newProject' %}"><i class="uk-icon-plus"></i> Create New</a>
+        <a class="dashboard-button" href="{% url 'projects:project_list' %}">See all</a>
+        <a class="dashboard-button" href="{% url 'projects:create_project' %}"><i class="uk-icon-plus"></i> Create New</a>
       </div>
 
       {% if project_list %}

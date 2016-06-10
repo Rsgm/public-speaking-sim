@@ -11,7 +11,7 @@
   <h2 class="uk-text-center">Create Project</h2>
 
   <form class="s-form uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
-        action="{% url 'projects:newProject' %}">
+        action="{% url 'projects:create_project' %}">
     {% csrf_token %}
 
     {% form form %}

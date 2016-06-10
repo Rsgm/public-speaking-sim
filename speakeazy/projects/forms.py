@@ -2,7 +2,7 @@ import floppyforms.__future__ as forms
 from speakeazy.projects.models import UserProject
 
 
-class NewProjectForm(forms.ModelForm):
+class CreateUserProjectForm(forms.ModelForm):
     class Meta:
         model = UserProject
         fields = ('name', 'description', 'audience', 'due_date')
@@ -11,8 +11,23 @@ class NewProjectForm(forms.ModelForm):
         self.user = user  # todo: try setting initial
         self.base_fields['audience'].queryset = audiences
 
-        super(NewProjectForm, self).__init__(*args, **kwargs)
+        super(CreateUserProjectForm, self).__init__(*args, **kwargs)
 
     def save(self, *args, **kwargs):
         self.instance.user = self.user
-        return super(NewProjectForm, self).save(*args, **kwargs)
+        return super(CreateUserProjectForm, self).save(*args, **kwargs)
+
+
+class UserProjectForm(forms.ModelForm):
+    class Meta:
+        model = UserProject
+        fields = ('description', 'due_date')
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+
+        super(UserProjectForm, self).__init__(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.instance.user = self.user
+        return super(UserProjectForm, self).save(*args, **kwargs)
