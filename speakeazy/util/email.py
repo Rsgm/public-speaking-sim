@@ -3,7 +3,7 @@ from django.core.mail.message import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 
-from speakeazy.recordings.mixins import GRADER
+from speakeazy.recordings.mixins import OWNER
 
 
 def send_feedback_email(submission, grader):
@@ -12,7 +12,7 @@ def send_feedback_email(submission, grader):
         'submission': submission,
         'user': user,
         'grader': grader,
-        'link_type': GRADER
+        'link_type': OWNER
     }
 
     plaintext = get_template('emails/evaluation.txt').render(context)
