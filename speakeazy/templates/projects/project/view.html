@@ -22,6 +22,11 @@
       </a>
     </div>
   </div>
+
+  <div>
+    <a class="uk-button" href="{% url 'projects:project:update' project.slug %}">Update Settings</a>
+    <a class="uk-button" href="{% url 'projects:project:delete' project.slug %}">Delete Project</a>
+  </div>
 {% endblock %}
 
 

@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from braces.views import LoginRequiredMixin
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
 from vanilla.model_views import UpdateView, DeleteView
 
@@ -40,6 +41,7 @@ class Update(LoginRequiredMixin, UpdateView):
 class Delete(LoginRequiredMixin, DeleteView):
     model = UserProject
     template_name = 'projects/project/delete.html'
+    success_url = reverse_lazy('projects:project_list')
 
     def get_object(self):
         return get_object_or_404(UserProject.objects.filter(user=self.request.user, slug=self.kwargs['project']))

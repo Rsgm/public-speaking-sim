@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-  <form class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post" action="{% url 'projects:project:update' object.slug %}">
+  <form class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post" action="{% url 'projects:project:delete' object.slug %}">
     {% csrf_token %}
 
     <h2>You are about to delete {{ object.name }}</h2>
