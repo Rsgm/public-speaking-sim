@@ -14,7 +14,8 @@ class Create(RecordingMixin, PostView):
         comment = Comment(user=request.user, recording=self.recording, text=request.POST['text'])
         comment.save()
 
-        send_feedback_email(self.submission, request.user)
+        if self.submission:
+            send_feedback_email(self.submission, request.user)
 
         return HttpResponse()
 

@@ -22,6 +22,7 @@ class Create(RecordingMixin, PostView):
                                 seconds=int(post['seconds']))
         evaluation.save()
 
-        send_feedback_email(self.submission, request.user)
+        if self.submission:
+            send_feedback_email(self.submission, request.user)
 
         return HttpResponse()

@@ -22,7 +22,7 @@ def send_feedback_email(submission, grader):
         _("New Group Submission"),
         plaintext,
         settings.EMAIL_HOST_USER,
-        user.email,
+        [user.email],
     )
     msg.attach_alternative(html, "text/html")
     msg.send()
