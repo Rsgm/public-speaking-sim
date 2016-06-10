@@ -1,6 +1,6 @@
 Hey there,
 
-{{ user }} submitted a recording to the {{ submission.group }}(https://speakeazy.io{{ submission.group.get_absolute_url }}) and would love some feedback.
+{{ user }} submitted a recording to the {{ submission.group }}(https://speakeazy.io{{ submission.group.get_absolute_url }}) group and would love some feedback.
 
 View the Submission at https://speakeazy.io{% url 'recordings:recording:view' link_type submission.recording.pk %}
 

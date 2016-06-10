@@ -11,7 +11,7 @@
   <p>Hey there,</p>
   <br>
   <p><span class="email-highlight">{{ user }}</span> submitted a recording to the
-    <a class="email-highlight" href="https://speakeazy.io{{ submission.group.get_absolute_url }}">{{ submission.group }}</a> and would love
+    <a class="email-highlight" href="https://speakeazy.io{{ submission.group.get_absolute_url }}">{{ submission.group }}</a> group and would love
     some feedback.</p>
   <br>
   <a href="https://speakeazy.io{% url 'recordings:recording:view' link_type submission.pk %}" class="email-button">View
