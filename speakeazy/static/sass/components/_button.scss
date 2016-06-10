@@ -1,4 +1,4 @@
-.uk-button {
+.uk-button:not(.uk-button-primary, .uk-button-success, .uk-button-danger) {
   background-color: #ccc;
 
   @include on-event {
