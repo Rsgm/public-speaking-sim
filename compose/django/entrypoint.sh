@@ -2,4 +2,6 @@
 
 set -e
 
+/app/.env.sh
+
 exec "$@"
