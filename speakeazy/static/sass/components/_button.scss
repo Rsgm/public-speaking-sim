@@ -1,0 +1,7 @@
+.uk-button {
+  background-color: #ccc;
+
+  @include on-event {
+    background-color: #bdbdbd;
+  }
+}
