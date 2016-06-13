@@ -5,13 +5,14 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Speakeazy{% block title %}{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="name" content="Speakeazy">
+  <meta name="keywords" content="public speaking speech improvement improve">
+  <meta name="description" content="Public speaking simulator">
+  <meta name="author" content="Speakeazy Inc.">
 
-  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
       <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+  <![endif]-->
 
   {% block css %}
     <!-- Latest compiled and minified CSS -->
@@ -50,7 +51,8 @@
     <div class="uk-navbar-flip">
       {% if not user.is_anonymous %}
         <ul class="uk-navbar-nav">
-          <li><a class="nav-link" {#href="{% url 'projects:practice:create' %}"#} title="Coming Soon!{#Magic Hat#}"><i class="uk-icon-magic uk-icon-small"></i></a></li>
+          <li><a class="nav-link" {#href="{% url 'projects:practice:create' %}"#} title="Coming Soon!
+              {#Magic Hat#}"><i class="uk-icon-magic uk-icon-small"></i></a></li>
 
           <li class="uk-parent" data-uk-dropdown="{mode:'click'}">
             <a class="nav-link">{{ user|capfirst }} <i class="uk-icon-caret-square-o-down"></i></a>
