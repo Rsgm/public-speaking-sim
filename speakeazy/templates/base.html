@@ -50,6 +50,8 @@
     <div class="uk-navbar-flip">
       {% if not user.is_anonymous %}
         <ul class="uk-navbar-nav">
+          <li><a class="nav-link" {#href="{% url 'projects:practice:create' %}"#} title="Coming Soon!{#Magic Hat#}"><i class="uk-icon-magic uk-icon-small"></i></a></li>
+
           <li class="uk-parent" data-uk-dropdown="{mode:'click'}">
             <a class="nav-link">{{ user|capfirst }} <i class="uk-icon-caret-square-o-down"></i></a>
 
@@ -60,7 +62,7 @@
 
                 <li><a href="{% url 'groups:groupList' %}">Group List</a></li>
                 <li><a href="{% url 'groups:joinGroup' %}">Join Group</a></li>
-                <li><a title="Coming Soon"{# href="{% url 'groups:create_group' %}" #} disabled>Create Group</a></li>
+                <li><a title="Coming Soon!"{# href="{% url 'groups:create_group' %}" #} disabled>Create Group</a></li>
 
                 {% if user.is_staff %}
                   <li class="uk-nav-divider"></li>
@@ -110,10 +112,10 @@
 <script src="{% static 'js/vendor/mousestop.js' %}"></script>
 <script src="{% static 'js/reverse.js' %}"></script>
 
-{#< Your stuff: Third-party javascript libraries go here #}
+{# Your stuff: Third-party javascript libraries go here #}
 {% block extra_js_libraries %}{% endblock extra_js_libraries %}
 
-{#< place project specific Javascript in this file #}
+{# place project specific Javascript in this file #}
 {% block template_scripts %}{% endblock template_scripts %}
 
 <script src="{% static 'js/project.js' %}"></script>

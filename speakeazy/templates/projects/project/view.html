@@ -1,21 +1,25 @@
 {% extends "base.html" %}
 {% load static from staticfiles %}{% load i18n %}
-{% block title %} - {{ project.name }}{% endblock %}
+{% block title %} - {{ object.name }}{% endblock %}
 
 {% block breadcrumbs %}
   {% include 'projects/project/breadcrumb.html' %}
-  <li class="uk-active"><span>{{ project.slug }}</span></li>
+  <li class="uk-active"><span>{{ object.slug }}</span></li>
 {% endblock %}
 
 {% block content %}
-  <div id="recording-list" class="uk-block uk-flex uk-grid uk-flex-middle">
+  <div>
+    <a class="uk-button" href="{% url 'projects:project:update' object.slug %}">Update Settings</a>
+    <a class="uk-button" href="{% url 'projects:project:delete' object.slug %}">Delete Project</a>
+  </div>
 
-    {% for recording in recording_list %}
+  <div id="recording-list" class="uk-block uk-flex uk-grid uk-flex-middle">
+    {% for recording in object.recordings %}
       {% include 'components/recording_thumbnail.html' %}
     {% endfor %}
 
     <div class="uk-width-small-1-3 uk-width-medium-1-4 uk-width-large-1-6">
-      <a href="{% url 'recordings:record' project.slug %}" class="uk-panel uk-panel-box panel-add">
+      <a href="{% url 'recordings:record' object.slug %}" class="uk-panel uk-panel-box panel-add">
         <i class="uk-text-contrast uk-icon-plus"></i>
 
         <div class="add-text">New Rehearsal</div>
@@ -23,12 +27,14 @@
     </div>
   </div>
 
-  <div>
-    <a class="uk-button" href="{% url 'projects:project:update' project.slug %}">Update Settings</a>
-    <a class="uk-button" href="{% url 'projects:project:delete' project.slug %}">Delete Project</a>
-  </div>
-{% endblock %}
 
+  {% if object.practiceproject %}
+    <div class="uk-block">
+      <h3>{{ object.practiceproject.practice_speech.subject }}</h3>
+      <p>{{ object.practiceproject.practice_speech.text }}</p>
+    </div>
+  {% endif %}
+{% endblock %}
 
 {% block jquery %}
   <script src="{% static 'js/project_view.js' %}"></script>

@@ -1,7 +1,7 @@
 import floppyforms.__future__ as forms
-from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+
 from speakeazy.groups.models import GroupInvite, GroupMembership, Group, Role, DefaultGroupStructure, DefaultGroupRole
 from speakeazy.util.inputs import ModelSelectField, CUSTOM_END_CHOICE_VALUE
 
@@ -47,9 +47,9 @@ class CreateGroupForm(forms.ModelForm):
         model = Group
         fields = ('name', 'description', 'logo')
 
-    def __init__(self, user):
+    def __init__(self, user, *args, **kwargs):
         self.user = user
-        super(CreateGroupForm, self).__init__()
+        super(CreateGroupForm, self).__init__(*args, **kwargs)
 
     def save(self, *args, **kwargs):
         super(CreateGroupForm, self).save(*args, **kwargs)
@@ -63,32 +63,25 @@ class CreateGroupForm(forms.ModelForm):
 
 
 class DefaultStructureForm(forms.Form):
-    custom_structure_choice = {
-        'id': CUSTOM_END_CHOICE_VALUE,
-        'name': 'Create Your Own',
-        'description': 'Create a group that suits your needs.'
-    }
+    def __init__(self, *args, **kwargs):
+        super(DefaultStructureForm, self).__init__(*args, **kwargs)
 
-    structure = ModelSelectField(model=DefaultGroupStructure,
-                                 display_values=('name', 'description', ('default_role_types', 'name')),
-                                 custom_end_object=custom_structure_choice,
-                                 required=True,
-                                 label=_("Select a Group Structure"),
-                                 label_suffix="")
+        custom_structure_choice = {
+            'id': CUSTOM_END_CHOICE_VALUE,
+            'name': 'Create Your Own',
+            'description': 'Create a group that suits your needs.'
+        }
 
-    def clean_structure(self):
-        pk = self.cleaned_data['structure'][0]
-
-        if pk == CUSTOM_END_CHOICE_VALUE:
-            return None
-        else:
-            try:
-                return DefaultGroupStructure.objects.get(pk=pk)
-            except DefaultGroupStructure.DoesNotExist:
-                raise forms.ValidationError(_("Invalid group structure."))
+        self.fields['structure'] = ModelSelectField(model=DefaultGroupStructure,
+                                                    display_values=(
+                                                        'name', 'description', ('default_role_types', 'name')),
+                                                    custom_end_object=custom_structure_choice,
+                                                    required=True,
+                                                    label=_("Select a Group Structure"),
+                                                    label_suffix="")
 
     def save(self, group, membership):
-        default_structure = self.cleaned_data['structure']
+        default_structure = self.cleaned_data['structure'][0]
 
         if not default_structure:
             return None
@@ -109,16 +102,15 @@ class DefaultStructureForm(forms.Form):
 
 
 class DefaultRolesForm(forms.Form):
-    roles = ModelSelectField(model=DefaultGroupRole,
-                             display_values=('name', 'description'),
-                             multiple=True,
-                             required=False,
-                             label=_("What Rolls Will People Need?"),
-                             label_suffix="")
+    def __init__(self, *args, **kwargs):
+        super(DefaultRolesForm, self).__init__(*args, **kwargs)
 
-    def clean_roles(self):
-        pks = self.cleaned_data['roles']
-        return DefaultGroupRole.objects.filter(pk__in=pks)
+        self.fields['roles'] = ModelSelectField(model=DefaultGroupRole,
+                                                display_values=('name', 'description'),
+                                                multiple=True,
+                                                required=False,
+                                                label=_("What Rolls Will People Need?"),
+                                                label_suffix="")
 
     def is_valid(self, structure=None):
         self.full_clean()

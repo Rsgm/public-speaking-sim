@@ -3,6 +3,8 @@ from __future__ import absolute_import, unicode_literals
 
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.urlresolvers import reverse_lazy
+from django.http.response import HttpResponseRedirect
+
 from speakeazy.groups.models import Group
 from speakeazy.groups.views.forms import CreateGroupForm, DefaultStructureForm, DefaultRolesForm
 from vanilla.views import TemplateView
@@ -35,7 +37,7 @@ class CreateGroup(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
         structure_form_class = DefaultStructureForm
         roles_form_class = DefaultRolesForm
 
-        group_form = group_form_class(data=request.POST, files=request.FILES)
+        group_form = group_form_class(request.user, data=request.POST, files=request.FILES)
         structure_form = structure_form_class(data=request.POST, files=request.FILES)
         roles_form = roles_form_class(data=request.POST, files=request.FILES)
 
@@ -60,7 +62,7 @@ class CreateGroup(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
                 group.delete()
                 return self.form_invalid(roles_form)
 
-        return reverse_lazy('groups:group:groupView', kwargs={'group': group.slug})
+        return HttpResponseRedirect(reverse_lazy('groups:group:groupView', kwargs={'group': group.slug}))
 
     def form_invalid(self, form):
         context = self.get_context_data(form=form)

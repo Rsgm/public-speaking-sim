@@ -5,7 +5,7 @@ from braces.views import LoginRequiredMixin
 from vanilla import ListView
 from vanilla.model_views import CreateView
 
-from speakeazy.projects.forms import CreateUserProjectForm
+from speakeazy.projects.forms import CreateUserProjectForm, CreatePracticeProjectForm
 from speakeazy.projects.models import UserProject
 
 
@@ -14,6 +14,17 @@ class CreateProject(LoginRequiredMixin, CreateView):
 
     def get_form(self, data=None, files=None, **kwargs):
         return CreateUserProjectForm(self.request.user, data=data, files=files)
+
+
+class MagicHat(LoginRequiredMixin, CreateView):
+    """
+    Create practice projects, or magic hat
+    Creates a practice project using the create practice project form
+    """
+    template_name = 'projects/magic_hat.html'
+
+    def get_form(self, data=None, files=None, **kwargs):
+        return CreatePracticeProjectForm(user=self.request.user, data=data, files=files, **kwargs)
 
 
 class ProjectList(LoginRequiredMixin, ListView):

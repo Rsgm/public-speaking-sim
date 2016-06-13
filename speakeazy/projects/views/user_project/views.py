@@ -3,27 +3,29 @@ from __future__ import absolute_import, unicode_literals
 
 from braces.views import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
+from django.db.models.query import Prefetch
 from django.shortcuts import get_object_or_404
-from vanilla.model_views import UpdateView, DeleteView
+from vanilla.model_views import UpdateView, DeleteView, DetailView
 
-from speakeazy.projects.forms import UserProjectForm
 from speakeazy.projects.models import UserProject, Recording
+from speakeazy.projects.views.user_project.forms import UserProjectForm
 from speakeazy.recordings.models import RECORDING_FINISHED
-from vanilla.views import TemplateView
 
 
-class View(LoginRequiredMixin, TemplateView):
+class View(LoginRequiredMixin, DetailView):
     model = UserProject
     template_name = 'projects/project/view.html'
 
-    def get_context_data(self, **kwargs):
-        kwargs['view'] = self
+    def get_object(self):
+        queryset = UserProject.objects.filter(user=self.request.user, slug=self.kwargs['project']) \
+            .select_related('practiceproject', 'practiceproject__practice_speech') \
+            .prefetch_related(Prefetch('recording_set',
+                                       to_attr='recordings',
+                                       queryset=Recording.objects.filter(
+                                           state=RECORDING_FINISHED)
+                                       ))
 
-        kwargs['project'] = get_object_or_404(
-            UserProject.objects.filter(user=self.request.user, slug=self.kwargs['project']))
-        kwargs['recording_list'] = Recording.objects.filter(project=kwargs['project'], state=RECORDING_FINISHED)
-
-        return kwargs
+        return get_object_or_404(queryset)
 
 
 class Update(LoginRequiredMixin, UpdateView):
