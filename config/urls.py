@@ -10,6 +10,8 @@ from speakeazy.users.forms import SpeakeazySignupForm
 
 urlpatterns = [
                   url(r'^$', TemplateView.as_view(template_name='speakeazy/landing.html'), name="home"),
+                  url(r'^robots\.txt$', TemplateView.as_view(template_name='speakeazy/robots.txt',
+                                                             content_type='text/plain')),
 
                   # Django Admin, use {% url 'admin:index' %}
                   url(settings.ADMIN_URL + 'docs/', include('django.contrib.admindocs.urls')),
