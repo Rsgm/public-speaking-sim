@@ -13,7 +13,7 @@ class CreateProject(LoginRequiredMixin, CreateView):
     template_name = 'projects/create_project.html'
 
     def get_form(self, data=None, files=None, **kwargs):
-        return CreateUserProjectForm(self.request.user, data=data, files=files)
+        return CreateUserProjectForm(user=self.request.user, data=data, files=files)
 
 
 class MagicHat(LoginRequiredMixin, CreateView):

@@ -20,11 +20,11 @@ class CreateUserProjectForm(forms.ModelForm):
         model = UserProject
         fields = ('name', 'description', 'audience', 'due_date')
 
-    def __init__(self, user, *args, **kwargs):
-        self.user = user  # todo: try setting initial
-        self.base_fields['audience'].queryset = self.AudienceQueryset(user)
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')  # todo: try setting initial
+        super(CreateUserProjectForm, self).__init__(*args, **kwargs)
 
-        super(CreateUserProjectForm, self).__init__()
+        self.fields['audience'].queryset = audience_queryset(self.user)
 
     def save(self, *args, **kwargs):
         self.instance.user = self.user
