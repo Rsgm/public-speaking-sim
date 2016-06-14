@@ -70,7 +70,7 @@ recordings/*/*
 
 # Static files
 staticfiles/
-speakeazy/static/sass/build.scss
+speakeazy/static/css/build.css.map
 speakeazy/static/css/build.css
 speakeazy/static/js/reverse.js
 

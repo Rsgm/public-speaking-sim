@@ -7,19 +7,16 @@ ENV LANG C.UTF-8
 RUN echo deb http://www.deb-multimedia.org jessie main non-free >> /etc/apt/sources.list \
     && echo deb-src http://www.deb-multimedia.org jessie main non-free >> /etc/apt/sources.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5C808C2B65558117 \
-    && apt-get -y --force-yes update \
-    && apt-get -y --force-yes install deb-multimedia-keyring \
-    && apt-get -y --force-yes update \
-    && apt-get -y --force-yes install ffmpeg
+    && apt-get -y update \
+    && apt-get -y install deb-multimedia-keyring \
+    && apt-get -y update \
+    && apt-get -y install ffmpeg
 
 
 # Install npm
 # todo: https://github.com/nodejs/docker-node/blob/b2c7f6e357359b7b8f30caada05f1d412d926d7b/5.7/wheezy/Dockerfile
 RUN echo Installing npm \
-    && apt-get -y --force-yes update \
-    && apt-get -y --force-yes install nodejs-legacy \
-    && apt-get -y --force-yes install npm \
-    && npm install -g grunt-cli \
+    && apt-get -y install npm \
     \
     \
     && echo create non-root user \
@@ -32,8 +29,7 @@ RUN echo Installing npm \
     \
     \
     && echo Install python and add python3 link \
-    && apt-get -y --force-yes update \
-    && apt-get -y --force-yes install python3 python3-pip \
+    && apt-get -y install python3 python3-pip \
     && pip3 install --upgrade pip \
     \
     \
@@ -44,13 +40,15 @@ RUN echo Installing npm \
 	\
 	\
 	&& echo Install packages needed by python packages later \
-    && apt-get -y --force-yes install libjpeg62-turbo-dev zlib1g-dev gcc libffi-dev
+    && apt-get -y install libjpeg62-turbo-dev zlib1g-dev gcc libffi-dev \
+    \
+    \
+    && apt-get clean
 
 
 # Install npm dependencies
-# the only difference between prod and package.json is that prod has version numbers, so use that
-COPY ./prod_package.json /app/package.json
-run cd /app \
+COPY ./package.json /app/package.json
+RUN cd /app \
     && npm install
 
 
@@ -65,7 +63,7 @@ COPY . /app
 
 # Compile sass and run any final commands(keep this layer fast)
 RUN cd /app \
-    && grunt build \
+    && npm run build \
     && ./fix_permissions.sh # must be in app directory
 
 

@@ -3,70 +3,70 @@ FROM debian:jessie
 ENV PYTHONUNBUFFERED 1
 ENV LANG C.UTF-8
 
-# todo: https://ffmpeg.org/releases/ffmpeg-3.0.tar.bz2
-# https://ffmpeg.org/releases/ffmpeg-3.0.tar.xz.asc
-
 # Install ffmpeg
 RUN echo deb http://www.deb-multimedia.org jessie main non-free >> /etc/apt/sources.list \
     && echo deb-src http://www.deb-multimedia.org jessie main non-free >> /etc/apt/sources.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5C808C2B65558117 \
-    && apt-get -y --force-yes update \
-    && apt-get -y --force-yes install deb-multimedia-keyring \
-    && apt-get -y --force-yes update \
-    && apt-get -y --force-yes install ffmpeg
+    && apt-get -y update \
+    && apt-get -y install deb-multimedia-keyring \
+    && apt-get -y update \
+    && apt-get -y install ffmpeg
 
 
 # Install npm
-# This tries to install python 2.7, do this after installing python
 # todo: https://github.com/nodejs/docker-node/blob/b2c7f6e357359b7b8f30caada05f1d412d926d7b/5.7/wheezy/Dockerfile
-RUN apt-get -y --force-yes update \
-    && apt-get -y --force-yes install nodejs-legacy \
-    && apt-get -y --force-yes install npm \
-    && npm install -g grunt-cli
-
-
-# Install python and add python3 link
-RUN apt-get -y --force-yes update \
-    && apt-get -y --force-yes install python3 python3-pip \
+RUN echo Installing npm \
+    && apt-get -y install npm \
+    \
+    \
+    && echo create non-root user \
+    && groupadd -r django \
+    && useradd -r -g django django \
+    \
+    && mkdir /app \
+    && chmod 777 /app \
+    && chown django /app \
+    \
+    \
+    && echo Install python and add python3 link \
+    && apt-get -y install python3 python3-pip \
     && pip3 install --upgrade pip \
     \
+    \
+    && echo npm installs python 2.7, make 3 default \
     && cd /usr/bin \
 	&& rm python \
-	&& ln -s python3 python
+	&& ln -s python3 python \
+	\
+	\
+	&& echo Install packages needed by python packages later \
+    && apt-get -y install libjpeg62-turbo-dev zlib1g-dev gcc libffi-dev \
+    \
+    \
+    && apt-get clean
 
 
-# Install packages needed by python packages later
-RUN apt-get -y --force-yes update \
-    && apt-get -y --force-yes install libjpeg62-turbo-dev zlib1g-dev gcc libffi-dev
+# Install npm dependencies
+COPY ./package.json /app/package.json
+RUN cd /app \
+    && npm install --production
 
 
-# Requirements have to be pulled and installed here, otherwise caching won't work
-COPY ./requirements /requirements
+# Install python dependencies
+COPY ./requirements /requirements/
 RUN pip3 install -r /requirements/production.txt
 
 
-RUN groupadd -r django && useradd -r -g django django
+# Copy the project, up to here should usually be cached
 COPY . /app
 
 
-# install npm dependencies and fix file permissions
+# Compile sass and run any final commands(keep this layer fast)
 RUN cd /app \
-    && mv ./prod_package.json ./package.json \
-    && npm install \
-    && grunt build \
-    \
-    && echo fixing file permissions \
-    && chown -R django /app \
-    && chmod -R 777 /app # todo: is this a security issue?
-
-
-COPY ./compose/django/gunicorn.sh /gunicorn.sh
-COPY ./compose/django/entrypoint.sh /entrypoint.sh
-
-
-RUN chown django /entrypoint.sh && chmod +x /entrypoint.sh \
-    && chown django /gunicorn.sh && chmod +x /gunicorn.sh
+    && npm run build \
+    && ./fix_permissions.sh # must be in app directory
 
 
 WORKDIR /app
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/app/compose/django/entrypoint.sh"]
+CMD ["/app/compose/django/gunicorn.sh"]
