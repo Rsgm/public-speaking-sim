@@ -16,7 +16,7 @@ RUN echo deb http://www.deb-multimedia.org jessie main non-free >> /etc/apt/sour
 # Install npm
 # todo: https://github.com/nodejs/docker-node/blob/b2c7f6e357359b7b8f30caada05f1d412d926d7b/5.7/wheezy/Dockerfile
 RUN echo Installing npm \
-    && apt-get -y install npm \
+    && apt-get -y install nodejs-legacy npm \
     \
     \
     && echo create non-root user \
