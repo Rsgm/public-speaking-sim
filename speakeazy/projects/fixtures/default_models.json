@@ -1,0 +1,52 @@
+[
+  {
+    "pk": 1,
+    "fields": {
+      "subject": "Historical Improv",
+      "time_length": 5,
+      "name": "Improv informative speech on ww2",
+      "text": "Talk for five minutes on anything about world war two."
+    },
+    "model": "projects.practicespeech"
+  },
+  {
+    "pk": 2,
+    "fields": {
+      "subject": "Improv Nature",
+      "time_length": 2,
+      "name": "Which is the best tree and why is it birch",
+      "text": "In two minutes explain why birch is the best tree."
+    },
+    "model": "projects.practicespeech"
+  },
+  {
+    "pk": 3,
+    "fields": {
+      "subject": "Sports",
+      "time_length": 7,
+      "name": "Sports motivational speech",
+      "text": "Some long sports motivational speech goes here."
+    },
+    "model": "projects.practicespeech"
+  },
+  {
+    "pk": 4,
+    "fields": {
+      "subject": "History",
+      "time_length": 10,
+      "name": "Some famous speech",
+      "text": "Famous speech made to people a long time ago."
+    },
+    "model": "projects.practicespeech"
+  },
+  {
+    "pk": 5,
+    "fields": {
+      "subject": "Improv sports",
+      "time_length": 4,
+      "name": "Informative speech on Football vs Footbal",
+      "text": "Give a 4 minute speech on American football and everyone else football."
+    },
+    "model": "projects.practicespeech"
+  }
+]
