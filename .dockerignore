@@ -12,6 +12,6 @@ venv/
 .editorconfig
 .gitattributes
 .gitignore
-compose.yml
+docker-compose.yml
 Dockerfile-dev
 speakeazy.db
