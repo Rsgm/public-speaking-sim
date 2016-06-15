@@ -31,10 +31,7 @@ class ModelSelectField(forms.ChoiceField):
         if multiple and custom_end_object:
             raise SelectError(_("Select input cannot be multiple with a custom end object."))
 
-        if queryset:
-            self.queryset = queryset
-        else:
-            self.queryset = model.objects.all()
+        self.queryset = queryset or model.objects.all()
 
         choices = list(self.queryset.values_list('pk', flat=True))
         if custom_end_object:
@@ -43,7 +40,7 @@ class ModelSelectField(forms.ChoiceField):
         # if not display_queryset:
         #     display_queryset = queryset
 
-        widget = ModelSelectWidget(display_queryset, display_values, multiple=multiple,
+        widget = ModelSelectWidget(display_queryset or self.queryset, display_values, multiple=multiple,
                                    custom_end_object=custom_end_object)
 
         super(ModelSelectField, self).__init__(choices=choices, widget=widget, *args, **kwargs)

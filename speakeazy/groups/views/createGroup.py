@@ -33,13 +33,9 @@ class CreateGroup(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
         return kwargs
 
     def post(self, request, *args, **kwargs):
-        group_form_class = CreateGroupForm
-        structure_form_class = DefaultStructureForm
-        roles_form_class = DefaultRolesForm
-
-        group_form = group_form_class(request.user, data=request.POST, files=request.FILES)
-        structure_form = structure_form_class(data=request.POST, files=request.FILES)
-        roles_form = roles_form_class(data=request.POST, files=request.FILES)
+        group_form = CreateGroupForm(request.user, data=request.POST, files=request.FILES)
+        structure_form = DefaultStructureForm(data=request.POST, files=request.FILES)
+        roles_form = DefaultRolesForm(data=request.POST, files=request.FILES)
 
         # validate group
         if group_form.is_valid():
