@@ -73,8 +73,7 @@ COPY . /app
 # Compile sass and run any final commands(keep this layer fast)
 RUN cd /app \
     && npm run build \
-    && chmod 755 ./fix_permissions.sh \
-    && ./fix_permissions.sh
+    && bash ./fix_permissions.sh
 
 
 WORKDIR /app
