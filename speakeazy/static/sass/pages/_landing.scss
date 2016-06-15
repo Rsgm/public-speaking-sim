@@ -47,12 +47,14 @@
 
     h1 {
       margin-bottom: 10px;
-      font-size: 36px;
+      font-size: 38px;
+      text-shadow: 1px 1px 1px #000;
     }
 
     h2 {
       margin: 0;
-      font-size: 20px
+      font-size: 24px;
+      text-shadow: 1px 1px 1px #000;
     }
 
     .video-container {
@@ -64,6 +66,7 @@
     }
 
     .browser-compatability {
+      @include card(1);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -75,8 +78,8 @@
       background-color: rgba(255, 255, 255, 0.60);
       margin-right: 8px;
       position: absolute;
-      bottom: 20px;
-      left: 16px;
+      bottom: 60px;
+      left: 36px;
       color: $text-color;
 
       span {
@@ -100,7 +103,8 @@
     color: $text-light-color;
 
     p {
-      margin: 60px 0;
+      margin: 40px 0;
+      font-size: 20px;
     }
 
     h2 {

@@ -11,6 +11,9 @@ h1, h2, h3, h4, h5, h6 {
   font-family: $text-font-stack;
   color: rgba(0, 0, 0, .64);
 }
+.logo-font {
+    font-family:$logo-font;
+}
 
 //* {
 //  font-family: inherit !important;
