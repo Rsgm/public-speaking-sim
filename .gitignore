@@ -54,6 +54,7 @@ node_modules/
 
 # virtual environments
 venv/
+myvenv/
 
 # User-uploaded media
 speakeazy/media/
