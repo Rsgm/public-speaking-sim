@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------------
 // This file contains styles that are specific to the landing page.
 // -----------------------------------------------------------------------------
-
 #landing-page {
   p {
     font-size: medium;
@@ -48,13 +47,13 @@
     h1 {
       margin-bottom: 10px;
       font-size: 38px;
-      text-shadow: 1px 1px 1px #000;
+      @include title-shadow(1)
     }
 
     h2 {
       margin: 0;
       font-size: 24px;
-      text-shadow: 1px 1px 1px #000;
+      @include title-shadow(1)
     }
 
     .video-container {
