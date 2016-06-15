@@ -9,7 +9,8 @@ html {
   box-sizing: border-box;
 }
 
-body {
+.base-content {
+  padding-top: 25px;;
   background: #eeeeee;
   min-height: 100vh;
 }
