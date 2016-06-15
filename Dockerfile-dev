@@ -54,7 +54,6 @@ RUN apt-get -y install curl xz-utils \
     \
     && apt-get clean
 
-
 # Install npm dependencies
 COPY ./package.json /app/package.json
 RUN cd /app \
@@ -73,7 +72,8 @@ COPY . /app
 # Compile sass and run any final commands(keep this layer fast)
 RUN cd /app \
     && npm run build \
-    && bash ./fix_permissions.sh
+    && bash ./fix_permissions.sh \
+    && touch ./.env.sh
 
 
 WORKDIR /app

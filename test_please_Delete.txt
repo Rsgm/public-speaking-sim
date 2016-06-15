@@ -1,9 +1,0 @@
-this
-is
-a
-test
-file
-for
-line
-endings
-

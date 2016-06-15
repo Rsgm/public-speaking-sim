@@ -8,7 +8,6 @@ services:
     image: speakeazy_django
     user: django
     env_file: dev.env
-    tmpfs: /logs
     volumes:
       - ./speakeazy.db:/app/speakeazy.db
       - ./recordings/:/app/recordings/
@@ -29,7 +28,6 @@ services:
     image: speakeazy_django
     user: django
     env_file: dev.env
-    tmpfs: /logs
     volumes:
       - ./speakeazy.db:/app/speakeazy.db
     command: celery -A speakeazy.taskapp worker -l INFO
@@ -39,7 +37,6 @@ services:
     image: speakeazy_django
     user: django
     env_file: dev.env
-    tmpfs: /logs
     volumes:
       - ./speakeazy.db:/app/speakeazy.db
     command: celery -A speakeazy.taskapp beat -l INFO
