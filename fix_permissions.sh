@@ -12,7 +12,7 @@ find ./ -type f -exec chmod 744 {} + # argument list was too long the other way
 chmod 777 $(find ./speakeazy/media/ -type d)
 chmod 666 $(find ./speakeazy/media/ -type f)
 
-chmod 777 $(find ./speakeazy/media/ -type d)
+chmod 777 $(find ./recordings/ -type d)
 chmod 666 $(find ./recordings/ -type f)
 
 

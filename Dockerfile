@@ -49,7 +49,7 @@ RUN apt-get -y install curl xz-utils \
     && echo Install python and python dependencies for later \
     && apt-get -y install python3 python3-pip libjpeg62-turbo-dev zlib1g-dev gcc libffi-dev \
     && pip3 install --upgrade pip \
-    && ln -s /usr/local/bin/python3 /usr/bin/python \
+    && ln -s /usr/bin/python3 /usr/local/bin/python \
     \
     \
     && apt-get clean
