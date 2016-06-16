@@ -1,10 +1,25 @@
-.uk-button:not(.uk-button-primary, .uk-button-success, .uk-button-danger) {
-  transition: all .3s ease, background .2s ease;
-  background-color: #ccc;
+button, .uk-button {
+  transition: box-shadow .3s ease, background .3s ease;
+  border-radius: 4px;
+
+  @extend .uk-button-primary;
+
   @include card(1);
 
   @include on-event {
-    background-color: #bdbdbd;
     @include card(2);
   }
+}
+
+.uk-button-primary {
+  @include button(#2196f3, white);
+}
+
+.uk-button-success {
+  @include button(#43a047, white);
+
+}
+
+.uk-button-danger {
+  @include button(#d32f2f, white);
 }

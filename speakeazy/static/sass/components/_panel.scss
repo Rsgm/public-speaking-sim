@@ -21,7 +21,7 @@
   }
 
   &:only-of-type(a) {
-    @include button(1, #F5F5F5);
+    @include button(#F5F5F5);
   }
 }
 
@@ -30,11 +30,10 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: $secondary-brand-color;
+
+  @extend .uk-button;
 
   padding: 0;
-
-  @include button(2, $secondary-brand-color);
 
   .add-text {
     color: #fff;

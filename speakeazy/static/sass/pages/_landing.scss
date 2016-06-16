@@ -156,7 +156,7 @@
     }
   }
 
-  .action-button {
+  .uk-button {
     width: 240px;
     margin: 0 auto;
     display: block;
@@ -166,7 +166,7 @@
     border-radius: 4px;
     text-align: center;
 
-    @include button(2, $landing-button-color);
+    @include button($landing-button-color);
   }
 
   // cody.css

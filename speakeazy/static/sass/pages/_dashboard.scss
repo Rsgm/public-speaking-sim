@@ -20,10 +20,6 @@
   }
 }
 
-.dashboard-section-header {
-  color: #828282;
-}
-
 #dashboard {
   #projects {
     border-right: 1px solid #d2d2d2;
@@ -32,19 +28,16 @@
     box-sizing: border-box;
   }
 
-  .dashboard-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 30px 0;
-    background-color: #f5f5f5;
-    padding: 8px 5px;
-    max-width: 50%;
-    box-sizing: border-box;
-    @include card(1);
+  .section-buttons {
+    width: auto;
+    margin: 20px auto 40px;
   }
 
-  #groups .dashboard-title {
+  .dashboard-section-header {
+    color: #828282;
+  }
+
+  #groups {
     max-width: 350px;
   }
 
@@ -55,15 +48,5 @@
     font-weight: 200;
     font-size: 20px;
     padding-right: 5px;
-  }
-
-  .dashboard-button {
-    color: #fff;
-    font-size: 14px;
-    padding: 4px 15px;
-    border-radius: 2px;
-    margin: 0 6px;
-
-    @include button(1, $secondary-brand-color);
   }
 }

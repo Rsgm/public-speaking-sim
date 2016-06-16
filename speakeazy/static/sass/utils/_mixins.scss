@@ -85,9 +85,9 @@
 }
 
 // Give buttons similar hover colors and behaviors
-@mixin button($card, $background, $text-color: false) {
+@mixin button($background, $text-color: false) {
   background-color: $background;
-  @include card($card);
+
   @if $text-color {
     color: $text-color
   }

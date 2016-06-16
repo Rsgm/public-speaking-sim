@@ -9,15 +9,18 @@
 {% block content %}
   <div class="dashboard-welcome">
     <h3 class="dashboard-section-header">Welcome! Create a new project to start preparing for your next
-      presentation.</h3><a href="javascript:void(Tawk_API.toggle())" target="_top">Need Help?</a>
+      presentation.<a href="javascript:void(Tawk_API.toggle())" target="_top">Need Help?</a></h3>
   </div>
-  <div id="dashboard" class="uk-flex">
 
+  <div id="dashboard" class="uk-flex uk-block">
     <div id="projects" class="uk-width-7-10">
-      <div class="dashboard-title">
-        <h2><i class="uk-icon-folder-o"></i> Projects</h2>
-        <a class="dashboard-button" href="{% url 'projects:project_list' %}">See all</a>
-        <a class="dashboard-button" href="{% url 'projects:create_project' %}"><i class="uk-icon-plus"></i> Create New</a>
+
+      <h2><i class="uk-icon-folder-o"></i> Projects</h2>
+
+      <div class="section-buttons">
+        <a class="uk-button uk-margin-right" href="{% url 'projects:project_list' %}">See all</a>
+        <a class="uk-button" href="{% url 'projects:create_project' %}"><i class="uk-icon-plus"></i>
+          Create New</a>
       </div>
 
       {% if project_list %}
@@ -57,11 +60,12 @@
     </div>
 
     <div id="groups" class="uk-width-3-10">
+      <h2><i class="uk-icon-group"></i> Groups</h2>
 
-      <div class="dashboard-title">
-        <h2><i class="uk-icon-group"></i> Groups</h2>
-        <a class="dashboard-button" href="{% url 'groups:dashboard' %}">See all</a>
-        <a class="dashboard-button" href="{% url 'groups:joinGroup' %}"><i class="uk-icon-plus"></i> Join Group</a>
+      <div class="section-buttons">
+        <a class="uk-button uk-margin-right" href="{% url 'groups:dashboard' %}">See all</a>
+        <a class="uk-button" href="{% url 'groups:joinGroup' %}"><i class="uk-icon-plus"></i> Join
+          Group</a>
       </div>
 
       <div class="uk-flex uk-grid">
