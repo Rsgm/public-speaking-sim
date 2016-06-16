@@ -29,8 +29,12 @@
   }
 
   .section-buttons {
-    width: auto;
     margin: 20px auto 40px;
+
+    a {
+      line-height: 30px;
+      min-height: 30px;
+    }
   }
 
   .dashboard-section-header {
@@ -42,11 +46,12 @@
   }
 
   h2 {
-    margin-bottom: 0;
-    text-transform: uppercase;
-    color: #000;
-    font-weight: 200;
+    //color: #000;
     font-size: 20px;
-    padding-right: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: #fff;
+
+    @include card(1);
   }
 }

@@ -69,23 +69,8 @@
   }
 }
 
-/// Gives a card depth effect for titles.
-/// @param {Number} $depth - depth level (between 1 and 5)
-/// @link http://www.google.com/design/spec/layout/layout-principles.html#layout-principles-dimensionality Google Design
-/// @requires {function} top-shadow
-/// @requires {function} bottom-shadow
-@mixin title-shadow($depth) {
-  @if $depth < 1 {
-    box-shadow: none;
-  } @else if $depth > 5 {
-    @warn "Invalid $depth `#{$depth}` for mixin `card`.";
-  } @else {
-    text-shadow: bottom-shadow($depth), top-shadow($depth);
-  }
-}
-
 // Give buttons similar hover colors and behaviors
-@mixin button($background, $text-color: false) {
+@mixin button($background, $text-color: false, $invert-hover: false) {
   background-color: $background;
 
   @if $text-color {
@@ -94,7 +79,11 @@
 
   @include on-event {
     text-decoration: none;
-    background-color: $background - $hover;
+    @if $invert-hover {
+      background-color: $background + $hover;
+    } @else {
+      background-color: $background - $hover;
+    }
 
     @if $text-color {
       color: $text-color

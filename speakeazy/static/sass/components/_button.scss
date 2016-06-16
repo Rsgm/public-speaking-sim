@@ -1,6 +1,7 @@
 button, .uk-button {
   transition: box-shadow .3s ease, background .3s ease;
-  border-radius: 4px;
+  border-radius: 3px;
+  border: none !important;
 
   @extend .uk-button-primary;
 
@@ -12,14 +13,16 @@ button, .uk-button {
 }
 
 .uk-button-primary {
-  @include button(#2196f3, white);
+  @extend button;
+  @include button(#2196f3, $text-light-color);
 }
 
 .uk-button-success {
-  @include button(#43a047, white);
-
+  @extend button;
+  @include button(#43a047, $text-light-color);
 }
 
 .uk-button-danger {
-  @include button(#d32f2f, white);
+  @extend button;
+  @include button(#d32f2f, $text-light-color);
 }

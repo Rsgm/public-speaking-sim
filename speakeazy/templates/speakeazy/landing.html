@@ -42,13 +42,13 @@
 <div id="landing-page">
 
   <nav class="uk-navbar uk-navbar-attached">
-    <a class="uk-navbar-brand s-brand" href="{% url 'speakeazy:dashboard' %}">
+    <a class="uk-navbar-brand logo" href="{% url 'speakeazy:dashboard' %}">
       {% include 'components/logo.html' %}
     </a>
 
     <div class="uk-navbar-flip">
       <ul class="uk-navbar-nav">
-        <li><a href="{% url 'userena_signin' %}">Sign In</a></li>
+        <li><a class="uk-margin-right" href="{% url 'userena_signin' %}">Sign In</a></li>
         <li><a href="{% url 'userena_signup' %}">Register</a></li>
       </ul>
     </div>
@@ -82,7 +82,7 @@
             best way possible.</p>
 
           <div class="uk-align-center uk-margin-medium uk-margin-medium-bottom demo-button">
-            <a class="action-button" href="javascript:void(Tawk_API.toggle())" target="_top">Request a Live Demo</a>
+            <a class="uk-button" href="javascript:void(Tawk_API.toggle())" target="_top">Request a Live Demo</a>
           </div>
         </div>
       </div>
@@ -150,8 +150,9 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.2/js/uikit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/js/uikit.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/js/components/tooltip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/js/components/notify.min.js"></script>
 
 
 <script src="{% static 'js/project.js' %}"></script>

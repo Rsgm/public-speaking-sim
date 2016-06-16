@@ -15,12 +15,12 @@
   <![endif]-->
 
   {% block css %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/css/uikit.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/css/components/tooltip.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/css/components/autocomplete.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/css/components/datepicker.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/css/components/progress.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/css/components/notify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/css/uikit.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/css/components/tooltip.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/css/components/autocomplete.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/css/components/datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/css/components/progress.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/css/components/notify.min.css">
 
     <link href="{% static 'css/build.css' %}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>
@@ -40,7 +40,7 @@
 
 <div id="base-header">
   <nav class="uk-navbar uk-navbar-attached">
-    <a class="uk-navbar-brand s-brand" href="{% url 'speakeazy:dashboard' %}">
+    <a class="uk-navbar-brand logo" href="{% url 'speakeazy:dashboard' %}">
       {% include 'components/logo.html' %}
     </a>
 
@@ -60,7 +60,7 @@
 
                 <li><a href="{% url 'groups:groupList' %}">Group List</a></li>
                 <li><a href="{% url 'groups:joinGroup' %}">Join Group</a></li>
-                <li><a title="Coming Soon!"{# href="{% url 'groups:create_group' %}" #} disabled>Create Group</a></li>
+                <li><a title="Coming Soon!" disabled>Create Group</a></li>
 
                 {% if user.is_staff %}
                   <li class="uk-nav-divider"></li>
@@ -103,12 +103,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/js/uikit.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/js/components/tooltip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/js/components/autocomplete.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/js/components/datepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/js/components/timepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/js/components/notify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/js/uikit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/js/components/tooltip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/js/components/autocomplete.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/js/components/datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/js/components/timepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/js/components/notify.min.js"></script>
 
 <script src="{% static 'js/vendor/jquery.ba-throttle-debounce.min.js' %}"></script>
 <script src="{% static 'js/vendor/mousestop.js' %}"></script>
