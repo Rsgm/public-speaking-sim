@@ -10,6 +10,9 @@ module.exports = function (grunt) {
     // see: https://npmjs.org/package/time-grunt
     require('time-grunt')(grunt);
 
+    var webpack = require("webpack");
+    var webpackConfig = require("./webpack.config.js");
+
     var pathsConfig = function (appName) {
         this.app = appName || appConfig.name;
 
@@ -21,6 +24,7 @@ module.exports = function (grunt) {
             fonts: this.app + '/static/fonts',
             images: this.app + '/static/images',
             js: this.app + '/static/js',
+            vue: this.app + '/static/vue',
 
             manage: 'manage.py',
             venv: 'venv/bin/activate'
@@ -39,7 +43,15 @@ module.exports = function (grunt) {
 
             css: {
                 files: ['<%= paths.sass %>/**/*.{scss,sass}'],
-                tasks: ['sass:dev', 'postcss'],
+                tasks: ['sass:dev', 'postcss:dev'],
+                options: {
+                    atBegin: true
+                }
+            },
+
+            vue: {
+                files: ['<%= paths.vue %>/**/*.vue', '<%= paths.vue %>/app.js'],
+                tasks: ['bgShell:webpack'],
                 options: {
                     atBegin: true
                 }
@@ -58,9 +70,8 @@ module.exports = function (grunt) {
         sass: {
             dev: {
                 options: {
-                    sourceMap: true,
-                    precision: 10,
-                    outFile: '<%= paths.css %>/build.map.css'
+                    sourceMapEmbed: true,
+                    precision: 10
                 },
                 files: {
                     '<%= paths.css %>/build.css': '<%= paths.sass %>/main.scss'
@@ -69,9 +80,7 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     outputStyle: 'compressed',
-                    sourceMap: true,
-                    precision: 10,
-                    outFile: '<%= paths.css %>/build.map.css'
+                    precision: 10
                 },
                 files: {
                     '<%= paths.css %>/build.css': '<%= paths.sass %>/main.scss'
@@ -81,30 +90,49 @@ module.exports = function (grunt) {
 
         //see https://github.com/nDmitry/grunt-postcss
         postcss: {
-            options: {
-                map: true, // inline sourcemaps
-
-                processors: [
-                    require('pixrem')(), // add fallbacks for rem units
-                    require('autoprefixer')({
-                        browsers: [
-                            'Android 2.3',
-                            'Android >= 4',
-                            'Chrome >= 20',
-                            'Firefox >= 24',
-                            'Explorer >= 8',
-                            'iOS >= 6',
-                            'Opera >= 12',
-                            'Safari >= 6'
-                        ]
-                    }), // add vendor prefixes
-                    require('cssnano')({mergeRules: false}) // minify the result
-                ]
+            dev: {
+                options: {
+                    map: true // inline sourcemaps
+                },
+                dist: {
+                    src: '<%= paths.css %>/*.css'
+                }
             },
             dist: {
-                src: '<%= paths.css %>/*.css'
+                options: {
+                    processors: [
+                        require('pixrem')(), // add fallbacks for rem units
+                        require('autoprefixer')({
+                            browsers: [
+                                'Android 2.3',
+                                'Android >= 4',
+                                'Chrome >= 20',
+                                'Firefox >= 24',
+                                'Explorer >= 8',
+                                'iOS >= 6',
+                                'Opera >= 12',
+                                'Safari >= 6'
+                            ]
+                        }), // add vendor prefixes
+                        require('cssnano')({mergeRules: false}) // minify the result
+                    ]
+                },
+                dist: {
+                    src: '<%= paths.css %>/*.css'
+                }
             }
         },
+
+        // // https://github.com/webpack/grunt-webpack
+        // webpack: {
+        //     options: webpackConfig,
+        //
+        //     "dev": {
+        //         progress: false,
+        //         debug: true,
+        //         failOnError: false
+        //     }
+        // },
 
         // see: https://npmjs.org/package/grunt-bg-shell
         bgShell: {
@@ -119,6 +147,9 @@ module.exports = function (grunt) {
             },
             runCelery: {
                 cmd: '. <%= paths.venv %> && celery -A speakeazy.taskapp worker -l info'
+            },
+            webpack: {
+                cmd: 'webpack -p'
             }
         }
     });
@@ -131,7 +162,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'sass:dist',
-        'postcss'
+        'postcss:dist'
+
     ]);
 
     grunt.registerTask('default', [
