@@ -1,0 +1,15 @@
+[Unit]
+Description=Distributed python task worker
+After=syslog.target network.target auditd.service
+
+[Service]
+ExecStart=
+Restart=always
+User=django
+Group=django
+
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+[Install]
+WantedBy=multi-user.target

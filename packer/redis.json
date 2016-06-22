@@ -1,0 +1,31 @@
+{
+  "variables": {
+  },
+  "builders": [
+    {
+      "type": "googlecompute",
+      "account_file": "../account.json",
+      "project_id": "",
+      "source_image": "debian-8-jessie-v20160606",
+      "zone": "us-central1-a",
+      "image_name": "redis-{{timestamp}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "redis/redis.service",
+      "destination": "/tmp/redis.service"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "apt-get update",
+        "apt-get install --no-install-recommends --no-install-suggests -y redis-server",
+        "apt-get clean",
+        "mv /tmp/redis.service /lib/systemd/system/redis.service",
+        "systemd enable redis.service"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "variables": {
+  },
+  "builders": [
+    {
+      "type": "googlecompute",
+      "account_file": "../account.json",
+      "project_id": "",
+      "source_image": "debian-8-jessie-v20160606",
+      "zone": "us-central1-a",
+      "image_name": "nginx-{{timestamp}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "nginx/",
+      "destination": "/tmp"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "apt-get update",
+        "apt-get install --no-install-recommends --no-install-suggests -y nginx",
+        "apt-get clean",
+        "mv /tmp/nginx.conf /etc/nginx/nginx.conf",
+        "mv /tmp/nginx.service /lib/systemd/system/nginx.service",
+        "systemd enable nginx.service"
+      ]
+    }
+  ]
+}
