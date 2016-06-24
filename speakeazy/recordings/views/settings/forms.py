@@ -62,4 +62,4 @@ class ShareSubmissionForm(forms.ModelForm):
              GroupMembership.objects.filter(group=self.instance.group, roles__permissions__name=EVALUATE_SUBMISSION)],
         )
         msg.attach_alternative(html, "text/html")
-        msg.send()
+        msg.send()  # todo: move to task

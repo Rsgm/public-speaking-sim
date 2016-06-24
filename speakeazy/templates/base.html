@@ -40,15 +40,17 @@
 
 <div id="base-header">
   <nav class="uk-navbar uk-navbar-attached">
-    <a class="uk-navbar-brand logo" href="{% url 'speakeazy:dashboard' %}">
+    <a class="uk-navbar-brand logo"
+       href="{% if user.is_anonymous %}{% url 'landing' %}{% else %}{% url 'speakeazy:dashboard' %}{% endif %}">
       {% include 'components/logo.html' %}
     </a>
 
     <div class="uk-navbar-flip">
       {% if not user.is_anonymous %}
         <ul class="uk-navbar-nav">
-          <li><a class="nav-link" {#href="{% url 'projects:practice:create' %}"#} title="Coming Soon!
-              {#Magic Hat#}"><i class="uk-icon-magic uk-icon-small"></i></a></li>
+          <li><a class="nav-link" {#href="{% url 'projects:practice:create' %}"#} title="Coming Soon!{#Magic Hat#}">
+            <i class="uk-icon-magic uk-icon-small"></i>
+          </a></li>
 
           <li class="uk-parent" data-uk-dropdown="{mode:'click'}">
             <a class="nav-link">{{ user|capfirst }} <i class="uk-icon-caret-square-o-down"></i></a>
