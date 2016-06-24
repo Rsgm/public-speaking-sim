@@ -1,12 +1,18 @@
-{% extends "actions/delete.html" %}
-
-{% block sub_title %} - Invite Delete{% endblock %}
-
-{% block post_url %}{% url 'groups:group:invite:delete' view.kwargs.group object.slug %}{% endblock %}
-
+{% extends "base.html" %}
+{% block title %} - Invite Delete{% endblock %}
 
 {% block breadcrumbs %}
   {% include "groups/group/invite/breadcrumb.html" %}
   <li><span>delete</span></li>
   <li><span>{{ object.slug }}</span></li>
+{% endblock %}
+
+{% block content %}
+  <form class="uk-form uk-form-stacked" method="post" action="{% url 'groups:group:invite:delete' view.kwargs.group object.slug %}">
+    {% csrf_token %}
+
+    <div class="uk-form-row">
+      <button type="submit" class="uk-button uk-button-danger">Delete</button>
+    </div>
+  </form>
 {% endblock %}
