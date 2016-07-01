@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# todo: until consol/vault is setup
+. /app/.env.sh
+
 python3 /app/manage.py collectstatic_js_reverse
 python3 /app/manage.py collectstatic --noinput
 python3 /app/manage.py check_permissions

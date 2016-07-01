@@ -81,8 +81,6 @@ speakeazy/static/js/reverse.js
 #Production Files
 .env
 .env.sh
-account.json
-config/settings/production.py
 
 #Development Files
 speakeazy.db

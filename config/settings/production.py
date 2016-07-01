@@ -126,11 +126,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'speakeazy',
-        'USER': 'admin',  # env.db("DATABASE_USER"),
-        'PASSWORD': 'FLcX0y5KXnlZ7uVh8pLmLeJcdhHvFOkZtzTgQHkhK',  # env.db("DATABASE_PASSWORD"),
-        'HOST': 'speakeazy-django.cwrnk6vpjdiq.us-east-1.rds.amazonaws.com',
-        # env.db("DATABASE_URL"),  # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'USER': env("DATABASE_USER"),
+        'PASSWORD': env("DATABASE_PASSWORD"),
+        'HOST': env("DATABASE_URL"),  # Or an IP Address that your DB is hosted on
+        'PORT': env("DATABASE_PORT"),
         'ATOMIC_REQUESTS': True,
     }
 }
@@ -174,7 +173,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'verbose',
-            'filename': '/logs/django.log'
+            'filename': '/app/django.log'
         }
     },
     'loggers': {
@@ -207,15 +206,15 @@ LOGGING = {
 }
 
 #
-INSTALLED_APPS += (
-    'opbeat.contrib.django',
-)
-OPBEAT = {
-    'ORGANIZATION_ID': env('OPBEAT_ORGANIZATION_ID'),
-    'APP_ID': env('OPBEAT_APP_ID'),
-    'SECRET_TOKEN': env('OPBEAT_SECRET_TOKEN'),
-}
-MIDDLEWARE_CLASSES = ('opbeat.contrib.django.middleware.OpbeatAPMMiddleware',) + MIDDLEWARE_CLASSES
+# INSTALLED_APPS += (
+#     'opbeat.contrib.django',
+# )
+# OPBEAT = {
+#     'ORGANIZATION_ID': env('OPBEAT_ORGANIZATION_ID'),
+#     'APP_ID': env('OPBEAT_APP_ID'),
+#     'SECRET_TOKEN': env('OPBEAT_SECRET_TOKEN'),
+# }
+# MIDDLEWARE_CLASSES = ('opbeat.contrib.django.middleware.OpbeatAPMMiddleware',) + MIDDLEWARE_CLASSES
 
 # Custom Admin URL, use {% url 'admin:index' %}
 ADMIN_URL = env('DJANGO_ADMIN_URL', default=r'^admin/')

@@ -1,0 +1,8 @@
+[Unit]
+Description=Renews letsencrypt certs
+
+[Timer]
+OnUnitActiveSec=12h 11m
+
+[Install]
+WantedBy=timers.target

@@ -12,8 +12,8 @@ apt-get --no-install-recommends --no-install-suggests -y install ffmpeg
 
 
 # Install python and python dependencies for later
-apt-get --no-install-recommends --no-install-suggests -y install python3 python3-pip libjpeg62-turbo-dev zlib1g-dev gcc libffi-dev
-apt-get clean
+apt-get --no-install-recommends --no-install-suggests -y install \
+    python3 python3-pip python3-pil python3-dev libjpeg-dev libjpeg62-turbo-dev zlib1g-dev gcc libffi-dev
 pip3 install --upgrade pip
 ln -s /usr/bin/python3 /usr/local/bin/python
 
@@ -25,17 +25,23 @@ mkdir /app
 chmod 777 /app
 chown worker /app
 
-cd /app
 
 # extract speakeazy
-tar -zxf /tmp/worker.tar.gz
+tar -zxf /tmp/speakeazy.tar.gz -C /app
+
+mv /app/devops/packer/fix_permissions.sh /app/fix_permissions.sh
 
 # fix speakeazy file permissions
-bash ./fix_permissions.sh
+bash /app/fix_permissions.sh
 
 # install pip dependencies
 pip3 install -r /app/requirements/production.txt
+echo test1
 
-
-mv ./packer/worker/worker.service /lib/systemd/system/worker.service
+mv /app/packer/worker/worker.service /lib/systemd/system/worker.service
+echo test2
 systemd enable worker.service
+echo test3
+
+# So, this script fails inexplicably somewhere after 'echo test1' without each 'echo testx'.
+# I guess I have no choice but to leave them. Future archaeologists have been warned.

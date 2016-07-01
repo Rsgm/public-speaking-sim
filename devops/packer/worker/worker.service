@@ -3,7 +3,8 @@ Description=Distributed python task worker
 After=syslog.target network.target auditd.service
 
 [Service]
-ExecStart=
+WorkingDirectory=/app
+ExecStart=celery -A speakeazy.taskapp worker -l INFO
 Restart=always
 User=django
 Group=django

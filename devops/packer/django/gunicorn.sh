@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# todo: until consol/vault is setup
+. /app/.env.sh
+
 python3 /app/manage.py collectstatic_js_reverse
 python3 /app/manage.py collectstatic --noinput
 python3 /app/manage.py check_permissions
@@ -12,3 +15,5 @@ python3 /app/manage.py check_permissions
     --timeout 90 \
     --log-level $GUNICORN_LOG_LEVEL \
     --access-logfile $GUNICORN_LOG_FILE
+
+# may need --proxy-allow-from
