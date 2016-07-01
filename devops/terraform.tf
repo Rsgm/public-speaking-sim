@@ -3,16 +3,16 @@ provider "aws" {
 }
 
 variable "django_ami" {
-  default = "ami-4c43fb5b"
+  default = "ami-3dbd062a"
 }
 variable "nginx_ami" {
-  default = "ami-5d4cf44a"
+  default = "ami-dfb308c8"
 }
 variable "docker_ami" {
   default = "ami-a88a46c5"
 }
 variable "worker_ami" {
-  default = "ami-6043fb77"
+  default = "ami-36bd0621"
 }
 variable "ssh_key" {
   default = "Ryan's desktop"
