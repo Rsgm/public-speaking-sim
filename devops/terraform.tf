@@ -72,6 +72,7 @@ resource "aws_subnet" "worker_subnet" {
     Name = "worker subnet"
   }
 }
+
 resource "aws_internet_gateway" "vpc_gateway" {
   vpc_id = "${aws_vpc.speakeazy_vpc.id}"
 
@@ -79,9 +80,6 @@ resource "aws_internet_gateway" "vpc_gateway" {
     Name = "speakeazy"
   }
 }
-
-// VPC Static Routes
-// ==========
 resource "aws_route_table" "route_table" {
   vpc_id = "${aws_vpc.speakeazy_vpc.id}"
   route {

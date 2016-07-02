@@ -2,4 +2,4 @@
 
 certbot certonly
 
-sudo systemd start
+systemd start
