@@ -1,0 +1,14 @@
+// -----------------------------------------------------------------------------
+// This file contains styles that normalize the browsers
+// -----------------------------------------------------------------------------
+
+// fix normalize.css video alignment
+video {
+  vertical-align: middle !important;
+}
+
+
+// fix chrome buttons on mac
+button, html [type="button"], [type="reset"], [type="submit"] {
+   appearance: none;
+}
