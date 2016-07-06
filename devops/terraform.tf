@@ -15,7 +15,7 @@ variable "worker_ami" {
   default = "ami-36bd0621"
 }
 variable "ssh_key" {
-  default = "Ryan's desktop"
+  default = "Ryan's laptop" //"Ryan's desktop"
 }
 
 variable "gunicorn_port" {
@@ -27,6 +27,7 @@ variable "redis_port" {
 variable "db_port" {
   default = 3306
 }
+
 
 // IPs
 variable "nginx_ip" {
@@ -49,6 +50,7 @@ variable "main_block" {
 variable "worker_block" {
   default = "10.0.2.0/24"
 }
+
 
 // VPC
 // =========
@@ -80,13 +82,13 @@ resource "aws_internet_gateway" "vpc_gateway" {
     Name = "speakeazy"
   }
 }
-resource "aws_route_table" "route_table" {
-  vpc_id = "${aws_vpc.speakeazy_vpc.id}"
-  route {
-    cidr_block = "0.0.0.0/0"
-    instance_id = "${aws_internet_gateway.vpc_gateway.id}"
-  }
-}
+//resource "aws_route_table" "route_table" {
+//  vpc_id = "${aws_vpc.speakeazy_vpc.id}"
+//  route {
+//    cidr_block = "0.0.0.0/0"
+//    instance_id = "${aws_internet_gateway.vpc_gateway.id}"
+//  }
+//}
 
 
 // Public Ips
@@ -122,9 +124,16 @@ resource "aws_instance" "docker" {
   ]
   subnet_id = "${aws_subnet.main_subnet.id}"
   private_ip = "${var.docker_ip}"
+  iam_instance_profile = "${aws_iam_instance_profile.docker_ecs.name}"
   key_name = "Ryan's desktop"
+
   tags {
     Name = "docker"
+  }
+
+  provisioner "file" {
+    source = "files/docker/ecs.config"
+    destination = "/etc/ecs/ecs.config"
   }
 }
 resource "aws_instance" "django" {
@@ -141,18 +150,12 @@ resource "aws_instance" "django" {
     Name = "django"
   }
 }
-resource "aws_instance" "test" {
-  ami = "${var.django_ami}"
-  instance_type = "t2.nano"
-  vpc_security_group_ids = [
-    "${aws_security_group.ssh.id}"
-  ]
-  subnet_id = "${aws_subnet.main_subnet.id}"
-  private_ip = "10.0.1.254"
-  key_name = "Ryan's desktop"
-  tags {
-    Name = "test"
-  }
+
+
+// Docker iam
+resource "aws_iam_instance_profile" "docker_ecs" {
+    name = "test_profile"
+    roles = ["ecsInstanceRole"]
 }
 
 
@@ -432,18 +435,4 @@ resource "aws_cloudwatch_metric_alarm" "worker_alarm_cpu_low" {
 // =============================================
 resource "aws_ecs_cluster" "docker_tools" {
   name = "tools"
-}
-
-// Tasks
-resource "aws_ecs_task_definition" "redis" {
-  family = "redis"
-  container_definitions = "${file("task-definitions/redis.json")}"
-}
-
-// Services
-resource "aws_ecs_service" "redis" {
-  name = "redis"
-  cluster = "${aws_ecs_cluster.docker_tools.id}"
-  task_definition = "${aws_ecs_task_definition.redis.arn}"
-  desired_count = 1
 }

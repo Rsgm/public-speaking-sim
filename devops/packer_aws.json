@@ -57,7 +57,7 @@
       "destination": "/tmp/speakeazy.tar.gz",
       "override": {
         "nginx": {
-          "source": "{{template_dir}}/nginx/",
+          "source": "{{template_dir}}/files/nginx/",
           "destination": "/tmp"
         }
       }
@@ -85,10 +85,10 @@
           ]
         },
         "django": {
-          "script": "{{template_dir}}/django/django.sh"
+          "script": "{{template_dir}}/files/django/django.sh"
         },
         "worker": {
-          "script": "{{template_dir}}/worker/worker.sh"
+          "script": "{{template_dir}}/files/worker/worker.sh"
         }
       }
     },

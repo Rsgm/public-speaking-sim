@@ -81,6 +81,9 @@ speakeazy/static/js/reverse.js
 #Production Files
 .env
 .env.sh
+devops/terraform.tfstate
+devops/terraform.tfstate.backup
 
 #Development Files
 speakeazy.db
+
