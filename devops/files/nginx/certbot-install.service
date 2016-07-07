@@ -4,7 +4,7 @@ After=syslog.target network.target
 ConditionPathExists=!/etc/letsencrypt/live/
 
 [Service]
-ExecStart=/usr/bin/certbot certonly --quiet
+ExecStart=/usr/bin/certbot certonly --quiet --agree-tos
 Type=oneshot
 
 [Install]
