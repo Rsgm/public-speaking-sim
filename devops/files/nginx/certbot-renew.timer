@@ -2,7 +2,7 @@
 Description=Renews letsencrypt certs
 
 [Timer]
-OnUnitActiveSec=12h 11m
+OnUnitActiveSec=12h 17m
 
 [Install]
 WantedBy=timers.target

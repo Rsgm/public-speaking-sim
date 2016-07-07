@@ -1,0 +1,12 @@
+[Unit]
+Description=Renews letsencrypt certs
+After=syslog.target network.target
+
+[Service]
+ExecStart=/usr/bin/certbot renew --quiet --pre-hook "systemctl stop nginx.service" --post-hook "systemctl start nginx.service"
+
+Requires=certbot-install.service
+After=certbot-install.service
+
+[Install]
+RequiredBy=nginx.service

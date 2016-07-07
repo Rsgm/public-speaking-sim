@@ -1,0 +1,10 @@
+[Unit]
+Description=Renews letsencrypt certs
+After=syslog.target network.target
+ConditionPathExists=/etc/letsencrypt/live/
+
+[Service]
+ExecStart=/usr/bin/certbot certonly --quiet
+
+[Install]
+WantedBy=multi-user.target
