@@ -87,6 +87,7 @@
             "mv /tmp/certbot-renew.timer /lib/systemd/system/",
             "",
             "systemctl enable certbot-install.service",
+            "systemctl enable certbot-renew.service",
             "systemctl enable certbot-renew.timer",
             "",
             "openssl dhparam -outform PEM -out /etc/speakeazy_dhparam.pem 2048"
