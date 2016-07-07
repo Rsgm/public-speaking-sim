@@ -20,8 +20,8 @@ chown django /app
 # extract speakeazy
 tar -zxf /tmp/speakeazy.tar.gz -C /app
 
-mv /app/devops/packer/django/gunicorn.sh /app/gunicorn.sh
-mv /app/devops/packer/fix_permissions.sh /app/fix_permissions.sh
+mv /app/devops/files/django/gunicorn.sh /app/gunicorn.sh
+mv /app/devops/files/fix_permissions.sh /app/fix_permissions.sh
 
 # fix speakeazy file permissions
 bash /app/fix_permissions.sh
@@ -30,7 +30,7 @@ bash /app/fix_permissions.sh
 pip3 install -r /app/requirements/production.txt
 echo test1
 
-mv /app/packer/django/django.service /lib/systemd/system/django.service
+mv /app/devops/files/django/django.service /lib/systemd/system/django.service
 echo test2
 systemd enable django.service
 echo test3

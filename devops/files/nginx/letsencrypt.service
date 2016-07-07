@@ -3,4 +3,4 @@ Description=Renews letsencrypt certs
 After=syslog.target network.target
 
 [Service]
-ExecStart=certbot renew --quiet
+ExecStart=/usr/bin/certbot renew --quiet

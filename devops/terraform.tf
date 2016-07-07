@@ -3,19 +3,19 @@ provider "aws" {
 }
 
 variable "django_ami" {
-  default = "ami-3dbd062a"
+  default = "ami-b51195a2"
 }
 variable "nginx_ami" {
-  default = "ami-dfb308c8"
+  default = "ami-60109477"
 }
 variable "docker_ami" {
   default = "ami-a88a46c5"
 }
 variable "worker_ami" {
-  default = "ami-36bd0621"
+  default = "ami-83159194"
 }
 variable "ssh_key" {
-  default = "Ryan's laptop" //"Ryan's desktop"
+  default = "Ryan's desktop"
 }
 
 variable "gunicorn_port" {
@@ -369,7 +369,7 @@ resource "aws_autoscaling_group" "worker_scale" {
   launch_configuration = "${aws_launch_configuration.worker_config.name}"
 }
 
-// worker scaling policies
+// worker scaling policies.
 resource "aws_autoscaling_policy" "worker_scale_policy_up" {
   name = "worker-scale-cpu-up"
   scaling_adjustment = 100

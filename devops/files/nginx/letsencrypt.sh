@@ -2,4 +2,4 @@
 
 certbot certonly
 
-systemd start
+systemd start letsencrypt.timer

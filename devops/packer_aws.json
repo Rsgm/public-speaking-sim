@@ -77,8 +77,12 @@
             "mv /tmp/letsencrypt.ini /etc/letsencrypt/cli.ini",
             "mv /tmp/letsencrypt.service /lib/systemd/system/",
             "mv /tmp/letsencrypt.timer /lib/systemd/system/",
+            "mv /tmp/letsencrypt.sh /letsencrypt.sh",
             "TODO: run lets encrypt here",
+            "/letsencrypt.sh",
             "systemctl enable letsencrypt.timer",
+            "",
+            "useradd --no-create-home nginx",
             "",
             "openssl dhparam -outform PEM -out /etc/speakeazy_dhparam.pem 2048",
             "echo You must ssh into the deployed instance and setup lets encrypt"

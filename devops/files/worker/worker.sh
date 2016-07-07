@@ -29,7 +29,7 @@ chown worker /app
 # extract speakeazy
 tar -zxf /tmp/speakeazy.tar.gz -C /app
 
-mv /app/devops/packer/fix_permissions.sh /app/fix_permissions.sh
+mv /app/devops/flies/fix_permissions.sh /app/fix_permissions.sh
 
 # fix speakeazy file permissions
 bash /app/fix_permissions.sh
@@ -38,7 +38,7 @@ bash /app/fix_permissions.sh
 pip3 install -r /app/requirements/production.txt
 echo test1
 
-mv /app/packer/worker/worker.service /lib/systemd/system/worker.service
+mv /app/devops/files/worker/worker.service /lib/systemd/system/worker.service
 echo test2
 systemd enable worker.service
 echo test3
