@@ -3,16 +3,16 @@ provider "aws" {
 }
 
 variable "django_ami" {
-  default = "ami-b51195a2"
+  default = "ami-f169eee6"
 }
 variable "nginx_ami" {
-  default = "ami-60109477"
+  default = "ami-c268efd5"
 }
 variable "docker_ami" {
   default = "ami-a88a46c5"
 }
 variable "worker_ami" {
-  default = "ami-83159194"
+  default = "ami-966aed81"
 }
 variable "ssh_key" {
   default = "Ryan's desktop"
@@ -82,13 +82,18 @@ resource "aws_internet_gateway" "vpc_gateway" {
     Name = "speakeazy"
   }
 }
-//resource "aws_route_table" "route_table" {
-//  vpc_id = "${aws_vpc.speakeazy_vpc.id}"
-//  route {
-//    cidr_block = "0.0.0.0/0"
-//    instance_id = "${aws_internet_gateway.vpc_gateway.id}"
-//  }
-//}
+resource "aws_route_table" "route_table" {
+  vpc_id = "${aws_vpc.speakeazy_vpc.id}"
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.vpc_gateway.id}"
+  }
+}
+resource "aws_route_table_association" "eu-west-1a-private" {
+    subnet_id = "${aws_subnet.main_subnet.id}"
+    route_table_id = "${aws_route_table.route_table.id}"
+}
+
 
 
 // Public Ips
@@ -115,27 +120,27 @@ resource "aws_instance" "nginx" {
     Name = "nginx"
   }
 }
-resource "aws_instance" "docker" {
-  ami = "${var.docker_ami}"
-  instance_type = "t2.nano"
-  vpc_security_group_ids = [
-    "${aws_security_group.docker.id}",
-    "${aws_security_group.ssh.id}"
-  ]
-  subnet_id = "${aws_subnet.main_subnet.id}"
-  private_ip = "${var.docker_ip}"
-  iam_instance_profile = "${aws_iam_instance_profile.docker_ecs.name}"
-  key_name = "Ryan's desktop"
-
-  tags {
-    Name = "docker"
-  }
-
-  provisioner "file" {
-    source = "files/docker/ecs.config"
-    destination = "/etc/ecs/ecs.config"
-  }
-}
+//resource "aws_instance" "docker" {
+//  ami = "${var.docker_ami}"
+//  instance_type = "t2.nano"
+//  vpc_security_group_ids = [
+//    "${aws_security_group.docker.id}",
+//    "${aws_security_group.ssh.id}"
+//  ]
+//  subnet_id = "${aws_subnet.main_subnet.id}"
+//  private_ip = "${var.docker_ip}"
+//  iam_instance_profile = "${aws_iam_instance_profile.docker_ecs.name}"
+//  key_name = "Ryan's desktop"
+//
+//  tags {
+//    Name = "docker"
+//  }
+//
+//  provisioner "file" {
+//    source = "files/docker/ecs.config"
+//    destination = "/etc/ecs/ecs.config"
+//  }
+//}
 resource "aws_instance" "django" {
   ami = "${var.django_ami}"
   instance_type = "t2.micro"
