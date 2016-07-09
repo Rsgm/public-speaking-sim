@@ -4,9 +4,10 @@
     "ami": "ami-c8bda8a2",
     "instance_type": "t2.nano",
     "ssh_user": "admin",
-    "app_tar": "/tmp/speakeazy.tar.gz"
+    "django_tar": "/tmp/django.tar.gz",
+    "worker_tar": "/tmp/worker.tar.gz"
   },
-  "_NOTE": "/tmp/speakeazy.tar.gz must exist at compile time, otherwise you get a bad source error",
+  "_NOTE": "/tmp/django.tar.gz and /tmp/worker.tar.gz must exist at compile time, otherwise you get a bad source error",
   "builders": [
     {
       "name": "nginx",
@@ -40,10 +41,16 @@
     {
       "type": "shell-local",
       "only": [
-        "django",
+        "django"
+      ],
+      "command": "npm run build && tar --exclude-vcs-ignores -zcf {{user `django_tar`}} ./ ./.env.sh ./speakeazy/static/css/build.css"
+    },
+    {
+      "type": "shell-local",
+      "only": [
         "worker"
       ],
-      "command": "npm run build && tar --exclude-vcs-ignores -zcf {{user `app_tar`}} ./ ./.env.sh ./speakeazy/static/css/build.css"
+      "command": "tar --exclude-vcs-ignores -zcf {{user `worker_tar`}} ./ ./.env.sh"
     },
     {
       "type": "shell",
@@ -53,9 +60,15 @@
     },
     {
       "type": "file",
-      "source": "{{user `app_tar`}}",
-      "destination": "/tmp/speakeazy.tar.gz",
       "override": {
+        "django": {
+          "source": "{{user `django_tar`}}",
+          "destination": "/tmp/django.tar.gz"
+        },
+        "worker": {
+          "source": "{{user `worker_tar`}}",
+          "destination": "/tmp/worker.tar.gz"
+        },
         "nginx": {
           "source": "{{template_dir}}/files/nginx/",
           "destination": "/tmp"

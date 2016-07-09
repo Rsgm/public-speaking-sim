@@ -27,7 +27,7 @@ chown worker /app
 
 
 # extract speakeazy
-tar -zxf /tmp/speakeazy.tar.gz -C /app
+tar -zxf /tmp/worker.tar.gz -C /app
 
 mv /app/devops/flies/fix_permissions.sh /app/fix_permissions.sh
 

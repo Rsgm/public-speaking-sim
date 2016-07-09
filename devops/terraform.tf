@@ -3,16 +3,16 @@ provider "aws" {
 }
 
 variable "django_ami" {
-  default = "ami-f169eee6"
+  default = "ami-2936b03e"
 }
 variable "nginx_ami" {
-  default = "ami-c268efd5"
+  default = "ami-3906812e"
 }
 variable "docker_ami" {
   default = "ami-a88a46c5"
 }
 variable "worker_ami" {
-  default = "ami-966aed81"
+  default = "ami-2a36b03d"
 }
 variable "ssh_key" {
   default = "Ryan's desktop"
@@ -158,10 +158,10 @@ resource "aws_instance" "django" {
 
 
 // Docker iam
-resource "aws_iam_instance_profile" "docker_ecs" {
-    name = "test_profile"
-    roles = ["ecsInstanceRole"]
-}
+//resource "aws_iam_instance_profile" "docker_ecs" {
+//    name = "test_profile"
+//    roles = ["ecsInstanceRole"]
+//}
 
 
 // Security Groups
