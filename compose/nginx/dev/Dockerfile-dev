@@ -1,0 +1,3 @@
+FROM nginx:latest
+ADD *.pem server.crt /certs/
+ADD nginx-dev.conf /etc/nginx/nginx.conf

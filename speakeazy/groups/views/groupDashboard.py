@@ -23,7 +23,7 @@ class GroupDashboard(LoginRequiredMixin, TemplateView):
 
         # list all groups with submissions that you have permission to list
         kwargs['groups_with_submission_list'] = group_memberships \
-                                                    .filter(authorizations__permissions__name=LIST_SUBMISSION) \
+                                                    .filter(roles__permissions__name=LIST_SUBMISSION) \
                                                     .select_related('group') \
                                                     .annotate(submission_count=Count('group__submission')) \
                                                     .order_by('-submission_count')[:6]

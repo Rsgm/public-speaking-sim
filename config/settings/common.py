@@ -9,9 +9,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
-from django.core.exceptions import ImproperlyConfigured
+
 import environ
-from puput import PUPUT_APPS
+from django.core.exceptions import ImproperlyConfigured
 
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('speakeazy')
@@ -63,11 +63,11 @@ LOCAL_APPS = (
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PUPUT_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # apps that need to be added last
 INSTALLED_APPS += (
-    # 'hijack',  # http://django-hijack.readthedocs.org/en/latest/
+    'hijack',  # http://django-hijack.readthedocs.org/en/latest/
     'compat',
 )
 
@@ -81,9 +81,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'wagtail.wagtailcore.middleware.SiteMiddleware',
-    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-    'easy_timezones.middleware.EasyTimezoneMiddleware'
+    'easy_timezones.middleware.EasyTimezoneMiddleware',
 )
 
 # MIGRATIONS CONFIGURATION
@@ -191,7 +189,6 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder'
 )
 
 # MEDIA CONFIGURATION
@@ -210,6 +207,8 @@ ROOT_URLCONF = 'config.urls'
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # AUTHENTICATION CONFIGURATION
+#
+# http://docs.django-userena.org/en/latest/settings.html
 # ------------------------------------------------------------------------------
 AUTHENTICATION_BACKENDS = (
     'userena.backends.UserenaAuthenticationBackend',
@@ -223,14 +222,17 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 AUTH_USER_MODEL = 'users.User'
 
 # USERENA_SIGNIN_REDIRECT_URL = '/accounts/%(username)s/'
-USERENA_SIGNIN_REDIRECT_URL = '/home'
+USERENA_SIGNIN_REDIRECT_URL = '/dashboard'
 USERENA_ACTIVATION_NOTIFY = False
 USERENA_MUGSHOT_GRAVATAR = False
 USERENA_DEFAULT_PRIVACY = 'closed'
 USERENA_DISABLE_PROFILE_LIST = True
 USERENA_HIDE_EMAIL = True
 USERENA_HTML_EMAIL = True
+USERENA_REGISTER_USER = False  # override userena admin page
+USERENA_REGISTER_PROFILE = False  # override userena admin page
 USERENA_REDIRECT_ON_SIGNOUT = 'userena_signin'
+USERENA_FORBIDDEN_USERNAMES = ('signup', 'signout', 'signin', 'activate', 'me', 'password', 'admin')
 
 LOGIN_REDIRECT_URL = 'speakeazy:dashboard'
 LOGIN_URL = 'userena_signin'
@@ -239,12 +241,9 @@ LOGOUT_URL = 'userena_signout'
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
-########## CELERY
+# CELERY
+# ------------------------------------------------------------------------------
 INSTALLED_APPS += ('speakeazy.taskapp.celery.CeleryConfig',)
-# if you are not using the django database broker (e.g. rabbitmq, redis, memcached), you can remove the next line.
-BROKER_URL = env("CELERY_BROKER_URL", default='django://')
-########## END CELERY
-
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
@@ -270,13 +269,12 @@ RECORDING_PATHS = {
     'AUDIENCE': RECORDING_ROOT_PATH.path('audience')
 }
 
-WAGTAIL_SITE_NAME = 'Speakeazy blog'
 FFMPEG_LOG_LEVEL = 'quiet'
-
-COMPRESS_OFFLINE = True
 
 GEOIP_DATABASE = str(ROOT_DIR.path('resources/GeoLiteCity.dat'))
 GEOIPV6_DATABASE = str(ROOT_DIR.path('resources/GeoLiteCityv6.dat'))
 
 JS_REVERSE_INCLUDE_ONLY_NAMESPACES = ['recordings', 'projects', 'groups']
 JS_REVERSE_OUTPUT_PATH = str(APPS_DIR.path('static/js'))
+
+HIJACK_USE_BOOTSTRAP = False

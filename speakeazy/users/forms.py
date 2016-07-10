@@ -28,6 +28,6 @@ class SpeakeazySignupForm(SignupForm):
             new_membership.group = membership.group
             new_membership.save()
 
-            new_membership.authorizations.add(*membership.authorizations.all())
+            new_membership.roles.add(*membership.roles.all())
 
         return new_user

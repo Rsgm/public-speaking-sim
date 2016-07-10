@@ -69,7 +69,7 @@
 {% block template_scripts %}
   <script>
     var se = {
-      project: '{{ project.slug }}'
+      project: '{{ project.slug | escapejs }}'
     };
   </script>
 {% endblock %}

@@ -9,8 +9,7 @@
 {% endblock %}
 
 {% block content %}
-  <form class="uk-form uk-form-stacked" method="post"
-        action="{% url 'groups:group:audience:delete' view.group.slug audience.slug %}">
+  <form class="uk-form uk-form-stacked" method="post" enctype="multipart/form-data" action="{% url 'groups:group:audience:delete' view.group.slug audience.slug %}">
     {% csrf_token %}
 
     <div class="uk-form-row">

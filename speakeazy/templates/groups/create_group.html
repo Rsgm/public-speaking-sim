@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}{% load %}
+
+{% block title %} - Create Group{% endblock %}
+
+{% block breadcrumbs %}
+  {% include "groups/breadcrumb.html" %}
+  <li class="uk-active"><span>Create Group</span></li>
+{% endblock %}
+
+{% block content %}
+  <form id="group-form" hide="{{ structure_form.structure.name }}" class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post" action="{% url 'groups:create_group' %}">
+    {% csrf_token %}
+
+    <div id="group-settings" class="uk-block">
+      <h1>Create Your Group</h1>
+      {% form group_form %}
+    </div>
+
+    <div id="group-structure" class="uk-block">
+      {% form structure_form %}
+    </div>
+
+    <div id="group-roles" class="uk-block" v-show="showRoles" transition="show">
+      {% form roles_form %}
+    </div>
+
+    {#    <div id="custom-roles" class="uk-block" v-show="showRoles">#}
+    {#      <h2>Create Your Own Roles</h2>#}
+    {#    </div>#}
+
+    {#    <div id="group-limits" class="uk-block">#}
+    {#      <h2>Group Limitations</h2>#}
+    {#    </div>#}
+
+    <div class="uk-form-row">
+      <button type="submit" class="s-form-submit uk-button">Create Group</button>
+    </div>
+  </form>
+{% endblock %}
+
+{% block template_scripts %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>
+  <script src="{% static 'js/reverse.js' %}"></script>
+
+  <script src="{% static 'vue/components/select.js' %}"></script>
+  <script src="{% static 'vue/apps/create_group.js' %}"></script>
+{% endblock template_scripts %}

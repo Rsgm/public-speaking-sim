@@ -9,6 +9,12 @@ html {
   box-sizing: border-box;
 }
 
+.base-content {
+  padding-top: 25px;;
+  background: #eeeeee;
+  min-height: 100vh;
+}
+
 /**
  * Make all elements from the DOM inherit from the parent box-sizing
  * Since `*` has a specificity of 0, it does not override the `html` value
@@ -34,9 +40,4 @@ a {
 
 svg {
   display: block;
-}
-
-// fix normalize.css video alignment
-video {
-  vertical-align: middle !important;
 }

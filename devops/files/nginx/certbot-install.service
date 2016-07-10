@@ -1,0 +1,11 @@
+[Unit]
+Description=Renews letsencrypt certs
+After=syslog.target network.target
+ConditionPathExists=!/etc/letsencrypt/live/
+
+[Service]
+ExecStart=/usr/bin/certbot certonly --quiet --agree-tos --domains stronglyspoken.com,www.stronglyspoken.com
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target

@@ -21,8 +21,9 @@ module.exports = function (grunt) {
             fonts: this.app + '/static/fonts',
             images: this.app + '/static/images',
             js: this.app + '/static/js',
-            apps: this.app + '/static/apps',
-            manageScript: 'manage.py',
+
+            manage: 'manage.py',
+            venv: 'venv/bin/activate'
         }
     };
 
@@ -67,6 +68,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
+                    outputStyle: 'compressed',
                     sourceMap: true,
                     precision: 10,
                     outFile: '<%= paths.css %>/build.map.css'
@@ -110,14 +112,14 @@ module.exports = function (grunt) {
                 bg: true
             },
             collectUrls: {
-                cmd: 'python <%= paths.manageScript %> collectstatic_js_reverse'
+                cmd: '. <%= paths.venv %> && python <%= paths.manage %> collectstatic_js_reverse'
             },
             runDjango: {
-                cmd: 'python <%= paths.manageScript %> runserver'
+                cmd: '. <%= paths.venv %> && python <%= paths.manage %> runserver'
             },
             runCelery: {
-                cmd: 'celery -A speakeazy.taskapp worker -l info'
-            },
+                cmd: '. <%= paths.venv %> && celery -A speakeazy.taskapp worker -l info'
+            }
         }
     });
 
@@ -135,5 +137,4 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [
         'build'
     ]);
-
 };

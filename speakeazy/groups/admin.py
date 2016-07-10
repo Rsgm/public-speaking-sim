@@ -4,18 +4,18 @@ from pathlib import Path
 
 from django import forms
 from django.contrib import admin
-from speakeazy.groups.models import Group, GroupMembership, Authorization, Permission, Submission, \
-    DefaultAuthorization, DefaultGroupStructure, GroupInvite, Audience, SignupMembership
+from speakeazy.groups.models import Group, GroupMembership, Role, Permission, Submission, \
+    DefaultGroupRole, DefaultGroupStructure, GroupInvite, Audience, SignupMembership
 from speakeazy.groups.tasks import transcode_audience
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 admin.site.register(Group)
 admin.site.register(GroupMembership)
-admin.site.register(Authorization)
+admin.site.register(Role)
 admin.site.register(Permission)
 admin.site.register(Submission)
-admin.site.register(DefaultAuthorization)
+admin.site.register(DefaultGroupRole)
 admin.site.register(DefaultGroupStructure)
 admin.site.register(GroupInvite)
 admin.site.register(SignupMembership)

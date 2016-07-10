@@ -9,7 +9,9 @@ from django.views import defaults as default_views
 from speakeazy.users.forms import SpeakeazySignupForm
 
 urlpatterns = [
-                  url(r'^$', TemplateView.as_view(template_name='speakeazy/landing.html'), name="home"),
+                  url(r'^$', TemplateView.as_view(template_name='speakeazy/landing.html'), name="landing"),
+                  url(r'^robots\.txt$', TemplateView.as_view(template_name='speakeazy/robots.txt',
+                                                             content_type='text/plain')),
 
                   # Django Admin, use {% url 'admin:index' %}
                   url(settings.ADMIN_URL + 'docs/', include('django.contrib.admindocs.urls')),
@@ -22,8 +24,6 @@ urlpatterns = [
                   url(r'^account/activate/(?P<activation_key>\w+)/$', 'userena.views.activate',
                       {'success_url': 'speakeazy:dashboard'}, name='userena_activate'),
                   url(r'^account/', include('userena.urls')),
-
-                  url(r'^blog/', include('puput.urls')),
 
                   # Your stuff: custom urls includes go here
                   url(r'', include("speakeazy.speakeazy.urls", namespace="speakeazy")),

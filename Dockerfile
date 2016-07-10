@@ -3,70 +3,79 @@ FROM debian:jessie
 ENV PYTHONUNBUFFERED 1
 ENV LANG C.UTF-8
 
-# todo: https://ffmpeg.org/releases/ffmpeg-3.0.tar.bz2
-# https://ffmpeg.org/releases/ffmpeg-3.0.tar.xz.asc
-
 # Install ffmpeg
 RUN echo deb http://www.deb-multimedia.org jessie main non-free >> /etc/apt/sources.list \
     && echo deb-src http://www.deb-multimedia.org jessie main non-free >> /etc/apt/sources.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5C808C2B65558117 \
-    && apt-get -y --force-yes update \
-    && apt-get -y --force-yes install deb-multimedia-keyring \
-    && apt-get -y --force-yes update \
-    && apt-get -y --force-yes install ffmpeg
+    && apt-get -y update \
+    && apt-get -y install deb-multimedia-keyring \
+    && apt-get -y update \
+    && apt-get -y install ffmpeg
 
+# 4.4.5 is current node LTS
+ENV NODE_VERSION 4.4.5
+ENV NPM_CONFIG_LOGLEVEL info
 
-# Install npm
-# This tries to install python 2.7, do this after installing python
-# todo: https://github.com/nodejs/docker-node/blob/b2c7f6e357359b7b8f30caada05f1d412d926d7b/5.7/wheezy/Dockerfile
-RUN apt-get -y --force-yes update \
-    && apt-get -y --force-yes install nodejs-legacy \
-    && apt-get -y --force-yes install npm \
-    && npm install -g grunt-cli
-
-
-# Install python and add python3 link
-RUN apt-get -y --force-yes update \
-    && apt-get -y --force-yes install python3 python3-pip \
-    && pip3 install --upgrade pip \
+RUN apt-get -y install curl xz-utils \
     \
-    && cd /usr/bin \
-	&& rm python \
-	&& ln -s python3 python
+    && echo 'install npm, gpg keys listed at https://github.com/nodejs/node' \
+    && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys \
+        9554F04D7259F04124DE6B476D5A82AC7E37093B \
+        94AE36675C464D64BAFA68DD7434390BDBE9B9C5 \
+        0034A06D9D9B0064CE8ADF6BF1747F4AD2306D93 \
+        FD3A5288F042B6850C66B31F09FE44734EB7990E \
+        71DCFD284A79C3B38668286BC97EC7A07EDE3FC1 \
+        DD8F2338BAE7501E3DD5AC78C273792F7D83545D \
+        C4F0DFFF4E8C1A8236409D08E73BC641CC11F4C8 \
+    \
+    && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
+    && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
+    && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
+    && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
+    && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
+    && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
+    && apt-get -y remove curl xz-utils \
+    \
+    \
+    && echo create non-root user \
+    && groupadd -r django \
+    && useradd -r -g django django \
+    \
+    && mkdir /app \
+    && chmod 777 /app \
+    && chown django /app \
+    \
+    \
+    && echo Install python and python dependencies for later \
+    && apt-get -y install python3 python3-pip libjpeg62-turbo-dev zlib1g-dev gcc libffi-dev \
+    && pip3 install --upgrade pip \
+    && ln -s /usr/bin/python3 /usr/local/bin/python \
+    \
+    \
+    && apt-get clean
 
 
-# Install packages needed by python packages later
-RUN apt-get -y --force-yes update \
-    && apt-get -y --force-yes install libjpeg62-turbo-dev zlib1g-dev gcc libffi-dev
+# Install npm dependencies
+COPY ./package.json /app/package.json
+RUN cd /app \
+    && npm install --production
 
 
-# Requirements have to be pulled and installed here, otherwise caching won't work
-COPY ./requirements /requirements
-RUN pip3 install -r /requirements/production.txt
+# Install python dependencies
+COPY ./requirements /app/requirements/
+RUN pip3 install -r /app/requirements/production.txt
 
 
-RUN groupadd -r django && useradd -r -g django django
+# Copy the project, up to here should usually be cached
 COPY . /app
 
 
-# install npm dependencies and fix file permissions
+# Compile sass and run any final commands(keep this layer fast)
 RUN cd /app \
-    && mv ./prod_package.json ./package.json \
-    && npm install \
-    && grunt build \
-    \
-    && echo fixing file permissions \
-    && chown -R django /app \
-    && chmod -R 777 /app # todo: is this a security issue?
-
-
-COPY ./compose/django/gunicorn.sh /gunicorn.sh
-COPY ./compose/django/entrypoint.sh /entrypoint.sh
-
-
-RUN chown django /entrypoint.sh && chmod +x /entrypoint.sh \
-    && chown django /gunicorn.sh && chmod +x /gunicorn.sh
+    && npm run build \
+    && bash ./fix_permissions.sh
 
 
 WORKDIR /app
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/app/compose/django/entrypoint.sh"]
+CMD ["/app/compose/django/gunicorn.sh"]

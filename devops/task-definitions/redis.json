@@ -1,0 +1,14 @@
+[
+  {
+    "name": "redis",
+    "image": "redis:latest",
+    "memory": 64,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 6379,
+        "hostPort": 6379
+      }
+    ]
+  }
+]

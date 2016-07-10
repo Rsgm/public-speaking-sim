@@ -10,7 +10,7 @@ from speakeazy.users.models import User
 
 
 class Project(Model):
-    name = models.CharField(_("Name of project"), max_length=30)
+    name = models.CharField(_("Name of project"), max_length=60)
     description = models.TextField(_("Description of project"), null=True, blank=True)
     audience = models.ForeignKey('groups.Audience')
 
@@ -24,13 +24,6 @@ class Project(Model):
 
     def __str__(self):
         return self.name
-
-
-class UserProject(Project):
-    user = models.ForeignKey(User)
-
-    def get_absolute_url(self):
-        return reverse_lazy('projects:project:projectView', kwargs={'project': self.slug})
 
 
 class Settings(Model):
@@ -47,3 +40,30 @@ class Settings(Model):
 
     def get_absolute_url(self):
         return reverse_lazy('projects:project:projectView', kwargs={'project': self.slug})
+
+
+class UserProject(Project):
+    user = models.ForeignKey('users.User')
+
+    def get_absolute_url(self):
+        return reverse_lazy('projects:project:projectView', kwargs={'project': self.slug})
+
+
+class PracticeProject(UserProject):
+    practice_speech = models.ForeignKey('PracticeSpeech')
+
+    def get_absolute_url(self):
+        return reverse_lazy('projects:project:projectView', kwargs={'project': self.slug})
+
+
+class PracticeSpeech(Model):
+    name = models.CharField(_("Name of Speech"), max_length=60)
+    subject = models.CharField(_("A General Subject This Speech Covers"), max_length=30)
+
+    time_length = models.IntegerField(_("Estimated Recording Duration"))
+    text = models.TextField(_("Speech Text"))
+
+    def __str__(self):
+        return self.name
+
+        # def get_absolute_url(self):

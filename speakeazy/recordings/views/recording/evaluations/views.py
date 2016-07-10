@@ -3,8 +3,10 @@ from __future__ import absolute_import, unicode_literals
 
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
+
 from speakeazy.recordings.mixins import RecordingMixin
 from speakeazy.recordings.models import EvaluationType, Evaluation
+from speakeazy.util.email import send_feedback_email
 from speakeazy.util.views import PostView
 
 
@@ -19,5 +21,8 @@ class Create(RecordingMixin, PostView):
                                 text=post['text'],
                                 seconds=int(post['seconds']))
         evaluation.save()
+
+        if self.submission:
+            send_feedback_email(self.submission, request.user)
 
         return HttpResponse()

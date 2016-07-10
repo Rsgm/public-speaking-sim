@@ -1,0 +1,6 @@
+{% extends "floppyforms/input.html" %}
+
+{% block input %}
+  <select-input class="s-select" name="{{ name }}" :choices="{{ objects }}" :end="{{ custom_end_object }}"
+      {% if multiple %} :multiple="true"{% endif %}{% include "floppyforms/attrs.html" %}{% if required %} required{% endif %}></select-input>
+{% endblock %}

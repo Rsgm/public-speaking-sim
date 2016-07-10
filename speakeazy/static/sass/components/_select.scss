@@ -1,0 +1,34 @@
+.s-select {
+  width: 80%;
+  margin: auto;
+
+  div {
+    color: $text-color;
+    background: white;
+    padding: 15px 20px;
+    @include card(1);
+
+    &:not(:nth-last-of-type(1)) {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      margin-left: 15px;
+    }
+
+    &.selected {
+      @include card(2);
+      transition: box-shadow .3s ease, background .2s ease;
+    }
+
+    &.deselected {
+      @include card(1);
+      transition: box-shadow .3s ease, background .2s ease,;
+    }
+
+    @include on-event() {
+      background: $light-grey;
+      cursor: pointer;
+    }
+  }
+}

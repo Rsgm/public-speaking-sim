@@ -1,43 +1,42 @@
-#postgres:
-#  image: postgres:9.4
-#  volumes:
-#    - /data/speakeazy/postgres:/var/lib/postgresql/data
-#  env_file: .env
+version: '2'
 
-# https://093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/server
-django: # django app
-  build: .
-  user: django
-  links:
-    - redis
-  command: /gunicorn.sh
-  env_file: .env
+services:
+  django: # django app
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    image: speakeazy_django
+    user: django
+    env_file: dev.env
+    volumes:
+      - ./speakeazy.db:/app/speakeazy.db
+      - ./recordings/:/app/recordings/
+      - ./speakeazy/media/:/app/speakeazy/media/
 
-# https://093873736372.dkr.ecr.us-east-1.amazonaws.com/speakeazy/nginx
-nginx: # reverse proxy
-  build: ./compose/nginx
-  links:
-    - django
-  ports:
-    - "0.0.0.0:80:80"
+  nginx: # reverse proxy
+    build:
+      context: ./compose/nginx/dev
+      dockerfile: Dockerfile-dev
+    links:
+      - django
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
 
-redis:
-  image: redis:3.0
+  # part of speakeazy/server
+  celeryworker: # runs tasks
+    image: speakeazy_django
+    user: django
+    env_file: dev.env
+    volumes:
+      - ./speakeazy.db:/app/speakeazy.db
+    command: celery -A speakeazy.taskapp worker -l INFO
 
-# part of speakeazy/server
-celeryworker: # runs tasks
-  build: .
-  user: django
-  env_file: .env
-  links:
-   - redis
-  command: celery -A speakeazy.taskapp worker -l INFO
-
-# part of speakeazy/server
-celerybeat: # assigns tasks to workers I think
-  build: .
-  user: django
-  env_file: .env
-  links:
-    - redis
-  command: celery -A speakeazy.taskapp beat -l INFO
+  # part of speakeazy/server
+  celerybeat: # aruns scheduled tasks
+    image: speakeazy_django
+    user: django
+    env_file: dev.env
+    volumes:
+      - ./speakeazy.db:/app/speakeazy.db
+    command: celery -A speakeazy.taskapp beat -l INFO

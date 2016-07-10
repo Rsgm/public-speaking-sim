@@ -1,9 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-python /app/manage.py collectstatic_js_reverse
-python /app/manage.py collectstatic --noinput
-python /app/manage.py compress
-python /app/manage.py check_permissions
+# todo: until consol/vault is setup
+. /app/.env.sh
+
+python3 /app/manage.py collectstatic_js_reverse
+python3 /app/manage.py collectstatic --noinput
+python3 /app/manage.py check_permissions
 
 /usr/local/bin/gunicorn config.wsgi \
     --workers  3 \
@@ -11,5 +13,5 @@ python /app/manage.py check_permissions
     -b 0.0.0.0:5000 \
     --chdir=/app \
     --timeout 90 \
-    --log-level info \
-    --access-logfile /logs/gunicorn.log
+    --log-level $GUNICORN_LOG_LEVEL \
+    --access-logfile $GUNICORN_LOG_FILE

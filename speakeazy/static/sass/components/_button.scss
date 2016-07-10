@@ -1,0 +1,28 @@
+button, .uk-button {
+  transition: box-shadow .3s ease, background .3s ease;
+  border-radius: 3px;
+  border: none !important;
+
+  @extend .uk-button-primary;
+
+  @include card(1);
+
+  @include on-event {
+    @include card(2);
+  }
+}
+
+.uk-button-primary {
+  @extend button;
+  @include button(#2196f3, $text-light-color);
+}
+
+.uk-button-success {
+  @extend button;
+  @include button(#43a047, $text-light-color);
+}
+
+.uk-button-danger {
+  @extend button;
+  @include button(#d32f2f, $text-light-color);
+}

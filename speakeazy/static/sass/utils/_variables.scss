@@ -3,17 +3,12 @@
 // -----------------------------------------------------------------------------
 
 
-
-
-
 /// Regular font family
 /// @type List
-$text-font-stack: 'Open Sans',  'Arial', sans-serif !default;
+$text-font-stack: 'Open Sans', sans-serif !default;
 
-/// Code (monospace) font family
-/// @type List
-$code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Monaco', monospace !default;
-
+// LOGO font
+$logo-font: 'Comfortaa', sans-serif;
 
 
 

@@ -363,18 +363,28 @@
   }
 
   function addEvaluation(evaluation) {
-    var $newEvaluation = $('<div class="s-evaluation" data-time=' + evaluation.time + ' data-uk-dropdown="{mode:\'click\', pos:\'right-top\'}">'
-        + '<i class="uk-icon-hover s-video-button ' + evaluation.icon + '"></i>'
-        + '<div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">'
-        + '<div class="uk-panel-title">' + evaluation.evaluator + '</div>'
-        + '<p>' + evaluation.text + '</p>'
-        + '</div>'
-        + '</div>');
+    var $newEval = $('<div class="s-evaluation" data-uk-dropdown="{mode:\'click\', pos:\'right-top\'}">');
+    $newEval.attr('data-time', evaluation.time);
 
-    $evaluations.append($newEvaluation);
-    $evaluation.push($newEvaluation);
+    var $icon = $('<i class="uk-icon-hover s-video-button">');
+    $icon.addClass(evaluation.icon);
 
-    return $newEvaluation;
+    var $container = $('<div class="uk-dropdown uk-dropdown-scrollable uk-panel uk-panel-header">');
+    var $user = $('<div class="uk-panel-title">');
+    $user.text(evaluation.evaluator);
+
+    var $text = $('<p>');
+    $text.text(evaluation.text);
+
+    $newEval.append($icon);
+    $newEval.append($container);
+    $container.append($user);
+    $container.append($text);
+
+    $evaluations.append($newEval);
+    $evaluation.push($newEval);
+
+    return $newEval;
   }
 
   function showEvaluations() {

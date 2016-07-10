@@ -1,0 +1,238 @@
+[
+  {
+    "model": "groups.group",
+    "pk": 1,
+    "fields": {
+      "color": null,
+      "name": "Speakeazy",
+      "logo": "",
+      "description": "",
+      "slug": "speakeazy",
+      "parent_user_group": null,
+      "created_time": "2016-06-12T21:08:45.570Z"
+    }
+  },
+  {
+    "model": "groups.role",
+    "pk": 1,
+    "fields": {
+      "permissions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "group": 1,
+      "name": "admin"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 1,
+    "fields": {
+      "name": "list_audience"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 2,
+    "fields": {
+      "name": "view_audience"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 3,
+    "fields": {
+      "name": "add_audience"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 4,
+    "fields": {
+      "name": "update_audience"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 5,
+    "fields": {
+      "name": "delete_audience"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 6,
+    "fields": {
+      "name": "list_user"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 7,
+    "fields": {
+      "name": "view_user"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 8,
+    "fields": {
+      "name": "update_user"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 9,
+    "fields": {
+      "name": "delete_user"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 10,
+    "fields": {
+      "name": "list_invite"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 11,
+    "fields": {
+      "name": "view_invite"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 12,
+    "fields": {
+      "name": "add_invite"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 13,
+    "fields": {
+      "name": "update_invite"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 14,
+    "fields": {
+      "name": "delete_invite"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 15,
+    "fields": {
+      "name": "list_submission"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 16,
+    "fields": {
+      "name": "view_submission"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 17,
+    "fields": {
+      "name": "request_submission"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 18,
+    "fields": {
+      "name": "update_submission"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 19,
+    "fields": {
+      "name": "delete_submission"
+    }
+  },
+  {
+    "model": "groups.permission",
+    "pk": 20,
+    "fields": {
+      "name": "evaluate_submission"
+    }
+  },
+  {
+    "model": "groups.defaultgrouprole",
+    "pk": 1,
+    "fields": {
+      "permissions": [
+        17
+      ],
+      "description": "",
+      "name": "user"
+    }
+  },
+  {
+    "model": "groups.defaultgrouprole",
+    "pk": 2,
+    "fields": {
+      "permissions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "description": "",
+      "name": "admin"
+    }
+  },
+  {
+    "model": "groups.defaultgroupstructure",
+    "pk": 1,
+    "fields": {
+      "default_role_types": [
+        1,
+        2
+      ],
+      "description": "",
+      "name": "Group"
+    }
+  }
+]

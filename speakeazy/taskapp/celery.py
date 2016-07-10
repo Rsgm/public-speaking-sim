@@ -22,12 +22,12 @@ class CeleryConfig(AppConfig):
         app.config_from_object('django.conf:settings')
         app.autodiscover_tasks(lambda: settings.INSTALLED_APPS, force=True)
 
-        if hasattr(settings, 'RAVEN_CONFIG'):
-            # Celery signal registration
-            from raven import Client
-            from raven.contrib.celery import register_signal
-            client = Client(dsn=settings.RAVEN_CONFIG['DSN'])
-            register_signal(client)
+        # if hasattr(settings, 'RAVEN_CONFIG'):
+        #     # Celery signal registration
+        #     from raven import Client
+        #     from raven.contrib.celery import register_signal
+        #     client = Client(dsn=settings.RAVEN_CONFIG['DSN'])
+        #     register_signal(client)
 
 
 @app.task(bind=True)

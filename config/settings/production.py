@@ -10,9 +10,12 @@ Production Configurations
 
 '''
 from __future__ import absolute_import, unicode_literals
+
+import os
+
 from boto.s3.connection import OrdinaryCallingFormat
 from django.utils import six
-import logging
+
 from .common import *  # noqa
 
 # SECRET CONFIGURATION
@@ -21,35 +24,30 @@ from .common import *  # noqa
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
-# This ensures that Django will be able to detect a secure connection
-# properly on Heroku.
+# This ensures that Django will be able to detect a secure connection on reverse proxies
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # django-secure
 # ------------------------------------------------------------------------------
 INSTALLED_APPS += ("djangosecure",)
-# raven sentry client
-# See https://docs.getsentry.com/hosted/clients/python/integrations/django/
-INSTALLED_APPS += ('raven.contrib.django.raven_compat',)
+
 SECURITY_MIDDLEWARE = (
-    'djangosecure.middleware.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware',
 )
-RAVEN_MIDDLEWARE = ('raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware',
-                    'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware',)
-MIDDLEWARE_CLASSES = SECURITY_MIDDLEWARE + \
-                     RAVEN_MIDDLEWARE + MIDDLEWARE_CLASSES
+
+MIDDLEWARE_CLASSES = SECURITY_MIDDLEWARE + MIDDLEWARE_CLASSES
 
 # set this to 60 seconds and then to 518400 when you can prove it works
-SECURE_HSTS_SECONDS = 60
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
-SECURE_FRAME_DENY = env.bool("DJANGO_SECURE_FRAME_DENY", default=True)
-SECURE_CONTENT_TYPE_NOSNIFF = env.bool("DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", default=True)
-SECURE_BROWSER_XSS_FILTER = True
+# SECURE_HSTS_SECONDS = 60 # done in nginx
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
+# SECURE_FRAME_DENY = env.bool("DJANGO_SECURE_FRAME_DENY", default=True)
+# SECURE_CONTENT_TYPE_NOSNIFF = env.bool("DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", default=True)
+# SECURE_BROWSER_XSS_FILTER = True
 SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=True)
 CSRF_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=True)
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
-SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
+# SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
 
 # SITE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -59,6 +57,10 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 # END SITE CONFIGURATION
 
 INSTALLED_APPS += ("gunicorn",)
+
+# set default redis variable
+os.environ.setdefault("REDIS_URL",
+                      'redis://%s:%s/0' % (env("REDIS_PORT_6379_TCP_ADDR"), env("REDIS_PORT_6379_TCP_PORT")))
 
 # STORAGE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -98,7 +100,6 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # STATIC_HOST = env('DJANGO_STATIC_HOST')
 STATIC_URL = '/static/'  # STATIC_HOST + '/static/'
 
-
 # EMAIL
 # ------------------------------------------------------------------------------
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -125,23 +126,21 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'speakeazy',
-        'USER': 'admin',  # env.db("DATABASE_USER"),
-        'PASSWORD': 'FLcX0y5KXnlZ7uVh8pLmLeJcdhHvFOkZtzTgQHkhK',  # env.db("DATABASE_PASSWORD"),
-        'HOST': 'speakeazy-django.cwrnk6vpjdiq.us-east-1.rds.amazonaws.com',
-        # env.db("DATABASE_URL"),  # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'USER': env("DATABASE_USER"),
+        'PASSWORD': env("DATABASE_PASSWORD"),
+        'HOST': env("DATABASE_URL"),  # Or an IP Address that your DB is hosted on
+        'PORT': env("DATABASE_PORT"),
         'ATOMIC_REQUESTS': True,
     }
 }
 
 # CACHING
 # ------------------------------------------------------------------------------
-# Heroku URL does not pass the DB number, so we parse it in
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        # "LOCATION": "redis://%s:%s/%s" % (env('REDIS_PORT_6379_TCP_ADDR'), env('REDIS_PORT_6379_TCP_PORT'), 0),
-        "LOCATION": "{0}/{1}".format(env.cache_url('REDIS_URL', default="redis://127.0.0.1:6379"), 0),
+        "LOCATION": "redis://%s:%s/%s" % (env('REDIS_PORT_6379_TCP_ADDR'), env('REDIS_PORT_6379_TCP_PORT'), 0),
+        # "LOCATION": "{0}/{1}".format(env.cache_url('REDIS_URL', default="redis://127.0.0.1:6379"), 0),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "IGNORE_EXCEPTIONS": True,  # mimics memcache behavior.
@@ -150,9 +149,8 @@ CACHES = {
     }
 }
 
-# Sentry Configuration
-# SENTRY_DSN = env('DJANGO_SENTRY_DSN')
-# SENTRY_CLIENT = env('DJANGO_SENTRY_CLIENT', default='raven.contrib.django.raven_compat.DjangoClient')
+# LOGGING
+# ------------------------------------------------------------------------------
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -167,10 +165,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        # 'sentry': {
-        #     'level': 'DEBUG',  # ERROR
-        #     'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
-        # },
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler'
@@ -179,7 +173,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'verbose',
-            'filename': '/logs/django.log'
+            'filename': '/app/django.log'
         }
     },
     'loggers': {
@@ -198,11 +192,6 @@ LOGGING = {
         #     'handlers': ['file', 'mail_admins'],
         #     'propagate': False,
         # },
-        # 'raven': {
-        #     'level': 'DEBUG',
-        #     'handlers': ['file', 'mail_admins'],
-        #     'propagate': False,
-        # },
         # 'sentry.errors': {
         #     'level': 'DEBUG',
         #     'handlers': ['file', 'mail_admins'],
@@ -215,11 +204,17 @@ LOGGING = {
         # },
     },
 }
-# SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.DEBUG)  # INFO
-# RAVEN_CONFIG = {
-#     'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.DEBUG),  # INFO
-#     'DSN': SENTRY_DSN
+
+#
+# INSTALLED_APPS += (
+#     'opbeat.contrib.django',
+# )
+# OPBEAT = {
+#     'ORGANIZATION_ID': env('OPBEAT_ORGANIZATION_ID'),
+#     'APP_ID': env('OPBEAT_APP_ID'),
+#     'SECRET_TOKEN': env('OPBEAT_SECRET_TOKEN'),
 # }
+# MIDDLEWARE_CLASSES = ('opbeat.contrib.django.middleware.OpbeatAPMMiddleware',) + MIDDLEWARE_CLASSES
 
 # Custom Admin URL, use {% url 'admin:index' %}
 ADMIN_URL = env('DJANGO_ADMIN_URL', default=r'^admin/')
@@ -227,4 +222,5 @@ ADMIN_URL = env('DJANGO_ADMIN_URL', default=r'^admin/')
 # Your production stuff: Below this line define 3rd party library settings
 BCRYPT_ROUNDS = env('BCRYPT_ROUNDS', default=12)
 
-JWT_KEYFILE_PATH = '/app/resources/jwt.pem'
+# Set production celery url
+BROKER_URL = env("REDIS_URL")
