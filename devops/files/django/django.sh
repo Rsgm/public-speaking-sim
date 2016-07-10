@@ -20,11 +20,8 @@ chown django /app
 # extract speakeazy
 tar -zxf /tmp/django.tar.gz -C /app
 
-mv /app/devops/files/django/gunicorn.sh /app/gunicorn.sh
-mv /app/devops/files/fix_permissions.sh /app/fix_permissions.sh
-
 # fix speakeazy file permissions
-bash /app/fix_permissions.sh
+bash /app/devops/files/fix_permissions.sh
 
 # install pip dependencies
 pip3 install -r /app/requirements/production.txt
