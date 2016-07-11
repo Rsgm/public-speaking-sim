@@ -12,8 +12,6 @@ urlpatterns = [
         name='record'
     ),
 
-    url(r'^new/', TemplateView.as_view(template_name='recordings/new.html'), name="home"),
-
     url(r'^view/(?P<type>[\w]+)/(?P<key>\d+)/',
         include("speakeazy.recordings.views.recording.urls", namespace="recording")),
 
