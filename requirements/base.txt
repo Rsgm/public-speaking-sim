@@ -50,4 +50,3 @@ django-ratelimit
 bcrypt
 django-flat-theme
 django-easy-timezones
-pyjwt
