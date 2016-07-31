@@ -50,4 +50,3 @@ django-ratelimit
 bcrypt
 django-flat-theme
 django-easy-timezones
-sqlparse==0.1.19 #  todo: https://stackoverflow.com/questions/38479063/django-debug-toolbar-breaking-on-admin-while-getting-sql-stats
