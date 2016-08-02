@@ -46,12 +46,20 @@ module.exports = function (grunt) {
             },
 
             urls: {
-                files: ['speakeazy/**/urls.py', 'config/urls.py'],
+                files: ['<%= paths.app %>/**/urls.py', '<%= paths.app %>/config/urls.py'],
                 tasks: ['bgShell:collectUrls'],
                 options: {
                     atBegin: true
                 }
             }
+
+            // celery: {
+            //     files: ['<%= paths.app %>/**/tasks.py', '<%= paths.app %>/taskapp/**/*.py'],
+            //     tasks: ['bgShell:runCelery'],
+            //     options: {
+            //         atBegin: true
+            //     }
+            // }
         },
 
         // see: https://github.com/sindresorhus/grunt-sass

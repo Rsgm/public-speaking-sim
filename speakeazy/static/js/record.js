@@ -1,18 +1,19 @@
-(function () {
+// (function () {
   var stopped;
 
   var mediaStream;
+  var recording;
   var setupVideo;
   var audienceVideo;
   var stopAudioAnalyzer;
 
   var mediaRecorder;
 
-  var uploadInterval = 3000;
-  var crsf = $('input[name=csrfmiddlewaretoken]').val();
+  var uploadInterval = 99000;
+  var uploadQueue = [];
+  var uploadTotal;
 
-  var ws = new WebSocket('ws://0.0.0.0:1500', 'sync');
-  // var ws2 = new WebSocket('ws://0.0.0.0:1500', 'async');
+  var crsf = $('input[name=csrfmiddlewaretoken]').val();
 
   // navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
@@ -39,12 +40,11 @@
 
     function onMediaSuccess(stream) {
       mediaStream = stream;
-      url = window.URL.createObjectURL(mediaStream);
-
       console.log(mediaStream);
 
+
       setupVideo = $('#setup-video').get(0);
-      setupVideo.src = url;
+      setupVideo.src = window.URL.createObjectURL(mediaStream);
       setupVideo.muted = true;
       setupVideo.play();
 
@@ -54,14 +54,14 @@
       $('#preview').show();
 
 
-      var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      var source = audioCtx.createMediaStreamSource(stream);
-      var analyser = audioCtx.createAnalyser();
-      source.connect(analyser);
-
-      var $volume = $('#volume-slider');
-      var totalHeight = $volume.parent().height();
-
+      // var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      // var source = audioCtx.createMediaStreamSource(stream);
+      // var analyser = audioCtx.createAnalyser();
+      // source.connect(analyser);
+      //
+      // var $volume = $('#volume-slider');
+      // var totalHeight = $volume.parent().height();
+      //
       //var lastVolumes = [0, 0, 0, 0, 0, 0];
       //var volumeInterval = setInterval(function () {
       //  var data = new Uint8Array(analyser.fftSize);
@@ -104,6 +104,7 @@
     }
   }
 
+
   function startRecording() {
     $('#preview').hide();
     $('#recording').show();
@@ -111,23 +112,91 @@
 
     //stopAudioAnalyzer();
 
+    // setup recorder
+    mediaRecorder = new MultiStreamRecorder(mediaStream);
+    mediaRecorder.video = setupVideo;
+    mediaRecorder.mimeType = 'video/webm';
+
     setupVideo.muted = true;
     audienceVideo.play();
 
-    $.post('/recordings/record/' + se.project + '/', {request: 'start', csrfmiddlewaretoken: crsf}, function (result) {
-      ws.send(result);
-
-      // setup recorder and start recording
-      mediaRecorder = new MultiStreamRecorder(mediaStream);
-      mediaRecorder.video = setupVideo;
+    $.post(Urls['recordings:record'](se.project), {csrfmiddlewaretoken: crsf}).then(function (result) {
+      console.log('recording: ' + result.id);
 
       mediaRecorder.ondataavailable = function (blobs) {
-        upload(blobs.video, blobs.audio);
+        console.log('data available');
+        upload(result.id, blobs);
       };
 
       mediaRecorder.start(uploadInterval);
     });
   }
+
+
+  function upload(id, blobs) {
+    var video = blobs.video;
+    var audio = blobs.audio;
+    var formData = new FormData();
+
+    console.log(blobs);
+
+    formData.append('csrfmiddlewaretoken', crsf);
+    if (audio && video.type.startsWith('video')) {
+      formData.append('video', video);
+    }
+    if (audio && audio.type.startsWith('audio')) {
+      formData.append('audio', audio);
+    }
+
+    uploadBlob(formData);
+
+    function uploadBlob(data) {
+      uploadQueue.push(data);
+
+      if (uploadQueue.length == 1) {
+        uploadPiece(); // upload when not waiting on other uploads
+      }
+
+      // this recursively goes through the queue and
+      function uploadPiece() {
+        if (uploadQueue.length > 0) {
+          var data = uploadQueue[0];
+
+          console.log('uploading', data);
+
+          $.ajax({
+            url: Urls['recordings:piece_upload'](se.project, id + ''),
+            type: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false
+          }).then(function () {
+            uploadQueue.shift(); // needs to be done after upload
+            if (stopped) {
+              progress(uploadQueue.length, uploadTotal);
+            }
+
+            uploadPiece();
+          });
+
+        } else if (stopped) { // send finish request
+          $.ajax({
+            url: Urls['recordings:record'](se.project),
+            type: 'PUT',
+            data: {
+              recording: id,
+              request: 'finish',
+              csrfmiddlewaretoken: crsf
+            }
+          }).then(function (response) {
+            window.location.href = response;
+          });
+        }
+      }
+    }
+  }
+
 
   function stopRecording() {
     exitFullscreen();
@@ -139,12 +208,8 @@
     mediaRecorder.stop();
     mediaRecorder.stream.stop(); // recorder will stop the stream before the end of the current recording piece
 
+    uploadTotal = uploadQueue.length;
     stopped = true;
-
-    ws.onmessage = function (event) {
-      var data = JSON.parse(event.data);
-      
-    };
 
     var progress = function progress(size, uploadTotal) {
       var $progressBar = $('#finished .uk-progress-bar');
@@ -155,25 +220,6 @@
     };
   }
 
-
-  function upload(video, audio) {
-    console.log({
-      video: video,
-      audio: audio
-    });
-
-    if (video.type.startsWith("video")) {
-      ws.send(video);
-    }
-
-    if (audio.type.startsWith("audio")) {
-      ws.send(audio);
-    }
-
-    if (stopped) {
-      ws.send(JSON.stringify({finished: true}));
-    }
-  }
 
   function fullscreen() {
     var elem = $('#recording .s-recording-player')[0];
@@ -189,6 +235,7 @@
     }
   }
 
+
   function exitFullscreen() {
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -200,4 +247,4 @@
       document.webkitExitFullscreen();
     }
   }
-})();
+// })();

@@ -55,22 +55,24 @@ def convert_media(piece_id):
 
     converted_path = Path('%s/%s.webm' % (settings.RECORDING_PATHS['CONVERTED_PIECES'], piece_id)).absolute()
 
-    # I suppose we will leave these as cpu-used 2, I may downgrade this later if it takes too long
-    if combined:
-        command = 'ffmpeg -v %s -i %s ' \
-                  '-c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
-                  % (LOG_LEVEL, video_path, converted_path)
-    elif video_path and audio_path:
-        command = 'ffmpeg -v %s -i %s -i %s ' \
-                  '-map 0 -map 1 -c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
-                  % (LOG_LEVEL, video_path, audio_path, converted_path)
-    elif video_path:
-        command = 'ffmpeg -v %s -i %s video_path -c:v libvpx -cpu-used 2' % (LOG_LEVEL, converted_path)
-    elif audio_path:
-        command = 'ffmpeg -v %s -i %s -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
-                  % (LOG_LEVEL, audio_path, converted_path)
-    else:
-        command = 'Echo Error - No video or audio'
+    command = 'mv %s %s' % (video_path, converted_path)
+
+    # # I suppose we will leave these as cpu-used 2, I may downgrade this later if it takes too long
+    # if combined:
+    #     command = 'ffmpeg -v %s -i %s ' \
+    #               '-c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
+    #               % (LOG_LEVEL, video_path, converted_path)
+    # elif video_path and audio_path:
+    #     command = 'ffmpeg -v %s -i %s -i %s ' \
+    #               '-map 0 -map 1 -c:v libvpx -cpu-used 2 -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
+    #               % (LOG_LEVEL, video_path, audio_path, converted_path)
+    # elif video_path:
+    #     command = 'ffmpeg -v %s -i %s video_path -c:v libvpx -cpu-used 2' % (LOG_LEVEL, converted_path)
+    # elif audio_path:
+    #     command = 'ffmpeg -v %s -i %s -c:a libvorbis -filter:a asetpts=N/SR/TB %s' \
+    #               % (LOG_LEVEL, audio_path, converted_path)
+    # else:
+    #     command = 'Echo Error - No video or audio'
 
     # run command
     print(command)

@@ -8,7 +8,7 @@ class PostView(View):
 
     It may be a good idea to replace this with an actual rest framework. Preferably a lightweight framework.
     """
-    http_method_names = ['post']
+    http_method_names = ['options', 'post']
 
     def get(self):
         raise Http404()
