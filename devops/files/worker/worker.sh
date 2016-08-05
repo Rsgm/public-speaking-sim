@@ -22,18 +22,18 @@ ln -s /usr/bin/python3 /usr/local/bin/python
 groupadd -r worker
 useradd -r -g worker worker
 mkdir /app
-chmod 777 /app
-chown worker /app
+chown worker:worker /app
 
 
 # extract speakeazy
 tar -zxf /tmp/worker.tar.gz -C /app
 
-# fix speakeazy file permissions
-bash /app/devops/files/fix_permissions.sh
-
 # install pip dependencies
 pip3 install -r /app/requirements/production.txt
+echo test0
+
+# fix speakeazy file permissions
+bash /app/devops/files/fix_permissions.sh
 echo test1
 
 mv /app/devops/files/worker/worker.service /lib/systemd/system/worker.service

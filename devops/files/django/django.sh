@@ -13,18 +13,20 @@ ln -s /usr/bin/python3 /usr/local/bin/python
 groupadd -r django
 useradd -r -g django django
 mkdir /app
-chmod 777 /app
-chown django /app
+chmod 770 /app
+chown django:django /app
 
 
 # extract speakeazy
 tar -zxf /tmp/django.tar.gz -C /app
 
-# fix speakeazy file permissions
-bash /app/devops/files/fix_permissions.sh
 
 # install pip dependencies
 pip3 install -r /app/requirements/production.txt
+echo test0
+
+# fix speakeazy file permissions
+bash /app/devops/files/fix_permissions.sh
 echo test1
 
 mv /app/devops/files/django/django.service /lib/systemd/system/django.service
