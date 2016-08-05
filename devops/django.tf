@@ -29,8 +29,8 @@ resource "aws_security_group" "django" {
   }
   // ftp
   ingress {
-    from_port = 20
-    to_port = 20
+    from_port = 41276
+    to_port = 41276
     protocol = "tcp"
     cidr_blocks = [
       "${var.worker_block}"

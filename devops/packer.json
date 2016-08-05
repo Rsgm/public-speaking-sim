@@ -41,16 +41,17 @@
     {
       "type": "shell-local",
       "only": [
-        "django"
-      ],
-      "command": "npm run build && tar --exclude-vcs-ignores -zcf {{user `django_tar`}} ./ ./.env.sh ./speakeazy/static/css/build.css"
-    },
-    {
-      "type": "shell-local",
-      "only": [
+        "django",
         "worker"
       ],
-      "command": "tar --exclude-vcs-ignores -zcf {{user `worker_tar`}} ./ ./.env.sh"
+      "override": {
+        "django": {
+          "command": "npm run build && tar --exclude-vcs-ignores -zcf {{user `django_tar`}} ./ ./.env.sh ./speakeazy/static/css/build.css"
+        },
+        "worker": {
+          "command": "tar --exclude-vcs-ignores -zcf {{user `worker_tar`}} ./ ./.env.sh"
+        }
+      }
     },
     {
       "type": "shell",
