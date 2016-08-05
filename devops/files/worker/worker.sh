@@ -11,29 +11,33 @@ apt-get -y update
 apt-get --no-install-recommends --no-install-suggests -y install ffmpeg
 
 
-# Install python and python dependencies for later
+# install python and python dependencies for later
 apt-get --no-install-recommends --no-install-suggests -y install \
     python3 python3-pip python3-pil python3-dev libjpeg-dev libjpeg62-turbo-dev zlib1g-dev gcc libffi-dev
 pip3 install --upgrade pip
 ln -s /usr/bin/python3 /usr/local/bin/python
 
 
+# install ftp
+apt-get --no-install-recommends --no-install-suggests -y install ftp
+
+
 # create non-root user
 groupadd -r worker
 useradd -r -g worker worker
 mkdir /app
-chmod 777 /app
-chown worker /app
+chown worker:worker /app
 
 
 # extract speakeazy
 tar -zxf /tmp/worker.tar.gz -C /app
 
-# fix speakeazy file permissions
-bash /app/devops/files/fix_permissions.sh
-
 # install pip dependencies
 pip3 install -r /app/requirements/production.txt
+echo test0
+
+# fix speakeazy file permissions
+bash /app/devops/files/fix_permissions.sh
 echo test1
 
 mv /app/devops/files/worker/worker.service /lib/systemd/system/worker.service
