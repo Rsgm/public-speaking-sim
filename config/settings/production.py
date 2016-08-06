@@ -192,16 +192,11 @@ LOGGING = {
         #     'handlers': ['file', 'mail_admins'],
         #     'propagate': False,
         # },
-        # 'sentry.errors': {
-        #     'level': 'DEBUG',
-        #     'handlers': ['file', 'mail_admins'],
-        #     'propagate': False,
-        # },
-        # 'django.security': {
-        #     'level': 'info',
-        #     'handlers': ['file', 'mail_admins'],
-        #     'propagate': False,
-        # },
+        'django.security': {
+            'level': 'info',
+            'handlers': ['file', 'mail_admins'],
+            'propagate': False,
+        },
     },
 }
 

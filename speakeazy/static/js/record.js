@@ -1,4 +1,4 @@
-// (function () {
+(function () {
   var stopped;
 
   var mediaStream;
@@ -9,7 +9,7 @@
 
   var mediaRecorder;
 
-  var uploadInterval = 99000;
+  var uploadInterval = 9900; // ms
   var uploadQueue = [];
   var uploadTotal;
 
@@ -186,7 +186,6 @@
             type: 'PUT',
             data: {
               recording: id,
-              request: 'finish',
               csrfmiddlewaretoken: crsf
             }
           }).then(function (response) {
@@ -247,4 +246,4 @@
       document.webkitExitFullscreen();
     }
   }
-// })();
+})();

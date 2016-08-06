@@ -123,7 +123,7 @@ module.exports = function (grunt) {
                 cmd: '. <%= paths.venv %> && python <%= paths.manage %> collectstatic_js_reverse'
             },
             runDjango: {
-                cmd: '. <%= paths.venv %> && python <%= paths.manage %> runserver'
+                cmd: '. <%= paths.venv %> && python <%= paths.manage %> runserver 0.0.0.0:8000'
             },
             runCelery: {
                 cmd: '. <%= paths.venv %> && celery -A speakeazy.taskapp worker -l info'
