@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+import shutil
 from pathlib import Path
 
-import shutil
 from braces.views import LoginRequiredMixin
 from django.conf import settings
 from django.contrib import messages
@@ -12,14 +12,14 @@ from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
+from vanilla.views import TemplateView
+
 from speakeazy.projects.models import UserProject
 from speakeazy.recordings import models
 from speakeazy.recordings.models import Recording, UploadPiece
-from speakeazy.recordings.tasks import convert_media, concatenate_media
+from speakeazy.recordings.tasks import concatenate_media, combine_media
 from speakeazy.util.views import PostView
-from vanilla.views import TemplateView
 
 START = 'start'
 UPLOAD = 'upload'
@@ -110,14 +110,20 @@ class PieceUpload(LoginRequiredMixin, PostView):
         piece = UploadPiece(recording=recording)
         piece.save()
 
+        video = 'video' in request.FILES
+        audio = 'audio' in request.FILES
+
         # write video data
-        if 'video' in request.FILES:
+        if video:
             path = Path('%s/%s.webm' % (settings.RECORDING_PATHS['VIDEO_PIECES'], piece.pk))
             write_file(request.FILES['video'], path)
 
         # write audio data
-        if 'audio' in request.FILES:
+        if audio:
             path = Path('%s/%s.wav' % (settings.RECORDING_PATHS['AUDIO_PIECES'], piece.pk))
             write_file(request.FILES['audio'], path)
+
+        host = ''
+        combine_media(host, piece.pk, video, audio)
 
         return HttpResponse()
