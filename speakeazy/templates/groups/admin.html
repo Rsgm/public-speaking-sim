@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block title %} - Group Admin{% endblock %}
+
+{% block breadcrumbs %}
+  {% include 'groups/breadcrumb.html' %}
+  <li class="uk-active"><span>admin</span></li>
+{% endblock %}
+
+{% block content %}
+  <router-view></router-view>
+{% endblock %}
+
+{% block template_scripts %}
+  <script src="{% static 'js/a.build.js' %}"></script>
+{% endblock template_scripts %}
