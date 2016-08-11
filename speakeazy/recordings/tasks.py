@@ -22,8 +22,8 @@ logger = logging.getLogger(__name__)
 
 @shared_task
 def combine_media(host, piece_id, video, audio):
-    video_path = Path('%s/%s.webm' % (settings.RECORDING_PATHS['VIDEO_PIECES'], piece_id))
-    audio_path = Path('%s/%s.wav' % (settings.RECORDING_PATHS['AUDIO_PIECES'], piece_id))
+    video_path = Path('%s/%s.webm' % (settings.RECORDING_PATHS['VIDEO_PIECES'], piece_id)).absolute()
+    audio_path = Path('%s/%s.wav' % (settings.RECORDING_PATHS['AUDIO_PIECES'], piece_id)).absolute()
     combined_path = Path('%s/%s.combined.webm' % (settings.RECORDING_PATHS['VIDEO_PIECES'], piece_id)).absolute()
 
     ftp = FTP()
@@ -58,10 +58,10 @@ def combine_media(host, piece_id, video, audio):
         logger.info('Running: %s' % command)
         status = subprocess.call(command.split())
 
-        os.remove(video_path.absolute())
-        os.remove(audio_path.absolute())
+        os.remove(video_path)
+        os.remove(audio_path)
 
-        shutil.move(combined_path, video_path.absolute())
+        shutil.move(combined_path, video_path)
 
     elif audio and not video:
         command = 'ffmpeg -v %s -i %s %s' % (LOG_LEVEL, audio_path, combined_path)
@@ -70,12 +70,12 @@ def combine_media(host, piece_id, video, audio):
         logger.info('Running: %s' % command)
         status = subprocess.call(command.split())
 
-        os.remove(video_path.absolute())
-        os.remove(audio_path.absolute())
+        os.remove(video_path)
+        os.remove(audio_path)
 
-        shutil.move(combined_path, video_path.absolute())
+        shutil.move(combined_path, video_path)
 
-    elif not (audio or video):
+    else:
         logger.error('No audio or video, piece id: %s' % piece_id)
 
     if status > 0:
@@ -93,10 +93,10 @@ def concatenate_media(recording_id, piece_list):
     # fill list with piece paths
     with list_path.open(mode='w') as list_file:
         for i in piece_list:
-            print('file \'%s/%s.webm\'' % (settings.RECORDING_PATHS['VIDEO_PIECES'], i), file=list_file)
+            print("file '%s/%s.webm'" % (settings.RECORDING_PATHS['VIDEO_PIECES'], i), file=list_file)
 
     # concat pieces, safe 0 since all paths are absolute, I don't trust relative paths to work
-    command = 'ffmpeg -v %s -f concat -safe 0 -i %s -c copy %s' % (LOG_LEVEL, list_path, finished_path.absolute())
+    command = 'ffmpeg -v %s -f concat -safe 0 -i %s -c copy %s' % (LOG_LEVEL, list_path, finished_path)
     logger.info('Running concat: %s' % command)
     status = subprocess.call(command.split())
 
@@ -152,26 +152,29 @@ def create_thumbnails(recording_id):
         offset_time = timedelta(seconds=offset * (i + 1))
         path = Path('%s/%s-%s.png' % (settings.RECORDING_PATHS['THUMBNAILS'], recording_id, i)).absolute()
         thumbnail_image_paths.append(path)
+
         command = 'ffmpeg -v %s -i %s -vf scale=150:-1 -ss %s -vframes 1 %s' \
                   % (LOG_LEVEL, finished_path, offset_time, path)
-        print(command)
+
+        logger.info('Running command: %s' % command)
         subprocess.call(command.split())
 
         # save first image when possible
         if i == 0:
-            recording.thumbnail_image.save('%s.png' % recording_id,
-                                           File(open(str(thumbnail_image_paths[0]), mode='rb')))
+            with thumbnail_image_paths[0].open(mode='rb') as image:
+                recording.thumbnail_image.save('%s.png' % recording_id, File(image))
 
     # create thumbnail slideshow
     command = 'ffmpeg -v %s -framerate 2/3 -i %s/%s-%s -c:v libvpx -cpu-used 2 -an %s' \
               % (LOG_LEVEL, settings.RECORDING_PATHS['THUMBNAILS'], recording_id, '%1d.png', thumbnail_video_path)
-    print(command)
+    logger.info('Running command: %s' % command)
     subprocess.call(command.split())
 
-    recording.thumbnail_video.save('%s.webm' % recording_id, File(open(str(thumbnail_video_path), mode='rb')))
+    with thumbnail_video_path.open(mode='rb') as thumbnail_video:
+        recording.thumbnail_video.save('%s.webm' % recording_id, File(thumbnail_video))
 
     # clean up thumbnails and finished video files
-    os.remove(str(finished_path))
-    os.remove(str(thumbnail_video_path))
+    os.remove(finished_path)
+    os.remove(thumbnail_video_path)
     for path in thumbnail_image_paths:
-        os.remove(str(path))
+        os.remove(path)
