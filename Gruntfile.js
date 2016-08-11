@@ -19,10 +19,9 @@ module.exports = function (grunt) {
     return {
       app: this.app,
       css: this.app + '/static/css',
+      images: this.app + '/static/images',
 
       sass: this.app + '/web/sass',
-      fonts: this.app + '/web/fonts',
-      images: this.app + '/web/images',
       js: this.app + '/web/js',
       vue: this.app + '/web/vue',
 

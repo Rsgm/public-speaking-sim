@@ -16,7 +16,7 @@ module.exports = {
       {
         test: /\.vue$/, // a regex for matching all files that end in `.vue`
         exclude: /node_modules/,
-        loader: 'vue'   // loader to use for matched files
+        loader: 'vue' // loader to use for matched files
       },
 
       {

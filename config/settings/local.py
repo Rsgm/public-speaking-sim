@@ -58,7 +58,6 @@ INSTALLED_APPS += ('django_extensions',)
 # ------------------------------------------------------------------------------
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
-
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
@@ -76,3 +75,5 @@ DATABASES = {
 BCRYPT_ROUNDS = 12
 
 BROKER_URL = env("REDIS_URL", default='django://')
+
+STATICFILES_DIRS += (str(APPS_DIR.path('web/')),)  # allows sourcemaps to work in dev
