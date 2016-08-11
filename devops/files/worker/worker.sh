@@ -18,10 +18,6 @@ pip3 install --upgrade pip
 ln -s /usr/bin/python3 /usr/local/bin/python
 
 
-# install ftp
-apt-get --no-install-recommends --no-install-suggests -y install ftp
-
-
 # create non-root user
 groupadd -r worker
 useradd -r -g worker worker

@@ -96,8 +96,8 @@ resource "aws_security_group" "worker" {
   vpc_id = "${aws_vpc.speakeazy_vpc.id}"
   // ftp
   egress {
-    from_port = 41276
-    to_port = 41276
+    from_port = 20
+    to_port = 20
     protocol = "tcp"
     cidr_blocks = [
       "${var.nginx_ip}/32"
