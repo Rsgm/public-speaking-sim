@@ -1,0 +1,16 @@
+[Unit]
+Description=Distributed python task worker
+After=syslog.target network.target auditd.service
+
+[Service]
+WorkingDirectory=/app
+ExecStart=celery -A speakeazy.taskapp worker -l INFO
+Restart=always
+User=django
+Group=django
+
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+[Install]
+WantedBy=multi-user.target

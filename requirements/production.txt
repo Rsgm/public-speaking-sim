@@ -10,3 +10,4 @@ gunicorn==19.6
 
 boto
 opbeat
+PyMySQL

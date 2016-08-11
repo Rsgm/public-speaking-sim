@@ -9,7 +9,7 @@ from django.views import defaults as default_views
 from speakeazy.users.forms import SpeakeazySignupForm
 
 urlpatterns = [
-                  url(r'^$', TemplateView.as_view(template_name='speakeazy/landing.html'), name="home"),
+                  url(r'^$', TemplateView.as_view(template_name='speakeazy/landing.html'), name="landing"),
                   url(r'^robots\.txt$', TemplateView.as_view(template_name='speakeazy/robots.txt',
                                                              content_type='text/plain')),
 

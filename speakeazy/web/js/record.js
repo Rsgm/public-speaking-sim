@@ -145,6 +145,7 @@
 
     audienceVideo.pause();
     mediaRecorder.stop();
+    mediaRecorder.stream.stop(); // recorder will stop the stream before the end of the current recording piece
 
     finish(id, function progress(size, uploadTotal) {
       var $progressBar = $('#finished .uk-progress-bar');

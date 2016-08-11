@@ -1,0 +1,124 @@
+{
+  "variables": {
+    "region": "us-east-1",
+    "ami": "ami-c8bda8a2",
+    "instance_type": "t2.nano",
+    "ssh_user": "admin",
+    "django_tar": "/tmp/django.tar.gz",
+    "worker_tar": "/tmp/worker.tar.gz"
+  },
+  "_NOTE": "/tmp/django.tar.gz and /tmp/worker.tar.gz must exist at compile time, otherwise you get a bad source error",
+  "builders": [
+    {
+      "name": "nginx",
+      "type": "amazon-ebs",
+      "region": "{{user `region`}}",
+      "source_ami": "{{user `ami`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "ssh_username": "{{user `ssh_user`}}",
+      "ami_name": "nginx-{{timestamp}}"
+    },
+    {
+      "name": "django",
+      "type": "amazon-ebs",
+      "region": "{{user `region`}}",
+      "source_ami": "{{user `ami`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "ssh_username": "{{user `ssh_user`}}",
+      "ami_name": "django-{{timestamp}}"
+    },
+    {
+      "name": "worker",
+      "type": "amazon-ebs",
+      "region": "{{user `region`}}",
+      "source_ami": "{{user `ami`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "ssh_username": "{{user `ssh_user`}}",
+      "ami_name": "worker-{{timestamp}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell-local",
+      "only": [
+        "django",
+        "worker"
+      ],
+      "override": {
+        "django": {
+          "command": "npm run build && tar --exclude-vcs-ignores -zcf {{user `django_tar`}} ./ ./.env.sh ./speakeazy/static/css/build.css"
+        },
+        "worker": {
+          "command": "tar --exclude-vcs-ignores -zcf {{user `worker_tar`}} ./ ./.env.sh"
+        }
+      }
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo timeout 180 /bin/bash -c 'until stat /var/lib/cloud/instance/boot-finished 2>/dev/null; do echo waiting ...; sleep 1; done'"
+      ]
+    },
+    {
+      "type": "file",
+      "override": {
+        "django": {
+          "source": "{{user `django_tar`}}",
+          "destination": "/tmp/django.tar.gz"
+        },
+        "worker": {
+          "source": "{{user `worker_tar`}}",
+          "destination": "/tmp/worker.tar.gz"
+        },
+        "nginx": {
+          "source": "{{template_dir}}/files/nginx/",
+          "destination": "/tmp"
+        }
+      }
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "override": {
+        "nginx": {
+          "inline": [
+            "echo deb http://ftp.debian.org/debian jessie-backports main >> /etc/apt/sources.list",
+            "apt-get update",
+            "apt-get upgrade",
+            "apt-get install --no-install-recommends --no-install-suggests -y nginx -t jessie-backports certbot",
+            "",
+            "useradd --no-create-home nginx",
+            "mkdir /etc/letsencrypt/",
+            "",
+            "mv /tmp/nginx.conf /etc/nginx/nginx.conf",
+            "mv /tmp/nginx.service /lib/systemd/system/",
+            "mv /tmp/letsencrypt.ini /etc/letsencrypt/cli.ini",
+            "mv /tmp/certbot-install.service /lib/systemd/system/",
+            "mv /tmp/certbot-renew.service /lib/systemd/system/",
+            "mv /tmp/certbot-renew.timer /lib/systemd/system/",
+            "mv /tmp/certbot-renew.timer /lib/systemd/system/",
+            "",
+            "systemctl enable certbot-install.service",
+            "systemctl enable certbot-renew.service",
+            "systemctl enable certbot-renew.timer",
+            "",
+            "openssl dhparam -outform PEM -out /etc/speakeazy_dhparam.pem 2048"
+          ]
+        },
+        "django": {
+          "script": "{{template_dir}}/files/django/django.sh"
+        },
+        "worker": {
+          "script": "{{template_dir}}/files/worker/worker.sh"
+        }
+      }
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo apt-get autoremove",
+        "sudo apt-get clean"
+      ]
+    }
+  ]
+}

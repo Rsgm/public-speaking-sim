@@ -15,3 +15,5 @@ python3 /app/manage.py check_permissions
     --timeout 90 \
     --log-level $GUNICORN_LOG_LEVEL \
     --access-logfile $GUNICORN_LOG_FILE
+
+# may need --proxy-allow-from

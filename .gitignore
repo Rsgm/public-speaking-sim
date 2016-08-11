@@ -1,3 +1,6 @@
+# this is used for production builds, remove the git directory
+.git
+
 ### OSX ###
 .DS_Store
 .AppleDouble
@@ -47,17 +50,17 @@ htmlcov
 *.swo
 
 # npm
-node_modules/
+node_modules
 
 # Compass
 .sass-cache
 
 # virtual environments
-venv/
-myvenv/
+venv
+myvenv
 
 # User-uploaded media
-speakeazy/media/
+speakeazy/media
 
 # Hitch directory
 tests/.hitch
@@ -70,7 +73,7 @@ recordings/*/*
 !recordings/**/.gitkeep
 
 # Static files
-staticfiles/
+staticfiles
 speakeazy/static/css/build.css.map
 speakeazy/static/css/build.css
 speakeazy/static/js/reverse.js
@@ -78,7 +81,9 @@ speakeazy/static/js/reverse.js
 #Production Files
 .env
 .env.sh
-config/settings/production.py
+devops/terraform.tfstate
+devops/terraform.tfstate.backup
+devops/terraform.tfvars
 
 #Development Files
 speakeazy.db

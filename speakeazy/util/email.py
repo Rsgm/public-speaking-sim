@@ -25,4 +25,4 @@ def send_feedback_email(submission, grader):
         [user.email],
     )
     msg.attach_alternative(html, "text/html")
-    msg.send()
+    msg.send()  # todo: move to task

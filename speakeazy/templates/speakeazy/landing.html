@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/uikit.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/css/components/tooltip.min.css">
 
+  <link rel="icon" type="image/png" href="{% static 'images/speechy.png' %}" />
+
   <link href="{% static 'css/build.css' %}" rel="stylesheet">
 </head>
 
@@ -39,116 +41,113 @@
   </div>
 {% endif %}
 
-<test inline-template>
-  <div id="landing-page">
+<div id="landing-page">
 
-    <nav class="uk-navbar uk-navbar-attached">
-      <a class="uk-navbar-brand logo" href="{% url 'speakeazy:dashboard' %}">
-        {% include 'components/logo.html' %}
-      </a>
+  <nav class="uk-navbar uk-navbar-attached">
+    <div class="uk-navbar-brand logo">{% include 'components/logo.html' %}</div>
 
-      <div class="uk-navbar-flip">
-        <ul class="uk-navbar-nav">
-          <li><a class="uk-margin-right" href="{% url 'userena_signin' %}">Sign In</a></li>
-          <li><a href="{% url 'userena_signup' %}">Register</a></li>
-        </ul>
-      </div>
-    </nav>
-
-    <div id="main" class="uk-block uk-block-large uk-cover">
-      <video class="uk-cover-object" poster="https://s3.amazonaws.com/speakeazy-static/resources/background.jpg" autoplay muted loop preload="auto">
-        <source src="https://s3.amazonaws.com/speakeazy-static/resources/background.webm" type="video/webm">
-        <source src="https://s3.amazonaws.com/speakeazy-static/resources/background.mp4" type="video/mp4">
-      </video>
-
-      <div class="container video-container">
-        <h1 class="logo-font">Overcome your fear of public speaking from home.</h1>
-        <h2 class="logo-font">Simply the best way to prepare for your next presentation</h2>
-        <div class="browser-compatability">
-          <i class="uk-icon-chrome"></i>
-          <i class="uk-icon-firefox"></i>
-          <span>For Chrome and Firefox</span>
-        </div>
-      </div>
+    <div class="uk-navbar-flip">
+      <ul class="uk-navbar-nav">
+        <li><a class="uk-margin-right" href="{% url 'userena_signin' %}">Sign In</a></li>
+        <li><a href="{% url 'userena_signup' %}">Register</a></li>
+      </ul>
     </div>
+  </nav>
 
-    <div id="demo" class="uk-block">
-      <div class="container">
-        <div class="uk-grid">
-          <div class="uk-width-medium-9-10 uk-container-center">
-            <h2 class="logo-font">Get your students and employees ready for presentations!</h2>
+  <div id="main" class="uk-block uk-block-large uk-cover">
+    <video class="uk-cover-object" poster="https://s3.amazonaws.com/speakeazy-static/resources/background.jpg" autoplay muted loop preload="auto">
+      <source src="https://s3.amazonaws.com/speakeazy-static/resources/background.webm" type="video/webm">
+      <source src="https://s3.amazonaws.com/speakeazy-static/resources/background.mp4" type="video/mp4">
+    </video>
 
-            <p>SpeakEazy is a perfect addition to your school's, organization’s, or non-profit’s resource arsenal. Give
-              all of your students or employees access to SpeakEazy so they can prepare for their presentations the best
-              way possible.</p>
-
-            <div class="uk-align-center uk-margin-medium uk-margin-medium-bottom demo-button">
-              <a class="uk-button" href="javascript:void(Tawk_API.toggle())" target="_top">Request a Live Demo</a>
-            </div>
-          </div>
-        </div>
+    <div class="container video-container">
+      <h1 class="logo-font">Overcome your fear of public speaking from home.</h1>
+      <h2 class="logo-font">Simply the best way to prepare for your next presentation</h2>
+      <div class="browser-compatability">
+        <i class="uk-icon-chrome"></i>
+        <i class="uk-icon-firefox"></i>
+        <span>For Chrome and Firefox</span>
       </div>
-    </div>
-
-    <div id="points" class="uk-block uk-block-large">
-      <div class="container">
-        <h2 class="uk-text-center uk-margin-large-bottom logo-font">Become a Better Public Speaker</h2>
-
-        <div class="s-point uk-grid">
-          <img width="290" src="https://i.imgur.com/LncDP0h.png" class="uk-width-medium-1-2 uk-width-small-1-1">
-
-          <div class="uk-panel uk-width-medium-1-2 uk-width-small-1-1">
-            <h2 class="logo-font">Virtual Audiences</h2>
-            <p>Prepare for your upcoming presentation in front of a realistic, life-like audience. Audiences range from
-              board room to theatre and more.</p>
-          </div>
-        </div>
-
-        <div class="s-point uk-grid">
-          <div class="uk-panel uk-width-medium-1-2 uk-width-small-1-1">
-            <h2 class="logo-font">Connect for Feedback</h2>
-
-            <p>When you're finished with your mock presentation, you will recieve a video of your performance for you to
-              review or share with friends, teachers, coaches & mentors for feedback on your presentations. </p>
-          </div>
-
-          <img width="290" src="https://i.imgur.com/lCgNVUG.png" class="uk-width-medium-1-2 uk-width-small-1-1">
-        </div>
-      </div>
-    </div>
-
-    <div id="process" class="uk-block uk-block-large">
-      <h2 class="process-header logo-font">How SpeakEazy Works</h2>
-      <div class="container uk-grid">
-        <div class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-3">
-          <div class="uk-panel uk-panel-space process-panel">
-            <h2 class="uk-text-center">Record</h2>
-
-            <p>Record your speech in front of our simulated audience.</p>
-          </div>
-        </div>
-        <div id="wiki-link"
-             class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-3">
-          <div class="uk-panel uk-panel-space process-panel">
-            <h2 class="uk-text-center">Review</h2>
-
-            <p>See and hear how you look while presenting.</p>
-          </div>
-        </div>
-        <div class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-3">
-          <div class="uk-panel uk-panel-space process-panel">
-            <h2 class="uk-text-center">Share</h2>
-
-            <p>Share your recording with others for feedback.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="landing-footer" class="uk-block uk-block-large uk-block-secondary">
-      <a class="uk-button" href="{% url 'userena_signup' %}">Get Started</a>
     </div>
   </div>
-</test>
+
+  <div id="demo" class="uk-block">
+    <div class="container">
+      <div class="uk-grid">
+        <div class="uk-width-medium-9-10 uk-container-center">
+          <h2 class="logo-font">Get your students and employees ready for presentations!</h2>
+
+          <p>SpeakEazy is a perfect addition to your school's, organization’s, or non-profit’s resource arsenal. Give
+            all of your students or employees access to SpeakEazy so they can prepare for their presentations the
+            best way possible.</p>
+
+          <div class="uk-align-center uk-margin-medium uk-margin-medium-bottom demo-button">
+            <a class="uk-button" href="javascript:void(Tawk_API.toggle())" target="_top">Request a Live Demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="points" class="uk-block uk-block-large">
+    <div class="container">
+      <h2 class="uk-text-center uk-margin-large-bottom logo-font">Become a Better Public Speaker</h2>
+
+      <div class="s-point uk-grid">
+        <img width="290" src="https://i.imgur.com/LncDP0h.png" class="uk-width-medium-1-2 uk-width-small-1-1">
+
+        <div class="uk-panel uk-width-medium-1-2 uk-width-small-1-1">
+          <h2 class="logo-font">Virtual Audiences</h2>
+          <p>Prepare for your upcoming presentation in front of a realistic, life-like audience. Audiences range from
+            board room to theatre and more.</p>
+        </div>
+      </div>
+
+      <div class="s-point uk-grid">
+        <div class="uk-panel uk-width-medium-1-2 uk-width-small-1-1">
+          <h2 class="logo-font">Connect for Feedback</h2>
+
+          <p>When you're finished with your mock presentation, you will recieve a video of your performance for you to
+            review or share with friends, teachers, coaches & mentors for feedback
+            on your presentations. </p>
+        </div>
+
+        <img width="290" src="https://i.imgur.com/lCgNVUG.png" class="uk-width-medium-1-2 uk-width-small-1-1">
+      </div>
+    </div>
+  </div>
+
+  <div id="process" class="uk-block uk-block-large">
+    <h2 class="process-header logo-font">How SpeakEazy Works</h2>
+    <div class="container uk-grid">
+      <div class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-3">
+        <div class="uk-panel uk-panel-space process-panel">
+          <h2 class="uk-text-center">Record</h2>
+
+          <p>Record your speech in front of our simulated audience.</p>
+        </div>
+      </div>
+      <div id="wiki-link"
+           class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-3">
+        <div class="uk-panel uk-panel-space process-panel">
+          <h2 class="uk-text-center">Review</h2>
+
+          <p>See and hear how you look while presenting.</p>
+        </div>
+      </div>
+      <div class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-3">
+        <div class="uk-panel uk-panel-space process-panel">
+          <h2 class="uk-text-center">Share</h2>
+
+          <p>Share your recording with others for feedback.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="landing-footer" class="uk-block uk-block-large uk-block-secondary">
+    <a class="uk-button" href="{% url 'userena_signup' %}">Get Started</a>
+  </div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.3/js/uikit.min.js"></script>
