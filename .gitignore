@@ -74,9 +74,8 @@ recordings/*/*
 
 # Static files
 staticfiles
-speakeazy/static/css/build.css.map
-speakeazy/static/css/build.css
-speakeazy/static/js/reverse.js
+speakeazy/static/css
+speakeazy/static/js
 
 #Production Files
 .env

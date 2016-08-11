@@ -1,17 +1,20 @@
-module.exports = {
-  entry: './web/vue/app.js',
+var path = require('path');
 
-  devtool: "source-map",
+module.exports = {
+  entry: {
+    a: path.resolve(__dirname, 'speakeazy/web/vue/groupadmin/app.js')
+  },
 
   output: {
-    path: __dirname + '/speakeazy/static/',
-    filename: 'build.js'
+    path: path.resolve(__dirname, 'speakeazy/static/js'),
+    filename: '[name].build.js'
   },
 
   module: {
     loaders: [
       {
         test: /\.vue$/, // a regex for matching all files that end in `.vue`
+        exclude: /node_modules/,
         loader: 'vue'   // loader to use for matched files
       },
 

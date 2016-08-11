@@ -10,7 +10,7 @@ module.exports = function (grunt) {
     // see: https://npmjs.org/package/time-grunt
     require('time-grunt')(grunt);
 
-    var webpack = require("webpack");
+    require("webpack");
     var webpackConfig = require("./webpack.config.js");
 
     var pathsConfig = function (appName) {
@@ -18,13 +18,13 @@ module.exports = function (grunt) {
 
         return {
             app: this.app,
-            templates: this.app + '/templates',
             css: this.app + '/static/css',
-            sass: this.app + '/static/sass',
-            fonts: this.app + '/static/fonts',
-            images: this.app + '/static/images',
-            js: this.app + '/static/js',
-            vue: this.app + '/static/vue',
+
+            sass: this.app + '/web/sass',
+            fonts: this.app + '/web/fonts',
+            images: this.app + '/web/images',
+            js: this.app + '/web/js',
+            vue: this.app + '/web/vue',
 
             manage: 'manage.py',
             venv: 'venv/bin/activate'
@@ -50,8 +50,8 @@ module.exports = function (grunt) {
             },
 
             vue: {
-                files: ['<%= paths.vue %>/**/*.vue', '<%= paths.vue %>/app.js'],
-                tasks: ['bgShell:webpack'],
+                files: ['<%= paths.vue %>/**/*.{js,vue}'],
+                tasks: ['webpack:dev'],
                 options: {
                     atBegin: true
                 }
@@ -123,16 +123,17 @@ module.exports = function (grunt) {
             }
         },
 
-        // // https://github.com/webpack/grunt-webpack
-        // webpack: {
-        //     options: webpackConfig,
-        //
-        //     "dev": {
-        //         progress: false,
-        //         debug: true,
-        //         failOnError: false
-        //     }
-        // },
+        // https://github.com/webpack/grunt-webpack
+        webpack: {
+            options: webpackConfig,
+            build:{},
+            dev: {
+                progress: false,
+                debug: true,
+                devtool: 'source-map',
+                failOnError: false
+            }
+        },
 
         // see: https://npmjs.org/package/grunt-bg-shell
         bgShell: {
@@ -147,9 +148,6 @@ module.exports = function (grunt) {
             },
             runCelery: {
                 cmd: '. <%= paths.venv %> && celery -A speakeazy.taskapp worker -l info'
-            },
-            webpack: {
-                cmd: 'webpack -p'
             }
         }
     });
@@ -162,8 +160,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'sass:dist',
-        'postcss:dist'
-
+        'postcss:dist',
+        'webpack:build'
     ]);
 
     grunt.registerTask('default', [
