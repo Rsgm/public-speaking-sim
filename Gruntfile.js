@@ -10,7 +10,7 @@ module.exports = function (grunt) {
   // see: https://npmjs.org/package/time-grunt
   require('time-grunt')(grunt);
 
-  require("webpack");
+  var webpack = require("webpack");
   var webpackConfig = require("./webpack.config.js");
 
   var pathsConfig = function (appName) {
@@ -125,7 +125,9 @@ module.exports = function (grunt) {
     // https://github.com/webpack/grunt-webpack
     webpack: {
       options: webpackConfig,
-      build: {},
+      build: {
+        plugins: [new webpack.optimize.UglifyJsPlugin({minimize: true})]
+      },
       dev: {
         progress: false,
         debug: true,
