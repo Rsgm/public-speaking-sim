@@ -42,7 +42,6 @@ django-storages-redux>=1.3
 
 # Your custom requirements go here
 
-django-vanilla-views
 django-js-reverse
 django-hijack
 pathlib
@@ -50,3 +49,6 @@ django-ratelimit
 bcrypt
 django-flat-theme
 django-easy-timezones
+
+django-vanilla-views>1.0.0,<2.0.0
+djangorestframework>3.0.0,<4.0.0

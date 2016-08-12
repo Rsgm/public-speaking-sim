@@ -45,6 +45,8 @@ THIRD_PARTY_APPS = (
     'guardian',
     'easy_thumbnails',
 
+    'rest_framework',
+
     'kombu.transport.django',
 
     'django_js_reverse',  # https://github.com/ierror/django-js-reverse
@@ -278,3 +280,10 @@ JS_REVERSE_INCLUDE_ONLY_NAMESPACES = ['recordings', 'projects', 'groups']
 JS_REVERSE_OUTPUT_PATH = str(APPS_DIR.path('static/js'))
 
 HIJACK_USE_BOOTSTRAP = False
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+    'PAGE_SIZE': 10
+}
