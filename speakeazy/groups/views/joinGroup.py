@@ -68,4 +68,4 @@ def join(request, invite, user):
 
     membership.save()
     messages.success(request, _('Joined group %s.' % invite.group.name))
-    return HttpResponseRedirect(reverse_lazy('groups:group:groupView', kwargs={'group': membership.group.slug}))
+    return HttpResponseRedirect(reverse_lazy('groups:group:dashboard', kwargs={'group': membership.group.slug}))

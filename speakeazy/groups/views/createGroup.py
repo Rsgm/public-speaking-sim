@@ -58,7 +58,7 @@ class CreateGroup(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
                 group.delete()
                 return self.form_invalid(roles_form)
 
-        return HttpResponseRedirect(reverse_lazy('groups:group:groupView', kwargs={'group': group.slug}))
+        return HttpResponseRedirect(reverse_lazy('groups:group:dashboard', kwargs={'group': group.slug}))
 
     def form_invalid(self, form):
         context = self.get_context_data(form=form)

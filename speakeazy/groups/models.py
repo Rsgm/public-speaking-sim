@@ -39,7 +39,7 @@ class Group(Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse_lazy('groups:group:groupView', kwargs={'group': self.slug})
+        return reverse_lazy('groups:group:dashboard', kwargs={'group': self.slug})
 
 
 # class GroupLimits(Model):

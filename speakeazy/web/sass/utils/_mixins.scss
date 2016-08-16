@@ -66,6 +66,15 @@
     @warn "Invalid $depth `#{$depth}` for mixin `card`.";
   } @else {
     box-shadow: bottom-shadow($depth), top-shadow($depth);
+
+    @if ($depth < 5) {
+      transition: box-shadow, 150ms;
+
+      @include on-event {
+        $hover-depth: $depth + 1;
+        box-shadow: bottom-shadow($hover-depth), top-shadow($hover-depth);
+      }
+    }
   }
 }
 

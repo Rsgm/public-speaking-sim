@@ -71,7 +71,7 @@
       <div class="uk-flex uk-grid">
         {% for group in group_list %}
           <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-2 uk-margin-bottom">
-            <a href="{% url 'groups:group:groupView' group.slug %}"
+            <a href="{% url 'groups:group:dashboard' group.slug %}"
                class="uk-panel uk-panel-box panel-card uk-panel-header">
 
               <h3 class="uk-panel-title">{{ group.name }}</h3>

@@ -1,15 +1,11 @@
 button, .uk-button {
-  transition: box-shadow .3s ease, background .3s ease;
+  transition: background .3s ease;
   border-radius: 3px;
   border: none !important;
 
   @extend .uk-button-primary;
 
   @include card(1);
-
-  @include on-event {
-    @include card(2);
-  }
 }
 
 .uk-button-primary {
