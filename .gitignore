@@ -75,7 +75,9 @@ recordings/*/*
 # Static files
 staticfiles
 speakeazy/static/css/*
-speakeazy/static/js/*
+#speakeazy/static/js/*
+speakeazy/static/js/*.build.*
+speakeazy/static/js/reverse.js
 !speakeazy/static/**/.gitkeep
 
 #Production Files
