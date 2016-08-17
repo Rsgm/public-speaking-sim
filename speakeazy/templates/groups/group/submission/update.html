@@ -1,11 +1,25 @@
-{% extends "actions/update.html" %}
-
-{% block sub_title %} - Invite Update{% endblock %}
-
-{% block post_url %}{% url 'groups:group:invite:add' view.kwargs.group object.slug %}{% endblock %}
+{% extends "base.html" %}
+{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}
+{% block title %} - Submission Update{% endblock %}
 
 {% block breadcrumbs %}
-  {% include "groups/group/invite/breadcrumb.html" %}
-  <li><span>update</span></li>
-  <li><span>{{ object.slug }}</span></li>
+  {% include "groups/group/submission/breadcrumb.html" %}
+  <li><span>{{ submission.pk }}</span></li>
+{% endblock %}
+
+{% block content %}
+  <div class="uk-block">
+    <h2>Update Submission {{ submission.pk }}</h2>
+
+    <form class="uk-form uk-form-stacked" enctype="multipart/form-data" method="post"
+          action="{% url 'groups:group:submission:update' view.group.slug submission.pk %}">
+      {% csrf_token %}
+
+      {% form form %}
+
+      <div class="uk-form-row">
+        <button type="submit" class="uk-button">Update</button>
+      </div>
+    </form>
+  </div>
 {% endblock %}

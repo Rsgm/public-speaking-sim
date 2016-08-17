@@ -28,6 +28,7 @@ class View(LoginRequiredMixin, GroupMixin, DetailView):
 class Update(LoginRequiredMixin, GroupMixin, UpdateView):
     template_name = 'groups/group/submission/update.html'
     model = Submission
+    fields = ['group', 'recording', 'grader', 'finished']
 
     group_permission = UPDATE_SUBMISSION
 

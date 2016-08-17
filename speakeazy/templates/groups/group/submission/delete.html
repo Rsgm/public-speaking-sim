@@ -1,18 +1,22 @@
 {% extends "base.html" %}
-{% block title %} - Invite Delete{% endblock %}
+{% load static from staticfiles %}{% load i18n %}{% load floppyforms %}
+{% block title %} - Submission Delete{% endblock %}
 
 {% block breadcrumbs %}
-  {% include "groups/group/invite/breadcrumb.html" %}
-  <li><span>delete</span></li>
-  <li><span>{{ object.slug }}</span></li>
+  {% include "groups/group/submission/breadcrumb.html" %}
+  <li><span>{{ submission.pk }}</span></li>
 {% endblock %}
 
 {% block content %}
-  <form class="uk-form uk-form-stacked" method="post" action="{% url 'groups:group:invite:delete' view.kwargs.group object.slug %}">
-    {% csrf_token %}
+  <div class="uk-block">
+    <h2>Delete Submission {{ submission.pk }}</h2>
 
-    <div class="uk-form-row">
-      <button type="submit" class="uk-button uk-button-danger">Delete</button>
-    </div>
-  </form>
+    <form class="uk-form uk-form-stacked" method="post" action="{% url 'groups:group:submission:delete' view.group.slug submission.pk %}">
+      {% csrf_token %}
+
+      <div class="uk-form-row">
+        <button type="submit" class="uk-button uk-button-danger">Delete</button>
+      </div>
+    </form>
+  </div>
 {% endblock %}
