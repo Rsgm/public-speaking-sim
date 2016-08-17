@@ -2,7 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
-from speakeazy.groups.views.group.submission.views import List, View, Delete, GraderRedirectView
+from speakeazy.groups.views.group.submission.views import List, View, Update, Delete
 
 urlpatterns = [
     url(
@@ -12,31 +12,20 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^view/(?P<pk>[\w-]+)/$',
+        regex=r'^(?P<pk>[\d]+)/$',
         view=View.as_view(),
         name='view'
     ),
 
-    # url(
-    #     regex=r'^add/$',
-    #     view=Add.as_view(),
-    #     name='add'
-    # ),
-
-    # url(
-    #     regex=r'^update/(?P<pk>[\w-]+)/$',
-    #     view=Update.as_view(),
-    #     name='update'
-    # ),
-
     url(
-        regex=r'^delete/(?P<pk>[\w-]+)/$',
-        view=Delete.as_view(),
-        name='delete'
+        regex=r'^(?P<pk>[\d]+)/update/$',
+        view=Update.as_view(),
+        name='update'
     ),
 
     url(
-        regex=r'^evaluate/(?P<key>[\w-]+)/$',
-        view=GraderRedirectView.as_view(),
+        regex=r'^(?P<pk>[\d]+)/delete/$',
+        view=Delete.as_view(),
+        name='delete'
     ),
 ]

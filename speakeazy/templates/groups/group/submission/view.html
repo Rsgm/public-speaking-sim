@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}{% load i18n %}
+{% block title %} - Invite View{% endblock %}
+
+{% block breadcrumbs %}
+  {% include "groups/group/submission/breadcrumb.html" %}
+  <li class="uk-active"><span>{{ submission.pk }}</span></li>
+{% endblock %}
+
+{% block content %}
+  <h3>Submission View</h3>
+
+  <div class="card-1 no-hover">
+    <div class="">{{ submission.recording.project.user }}</div>
+    <div class="">{{ submission.recording.project.name }}</div>
+    <div class="">{{ submission.created_time }}</div>
+  </div>
+
+  <div class="uk-margin-top">
+    <a class="uk-button" href="{% url 'groups:group:submission:update' view.group.slug submission.pk %}">Update</a>
+    <a class="uk-button uk-button-danger" href="{% url 'groups:group:submission:delete' view.group.slug submission.pk %}">Delete</a>
+  </div>
+{% endblock %}

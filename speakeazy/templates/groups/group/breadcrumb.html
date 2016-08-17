@@ -1,3 +1,2 @@
 {% include "groups/breadcrumb.html" %}
-<li><span>g</span></li>
-<li><a href="{% url 'groups:group:dashboard' group %}">{{ group.slug }}</a></li>
+<li><a href="{% url 'groups:group:dashboard' view.group.slug %}">{{ view.group.slug }}</a></li>

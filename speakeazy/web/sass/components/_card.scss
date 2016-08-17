@@ -1,7 +1,13 @@
 // Card class, no need to make a css class just for adding a card
 @for $i from 5 through 1 {
   .card-#{$i} {
-    @include card($i);
+    &:not(.no-hover) {
+      @include card($i);
+    }
+
+    &.no-hover {
+      @include card($i, false);
+    }
 
     padding: 15px;
     background: #fff;

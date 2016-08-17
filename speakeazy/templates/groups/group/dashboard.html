@@ -5,7 +5,6 @@
 
 {% block breadcrumbs %}
   {% include "groups/breadcrumb.html" %}
-  <li><span>g</span></li>
   <li class="uk-active"><span>{{ group.slug }}</span></li>
 {% endblock %}
 
@@ -39,11 +38,11 @@
 
     <div class="uk-width-small-1-1 uk-width-medium-1-4 uk-pull-2-4 uk-container">
       {% if 'list_user' in view.permissions %}
-        <h3><a href={% url 'groups:group:manage:user:list' group.slug %}>Users</a></h3>
+        <h3><a {#href={% url 'groups:group:manage:user:list' group.slug %}#}>Users</a></h3>
 
         <div class="uk-flex uk-flex-column">
           {% for membership in user_list %}
-            <a href="{% url 'groups:group:manage:user:view' group.slug membership.user.username %}" class="card-1 uk-grid">
+            <a {#href="/groups/admin/{{ group.slug }}/users/{{ membership.user.pk }}"#} class="card-1 uk-grid">
               <div class="uk-width-1-2">{{ membership.user.username }}</div>
               <div class="uk-width-1-2">{% for role in membership.roles.all %}{{ role.name }}{% endfor %}</div>
               {#              <div class="uk-width-1-3">{{ membership.roles__permissions__count }}</div>#}
@@ -56,18 +55,18 @@
 
     <div class="uk-width-small-1-1 uk-width-medium-1-4 uk-container">
       {% if 'add_invite' in view.permissions or 'list_invite' in view.permissions %}
-        <h3><a href={% url 'groups:group:manage:invite:list' group.slug %}>Invites</a></h3>
+        <h3><a {#href={% url 'groups:group:manage:invite:list' group.slug %}#}>Invites</a></h3>
 
         {% if 'list_invite' in view.permissions %}
           <div class="uk-flex uk-flex-column">
             {% for invite in invite_list %}
-              <a href="{% url 'groups:group:manage:invite:view' group.slug invite.slug %}" class="card-1 uk-grid">
+              <a {#href="{% url 'groups:group:manage:invite:view' group.slug invite.slug %}"#} class="card-1 uk-grid">
                 <div>{{ invite.name }}</div>
               </a>
             {% endfor %}
 
             {% if 'add_invite' in view.permissions %}
-              <a class="card-1 uk-grid" href="{% url 'groups:group:manage:invite:add' group.slug %}">
+              <a class="card-1 uk-grid" {#href="{% url 'groups:group:manage:invite:add' group.slug %}"#}>
                 <div>Create Invite</div>
               </a>
             {% endif %}

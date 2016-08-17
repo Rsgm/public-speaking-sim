@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %} - Submission List{% endblock %}
+
+{% block breadcrumbs %}
+  {% include "groups/group/breadcrumb.html" %}
+  <li class="uk-active"><span>submissions</span></li>
+{% endblock %}
+
+{% block content %}
+  <h3>Submission List</h3>
+
+  <div class="uk-flex uk-flex-column">
+    {% for submission in submission_list %}
+      <div class="card-1 uk-flex uk-flex-space-between uk-margin-bottom"
+          {% if 'evaluate_submission' in view.permissions %}
+           onclick="location.href='{% url 'recordings:recording:view' 'grader' submission.pk %}';"
+          {% endif %}>
+
+        <div class="uk-flex-item-1 uk-margin-large-left">{{ submission.recording.project.user }}</div>
+        <div class="uk-flex-item-auto uk-text-center">{{ submission.recording.project.name }}</div>
+        <div class="uk-flex-item-auto uk-text-center">{{ submission.created_time }}</div>
+
+        {% if 'list_submission' in view.permissions %}
+          <a class="uk-flex-item-auto uk-text-center" href="{% url 'groups:group:submission:view' view.group.slug submission.pk %}">view</a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

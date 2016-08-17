@@ -1,7 +1,8 @@
 button, .uk-button {
   transition: background .3s ease;
-  border-radius: 3px;
+  border-radius: 0;
   border: none !important;
+  padding: 5px 10px;
 
   @extend .uk-button-primary;
 

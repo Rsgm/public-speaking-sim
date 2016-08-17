@@ -30,11 +30,6 @@
 
   .section-buttons {
     margin: 20px auto 40px;
-
-    a {
-      line-height: 30px;
-      min-height: 30px;
-    }
   }
 
   .dashboard-section-header {
@@ -52,6 +47,6 @@
     text-align: center;
     background-color: #fff;
 
-    @include card(1);
+    @include card(1, false);
   }
 }
