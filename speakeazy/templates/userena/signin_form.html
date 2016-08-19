@@ -5,28 +5,43 @@
 {% block title %}{% trans "Signin" %}{% endblock %}
 
 {% block content %}
-<form class="s-form" action="" method="post">
-  {% csrf_token %}
-  <fieldset class="s-form-field">
-    <legend>{% trans "Sign In" %}</legend>
-    {{ form.non_field_errors }}
-    {% for field in form %}
-    {{ field.errors }}
-    {% comment %} Displaying checkboxes differently {% endcomment %}
-    {% if field.name == 'remember_me' %}
-    <p class="checkbox">
-    <label for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
-    </p>
-    {% else %}
-    <p>
-    {{ field.label_tag }}
-    {{ field }}
-    </p>
-    {% endif %}
-    {% endfor %}
-  </fieldset>
-  <input class="uk-button uk-margin-top" type="submit" value="{% trans "Sign In" %}" />
-  <p class="forgot-password"><a href="{% url 'userena_password_reset' %}" title="{% trans 'Forgot your password?' %}">{% trans "Forgot your password?" %}</a></p>
-  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
-</form>
+  <div class="uk-block">
+    <form class="uk-form uk-form-stacked uk-width-1-2 uk-push-1-4" action="" method="post">
+      {% csrf_token %}
+      <fieldset>
+        <legend>{% trans "Sign In" %}</legend>
+        {{ form.non_field_errors }}
+        {% for field in form %}
+          <div class="uk-form-row">
+            {{ field.errors }}
+            {% comment %} Displaying checkboxes differently {% endcomment %}
+            {% if field.name == 'remember_me' %}
+              <label class="uk-form-label" for="id_{{ field.name }}">
+                {{ field }}
+                {{ field.label }}
+              </label>
+            {% else %}
+              {{ field.label_tag }}
+              {{ field }}
+            {% endif %}
+          </div>
+        {% endfor %}
+      </fieldset>
+      <button class="uk-button uk-button-success uk-margin-top" type="submit">{% trans "Sign In" %}</button>
+
+      {% if next %}<input type="hidden" name="next" value="{{ next }}"/>{% endif %}
+
+      <div class="uk-grid uk-block uk-margin-large-top ">
+        <div class="uk-width-1-2">
+          <p>Don't have an account?</p>
+          <a class="uk-button" href="{% url 'userena_signup' %}?next={{ next }}">{% trans "Create One" %}</a>
+        </div>
+
+        <div class="uk-width-1-2">
+          <p>{% trans "Forgot your password?" %}</p>
+          <a class="uk-button" href="{% url 'userena_password_reset' %}">{% trans "Reset Password" %}</a>
+        </div>
+      </div>
+    </form>
+  </div>
 {% endblock %}

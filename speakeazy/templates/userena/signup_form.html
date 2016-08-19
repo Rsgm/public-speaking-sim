@@ -4,26 +4,27 @@
 {% block title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
-<form class="s-form" action="" method="post">
-  {% csrf_token %}
-  <fieldset class="s-form-field">
-    <legend>{% trans "Register" %}</legend>
-    {{ form.non_field_errors }}
-    {% for field in form %}
-    {{ field.errors }}
-    {% comment %} Displaying checkboxes differently {% endcomment %}
-    {% if field.name == 'tos' %}
-    <p class="checkbox">
-    <label class="s-form-label form-label" for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
-    </p>
-    {% else %}
-    <p>
-    {{ field.label_tag }}
-    {{ field }}
-    </p>
-    {% endif %}
-    {% endfor %}
-  </fieldset>
-  <input class="s-form-submit" type="submit" value="{% trans "Register"%}" />
-</form>
+  <form class="s-form" action="" method="post">
+    {% csrf_token %}
+    <fieldset class="s-form-field">
+      <legend>{% trans "Register" %}</legend>
+      {{ form.non_field_errors }}
+      {% for field in form %}
+        {{ field.errors }}
+        {% comment %} Displaying checkboxes differently {% endcomment %}
+        {% if field.name == 'tos' %}
+          <p class="checkbox">
+            <label class="s-form-label form-label" for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
+          </p>
+        {% else %}
+          <p>
+            {{ field.label_tag }}
+            {{ field }}
+          </p>
+        {% endif %}
+      {% endfor %}
+    </fieldset>
+    <input class="s-form-submit" type="submit" value="{% trans "Register" %}"/>
+    {% if next %}<input type="hidden" name="next" value="{{ next }}"/>{% endif %}
+  </form>
 {% endblock %}
