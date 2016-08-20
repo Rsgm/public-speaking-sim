@@ -28,7 +28,7 @@ class Dashboard(LoginRequiredMixin, GroupMixin, TemplateView):
         if LIST_INVITE in self.permissions:
             kwargs['invite_list'] = GroupInvite.objects \
                                         .filter(group=self.group) \
-                                        .order_by('-created_time')[:10]
+                                        .order_by('-created_time')[:5]
 
         if LIST_USER in self.permissions:
             kwargs['user_list'] = GroupMembership.objects \
@@ -37,6 +37,6 @@ class Dashboard(LoginRequiredMixin, GroupMixin, TemplateView):
                                       .prefetch_related(Prefetch('roles',
                                                                  queryset=Role.objects.filter(group=self.group))) \
                                       .annotate(Count('roles__permissions')) \
-                                      .order_by('-roles__permissions__count', 'user__username')[:10]
+                                      .order_by('-roles__permissions__count', 'user__username')[:5]
 
         return kwargs

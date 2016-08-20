@@ -74,7 +74,7 @@ class Role(Model):
     permissions = models.ManyToManyField('Permission')
 
     def __str__(self):
-        return '%s - %s' % (self.group, self.name)
+        return self.name
 
 
 class Permission(Model):
