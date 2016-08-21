@@ -11,6 +11,10 @@
 
     padding: 15px;
     background: #fff;
-    color: $text-color;
+
+    @include on-event(true) {
+      color: $text-color;
+      text-decoration: none;
+    }
   }
 }

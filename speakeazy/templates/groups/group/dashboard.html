@@ -24,7 +24,7 @@
         <h3><a href={% url 'groups:group:submission:list' group.slug %}>Submissions</a></h3>
 
         <div class="uk-flex uk-flex-column">
-          <div class="card-1 no-hover uk-grid uk-margin-top-remove uk-margin-bottom">
+          <div class="uk-grid uk-margin-top-remove uk-margin-small-bottom column-info">
             <div class="uk-width-1-4">Username</div>
             <div class="uk-width-1-4 uk-text-center">Project</div>
             <div class="uk-width-2-4 uk-text-center">Date Submitted</div>
@@ -48,7 +48,7 @@
           <h3><a {#href={% url 'groups:group:manage:user:list' group.slug %}#}>Users</a></h3>
 
           <div class="uk-flex uk-flex-column">
-            <div class="card-1 no-hover uk-grid uk-margin-top-remove uk-margin-bottom">
+            <div class="uk-grid uk-margin-top-remove uk-margin-small-bottom column-info">
               <div class="uk-width-1-2">User</div>
               <div class="uk-width-1-2">Roles</div>
             </div>
@@ -71,7 +71,7 @@
 
           <div class="uk-flex uk-flex-column uk-grid">
             {% if 'list_invite' in view.permissions %}
-              <div class="card-1 no-hover uk-margin-bottom">
+              <div class="uk-margin-small-bottom column-info">
                 <div>Invite Name</div>
               </div>
 
