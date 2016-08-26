@@ -1,26 +1,10 @@
-from rest_framework import viewsets
-
-from speakeazy.api.serializers import GroupSerializer, GroupMembershipSerializer
-from speakeazy.groups.models import GroupMembership
-
-
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    serializer_class = GroupSerializer
-    lookup_field = 'slug'
-
-    def get_queryset(self):
-        return self.request.user.group_set.all()
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework import response, schemas
+from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
 
-class GroupMembershipViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    serializer_class = GroupMembershipSerializer
-    lookup_field = 'pk'
-
-    def get_queryset(self):
-        return GroupMembership.objects.filter(group__in=self.request.user.group_set.all())
+@api_view()
+@renderer_classes([OpenAPIRenderer, SwaggerUIRenderer])
+def schema_view(request):
+    generator = schemas.SchemaGenerator(title='Speakeazy API')
+    return response.Response(generator.get_schema(request=request))

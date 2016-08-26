@@ -52,3 +52,5 @@ django-easy-timezones
 
 django-vanilla-views>1.0.0,<2.0.0
 djangorestframework>3.0.0,<4.0.0
+django-rest-swagger
+drf-nested-routers

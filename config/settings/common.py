@@ -46,6 +46,7 @@ THIRD_PARTY_APPS = (
     'easy_thumbnails',
 
     'rest_framework',
+    'rest_framework_swagger',
 
     'kombu.transport.django',
 
