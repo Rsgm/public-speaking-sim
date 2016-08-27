@@ -1,40 +1,49 @@
 {
   "variables": {
-    "region": "us-east-1",
-    "ami": "ami-c8bda8a2",
-    "instance_type": "t2.nano",
+    "zone": "",
+    "account_file": ".account.json",
+    "project": "",
+    "image": "",
+    "machine_type": "t2.nano",
     "ssh_user": "admin",
     "django_tar": "/tmp/django.tar.gz",
     "worker_tar": "/tmp/worker.tar.gz"
   },
   "_NOTE": "/tmp/django.tar.gz and /tmp/worker.tar.gz must exist at compile time, otherwise you get a bad source error",
+  "_google cloud builder": "https://www.packer.io/docs/builders/googlecompute.html",
   "builders": [
     {
       "name": "nginx",
-      "type": "amazon-ebs",
-      "region": "{{user `region`}}",
-      "source_ami": "{{user `ami`}}",
-      "instance_type": "{{user `instance_type`}}",
+      "type": "googlecompute",
+      "zone": "{{user `zone`}}",
+      "account_file": "{{ user `account_file`}}",
+      "project_id": "{{user `project`}}",
+      "source_image": "{{user `image`}}",
+      "machine_type": "{{user `machine_type`}}",
       "ssh_username": "{{user `ssh_user`}}",
-      "ami_name": "nginx-{{timestamp}}"
+      "image_name": "nginx-{{timestamp}}"
     },
     {
       "name": "django",
-      "type": "amazon-ebs",
-      "region": "{{user `region`}}",
-      "source_ami": "{{user `ami`}}",
-      "instance_type": "{{user `instance_type`}}",
+      "type": "googlecompute",
+      "zone": "{{user `zone`}}",
+      "account_file": "{{ user `account_file`}}",
+      "project_id": "{{user `project`}}",
+      "source_image": "{{user `image`}}",
+      "machine_type": "{{user `machine_type`}}",
       "ssh_username": "{{user `ssh_user`}}",
-      "ami_name": "django-{{timestamp}}"
+      "image_name": "django-{{timestamp}}"
     },
     {
       "name": "worker",
-      "type": "amazon-ebs",
-      "region": "{{user `region`}}",
-      "source_ami": "{{user `ami`}}",
-      "instance_type": "{{user `instance_type`}}",
+      "type": "googlecompute",
+      "zone": "{{user `zone`}}",
+      "account_file": "{{ user `account_file`}}",
+      "project_id": "{{user `project`}}",
+      "source_image": "{{user `image`}}",
+      "machine_type": "{{user `machine_type`}}",
       "ssh_username": "{{user `ssh_user`}}",
-      "ami_name": "worker-{{timestamp}}"
+      "image_name": "worker-{{timestamp}}"
     }
   ],
   "provisioners": [
