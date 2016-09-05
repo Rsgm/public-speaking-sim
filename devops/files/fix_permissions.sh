@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-echo fixing file permissions
+echo ------ FIXING FILE PERMISSIONS ------
 
 # Set root readonly
 chmod 750 /app
