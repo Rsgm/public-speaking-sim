@@ -17,7 +17,9 @@ django-model-utils>=2.3.1
 # Images
 Pillow
 
-django-userena
+#django-userena
+git+https://github.com/Rsgm/django-userena.git@signup-redirect
+#git@github.com:Rsgm/django-userena.git
 
 # Python-PostgreSQL Database Adapter
 #psycopg2==2.6.1

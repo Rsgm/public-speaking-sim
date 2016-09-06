@@ -5,21 +5,23 @@ from django.conf.urls import url
 from django.shortcuts import redirect
 from django.views.generic.base import RedirectView
 from speakeazy.speakeazy.views import Dashboard
+from speakeazy.users.forms import SpeakeazySignupForm
 
 urlpatterns = [
     url(
-        regex=r'^account/signup/$',
-        view=RedirectView.as_view(pattern_name='userena_signup', permanent=True)
+        r'^register/$',
+        'userena.views.signup',
+        {'signup_form': SpeakeazySignupForm},
+        'userena_register'
     ),
 
     url(
-        regex=r'^account/register/$',
-        view='userena.views.signup',
-        name='userena_signup'
+        regex=r'^signup/$',
+        view=RedirectView.as_view(pattern_name='userena_register', permanent=True)
     ),
 
     url(
-        regex=r'^account/activate/(?P<activation_key>\w+)/$',
+        regex=r'^activate/(?P<activation_key>\w+)/$',
         view='userena.views.activate',
         kwargs={'success_url': 'speakeazy:dashboard'},
         name='userena_activate'

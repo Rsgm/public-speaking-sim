@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load url from future %}
 
-{% block title %}{% trans "Signin" %}{% endblock %}
+{% block title %} - {% trans "Signin" %}{% endblock %}
 
 {% block content %}
   <div class="uk-block">
@@ -34,7 +34,7 @@
       <div class="uk-grid uk-block uk-margin-large-top ">
         <div class="uk-width-1-2">
           <p>Don't have an account?</p>
-          <a class="uk-button" href="{% url 'userena_signup' %}?next={{ next }}">{% trans "Create One" %}</a>
+          <a class="uk-button" href="{% url 'userena_register' %}?next={{ next }}">{% trans "Create One" %}</a>
         </div>
 
         <div class="uk-width-1-2">

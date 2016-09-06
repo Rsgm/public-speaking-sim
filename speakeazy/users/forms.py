@@ -12,6 +12,7 @@ class SpeakeazySignupForm(SignupForm):
 
         :return: the validated password
         """
+        print(12345678)
         with open('resources/yahoo-voices.txt', 'r') as file:
             for password in file:
                 if self.cleaned_data['password1'] == password[:-1]:
@@ -30,4 +31,6 @@ class SpeakeazySignupForm(SignupForm):
 
             new_membership.roles.add(*membership.roles.all())
 
+        print(12345678)
         return new_user
+
