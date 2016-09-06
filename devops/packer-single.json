@@ -8,7 +8,6 @@
     "image": "",
     "machine_type": "t2.nano",
     "ssh_user": "admin",
-    "shell_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
     "tar": "/tmp/server.tar.gz"
   },
   "builders": [
@@ -22,12 +21,6 @@
       "machine_type": "{{user `machine_type`}}",
       "ssh_username": "{{user `ssh_user`}}",
       "image_name": "speakeazy-{{timestamp}}"
-    },
-    {
-      "name": "docker",
-      "type": "docker",
-      "image": "debian:jessie",
-      "export_path": "image.tar"
     }
   ],
   "provisioners": [
@@ -37,9 +30,11 @@
     },
     {
       "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "inline": [
-        "echo ------ WAITING FOR INSTANCE TO BE READY ------",
-        "sudo timeout 180 /bin/bash -c 'until stat /var/lib/cloud/instance/boot-finished 2>/dev/null; do echo waiting ...; sleep 1; done'"
+        "echo ------ PREPARE SERVER ------",
+        "#timeout 180 /bin/bash -c 'until stat /var/lib/cloud/instance/boot-finished 2>/dev/null; do echo waiting ...; sleep 1; done'",
+        "apt-get update"
       ]
     },
     {
@@ -49,7 +44,7 @@
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "inline": [
         "echo ------ SETTING UP APP DIRECTORY AND USERS ------",
         "",
@@ -63,13 +58,13 @@
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "inline": [
         "echo ------ SETTING VSFTP ------",
         "apt-get --no-install-recommends --no-install-suggests -y install vsftpd",
         "mv /app/devops/files/django/vsftpd.conf /etc/vsftpd.conf",
         "echo anonymous > /etc/vsftpd.allowed_users",
-        "systemd enable vsftpd.service",
+        "systemd enable vsftpd.service  # docker: Excess arguments.",
         "",
         "mkdir /ftp",
         "mkdir /ftp/recordings",
@@ -79,7 +74,7 @@
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "inline": [
         "echo ------ INSTALLING PYTHON DEPENDENCIES ------",
         "# install python and python dependencies for later",
@@ -94,26 +89,27 @@
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "script": "{{template_dir}}/files/nginx/setup.sh"
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "script": "{{template_dir}}/files/django/setup.sh"
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "script": "{{template_dir}}/files/worker/setup.sh"
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "script": "{{template_dir}}/files/fix_permissions.sh"
     },
     {
       "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "inline": [
         "sudo apt-get autoremove",
         "sudo apt-get clean"
