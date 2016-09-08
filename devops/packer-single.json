@@ -5,7 +5,7 @@
     "zone": "us-central1-b",
     "account_file": ".account.json",
     "project": "speakeazy-1251",
-    "image": "debian-8",
+    "image": "debian-8-jessie-v20160803",
     "machine_type": "f1-micro",
     "ssh_user": "admin",
     "tar": "/tmp/server.tar.gz"
@@ -14,7 +14,9 @@
     {
       "name": "google",
       "type": "googlecompute",
-      "account_file": "devops/account.json",
+      "account_file": "{{template_dir}}/account.json",
+      "network": "default",
+      "subnetwork": "default",
       "zone": "{{user `zone`}}",
       "project_id": "{{user `project`}}",
       "source_image": "{{user `image`}}",
