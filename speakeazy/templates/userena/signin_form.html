@@ -34,7 +34,7 @@
       <div class="uk-grid uk-block uk-margin-large-top ">
         <div class="uk-width-1-2">
           <p>Don't have an account?</p>
-          <a class="uk-button" href="{% url 'userena_register' %}{% if redirect %}?next={{ next }}{% endif %}">{% trans "Create One" %}</a>
+          <a class="uk-button" href="{% url 'userena_register' %}{% if next %}?next={{ next }}{% endif %}">{% trans "Create One" %}</a>
         </div>
 
         <div class="uk-width-1-2">
