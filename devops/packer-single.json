@@ -2,45 +2,38 @@
   "_ SINGLE SERVER": "This builds a single, fully functional server image.",
   "_ NOTE": "/tmp/django.tar.gz and /tmp/worker.tar.gz must exist at compile time, otherwise you get a bad source error",
   "variables": {
-    "zone": "",
+    "zone": "us-central1-b",
     "account_file": ".account.json",
-    "project": "",
-    "image": "",
-    "machine_type": "t2.nano",
+    "project": "speakeazy-1251",
+    "image": "debian-8-jessie-v20160803",
+    "machine_type": "f1-micro",
     "ssh_user": "admin",
-    "shell_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
     "tar": "/tmp/server.tar.gz"
   },
   "builders": [
     {
       "name": "google",
       "type": "googlecompute",
+      "account_file": "{{template_dir}}/account.json",
+      "network": "default",
+      "subnetwork": "default",
       "zone": "{{user `zone`}}",
-      "account_file": "{{ user `account_file`}}",
       "project_id": "{{user `project`}}",
       "source_image": "{{user `image`}}",
       "machine_type": "{{user `machine_type`}}",
       "ssh_username": "{{user `ssh_user`}}",
       "image_name": "speakeazy-{{timestamp}}"
-    },
-    {
-      "name": "docker",
-      "type": "docker",
-      "image": "debian:jessie",
-      "export_path": "image.tar"
     }
   ],
   "provisioners": [
     {
       "type": "shell-local",
-      "command": "npm run build && tar --exclude-vcs-ignores -zcf {{user `tar`}} ./ ./.env.sh ./speakeazy/static/css/build.css"
+      "command": "echo ------ PACKAGE SPEAKEAZY ------ && npm run build && tar --exclude-vcs-ignores -zcf {{user `tar`}} ./ ./.env.sh ./speakeazy/static/css/build.css"
     },
     {
       "type": "shell",
-      "inline": [
-        "echo ------ WAITING FOR INSTANCE TO BE READY ------",
-        "sudo timeout 180 /bin/bash -c 'until stat /var/lib/cloud/instance/boot-finished 2>/dev/null; do echo waiting ...; sleep 1; done'"
-      ]
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/prepare-server.sh"
     },
     {
       "type": "file",
@@ -49,75 +42,43 @@
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
-      "inline": [
-        "echo ------ SETTING UP APP DIRECTORY AND USERS ------",
-        "",
-        "groupadd -r django",
-        "useradd -r -g django django",
-        "mkdir /app",
-        "chown django:django /app",
-        "",
-        "tar -zxf /tmp/server.tar.gz -C /app"
-      ]
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/install-app.sh"
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
-      "inline": [
-        "echo ------ SETTING VSFTP ------",
-        "apt-get --no-install-recommends --no-install-suggests -y install vsftpd",
-        "mv /app/devops/files/django/vsftpd.conf /etc/vsftpd.conf",
-        "echo anonymous > /etc/vsftpd.allowed_users",
-        "systemd enable vsftpd.service",
-        "",
-        "mkdir /ftp",
-        "mkdir /ftp/recordings",
-        "chmod 555 /ftp",
-        "mount --bind /app/recordings /ftp/recordings"
-      ]
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/vsftp-setup.sh"
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
-      "inline": [
-        "echo ------ INSTALLING PYTHON DEPENDENCIES ------",
-        "# install python and python dependencies for later",
-        "apt-get --no-install-recommends --no-install-suggests -y install python3 python3-pip python3-pil python3-dev libjpeg-dev libjpeg62-turbo-dev zlib1g-dev gcc libffi-dev",
-        "pip3 install --upgrade pip",
-        "",
-        "ln -s /usr/bin/python3 /usr/local/bin/python",
-        "",
-        "# install pip dependencies",
-        "pip3 install -r /app/requirements/production.txt"
-      ]
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/install-dependencies.sh"
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
-      "script": "{{template_dir}}/files/nginx/setup.sh"
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/nginx-setup.sh"
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
-      "script": "{{template_dir}}/files/django/setup.sh"
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/django-setup.sh"
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
-      "script": "{{template_dir}}/files/worker/setup.sh"
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/worker-setup.sh"
     },
     {
       "type": "shell",
-      "execute_command": "{{user `shell_command`}}",
-      "script": "{{template_dir}}/files/fix_permissions.sh"
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/fix-permissions.sh"
     },
     {
       "type": "shell",
-      "inline": [
-        "sudo apt-get autoremove",
-        "sudo apt-get clean"
-      ]
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/cleanup-server.sh"
     }
   ]
 }
