@@ -70,7 +70,18 @@ os.environ.setdefault("REDIS_URL",
 INSTALLED_APPS += (
     'storages',
 )
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.gs.GSBotoStorage'
+
+GS_ACCESS_KEY_ID = env('GCLOUD_ID')
+GS_SECRET_ACCESS_KEY = env('GCLOUD_ACCESS_KEY')
+GS_BUCKET_NAME = env('GCLOUD_BUCKET')
+GS_AUTO_CREATE_BUCKET = True
+GS_QUERYSTRING_AUTH = True
+GS_QUERYSTRING_EXPIRE = 60
+
+
+STATICFILES_STORAGE = 'storages.backends.gs.GSBotoStorage'
 
 AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY')

@@ -46,6 +46,11 @@
     {
       "type": "shell",
       "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/fix-permissions.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "script": "{{template_dir}}/packer/vsftp-setup.sh"
     },
     {
@@ -61,17 +66,17 @@
     {
       "type": "shell",
       "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/redis-setup.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "script": "{{template_dir}}/packer/django-setup.sh"
     },
     {
       "type": "shell",
       "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
       "script": "{{template_dir}}/packer/worker-setup.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
-      "script": "{{template_dir}}/packer/fix-permissions.sh"
     },
     {
       "type": "shell",

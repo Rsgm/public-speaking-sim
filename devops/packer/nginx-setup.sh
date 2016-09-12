@@ -11,13 +11,12 @@ apt-get install --no-install-recommends --no-install-suggests -y nginx -t jessie
 useradd --no-create-home nginx
 mkdir /etc/letsencrypt/
 
-mv /tmp/nginx.conf /etc/nginx/nginx.conf
-mv /tmp/nginx.service /lib/systemd/system/
-mv /tmp/letsencrypt.ini /etc/letsencrypt/cli.ini
-mv /tmp/certbot-install.service /lib/systemd/system/
-mv /tmp/certbot-renew.service /lib/systemd/system/
-mv /tmp/certbot-renew.timer /lib/systemd/system/
-mv /tmp/certbot-renew.timer /lib/systemd/system/
+mv /app/devops/files/nginx/nginx.conf /etc/nginx/nginx.conf
+mv /app/devops/files/nginx/nginx.service /lib/systemd/system/
+mv /app/devops/files/nginx/letsencrypt.ini /etc/letsencrypt/cli.ini
+mv /app/devops/files/nginx/certbot-install.service /lib/systemd/system/
+mv /app/devops/files/nginx/certbot-renew.service /lib/systemd/system/
+mv /app/devops/files/nginx/certbot-renew.timer /lib/systemd/system/
 
 systemctl enable certbot-install.service
 systemctl enable certbot-renew.service
