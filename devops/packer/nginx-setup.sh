@@ -14,8 +14,6 @@ mkdir /etc/letsencrypt/
 # grab the correct letsencrypt settings file
 env=$(curl -H "Metadata-Flavor: Google"  http://metadata.google.internal/computeMetadata/v1/instance/attributes/env)
 echo $env
-echo $($env)
-echo mv /app/devops/files/nginx/$(echo $env)-cli.ini /etc/letsencrypt/cli.ini
 mv /app/devops/files/nginx/$(echo $env)-cli.ini /etc/letsencrypt/cli.ini
 
 mv /app/devops/files/nginx/nginx.conf /etc/nginx/nginx.conf

@@ -4,7 +4,7 @@ After=syslog.target network.target auditd.service
 
 [Service]
 WorkingDirectory=/app
-ExecStart=celery -A speakeazy.taskapp worker -l INFO
+ExecStart=/usr/local/bin/celery -A speakeazy.taskapp worker -l INFO
 Restart=always
 User=django
 Group=django

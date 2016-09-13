@@ -17,5 +17,5 @@ apt-get --no-install-recommends --no-install-suggests -y install ffmpeg
 mv /app/devops/files/worker/worker.service /lib/systemd/system/worker.service
 sync
 
-systemd enable worker.service
+systemctl enable worker.service
 sync
