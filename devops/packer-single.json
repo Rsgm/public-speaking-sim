@@ -8,7 +8,8 @@
     "image": "debian-8-jessie-v20160803",
     "machine_type": "n1-standard-1",
     "ssh_user": "admin",
-    "tar": "/tmp/server.tar.gz"
+    "tar": "/tmp/server.tar.gz",
+    "env": "test"
   },
   "builders": [
     {
@@ -20,7 +21,10 @@
       "source_image": "{{user `image`}}",
       "machine_type": "{{user `machine_type`}}",
       "ssh_username": "{{user `ssh_user`}}",
-      "image_name": "speakeazy-{{timestamp}}"
+      "image_name": "speakeazy-{{timestamp}}",
+      "metadata": {
+        "env": "{{user `env`}}"
+      }
     }
   ],
   "provisioners": [
