@@ -1,12 +1,9 @@
 // AMIs
-variable "django_ami" {
+variable "django_image" {
 }
-variable "nginx_ami" {
+variable "nginx_image" {
 }
-variable "docker_ami" {
-  default = "ami-a88a46c5"
-}
-variable "worker_ami" {
+variable "worker_image" {
 }
 
 
@@ -30,10 +27,13 @@ variable "db_port" {
 variable "nginx_ip" {
   default = "10.0.1.4"
 }
-variable "docker_ip" {
-  default = "10.0.1.5"
-}
+//variable "docker_ip" {
+//  default = "10.0.1.5"
+//}
 variable "django_ip" {
+  default = "10.0.1.6"
+}
+variable "worker_ip" {
   default = "10.0.1.6"
 }
 
@@ -45,6 +45,6 @@ variable "vpc_block" {
 variable "main_block" {
   default = "10.0.1.0/24"
 }
-variable "worker_block" {
-  default = "10.0.2.0/24"
-}
+//variable "worker_block" {
+//  default = "10.0.2.0/24"
+//}

@@ -31,4 +31,3 @@ class SpeakeazySignupForm(SignupForm):
             new_membership.roles.add(*membership.roles.all())
 
         return new_user
-
