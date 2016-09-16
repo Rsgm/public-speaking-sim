@@ -3,11 +3,17 @@
 
 echo ------ SETTING UP WORKER ------
 
+if ! grep -Fxq "deb http://packages.dotdeb.org jessie all" /etc/apt/sources.list
+then
+    wget https://www.dotdeb.org/dotdeb.gpg
+    sudo apt-key add dotdeb.gpg
 
-apt-get --no-install-recommends --no-install-suggests -y install redis
+    echo deb http://packages.dotdeb.org jessie all >> /etc/apt/sources.list
+    echo deb-src http://packages.dotdeb.org jessie all >> /etc/apt/sources.list
+    apt-get update -y
+fi
 
-mv /app/devops/files/redis/redis.service /lib/systemd/system/
-sync
+apt-get install --no-install-recommends --no-install-suggests -y redis-server
 
-systemctl enable redis.service
+systemctl enable redis-server.service
 sync

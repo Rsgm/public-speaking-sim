@@ -8,7 +8,7 @@ python3 /app/manage.py collectstatic --noinput
 python3 /app/manage.py check_permissions
 
 /usr/local/bin/gunicorn config.wsgi \
-    --workers  3 \
+    --workers  $GUNICORN_WORKERS \
     --worker-class gevent \
     -b 0.0.0.0:5000 \
     --chdir=/app \
