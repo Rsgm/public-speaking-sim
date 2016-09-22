@@ -83,6 +83,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
     'easy_timezones.middleware.EasyTimezoneMiddleware',
 )
 
@@ -105,6 +106,8 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # )
 
 # MANAGER CONFIGURATION
+#
+# Put your email here if you like to get notified by email of every single error that occurs.
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
@@ -264,7 +267,6 @@ except ImproperlyConfigured:
 RECORDING_PATHS = {
     'VIDEO_PIECES': RECORDING_ROOT_PATH.path('video_pieces'),
     'AUDIO_PIECES': RECORDING_ROOT_PATH.path('audio_pieces'),
-    'CONVERTED_PIECES': RECORDING_ROOT_PATH.path('converted_pieces'),
     'LISTS': RECORDING_ROOT_PATH.path('lists'),
     'THUMBNAILS': RECORDING_ROOT_PATH.path('thumbnails'),
     'FINISHED': RECORDING_ROOT_PATH.path('finished'),

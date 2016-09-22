@@ -5,9 +5,12 @@
 
 # WSGI Handler
 # ------------------------------------------------
-gevent==1.1.1
-gunicorn==19.6
+gevent>=1.1.1
+gunicorn>=19.6
 
-boto
+google-compute-engine
+#boto
+git+https://github.com/Rsgm/boto.git
+
 opbeat
 PyMySQL

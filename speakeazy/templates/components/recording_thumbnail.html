@@ -2,6 +2,8 @@
   <a class="card-1 uk-thumbnail" href="{% url 'recordings:recording:view' 'owner' recording.pk %}">
     <video class="s-video-thumbnail" src="{{ recording.thumbnail_video.url }}" poster="{{ recording.thumbnail_image.url }}" loop></video>
     <div class="uk-thumbnail-caption">
+      {{ recording.start_time | date:"D, I M - H:i" }}
+      <br>
       {{ recording.project.name }} - {{ recording.pk }}
     </div>
 
