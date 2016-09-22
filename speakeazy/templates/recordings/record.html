@@ -11,7 +11,7 @@
   <div id="record">
     {% csrf_token %}
 
-    <!-- preview -->
+    {# preview #}
     <div id="preview" class="">
       <h2>Webcam and Microphone Setup</h2>
       <h5>Allow webcam and microphone access. Use this screen to double check you are in view of your webcam.</h5>
@@ -29,10 +29,9 @@
         {#                <div id="volume-slider"></div>#}
         {#            </div>#}
       </div>
-
     </div>
 
-    <!-- Recording -->
+    {# Recording #}
     <div id="recording" class="uk-flex uk-flex-center">
       <div class="s-recording-player">
         <video id="audience-video" class="uk-responsive-width" loop preload>
@@ -48,7 +47,7 @@
       </div>
     </div>
 
-    <!-- uploading -->
+    {# uploading #}
     <div class="upload-progress" id="finished">
       <h1 class="text-center">Uploading</h1>
 

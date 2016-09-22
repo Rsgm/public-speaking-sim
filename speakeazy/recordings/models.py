@@ -19,6 +19,8 @@ RECORDING_STATE_CHOICES = [
 class Recording(Model):
     project = models.ForeignKey('projects.UserProject', editable=False)
 
+    # audience = models.ForeignKey('groups.Audience') #  have a select on the preview page, post audience on start
+
     state = models.CharField(max_length=1, choices=RECORDING_STATE_CHOICES, default=RECORDING_UPLOADING)
     finish_time = models.DateTimeField(null=True, blank=True)
     start_time = models.DateTimeField(auto_now_add=True)

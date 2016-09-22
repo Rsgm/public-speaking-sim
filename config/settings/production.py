@@ -1,21 +1,8 @@
 # -*- coding: utf-8 -*-
-'''
-Production Configurations
-
-- Use djangosecure
-- Use Amazon's S3 for storing static files and uploaded media
-- Use Redis on Heroku
-
-- Use sentry for error logging
-
-'''
 from __future__ import absolute_import, unicode_literals
 
 import os
-
-from boto.s3.connection import OrdinaryCallingFormat
 from django.utils import six
-
 from .common import *  # noqa
 
 # SECRET CONFIGURATION
@@ -70,29 +57,36 @@ os.environ.setdefault("REDIS_URL",
 INSTALLED_APPS += (
     'storages',
 )
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = env('DJANGO_AWS_STORAGE_BUCKET_NAME')
-AWS_AUTO_CREATE_BUCKET = True
-AWS_QUERYSTRING_AUTH = True
-AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
+DEFAULT_FILE_STORAGE = 'storages.backends.gs.GSBotoStorage'
 
-# AWS cache settings, don't change unless you know what you're doing:
-AWS_EXPIRY = 60 * 60 * 24 * 7
+GS_ACCESS_KEY_ID = env('GCLOUD_KEY')
+GS_SECRET_ACCESS_KEY = env('GCLOUD_KEY_SECRET')
+GS_BUCKET_NAME = env('GCLOUD_BUCKET')
+GS_AUTO_CREATE_BUCKET = True
+GS_QUERYSTRING_AUTH = True
+GS_QUERYSTRING_EXPIRE = 60
+
+# STATICFILES_STORAGE = 'storages.backends.gs.GSBotoStorage'
+
+# AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = env('DJANGO_AWS_STORAGE_BUCKET_NAME')
+# AWS_AUTO_CREATE_BUCKET = True
+# AWS_QUERYSTRING_AUTH = True
+# AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 
 # TODO See: https://github.com/jschneier/django-storages/issues/47
 # Revert the following and use str after the above-mentioned bug is fixed in
 # either django-storage-redux or boto
-AWS_HEADERS = {
-    'Cache-Control': six.b('max-age=%d, s-maxage=%d, must-revalidate' % (AWS_EXPIRY, AWS_EXPIRY))
-}
+# AWS_HEADERS = {
+#     'Cache-Control': six.b('max-age=%d, s-maxage=%d, must-revalidate' % (AWS_EXPIRY, AWS_EXPIRY))
+# }
 
 # URL that handles the media served from MEDIA_ROOT, used for managing
 # stored files.
 MEDIA_ROOT = '/media/'
-MEDIA_URL = 'https://s3.amazonaws.com/%s/%s' % (AWS_STORAGE_BUCKET_NAME, MEDIA_ROOT)
+MEDIA_URL = 'https://s3.amazonaws.com/%s/%s' % (GS_BUCKET_NAME, MEDIA_ROOT)
 
 # Static Assets
 # ------------------------
@@ -192,16 +186,11 @@ LOGGING = {
         #     'handlers': ['file', 'mail_admins'],
         #     'propagate': False,
         # },
-        # 'sentry.errors': {
-        #     'level': 'DEBUG',
-        #     'handlers': ['file', 'mail_admins'],
-        #     'propagate': False,
-        # },
-        # 'django.security': {
-        #     'level': 'info',
-        #     'handlers': ['file', 'mail_admins'],
-        #     'propagate': False,
-        # },
+        'django.security': {
+            'level': 'info',
+            'handlers': ['file', 'mail_admins'],
+            'propagate': False,
+        },
     },
 }
 
