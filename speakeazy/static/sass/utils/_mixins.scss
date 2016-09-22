@@ -79,6 +79,7 @@
 
   @include on-event {
     text-decoration: none;
+
     @if $invert-hover {
       background-color: $background + $hover;
     } @else {

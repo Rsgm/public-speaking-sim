@@ -1,17 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import TemplateView
 from django.views import defaults as default_views
-from speakeazy.users.forms import SpeakeazySignupForm
+from django.views.generic import TemplateView
 
 urlpatterns = [
-                  url(r'^$', TemplateView.as_view(template_name='speakeazy/landing.html'), name="landing"),
-                  url(r'^robots\.txt$', TemplateView.as_view(template_name='speakeazy/robots.txt',
-                                                             content_type='text/plain')),
+                  url(
+                      regex=r'^$',
+                      view=TemplateView.as_view(template_name='speakeazy/landing.html'),
+                      name='landing'
+                  ),
+                  url(
+                      regex=r'^robots\.txt$',
+                      view=TemplateView.as_view(template_name='speakeazy/robots.txt', content_type='text/plain')
+                  ),
 
                   # Django Admin, use {% url 'admin:index' %}
                   url(settings.ADMIN_URL + 'docs/', include('django.contrib.admindocs.urls')),
@@ -19,17 +25,14 @@ urlpatterns = [
                   url(r'^hijack/', include('hijack.urls')),
 
                   # User management
-                  url(r'^account/signup/$', 'userena.views.signup', {'signup_form': SpeakeazySignupForm},
-                      name='userena_signup'),
-                  url(r'^account/activate/(?P<activation_key>\w+)/$', 'userena.views.activate',
-                      {'success_url': 'speakeazy:dashboard'}, name='userena_activate'),
+                  url(r'^account/', include('speakeazy.users.urls')),
                   url(r'^account/', include('userena.urls')),
 
                   # Your stuff: custom urls includes go here
-                  url(r'', include("speakeazy.speakeazy.urls", namespace="speakeazy")),
-                  url(r'^projects/', include("speakeazy.projects.urls", namespace="projects")),
-                  url(r'^groups/', include("speakeazy.groups.urls", namespace="groups")),
-                  url(r'^recordings/', include("speakeazy.recordings.urls", namespace="recordings")),
+                  url(r'', include('speakeazy.speakeazy.urls', namespace='speakeazy')),
+                  url(r'^projects/', include('speakeazy.projects.urls', namespace='projects')),
+                  url(r'^groups/', include('speakeazy.groups.urls', namespace='groups')),
+                  url(r'^recordings/', include('speakeazy.recordings.urls', namespace='recordings')),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

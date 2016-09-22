@@ -1,0 +1,91 @@
+{
+  "_ SINGLE SERVER": "This builds a single, fully functional server image.",
+  "_ NOTE": "/tmp/django.tar.gz and /tmp/worker.tar.gz must exist at compile time, otherwise you get a bad source error",
+  "variables": {
+    "zone": "us-central1-b",
+    "account_file": ".account.json",
+    "project": "speakeazy-142916",
+    "image": "debian-8-jessie-v20160803",
+    "machine_type": "n1-standard-1",
+    "ssh_user": "admin",
+    "tar": "/tmp/server.tar.gz",
+    "env": "test"
+  },
+  "builders": [
+    {
+      "name": "google",
+      "type": "googlecompute",
+      "account_file": "{{template_dir}}/account.json",
+      "zone": "{{user `zone`}}",
+      "project_id": "{{user `project`}}",
+      "source_image": "{{user `image`}}",
+      "machine_type": "{{user `machine_type`}}",
+      "ssh_username": "{{user `ssh_user`}}",
+      "image_name": "speakeazy-{{timestamp}}",
+      "metadata": {
+        "env": "{{user `env`}}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell-local",
+      "command": "echo ------ PACKAGE SPEAKEAZY ------ && npm run build && tar --exclude-vcs-ignores -zcf {{user `tar`}} ./ ./.env.sh ./speakeazy/static/css/build.css"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/prepare-server.sh"
+    },
+    {
+      "type": "file",
+      "source": "{{user `tar`}}",
+      "destination": "/tmp/server.tar.gz"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/install-app.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/fix-permissions.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/vsftp-setup.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/install-dependencies.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/nginx-setup.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/redis-setup.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/django-setup.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/worker-setup.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+      "script": "{{template_dir}}/packer/cleanup-server.sh"
+    }
+  ]
+}

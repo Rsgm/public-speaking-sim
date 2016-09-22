@@ -4,7 +4,7 @@ After=syslog.target network.target certbot-install.service
 Requires=certbot-install.service
 
 [Service]
-ExecStart=/usr/bin/certbot renew --quiet --agree-tos --pre-hook "systemctl stop nginx.service" --post-hook "systemctl start nginx.service"
+ExecStart=/usr/bin/certbot renew --pre-hook "systemctl stop nginx.service" --post-hook "systemctl start nginx.service"
 Type=oneshot
 
 [Install]
