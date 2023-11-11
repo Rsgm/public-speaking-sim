@@ -1,0 +1,43 @@
+run these to remove puput, also drop any tables left
+
+BEGIN;
+CREATE TABLE "puput_entrypage__new" ("page_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "wagtailcore_page" ("id"), "excerpt" text NOT NULL, "body" text NOT NULL, "date" datetime NOT NULL, "num_comments" integer NOT NULL, "header_image_id" integer NULL REFERENCES "wagtailimages_image" ("id"));
+INSERT INTO "puput_entrypage__new" ("header_image_id", "date", "page_ptr_id", "body", "excerpt", "num_comments") SELECT "header_image_id", "date", "page_ptr_id", "body", "excerpt", "num_comments" FROM "puput_entrypage";
+DROP TABLE "puput_entrypage";
+ALTER TABLE "puput_entrypage__new" RENAME TO "puput_entrypage";
+CREATE INDEX "puput_entrypage_c16de916" ON "puput_entrypage" ("header_image_id");
+CREATE TABLE "puput_category__new" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "parent_id" integer NULL REFERENCES "puput_category" ("id"), "name" varchar(80) NOT NULL UNIQUE, "slug" varchar(80) NOT NULL UNIQUE, "description" varchar(500) NOT NULL);
+INSERT INTO "puput_category__new" ("description", "slug", "id", "name", "parent_id") SELECT "description", "slug", "id", "name", "parent_id" FROM "puput_category";
+DROP TABLE "puput_category";
+ALTER TABLE "puput_category__new" RENAME TO "puput_category";
+CREATE INDEX "puput_category_6be37982" ON "puput_category" ("parent_id");
+CREATE TABLE "puput_category__new" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(80) NOT NULL UNIQUE, "slug" varchar(80) NOT NULL UNIQUE, "description" varchar(500) NOT NULL, "parent_id" integer NULL REFERENCES "puput_category" ("id"));
+INSERT INTO "puput_category__new" ("description", "slug", "id", "name", "parent_id") SELECT "description", "slug", "id", "name", "parent_id" FROM "puput_category";
+DROP TABLE "puput_category";
+ALTER TABLE "puput_category__new" RENAME TO "puput_category";
+CREATE INDEX "puput_category_6be37982" ON "puput_category" ("parent_id");
+CREATE TABLE "puput_category__new" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "description" varchar(500) NOT NULL, "name" varchar(80) NOT NULL UNIQUE, "slug" varchar(80) NOT NULL UNIQUE, "parent_id" integer NULL REFERENCES "puput_category" ("id"));
+INSERT INTO "puput_category__new" ("description", "slug", "id", "name", "parent_id") SELECT "description", "slug", "id", "name", "parent_id" FROM "puput_category";
+DROP TABLE "puput_category";
+ALTER TABLE "puput_category__new" RENAME TO "puput_category";
+CREATE INDEX "puput_category_6be37982" ON "puput_category" ("parent_id");
+CREATE TABLE "puput_blogpage__new" ("page_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "wagtailcore_page" ("id"), "description" varchar(255) NOT NULL, "display_comments" bool NOT NULL, "display_categories" bool NOT NULL, "display_tags" bool NOT NULL, "display_popular_entries" bool NOT NULL, "display_last_entries" bool NOT NULL, "display_archive" bool NOT NULL, "disqus_api_secret" text NOT NULL, "disqus_shortname" varchar(128) NOT NULL, "num_entries_page" integer NOT NULL, "num_last_entries" integer NOT NULL, "num_popular_entries" integer NOT NULL, "num_tags_entry_header" integer NOT NULL, "header_image_id" integer NULL REFERENCES "wagtailimages_image" ("id"));
+INSERT INTO "puput_blogpage__new" ("num_tags_entry_header", "page_ptr_id", "display_archive", "num_entries_page", "num_popular_entries", "display_last_entries", "display_tags", "disqus_shortname", "header_image_id", "display_popular_entries", "disqus_api_secret", "num_last_entries", "display_comments", "description", "display_categories") SELECT "num_tags_entry_header", "page_ptr_id", "display_archive", "num_entries_page", "num_popular_entries", "display_last_entries", "display_tags", "disqus_shortname", "header_image_id", "display_popular_entries", "disqus_api_secret", "num_last_entries", "display_comments", "description", "display_categories" FROM "puput_blogpage";
+DROP TABLE "puput_blogpage";
+ALTER TABLE "puput_blogpage__new" RENAME TO "puput_blogpage";
+CREATE INDEX "puput_blogpage_c16de916" ON "puput_blogpage" ("header_image_id");
+COMMIT;
+
+CREATE TABLE "puput_categoryentrypage__new" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "category_id" integer NOT NULL REFERENCES "puput_category" ("id"));
+INSERT INTO "puput_categoryentrypage__new" ("category_id", "id") SELECT "category_id", "id" FROM "puput_categoryentrypage";
+DROP TABLE "puput_categoryentrypage";
+ALTER TABLE "puput_categoryentrypage__new" RENAME TO "puput_categoryentrypage";
+CREATE INDEX "puput_categoryentrypage_b583a629" ON "puput_categoryentrypage" ("category_id");
+DROP TABLE "puput_tagentrypage";
+DROP TABLE "puput_entrypagerelated";
+DROP TABLE "puput_entrypage";
+DROP TABLE "puput_categoryentrypage";
+DROP TABLE "puput_category";
+DROP TABLE "puput_blogpage";
+
+COMMIT;

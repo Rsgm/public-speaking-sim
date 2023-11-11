@@ -85,7 +85,6 @@ speakeazy/static/js/reverse.js
 .env.sh
 devops/terraform.tfstate
 devops/terraform.tfstate.backup
-devops/terraform.tfvars
 devops/account.json
 
 #Development Files
